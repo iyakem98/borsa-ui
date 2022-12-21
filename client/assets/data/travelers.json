@@ -1,0 +1,97 @@
+[
+    {
+        "id" : "o1",
+        "name": "Thierry Henry",
+        "city" : "New York City",
+        "country": "USA",
+        "destination_city": "Addis Ababa",
+        "destination_country": "Ethiopia",
+        "flight_date": "11/19/2022",
+        "space_left": "6kg",
+        "profilePic": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Thierry_Henry_%2851649035951%29_%28cropped%29.jpg/800px-Thierry_Henry_%2851649035951%29_%28cropped%29.jpg"
+    },
+
+    {
+        "id" : "o2",
+        "name": "Jenny Polo",
+        "city" : "London",
+        "country": "UK",
+        "destination_city": "Addis Ababa",
+        "destination_country": "Ethiopia",
+        "flight_date": "11/21/2022",
+        "space_left": "4kg",
+        "profilePic": "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+    },
+
+    {
+        "id" : "o3",
+        "name": "Abebe Kebede",
+        "city" : "Washington DC",
+        "country": "USA",
+        "destination_city": "Addis Ababa",
+        "destination_country": "Ethiopia",
+        "flight_date": "12/01/2022",
+        "space_left": "16kg",
+        "profilePic": "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+    },
+
+    {
+        "id" : "o4",
+        "name": "Lionel Messi",
+        "city" : "Miami",
+        "country": "USA",
+        "destination_city": "Nairobi",
+        "destination_country": "Kenya",
+        "flight_date": "12/01/2022",
+        "space_left": "2kg",
+        "profilePic": "https://fcb-abj-pre.s3.amazonaws.com/img/jugadors/MESSI.jpg"
+    },
+
+    {
+        "id" : "o5",
+        "name": "Kylian Mbappe",
+        "city" : "Paris",
+        "country": "France",
+        "destination_city": "Louanda",
+        "destination_country": "Cameroon",
+        "flight_date": "01/01/2023",
+        "space_left": "6kg",
+        "profilePic": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnnyVs2pdMmYdeW_CBL0yyhpeO4HY-WoQLMg&usqp=CAU"
+    },
+
+    {
+        "id" : "o6",
+        "name": "Rihanna",
+        "city" : "Los Angeles",
+        "country": "USA",
+        "destination_city": "Johannesburg",
+        "destination_country": "South Africa",
+        "flight_date": "01/09/2023",
+        "space_left": "30kg",
+        "profilePic": "https://static.wikia.nocookie.net/disney/images/7/7f/Rihanna.jpg/revision/latest?cb=20200201173202"
+    },
+
+    {
+        "id" : "o7",
+        "name": "John Steven",
+        "city" : "Rome",
+        "country": "Italy",
+        "destination_city": "Lilongwe",
+        "destination_country": "Malawi",
+        "flight_date": "01/18/2023",
+        "space_left": "6kg",
+        "profilePic": "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+    },
+
+    {
+        "id" : "o8",
+        "name": "Ariana Grande",
+        "city" : "Dubai",
+        "country": "UAE",
+        "destination_city": "London",
+        "destination_country": "UK",
+        "flight_date": "11/01/2022",
+        "space_left": "0.5kg",
+        "profilePic": "https://lastfm.freetls.fastly.net/i/u/770x0/32a150c912538edab55fcf4f99fb6b93.jpg"
+    }
+]
