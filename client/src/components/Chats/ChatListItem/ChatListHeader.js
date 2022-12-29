@@ -4,7 +4,7 @@ const ChatListHeader = () => {
   return (
     <View style = {styles.container}>
         <Text style = {styles.cheader}>
-            Chats
+            Chat
         </Text>
     </View>
   )
@@ -21,4 +21,4 @@ const styles = StyleSheet.create ({
 
     }
 })
-export default ChatListHeader
+// export default ChatListHeader

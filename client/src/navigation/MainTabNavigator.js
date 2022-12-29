@@ -7,6 +7,9 @@ import NotImplementedScreen from '../screens/NotImplementedScreen';
 import { Entypo, AntDesign, MaterialIcons, FontAwesome, Feather, Ionicons } from '@expo/vector-icons'; 
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import Logout from '../screens/Logout';
+import Test from '../screens/Test';
+import ConnectScreen from '../screens/ConnectScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +22,7 @@ const MainTabNavigator = () => {
     },
       
     }}>
-        <Tab.Screen name="Connect" component={TravelerScreen} options={{
+        <Tab.Screen name="Connect" component={ConnectScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <FontAwesome name="users" size={size} color={color} />
             )
@@ -37,19 +40,25 @@ const MainTabNavigator = () => {
             )
         }} />
 
-        {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{
+        <Tab.Screen name="Logout" component={Logout} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="user" size={size} color={color} />
             ),
             headerShown: false
-        }} /> */}
+        }} />
         <Tab.Screen name="Login" component={LoginScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="user" size={size} color={color} />
             ),
             headerShown: false
         }} />
-        {/* <Tab.Screen name="Register" component={RegisterScreen} options={{
+        <Tab.Screen name="Register" component={RegisterScreen} options={{
+            tabBarIcon: ({color, size}) => (
+                <AntDesign name="user" size={size} color={color} />
+            ),
+            headerShown: false
+        }} />
+        {/* <Tab.Screen name="Test" component={Test} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="user" size={size} color={color} />
             ),

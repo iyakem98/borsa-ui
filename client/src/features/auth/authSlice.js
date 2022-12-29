@@ -1,12 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authService'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Get user from localStorage
+// Get user from localStorage/AsyncStorage
 // const user = JSON.parse(localStorage.getItem('user'))
+const getUser = async() => {
+  const user1 = await  AsyncStorage.getItem('user')
+  const user = JSON.parse(user1)
+
+  return user
+}
+
 
 const initialState = { 
-//   user: user ? user : null,
-  user:  null,
+  user: getUser() ? getUser() : null,
+  // user:  null,
   travelers: [],
   consumers: [],
   isError: false,
@@ -47,33 +55,33 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   }
 })
 
-// export const logout = createAsyncThunk('auth/logout', async () => {
-//   await authService.logout()
-// })
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await authService.logout()
+})
 
-// export const getTravelers = createAsyncThunk('auth/travelers', async (thunkAPI) => {
-//     try {
-//       return await authService.getTravelers()
-//     } catch (error) {
-//       const message =
-//         (error.response && error.response.data && error.response.data.message) ||
-//         error.message ||
-//         error.toString()
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   })
+export const getTravelers = createAsyncThunk('auth/travelers', async (thunkAPI) => {
+    try {
+      return await authService.getTravelers()
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  })
 
-// export const getConsumers = createAsyncThunk('auth/consumers', async (thunkAPI) => {
-//     try {
-//       return await authService.getConsumers()
-//     } catch (error) {
-//       const message =
-//         (error.response && error.response.data && error.response.data.message) ||
-//         error.message ||
-//         error.toString()
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   })
+export const getConsumers = createAsyncThunk('auth/consumers', async (thunkAPI) => {
+    try {
+      return await authService.getConsumers()
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  })
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -86,70 +94,9 @@ export const authSlice = createSlice({
       state.message = ''
     },
   },
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(register.pending, (state) => {
-//         state.isLoading = true
-//       })
-//       .addCase(register.fulfilled, (state, action) => {
-//         state.isLoading = false
-//         state.isSuccess = true
-//         state.user = action.payload
-//       })
-//       .addCase(register.rejected, (state, action) => {
-//         state.isLoading = false
-//         state.isError = true
-//         state.message = action.payload
-//         state.user = null
-//       })
-//       .addCase(login.pending, (state) => {
-//         state.isLoading = true
-//       })
-//       .addCase(login.fulfilled, (state, action) => {
-//         state.isLoading = false
-//         state.isSuccess = true
-//         state.user = action.payload
-//       })
-//       .addCase(login.rejected, (state, action) => {
-//         state.isLoading = false
-//         state.isError = true
-//         state.message = action.payload
-//         state.user = null
-//       })
-//       .addCase(getTravelers.pending, (state) => {
-//         state.isLoading = true
-//       })
-//       .addCase(getTravelers.fulfilled, (state, action) => {
-//         state.isLoading = false
-//         state.isSuccess = true
-//         state.travelers = action.payload
-//       })
-//       .addCase(getTravelers.rejected, (state, action) => {
-//         state.isLoading = false
-//         state.isError = true
-//         state.message = action.payload
-//       })
-//       .addCase(getConsumers.pending, (state) => {
-//         state.isLoading = true
-//       })
-//       .addCase(getConsumers.fulfilled, (state, action) => {
-//         state.isLoading = false
-//         state.isSuccess = true
-//         state.consumers = action.payload
-      
-//       })
-//       .addCase(getConsumers.rejected, (state, action) => {
-//         state.isLoading = false
-//         state.isError = true
-//         state.message = action.payload
-//       })
-//       .addCase(logout.fulfilled, (state) => {
-//         state.user = null
-//       })
-//   },
   extraReducers: (builder) => {
-    builder  
-    .addCase(register.pending, (state) => {
+    builder
+      .addCase(register.pending, (state) => {
         state.isLoading = true
       })
       .addCase(register.fulfilled, (state, action) => {
@@ -177,8 +124,72 @@ export const authSlice = createSlice({
         state.message = action.payload
         state.user = null
       })
-    
+      .addCase(getTravelers.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getTravelers.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.travelers = action.payload
+      })
+      .addCase(getTravelers.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getConsumers.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getConsumers.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.consumers = action.payload
+      
+      })
+      .addCase(getConsumers.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null
+      })
   },
+  // extraReducers: (builder) => {
+  //   builder  
+  //   .addCase(register.pending, (state) => {
+  //       state.isLoading = true
+  //     })
+  //     .addCase(register.fulfilled, (state, action) => {
+  //       state.isLoading = false
+  //       state.isSuccess = true
+  //       state.user = action.payload
+  //     })
+  //     .addCase(register.rejected, (state, action) => {
+  //       state.isLoading = false
+  //       state.isError = true
+  //       state.message = action.payload
+  //       state.user = null
+  //     })
+  //     .addCase(login.pending, (state) => {
+  //       state.isLoading = true
+  //     })
+  //     .addCase(login.fulfilled, (state, action) => {
+  //       state.isLoading = false
+  //       state.isSuccess = true
+  //       state.user = action.payload
+  //     })
+  //     .addCase(login.rejected, (state, action) => {
+  //       state.isLoading = false
+  //       state.isError = true
+  //       state.message = action.payload
+  //       state.user = null
+  //     })
+  //     .addCase(logout.fulfilled, (state) => {
+  //               state.user = null
+  //     })
+    
+  // },
 })
 
 export const { reset } = authSlice.actions

@@ -12,7 +12,6 @@
     "data:import": "node seeder",
     "data:destroy": "node seeder -d"
   },
-  
   "author": "Walid Mohamed",
   "license": "ISC",
   "dependencies": {
@@ -23,11 +22,10 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.2",
-    "socket.io": "^4.5.3"
+    "socket.io": "^4.5.4"
   },
   "devDependencies": {
     "concurrently": "^7.4.0",
     "nodemon": "^2.0.20"
   }
-
 }
