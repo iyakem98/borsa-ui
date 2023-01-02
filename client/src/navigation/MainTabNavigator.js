@@ -1,6 +1,7 @@
 import {View, Text} from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ChatsScreen from '../screens/ChatScreen';
+import ConnectScreen from "../screens/ConnectScreen"
 import TravelerScreen from '../screens/TravelerScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import NotImplementedScreen from '../screens/NotImplementedScreen';
@@ -19,36 +20,30 @@ const MainTabNavigator = () => {
     },
       
     }}>
-        <Tab.Screen name="Connect" component={TravelerScreen} options={{
+        <Tab.Screen name="Connect" component={ConnectScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <FontAwesome name="users" size={size} color={color} />
             )
         }} />
 
         <Tab.Screen name="Chats" component={ChatsScreen} options={{
-            tabBarIcon: ({color, size}) => (
-                <Entypo name="chat" size={size} color={color} />
-            ),
-            headerLeft: () => (
-                <Ionicons name="filter" size={24} color="#593196" style = {{marginLeft: 20}} />
-            ),
-            headerRight: () => (
-                <AntDesign name="adduser" size={24} color="#593196" style = {{marginRight: 20}} />
-            )
+           tabBarIcon: ({color, size}) => (
+            <Entypo name="chat" size={size} color={color} />
+        ),
         }} />
 
+        <Tab.Screen name="Profile" component={ProfileScreen} options={{
+            tabBarIcon: ({color, size}) => (
+                <AntDesign name="user" size={size} color={color} />
+            ),
+            headerShown: false
+        }} />
         {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="user" size={size} color={color} />
             ),
             headerShown: false
         }} /> */}
-        <Tab.Screen name="Login" component={LoginScreen} options={{
-            tabBarIcon: ({color, size}) => (
-                <AntDesign name="user" size={size} color={color} />
-            ),
-            headerShown: false
-        }} />
         {/* <Tab.Screen name="Register" component={RegisterScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="user" size={size} color={color} />

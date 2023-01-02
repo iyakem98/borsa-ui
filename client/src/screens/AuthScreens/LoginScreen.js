@@ -5,15 +5,16 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { login } from '../../features/auth/authSlice';
 
+
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   
-  const navigation = useNavigation()
+  // const navigation = useNavigation()
 
   const navigate = useNavigation()
-  const handleSubmit = async () => {
+  const handleSubmit =  () => {
       if ( email === '' || password === '') {
           alert("All fields are required");
           return;
@@ -24,7 +25,9 @@ const LoginScreen = () => {
           password,
         }
       dispatch(login(userData)) 
-    
+      
+      navigate.navigate('Chats')
+      alert("login successful")
    
 
   };
@@ -142,7 +145,7 @@ const LoginScreen = () => {
               </Text>
 
               <Pressable 
-                onPress={() => navigation.navigate('Signup')}
+                onPress={() => navigate.navigate('Register')}
                 style = {{
                   marginVertical: 30,
                   borderStyle: 'solid',
