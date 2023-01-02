@@ -54,7 +54,7 @@ const HomeScreen = () => {
             </Text>
         </Pressable>
 
-        <Pressable onPress={() => navigation.navigate('Signup')}
+        <Pressable onPress={() => navigation.navigate('Register')}
             style = {{
             //backgroundColor: 'white',
             width: '70%',

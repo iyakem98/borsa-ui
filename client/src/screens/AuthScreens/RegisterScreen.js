@@ -332,7 +332,7 @@ const RegisterScreen = () => {
                 </Text>
   
                 <Pressable 
-                  onPress={() => navigation.navigate('Login')}
+                  onPress={() => navigate.navigate('Login')}
                   style = {{
                     marginVertical: 30,
                     borderStyle: 'solid',

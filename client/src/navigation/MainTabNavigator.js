@@ -1,6 +1,7 @@
 import {View, Text} from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ChatsScreen from '../screens/ChatScreen';
+import ConnectScreen from "../screens/ConnectScreen"
 import TravelerScreen from '../screens/TravelerScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import NotImplementedScreen from '../screens/NotImplementedScreen';
@@ -28,9 +29,11 @@ const MainTabNavigator = () => {
             )
         }} />
 
-        {/* <Tab.Screen name="Chats" component={ChatsScreen} options={{
-           
-        }} /> */}
+        <Tab.Screen name="Chats" component={ChatsScreen} options={{
+           tabBarIcon: ({color, size}) => (
+            <Entypo name="chat" size={size} color={color} />
+        ),
+        }} />
 
         <Tab.Screen name="Profile" component={ProfileScreen} options={{
             tabBarIcon: ({color, size}) => (
@@ -38,7 +41,13 @@ const MainTabNavigator = () => {
             ),
             headerShown: false
         }} />
-        {/* <Tab.Screen name="Test" component={Test} options={{
+        {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{
+            tabBarIcon: ({color, size}) => (
+                <AntDesign name="user" size={size} color={color} />
+            ),
+            headerShown: false
+        }} /> */}
+        {/* <Tab.Screen name="Register" component={RegisterScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="user" size={size} color={color} />
             ),

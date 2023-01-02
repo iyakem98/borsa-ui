@@ -1,8 +1,13 @@
-import {View, Text, Image, StyleSheet, ImageBackground, Pressable, ScrollView} from 'react-native'
+import {View, Text, Image, StyleSheet, ImageBackground, Pressable, ScrollView, TouchableOpacity} from 'react-native'
 import { FontAwesome, FontAwesome5, MaterialIcons, AntDesign, Feather } from '@expo/vector-icons';
+import { logout } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
+    const navigate = useNavigation()
+    const dispatch = useDispatch()
     const handleLogout = () => {
         dispatch(logout())
         navigation.navigate("Login")
@@ -111,7 +116,11 @@ const ProfileScreen = () => {
                 }}>
                     4.5/5
                 </Text>
-
+                
+                <TouchableOpacity onPress={handleLogout} style={styles.buttonStyle}>
+                    <Text style={styles.buttonText}>Logout</Text>
+                </TouchableOpacity>
+                
                 </View>
                 <Text style = {{
                     fontSize: 15,
@@ -129,7 +138,7 @@ const ProfileScreen = () => {
                         <View style = {{
                             backgroundColor: 'orange',
                             padding: 8,
-                            borderRadius: "50%",
+                            borderRadius: 50,
                             marginRight: 20,
                         }}>
                             <FontAwesome name="history" size={24} color="white" />
@@ -145,7 +154,7 @@ const ProfileScreen = () => {
                         <View style = {{
                             backgroundColor: 'lightgreen',
                             padding: 8,
-                            borderRadius: "50%",
+                            borderRadius: 50,
                             marginRight: 20,
                         }}>
                             <FontAwesome5 name="money-bill-wave" size={19} color="white" />
@@ -165,7 +174,7 @@ const ProfileScreen = () => {
                         <View style = {{
                             backgroundColor: 'red',
                             padding: 8,
-                            borderRadius: "50%",
+                            borderRadius: 50,
                             marginRight: 20,
                         }}>
                             <MaterialIcons name="payment" size={24} color="white" />
@@ -181,7 +190,7 @@ const ProfileScreen = () => {
                         <View style = {{
                             backgroundColor: 'lightblue',
                             padding: 8,
-                            borderRadius: "50%",
+                            borderRadius: 50,
                             marginRight: 20,
                         }}>
                             <AntDesign name="phone" size={24} color="white" />
@@ -200,7 +209,7 @@ const ProfileScreen = () => {
                         <View style = {{
                             backgroundColor: '#a991d4',
                             padding: 8,
-                            borderRadius: "50%",
+                            borderRadius: 50,
                             marginRight: 20,
                         }}>
                             <MaterialIcons name="favorite-border" size={24} color="white" />
@@ -217,7 +226,7 @@ const ProfileScreen = () => {
                         <View style = {{
                             backgroundColor: 'gray',
                             padding: 8,
-                            borderRadius: "50%",
+                            borderRadius: 50,
                             marginRight: 20,
                         }}>
                            <Feather name="settings" size={24} color="white" />
@@ -242,6 +251,23 @@ const ProfileScreen = () => {
 }
 
 const styles = StyleSheet.create({
+    buttonStyle: {
+        backgroundColor: "red",
+        height: 50,
+        marginTop: 0,
+        justifyContent: "center",
+        marginHorizontal: 15,
+        borderRadius: 15,
+        marginLeft: 100,
+      
+    },
+    buttonText: {
+        fontSize: 20,
+        textAlign: 'center',
+        color: '#fff',
+        textTransform: 'uppercase',
+        fontWeight: 'bold'
+    },
     container : {
 
     },

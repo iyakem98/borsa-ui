@@ -21,22 +21,23 @@ import EditTravelerDetails from "../screens/MyCardsEditScreen/EditTravelerDetail
 import EditSpace from "../screens/MyCardsEditScreen/EditSpace"
 import MainTabNavigator from "./MainTabNavigator"
 import HomeScreen from "../screens/AuthScreens/HomeScreen"
+import { useSelector } from "react-redux"
 
 import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 const { user }   = useSelector((state) => state.auth)
 const Navigator = () => {
+  const { user } = useSelector((state) => state.auth)
   return (
    <NavigationContainer>
-   {/* {user ? (
+   {user ? (
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
-   <Stack.Screen name="static" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
+    <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
     <Stack.Screen name="Chats" component={ChatScreen} />
     <Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
     title: route.params.userSelected
   })} />
-    
     <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>
     <Stack.Screen name="Settings" component={SettingsScreen}/>
     <Stack.Screen name="Security" component={SecurityScreen}/>
@@ -49,8 +50,7 @@ const Navigator = () => {
           
           headerTintColor: "#fff"
         }}/>
-
-    <Stack.Screen name = "My Cards" component={MyCards} />
+         <Stack.Screen name = "My Cards" component={MyCards} />
     <Stack.Screen name = "Edit UserName" component={EditUserName} />
     <Stack.Screen name = "Edit Name" component={EditName} />
     <Stack.Screen name = "Edit Email" component={EditEmail} />
@@ -60,66 +60,22 @@ const Navigator = () => {
     <Stack.Screen name = "Edit Buyer Details" component={EditBuyerDetails} />
     <Stack.Screen name = "Edit Traveler Details" component={EditTravelerDetails} />
     <Stack.Screen name = "Edit Space Available" component={EditSpace} />
-
     </Stack.Navigator>
 
-   ) :(
+   ): (
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
-       <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-    <Stack.Screen name="Register" component={RegisterScreen} />
-
+     <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} />
+      <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
+    <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
     </Stack.Navigator>
 
-   )}  */}
-   
-    <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
-   <Stack.Screen name="static" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
-    <Stack.Screen name="Chats" component={ChatScreen} />
-    <Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
-    title: route.params.userSelected
-  })} />
+   )} 
     
-    <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>
-    <Stack.Screen name="Settings" component={SettingsScreen}/>
-    <Stack.Screen name="Security" component={SecurityScreen}/>
-    <Stack.Screen name="Contact Us" component={ContactScreen} 
-        options = {{
-          headerStyle: {
-            backgroundColor: '#593196',
-           // backgroundColor: '#a991d4',
-          },
-          
-          headerTintColor: "#fff"
-        }}/>
-
-    <Stack.Screen name = "My Cards" component={MyCards} />
-    <Stack.Screen name = "Edit UserName" component={EditUserName} />
-    <Stack.Screen name = "Edit Name" component={EditName} />
-    <Stack.Screen name = "Edit Email" component={EditEmail} />
-    <Stack.Screen name = "Edit Location" component={EditLocation} />
-    <Stack.Screen name = "Edit MyTraveler" component={EditMyTravelerScreen} />
-    <Stack.Screen name = "Edit MyBuyer" component={EditMyBuyerScreen} />
-    <Stack.Screen name = "Edit Buyer Details" component={EditBuyerDetails} />
-    <Stack.Screen name = "Edit Traveler Details" component={EditTravelerDetails} />
-    <Stack.Screen name = "Edit Space Available" component={EditSpace} />
-
-    </Stack.Navigator>
-
-  
-    <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
-       <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-    <Stack.Screen name="Register" component={RegisterScreen} />
-
-    </Stack.Navigator>
-
-   
-   
+    {/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
     
-   
+    {/* <Stack.Screen name="Chat" component={MessagingScreen} /> */}
     {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
-   
+    
    </NavigationContainer>
   )
 }
