@@ -144,11 +144,7 @@ const LoginScreen = () => {
               </Text>
 
               <Pressable 
-<<<<<<< HEAD
-                onPress={() => navigation.navigate('Signup')}
-=======
                 onPress={() => navigate.navigate('Register')}
->>>>>>> testone
                 style = {{
                   marginVertical: 30,
                   borderStyle: 'solid',

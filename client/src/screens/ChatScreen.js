@@ -1,11 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { useEffect, useLayoutEffect, useState } from 'react'
-<<<<<<< HEAD
-import {View, Text,FlatList, StyleSheet, Pressable, TouchableOpacity, Image} from 'react-native'
-=======
 import {View, Text,FlatList, StyleSheet, Pressable, TouchableOpacity, Image, ScrollView} from 'react-native'
->>>>>>> testone
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import ChatListItem from '../components/Chats/ChatListItem'
 // import ChatListHeader from '../components/Chats/ChatListItem/ChatListHeader'
