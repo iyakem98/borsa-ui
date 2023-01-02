@@ -28,31 +28,11 @@ const MainTabNavigator = () => {
             )
         }} />
 
-        <Tab.Screen name="Chats" component={ChatsScreen} options={{
-            tabBarIcon: ({color, size}) => (
-                <Entypo name="chat" size={size} color={color} />
-            ),
-            headerLeft: () => (
-                <Ionicons name="filter" size={24} color="#593196" style = {{marginLeft: 20}} />
-            ),
-            headerRight: () => (
-                <AntDesign name="adduser" size={24} color="#593196" style = {{marginRight: 20}} />
-            )
-        }} />
+        {/* <Tab.Screen name="Chats" component={ChatsScreen} options={{
+           
+        }} /> */}
 
-        <Tab.Screen name="Logout" component={Logout} options={{
-            tabBarIcon: ({color, size}) => (
-                <AntDesign name="user" size={size} color={color} />
-            ),
-            headerShown: false
-        }} />
-        <Tab.Screen name="Login" component={LoginScreen} options={{
-            tabBarIcon: ({color, size}) => (
-                <AntDesign name="user" size={size} color={color} />
-            ),
-            headerShown: false
-        }} />
-        <Tab.Screen name="Register" component={RegisterScreen} options={{
+        <Tab.Screen name="Profile" component={ProfileScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="user" size={size} color={color} />
             ),

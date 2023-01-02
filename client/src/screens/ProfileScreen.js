@@ -3,7 +3,14 @@ import { FontAwesome, FontAwesome5, MaterialIcons, AntDesign, Feather } from '@e
 
 
 const ProfileScreen = () => {
+    const handleLogout = () => {
+        dispatch(logout())
+        navigation.navigate("Login")
+        alert(" Logout  Successful");
+  
+      }
   return (
+    
     <View>
         <ImageBackground
                 source={{
