@@ -1,5 +1,5 @@
-import {View, Text, Image, StyleSheet, ImageBackground, Pressable, ScrollView, TouchableOpacity} from 'react-native'
-import { FontAwesome, FontAwesome5, MaterialIcons, AntDesign, Feather } from '@expo/vector-icons';
+import {View, Text, Image, StyleSheet, ImageBackground, Pressable, ScrollView} from 'react-native'
+import { FontAwesome, FontAwesome5, MaterialIcons, AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { logout } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +16,7 @@ const ProfileScreen = ({navigation}) => {
       }
   return (
     <View>
+         <View>
         <ImageBackground
                 source={{
                 uri: "https://www.usmagazine.com/wp-content/uploads/2021/01/The-Weeknd-Save-Your-Tears-Plastic-Surgery-Look-Is-Prosthetics-Feature.jpg?w=700&quality=86&strip=all",
@@ -25,16 +26,14 @@ const ProfileScreen = ({navigation}) => {
             <View style = {styles.overlay}>
                 <Text style = {{
                     color: 'white',
-                    marginBottom: 5,
-                    marginLeft: 10,
                     fontSize: 30
                 }}>
                     Abel Tesfaye
                 </Text>
                 <View style = {{
                     flexDirection: 'row',
-                    marginBottom: 40,
-                    marginLeft: 15,
+                    marginBottom: 20,
+                    marginLeft: 10,
                 }}>
                     <Text style = {{
                         color: 'white',
@@ -46,183 +45,113 @@ const ProfileScreen = ({navigation}) => {
                     </Text>
                     <Text style = {{
                         fontSize: 20,
-                        marginBottom: 10
+                        marginBottom: 0
                     }}>
                     🇨🇦
                     </Text>
                 </View>
-                
+                <View style = {{
+                    flexDirection: 'row',
+                }}>
+                    <Pressable style = {{
+                        backgroundColor: "#13b955",
+                        width: "20%",
+                        height: "35%",
+                        alignItems:'center',
+                        justifyContent: 'center',
+                        marginLeft: 10,
+                        borderRadius: 20,
+                        marginRight: 12
+                    }}>
+                       <Text style = {{
+                        color: 'white',
+                       }}>
+                            Traveler
+                       </Text>
+                    </Pressable>
+
+                    <Pressable style = {{
+                        backgroundColor: "#593196",
+                        width: "20%",
+                        height: "35%",
+                        alignItems:'center',
+                        justifyContent: 'center',
+                        borderRadius: 20,
+                    }}>
+                        <Text style = {{
+                            color: 'white'
+                        }}>
+                            Buyer
+                        </Text>
+                    </Pressable>
+                </View>
             </View>
             
 
         </ImageBackground>
         <View>
-            <View style = {styles. v2a}>
-                    <View>
-                    <Text style = {{
-                        fontSize: 30,
-                        //fontWeight: "bold",
-                        
-                    }}>
-                    Buyer
-                    </Text>
-
-                    <Text>
-                        Joined 12/12/2022
-                    </Text>
-                </View>
-              
-
-                <Pressable style = {{
-                    backgroundColor: '#17141f',
-                    width: '35%',
-                    height: 40,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    // borderRadius: 50,
-                    // borderRadius: 20,
-                   // borderStyle: 'solid',
-                    //borderWidth: 1,
-                    marginTop: 3
-                    
-
-                }}>
-                    <Text style = {{
-                        fontSize: 18,
-                        color: "white"
-                    }}>
-                        Update
-                    </Text>
-                </Pressable>
-            </View>
             <ScrollView style = {styles.v2b}>
                 <View style = {{
-                    flexDirection: 'row',
-                    marginBottom: 20
+                     paddingVertical: 30,
+                     paddingHorizontal: 15,
                 }}>
-
-                <FontAwesome name="star" size={24} color="gold" />
-                <FontAwesome name="star" size={24} color="gold" />
-                <FontAwesome name="star" size={24} color="gold" />
-                <FontAwesome name="star" size={24} color="gold" />
-                <FontAwesome name="star-half-empty" size={24} color="gold" />
-
-                <Text style = {{
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    marginLeft: 5,
-                    marginTop: 2
-                }}>
-                    4.5/5
-                </Text>
-                
-                <TouchableOpacity onPress={handleLogout} style={styles.buttonStyle}>
-                    <Text style={styles.buttonText}>Logout</Text>
-                </TouchableOpacity>
-                
-                </View>
                 <Text style = {{
                     fontSize: 15,
-                    color: 'lightgray',
+                    color: 'gray',
                     fontWeight: 'bold'
-                }}>
+                }}> 
                     PROFILE
-                </Text>
+                </Text> 
 
                 <View style = {{
                     marginTop: 15,
                 }}>
                     <View style = {styles.grid}>
-                    <Pressable style = {styles.press}>
+
+                    <Pressable onPress={() => navigation.navigate('Account')}
+                        style = {styles.press}>
                         <View style = {{
+                            backgroundColor: '#a991d4',
                             backgroundColor: 'orange',
                             padding: 8,
                             borderRadius: 50,
                             marginRight: 20,
                         }}>
-                            <FontAwesome name="history" size={24} color="white" />
+                            <MaterialIcons name="account-circle" size={24} color="white" /> 
                         </View>
                        
                         <Text style = {{
                             fontSize: 17,
                         }}>
-                            Orders
+                            Account
                             </Text>
                     </Pressable>
-                    <Pressable style = {styles.press}>
+                    <Pressable onPress={() => navigation.navigate('Security')}
+                        style = {styles.press}>
                         <View style = {{
-                            backgroundColor: 'lightgreen',
+                            backgroundColor: '#a991d4',
+                            backgroundColor: 'lightblue',
                             padding: 8,
                             borderRadius: 50,
                             marginRight: 20,
                         }}>
-                            <FontAwesome5 name="money-bill-wave" size={19} color="white" />
+                            <MaterialIcons name="security" size={24} color="white" /> 
                         </View>
                        
                         <Text style = {{
                             fontSize: 17,
                         }}>
-                            Bidding
+                            Security
                             </Text>
                     </Pressable>
                     </View>
 
                     <View style = {styles.grid}>
                         
-                    <Pressable style = {styles.press}>
-                        <View style = {{
-                            backgroundColor: 'red',
-                            padding: 8,
-                            borderRadius: 50,
-                            marginRight: 20,
-                        }}>
-                            <MaterialIcons name="payment" size={24} color="white" />
-                        </View>
-                       
-                        <Text style = {{
-                            fontSize: 17,
-                        }}>
-                            Payment
-                            </Text>
-                    </Pressable>
-                    <Pressable style = {styles.press}>
-                        <View style = {{
-                            backgroundColor: 'lightblue',
-                            padding: 8,
-                            borderRadius: 50,
-                            marginRight: 20,
-                        }}>
-                            <AntDesign name="phone" size={24} color="white" />
-                        </View>
-                       
-                        <Text style = {{
-                            fontSize: 17,
-                        }}>
-                            Contact
-                            </Text>
-                    </Pressable>
-                    </View>
-
-                    <View style = {styles.grid}>
-                    <Pressable style = {styles.press}>
+                    <Pressable onPress={() => navigation.navigate('Settings')}
+                        style = {styles.press}>
                         <View style = {{
                             backgroundColor: '#a991d4',
-                            padding: 8,
-                            borderRadius: 50,
-                            marginRight: 20,
-                        }}>
-                            <MaterialIcons name="favorite-border" size={24} color="white" />
-                        </View>
-                       
-                        <Text style = {{
-                            fontSize: 17,
-                        }}>
-                            Favorites
-                            </Text>
-                    </Pressable>
-
-                    <Pressable style = {styles.press}>
-                        <View style = {{
                             backgroundColor: 'gray',
                             padding: 8,
                             borderRadius: 50,
@@ -237,36 +166,228 @@ const ProfileScreen = ({navigation}) => {
                             Settings
                             </Text>
                     </Pressable>
+                    <Pressable onPress={() => navigation.navigate('Contact Us')}
+                        style = {styles.press}>
+                        <View style = {{
+                            backgroundColor: '#a991d4',
+                            backgroundColor: 'lightgreen',
+                            padding: 8,
+                            borderRadius: 50,
+                            marginRight: 20,
+                        }}>
+                            <AntDesign name="phone" size={24} color="white" />
+                        </View>
+                       
+                        <Text style = {{
+                            fontSize: 17,
+                        }}>
+                            Contact Us
+                            </Text>
+                    </Pressable>
                     </View>
+
+                    <View style = {{
+                        width: "100%",
+                        //paddingTop: 20,
+                        flexDirection: 'row',
+                        //justifyContent: 'space-around',
+                        textAlign: 'center',
+                        textAlignVertical: 'center',
+                    }}>
+                        <Pressable onPress={() => navigation.navigate('My Cards')}
+                            style = {styles.press}>
+                        <View style = {{
+                            backgroundColor: '#a991d4',
+                            backgroundColor: "#593196",
+                            padding: 8,
+                            borderRadius: 50,
+                            marginRight: 20,
+                        }}>
+                             <MaterialCommunityIcons name="cards" size={24} color="white" />
+                        </View>
+                            <Text style = {{
+                                fontSize: 17,
+                            }}>
+                                My Cards
+                            </Text>
+                            
+                        </Pressable>
+                    </View>
+
+
+                   {/* 
+                     <View style = {styles.grid}>
+                        
+                    <Pressable onPress={() => navigation.navigate('My Traveler Card')}
+                        style = {styles.press}>
+                        <View style = {{
+                            backgroundColor: '#13b955',
+                            padding: 8,
+                            borderRadius: "50%",
+                            marginRight: 20,
+                        }}>
+                          <MaterialIcons name="luggage" size={24} color="#fff" />
+                        </View>
+                       <View>
+                       <Text style = {{
+                            fontSize: 16,  
+                        }}>
+                            My Traveler
+                            </Text>
+                            <Text style = {{
+                            fontSize: 16,
+                        }}>
+                            Card
+                            </Text>
+                       </View>
+                        
+                    </Pressable>
+                    <Pressable onPress={() => navigation.navigate('My Buyer Card')}
+                        style = {styles.press}>
+                        <View style = {{
+                            backgroundColor: '#593196',
+                            padding: 8,
+                            borderRadius: "50%",
+                            marginRight: 20,
+                        }}>
+                             <AntDesign name="shoppingcart" size={24} color="#fff" />
+                        </View>
+                       
+                    <View>
+                       <Text style = {{
+                            fontSize: 17,
+                        }}>
+                            My Buyer
+                            </Text>
+                            <Text style = {{
+                            fontSize: 17,
+                        }}>
+                            Card
+                            </Text>
+                       </View>
+                    </Pressable>
+                    </View>
+                   */}
+               {/*   <View style = {{
+                    width: "100%",
+                    alignItems: 'flex-start',
+                    paddingTop: 10, 
+                    paddingBottom: 20
+                  }}>
+                    <Pressable style = {{
+                        width: "80%",
+                        height: 60,
+                        backgroundColor: '#fff',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        paddingLeft: 15,
+                        borderRadius: 30,
+                        flexDirection: 'row',
+                        marginBottom: 10,
+                        shadowColor: '#13b955',
+                        shadowOffset: {
+                            width: 0,
+                            height: 0,
+                        },
+                        
+                        shadowOpacity: 0.60,
+                        shadowRadius: 1.0,
+      
+                        elevation: 1,
+                                        
+                    }}>
+                        <View style = {{
+                            backgroundColor: '#13b955',
+                            padding: 8,
+                            borderRadius: "50%",
+                            marginRight: 20,
+                        }}>
+                        <MaterialIcons name="luggage" size={24} color="#fff" />
+                        </View>
+                        
+                        <Text style = {{
+                            //color: 'white',
+                            fontSize: 17
+                        }}>
+                            Update traveler card
+                        </Text>
+                    </Pressable>
+                    <Pressable style = {{
+                        width: "80%",
+                        height: 60,
+                        backgroundColor: '#fff',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        paddingLeft: 15,
+                        borderRadius: 30,
+                        flexDirection: 'row',
+                        shadowColor: '#a991d4',
+                        shadowOffset: {
+                            width: 0,
+                            height: 0,
+                        },
+                        
+                        shadowOpacity: 0.60,
+                        shadowRadius: 1.0,
+      
+                        elevation: 1,
+                        //borderStyle: 'solid',
+                        //borderBottomWidth: StyleSheet.hairlineWidth,
+                        //borderRightWidth: StyleSheet.hairlineWidth,
+                        
+                        
+                    }}>
+                        <View style = {{
+                            backgroundColor: '#a991d4',
+                            padding: 8,
+                            borderRadius: "50%",
+                            marginRight: 20,
+                        }}>
+                        <AntDesign name="shoppingcart" size={24} color="#fff" />
+                        </View>
+                        
+                        <Text style = {{
+                            //color: 'white',
+                            fontSize: 17
+                        }}>
+                            Update buyer card
+                        </Text>
+                    </Pressable>
+                  </View>
                    
-                   
+                    */}
 
                 </View>
+                </View>
+               {/* <View style = {{
+                    flexDirection: 'row',
+                    marginBottom: 20
+                }}>
+               <FontAwesome name="star" size={24} color="gold" />
+                <FontAwesome name="star" size={24} color="gold" />
+                <FontAwesome name="star" size={24} color="gold" />
+                <FontAwesome name="star" size={24} color="gold" />
+                <FontAwesome name="star-half-empty" size={24} color="gold" />
+                <Text style = {{
+                    fontWeight: 'bold',
+                    fontSize: 18,
+                    marginLeft: 5,
+                    marginTop: 2
+                }}>
+                    4.5/5
+                </Text>
+            </View> */}
+              
             </ScrollView>
         </View>
+            
+    </View>
             
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-    buttonStyle: {
-        backgroundColor: "red",
-        height: 50,
-        marginTop: 0,
-        justifyContent: "center",
-        marginHorizontal: 15,
-        borderRadius: 15,
-        marginLeft: 100,
-      
-    },
-    buttonText: {
-        fontSize: 20,
-        textAlign: 'center',
-        color: '#fff',
-        textTransform: 'uppercase',
-        fontWeight: 'bold'
-    },
     container : {
 
     },
@@ -274,16 +395,25 @@ const styles = StyleSheet.create({
     imagebk: {
         width: "100%",
         height: 400,
-        justifyContent: 'flex-end'
+        resizeMode: 'cover',
+        
+        
 
     },
 
     overlay: {
-        flex: 1,
+        flex: 10,
+        height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.3)',
         justifyContent: 'flex-end',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
+       // borderTopLeftRadius: 30,
+        //borderTopRightRadius: 30,
+        paddingHorizontal: 10,
+        paddingVertical: 0,
+        borderStyle: 'solid',
+        borderBottomWidth: 10,
+        borderColor: "#a991d4",
+        //borderColor: "lightgray",
     },
     
     v2a: {
@@ -306,25 +436,36 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 400,
         position: 'absolute',
-        marginTop: 70,
-        borderTopRightRadius: 15,
-        borderTopLeftRadius: 15,
-        paddingVertical: 30,
-        paddingHorizontal: 15
+       // marginTop: 70,
+       // borderTopRightRadius: 15,
+       // borderTopLeftRadius: 15,
+       
     },
 
     press: {
         flexDirection: 'row',
-        width: '40%',
-        height: 80,
+        width: '47%',
+        marginVertical: 15,
+        paddingHorizontal: 10,
+        height: 60,
         marginBottom: 8,
         borderStyle: 'solid',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderRightWidth: StyleSheet.hairlineWidth,
+        //borderBottomWidth: 0.7,
+        //borderRightWidth: 0.7,
+        backgroundColor: '#fff',
         borderRadius: 30,
         borderColor: '#c8c8c8',
         paddingVertical: 5,
         alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.18,
+        shadowRadius: 2.00,
+    
+        elevation: 1, 
        
         
     },
@@ -336,7 +477,6 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
         
     },
-
     
 
 })
