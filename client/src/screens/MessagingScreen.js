@@ -106,14 +106,16 @@ const MessagingScreen = () => {
     //  console.log(newMessageReceived.chat._id)
      if((!selectedChatCompare) || selectedChatCompare._id !== newMessageReceived.chat._id){
       if (!notification.includes({newMessageReceived})) {
+        // console.log(newMessageReceived.chat)
                 setNotification([...notification,  newMessageReceived]);
                 // console.log(notification)
                 setNotification((state) => {
                   // console.log(state)
                   return state
                 })
-                console.log(notification)
-                storeNotifcation(notification)
+                // console.log(notification)
+                storeNotifcation(notification, newMessageReceived.chat)
+                // storeNotifcation(notification)
                
                 
                 setfetchAgain(!fetchAgain)
@@ -121,7 +123,7 @@ const MessagingScreen = () => {
                   // console.log(state)
                   return state
                 })
-                console.log(fetchAgain)
+                // console.log(fetchAgain)
      }
 
     }
@@ -133,14 +135,25 @@ const MessagingScreen = () => {
 
   })
 
-  const storeNotifcation = async(notification) => {
+  const storeNotifcation = async(notification, chat) => {
     try{
-        await  AsyncStorage.setItem("notification", JSON.stringify(notification))
+          await AsyncStorage.removeItem("notification")
+          await AsyncStorage.removeItem("chat")
+      // console.log(notification)
+          await  AsyncStorage.setItem("notification", JSON.stringify(notification))
+        //  await AsyncStorage.getItem('notification')
+          await  AsyncStorage.setItem("notifChat", JSON.stringify(chat))
+          // const getChatnotif = await AsyncStorage.getItem('notifChat')
+        // // const chatnotif = await  AsyncStorage.setItem("notifChat", JSON.stringify(chat))
+
+        // console.log(JSON.parse(getChatnotif))
+        // // console.log(AsyncStorage.getItem(JSON.parse(chatnotif)))
+    }
+    catch(err){
+      console.log("cannot store notificaiton/chat")
+    }
       
-    }
-    catch(errr){
-      console.log('cannot store notification')
-    }
+   
   }
   
 //     useLayoutEffect(() =>{

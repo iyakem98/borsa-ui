@@ -10,15 +10,20 @@ import { fetchChat, reset } from '../features/chat/chatSlice'
 import { getSender, getSenderFull } from '../ChatConfig/ChatLogics'
 import Test from './Test'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import moment from 'moment'
+// import moment from 'moment'
 import { allMessages } from '../features/message/messageSlice'
+import { Badge, Icon, withBadge } from '@rneui/themed';
+// import { Badge } from '@rneui/themed';
 import dayjs from 'dayjs'
+
+
 
 
 // import chats from '../../assets/data/chats.json'
 
 
 const ChatScreen = () => {
+  const BadgedIcon = withBadge(15)(Icon);
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
     const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
@@ -26,7 +31,7 @@ const ChatScreen = () => {
     const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected, fetchAgain, setfetchAgain, notification, setNotification } = ChatState();
     const navigation = useNavigation();
     const [visible, setVisible] = useState(false);
-    const [storedNotifications, setstoredNotifications] = useState([])
+   
     const openMenu = () => setVisible(true);
     
     const closeMenu = () => setVisible(false);
@@ -45,6 +50,10 @@ const ChatScreen = () => {
     //   return <Text>chats are available currently for the new user</Text>
     //  }
     // }
+    // useEffect(() =>{
+    //   getNotif()
+    //   // console.log(notificationstored)
+    // }, [])
     useEffect(() => {
       
         // if (isError) {
@@ -93,29 +102,35 @@ useEffect(() =>{
 // }, [selectedChat])
 
     
-useEffect(() => {
-  // setNotification(JSON.parse(getNotif))
+// useEffect(() => {
+//   // setNotification(JSON.parse(getNotif))
 
-  console.log(getNotif)
-}, [])    
+//   console.log(getNotif)
+// }, [])    
 
-useEffect(() =>{
-  getNotif()
-  // console.log(notificationstored)
-}, [notification])
+// useEffect(() =>{
+//   getNotif()
+//   // console.log(notificationstored)
+// }, [notification])
+
 
 // const renderChats = () => {
 //   dispatch(fetchChat())
 //   setSelectedChat(chattts)
 //   console.log(selectedChat)
 // }
-const getNotif = async() =>{
-  const notif  = await AsyncStorage.getItem('notification')
-  // console.log(JSON.parse(notif))
-  setstoredNotifications(JSON.parse(notif))
-  console.log(storedNotifications)
-  // return JSON.parse(notif);
-}
+// const getNotif = async() =>{
+//   const notif  = await AsyncStorage.getItem('notification')
+//   const notifChat =  await AsyncStorage.getItem('notifChat')
+//   const parsedNotif = JSON.parse(notif)
+//   const parsedChat = JSON.parse(notifChat)
+//   // console.log(getSenderFull(user, parsedChat.users).firstName)
+//   // console.log(parsedNotif)
+//   // console.log(parsedChat._id)
+//   setstoredNotifications(parsedNotif)
+//   // console.log(storedNotifications)
+//   // return JSON.parse(notif);
+// }
 
 
 
@@ -130,12 +145,20 @@ const getNotif = async() =>{
     // </Pressable>
     //   </View>
         <ScrollView >
+         
+          
         <View>
-          <Text>
-            {/* {getnotif.length} */}
+        {/* <Feather name="bell" size={24} color="black" /> */}
+        
+          {/* <Text>
+          {storedNotifications.length  ? `new messages of length ${storedNotifications.length}` : "no new messages"}
+            {storedNotifications.length && `new messages of length ${storedNotifications.length}`}
+          </Text> */}
+          {/* <Text>
+
             {!storedNotifications.length  && "no new messages"}
             {storedNotifications.length && `new messages of length ${storedNotifications.length}`}
-          </Text>
+          </Text> */}
         {/* <Text>{ !getnotif.length && "no new messages"} </Text> 
         <Text>{getnotif.length && ` new messages of length ${notification.length}` } </Text> 
         {notification && notification.map((notif) => (

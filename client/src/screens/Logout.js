@@ -47,3 +47,7 @@ buttonText: {
     fontWeight: 'bold'
 },
 })
+
+{/* <TouchableOpacity onPress={handleLogout} style={styles.buttonStyle}>
+<Text style={styles.buttonText}>Logout</Text>
+</TouchableOpacity> */}
