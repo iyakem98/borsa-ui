@@ -31,7 +31,7 @@ const TravelerCard = ({traveler}) => {
         
               }
           }
-            const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+            const {data} = await axios.post('http://172.20.10.2:5003/api/chat/', {userId}, config)
             // console.log(data._id)
             setchatSelected(true)
         
@@ -189,6 +189,16 @@ const TravelerCard = ({traveler}) => {
                     color: 'white'
                 }}>
                     Start chatting
+                </Text>
+            </Pressable>
+        </View>
+        <View>
+            <Pressable>
+                <Text style = {{
+                    color: "black",
+                    fontSize: 18,
+                }}>
+                    View profile
                 </Text>
             </Pressable>
         </View>

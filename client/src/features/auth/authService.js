@@ -2,7 +2,7 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // const API_URL = '/api/users/'
-const API_URL = 'http://192.168.100.2:5000/api/users/'
+const API_URL = 'http://172.20.10.2:5003/api/users/'
 
 // Register user
 const register = async (userData) => {
@@ -47,6 +47,31 @@ const login = async (userData) => {
  
 }
 
+// User Details
+const getUserDetails = async (userId) => {
+  console.log(userId + 'detailservice')
+  try{
+    const {data} = await axios.get(API_URL + 'profile', {userId})
+    
+    // console.log(data)
+  
+    if (data) {
+
+      return data;
+       
+    }
+    else {
+      console.log('error in authservice')
+    }
+  }
+  
+  catch(error){
+    console.log("error in logging in")
+  }
+
+ 
+}
+
 // Logout user
 const logout = async() => {
   // localStorage.removeItem('user')
@@ -57,6 +82,7 @@ const logout = async() => {
 
 // //get list of all travelers
 const getTravelers = async () => {
+  console.log('traveler slice activated')
   const response = await axios.get(API_URL + 'travelers')
 
   return response.data
@@ -64,6 +90,7 @@ const getTravelers = async () => {
 
 // //get list of all consumers
 const getConsumers = async () => {
+  console.log('buyer slice activated')
   const response = await axios.get(API_URL + 'consumers')
 
   return response.data
@@ -75,6 +102,7 @@ const authService = {
   login,
   getTravelers,
   getConsumers,
+  getUserDetails,
 }
 
 export default authService

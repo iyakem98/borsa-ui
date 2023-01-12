@@ -25,7 +25,7 @@ const LoginScreen = () => {
         }
       dispatch(login(userData)) 
       
-      navigate.navigate('Chats')
+      //navigate.navigate('Chats')
       alert("login successful")
    
 

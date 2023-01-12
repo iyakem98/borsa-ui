@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 
-const API_URL = 'http://192.168.100.2:5000/api/message/'
+const API_URL = 'http://172.20.10.2:5003/api/message/'
 const fetchMessages = async(selectedChat, user, setLd, setMessages, socket) =>{
   if (!selectedChat){
     return

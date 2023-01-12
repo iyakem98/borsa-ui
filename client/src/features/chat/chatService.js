@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 
-const API_URL = 'http://192.168.100.2:5000/api/chat/'
+const API_URL = 'http://172.20.10.2:5003/api/chat/'
 const accessChat = async(userId) => {
   const user1 = await  AsyncStorage.getItem("user")
   const user = JSON.parse(user1)

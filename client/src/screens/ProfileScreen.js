@@ -3,9 +3,10 @@ import { FontAwesome, FontAwesome5, MaterialIcons, AntDesign, Feather, MaterialC
 import { logout } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-
+import { useSelector } from 'react-redux';
 
 const ProfileScreen = ({navigation}) => {
+    const { user } = useSelector((state) => state.auth)
     const navigate = useNavigation()
     const dispatch = useDispatch()
     const handleLogout = () => {
@@ -28,8 +29,8 @@ const ProfileScreen = ({navigation}) => {
                 <Text style = {{
                     color: 'white',
                     fontSize: 30
-                }}>
-                    Abel Tesfaye
+                }}> 
+                    {user.firstName + ' ' + user.lastName} 
                 </Text>
                 <View style = {{
                     flexDirection: 'row',
@@ -42,7 +43,7 @@ const ProfileScreen = ({navigation}) => {
                         fontSize: 14,
                         marginRight: 5
                     }}>
-                        Toronto, Canada 
+                        {user.city + ', ' + user.country}
                     </Text>
                     <Text style = {{
                         fontSize: 20,
@@ -54,22 +55,26 @@ const ProfileScreen = ({navigation}) => {
                 <View style = {{
                     flexDirection: 'row',
                 }}>
-                    <Pressable style = {{
-                        backgroundColor: "#13b955",
-                        width: "20%",
-                        height: "35%",
-                        alignItems:'center',
-                        justifyContent: 'center',
-                        marginLeft: 10,
-                        borderRadius: 20,
-                        marginRight: 12
-                    }}>
-                       <Text style = {{
-                        color: 'white',
-                       }}>
-                            Traveler
-                       </Text>
-                    </Pressable>
+                    {user.isTraveler && 
+                        <Pressable style = {{
+                            backgroundColor: "#13b955",
+                            width: "20%",
+                            height: "35%",
+                            alignItems:'center',
+                            justifyContent: 'center',
+                            marginLeft: 10,
+                            borderRadius: 20,
+                            marginRight: 12
+                        }}>
+                           <Text style = {{
+                            color: 'white',
+                           }}>
+                                Traveler
+                           </Text>
+                        </Pressable>
+                        
+                    }
+                    
 
                     <Pressable style = {{
                         backgroundColor: "#593196",

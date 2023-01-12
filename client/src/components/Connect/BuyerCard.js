@@ -4,10 +4,13 @@ import { useSelector } from 'react-redux';
 import { ChatState } from '../../context/ChatProvider';
 import { useNavigation } from '@react-navigation/native';
 import { getSenderFull } from '../../ChatConfig/ChatLogics';
+import { getUserDetails } from '../../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 
 const BuyerCard = ({buyer}) => {
+    const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
     const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
     const navigation = useNavigation();
@@ -20,7 +23,7 @@ const BuyerCard = ({buyer}) => {
         
                 }
             }
-            const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+            const {data} = await axios.post('http://172.20.10.2:5003/api/chat/', {userId}, config)
             // console.log(data._id)
             setchatSelected(true)
         
@@ -35,6 +38,14 @@ const BuyerCard = ({buyer}) => {
             console.log(err)
         }
     }
+
+    const goToUserProfile = async () => {
+        const userId = buyer._id
+        dispatch(getUserDetails(userId)) 
+        
+        //navigation.navigate("User Details")
+
+    };
   return (
     <View style = {styles.container}>
         <View style = {{
@@ -87,7 +98,7 @@ const BuyerCard = ({buyer}) => {
                     fontSize: 20,
                     marginTop: 2
                 }}>
-                {buyer.name}
+                {buyer.firstName + ' ' + buyer.lastName} 
             </Text>
 
             <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} />
@@ -162,7 +173,18 @@ const BuyerCard = ({buyer}) => {
                     Start chatting
                 </Text>
             </Pressable>
+            <View>
+            <Pressable onPress={goToUserProfile} >
+                <Text style = {{
+                    color: "black",
+                    fontSize: 18,
+                }}>
+                    View profile
+                </Text>
+            </Pressable>
         </View>
+        </View>
+        
     </View>
   )
 }

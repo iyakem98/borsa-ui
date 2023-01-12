@@ -15,7 +15,8 @@ import { allMessages } from '../features/message/messageSlice'
 import { Badge, Icon, withBadge } from '@rneui/themed';
 // import { Badge } from '@rneui/themed';
 import dayjs from 'dayjs'
-
+import ChatListHeader from '../components/Chats/ChatListItem/ChatListHeader'
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 
 
 
@@ -144,9 +145,11 @@ useEffect(() =>{
     //             </TouchableOpacity>
     // </Pressable>
     //   </View>
-        <ScrollView >
+        <ScrollView style = {{
+          backgroundColor: '#fff'
+        }}>
          
-          
+        <ChatListHeader/>
         <View>
         {/* <Feather name="bell" size={24} color="black" /> */}
         
@@ -252,9 +255,17 @@ useEffect(() =>{
                  })}  */}
                 
                   {chat.latestMessage && chat.latestMessage.content ?
-                   <Text  numberOfLines={2} style = {styles.subTitle}>
-                      {"latest message:" + chat.latestMessage.content}
+                  <View style = {{
+                    flexDirection: 'row'
+                  }}>
+
+                    <Ionicons name="checkmark-done-sharp" size={20} color="#593196" />
+                    
+                     <Text  numberOfLines={2} style = {styles.subTitle}>
+                      {chat.latestMessage.content}
                     </Text>
+                  </View>
+                  
                      : "" }
                    
                 {/* <Text style = {styles.subTitle} >
@@ -319,6 +330,7 @@ container: {
   marginHorizontal: 10,
   marginVertical: 5,
   height: 70,
+  backgroundColor: '#fff'
 },
 image: {
   width: 60,
@@ -337,9 +349,13 @@ row: {
 name: {
   flex: 1,
   fontWeight: 'bold',
+  fontSize: 16
 },
 subTitle: {
-  color: "gray"
+  color: "gray",
+  marginTop: 2,
+  marginLeft: 2,
+  fontSize: 15
 },
 Tex: {
   marginTop: 200

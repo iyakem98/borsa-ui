@@ -21,12 +21,12 @@ import EditTravelerDetails from "../screens/MyCardsEditScreen/EditTravelerDetail
 import EditSpace from "../screens/MyCardsEditScreen/EditSpace"
 import MainTabNavigator from "./MainTabNavigator"
 import HomeScreen from "../screens/AuthScreens/HomeScreen"
+import OtherProfile from "../components/Connect/OtherProfile"
+import ConnectScreen from "../screens/ConnectScreen"
 import { useSelector } from "react-redux"
 
-import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
-const { user }   = useSelector((state) => state.auth)
 const Navigator = () => {
   const { user } = useSelector((state) => state.auth)
   return (
@@ -35,6 +35,7 @@ const Navigator = () => {
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
     <Stack.Screen name="Chats" component={ChatScreen} />
+    <Stack.Screen name="User Details" component={OtherProfile} />
     <Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
     title: route.params.userSelected
   })} />

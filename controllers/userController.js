@@ -89,11 +89,50 @@ const registerUser = asyncHandler(async(req, res) => {
     }
 })
 
+const getUserProfile = asyncHandler(async(req, res) => {
+    const {userId} = await req.body
+
+    console.log(userId + ' is my userid in the backend')
+
+
+    const user = await User.findById(userId)
+
+    if (user) {
+        res.json({
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            userName: user.userName,
+            email: user.email,
+            isTraveler: user.isTraveler,
+            isAdmin: user.isAdmin,
+            profilePic: user.profilePic,
+            city: user.city,
+            country: user.country,
+            //token: generateToken(user._id),
+        })
+
+        console.log('Login successful!')
+    }
+    else {
+        res.status(401)
+        throw new Error ('invalid userId')
+    }
+})
+
 //auth user profile
 //GET/api/user/profile
-const getUserProfile = asyncHandler(async(req, res) => {
+const getUdeserProfile = asyncHandler(async(req, res) => {
+    console.log('backend for user profile')
     
-    const user = await User.findById(req.user._id)
+    //const user = await User.findById(req.user._id)
+
+    const {userId} = await req.body
+    console.log(userId + ' ' + 'userId in backend')
+    //console.log(firstName + ' ' + email)
+    //const user = await User.findById(req.params._id)
+
+    const user = await User.findById(userId)
 
     if(user) {
         res.json({
@@ -111,7 +150,7 @@ const getUserProfile = asyncHandler(async(req, res) => {
         res.status(404)
         throw new Error ('User not found')
     }
-
+    console.log('backend for user profile')
    
 })
 
@@ -120,12 +159,14 @@ const getUserProfile = asyncHandler(async(req, res) => {
 // @access Private
 const updateUserProfile = asyncHandler(async(req, res) => {
     
-    const user = await User.findById(req.user._id)
+    const {userId} = await req.body
 
     if(user) {
         user.firstName = req.body.firstName || user.firstName,
         user.lastName = req.body.lastName || user.lastName,
-        user.email = req.body.email || user.email
+        user.email = req.body.email || user.email,
+        user.city = req.body.city || user.city,
+        user.country = req.body.country || user.country
 
         if (req.body.password) {
             user.password = req.body.password
@@ -139,7 +180,10 @@ const updateUserProfile = asyncHandler(async(req, res) => {
             lastName: updatedUser.lastName,
             email: updatedUser.email,
             isAdmin: updatedUser.isAdmin,
-            current_balance: updatedUser.current_balance,
+            isTraveler: updatedUser.isTraveler,
+            isConsumer: updatedUser.isConsumer,
+            city: updatedUser.city,
+            country: updatedUser.country,
             token: generateToken(updatedUser._id),
         })
     }
@@ -150,7 +194,7 @@ const updateUserProfile = asyncHandler(async(req, res) => {
 })
 
 const getTravelers = asyncHandler(async(req, res) => {
-    
+    console.log('backend to get travelers')
     const users = await User.find({isTraveler: "true"})
 
     
@@ -160,7 +204,7 @@ const getTravelers = asyncHandler(async(req, res) => {
 })
 
 const getConsumers = asyncHandler(async(req, res) => {
-    
+    console.log('backend to get consuners')
     const users = await User.find({isTraveler: "false"})
 
     

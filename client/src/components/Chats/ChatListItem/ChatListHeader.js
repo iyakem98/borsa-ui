@@ -1,18 +1,42 @@
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, TextInput, StyleSheet} from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
 
 const ChatListHeader = () => {
   return (
     <View style = {styles.container}>
-        <Text style = {styles.cheader}>
-            Chat
-        </Text>
+        <View style = {styles.input}>
+        <Ionicons name="search" size={24} color="gray" />
+            <TextInput
+                style = {{ paddingHorizontal: 10,
+                    paddingVertical: 7,
+                     width: "100%",
+                     fontSize: 17,
+                     //color: '#593196'
+        }} 
+                placeholder='search'
+                placeholderTextColor="gray" 
+                />
+            </View>
+        <Ionicons name="filter-sharp" size={24} color="#593196" />
     </View>
   )
 }
 const styles = StyleSheet.create ({
     container: {
-        paddingTop: 50,
-        paddingBottom: 30
+       paddingVertical: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginBottom: 5,
+    },
+
+    input: {
+        flexDirection: 'row',
+        backgroundColor: '#efefef',
+        width: '70%',
+        borderRadius: 20,
+        paddingLeft: 10,
+        alignItems: 'center'
+
     },
 
     cheader: {
@@ -21,4 +45,4 @@ const styles = StyleSheet.create ({
 
     }
 })
-// export default ChatListHeader
+ export default ChatListHeader

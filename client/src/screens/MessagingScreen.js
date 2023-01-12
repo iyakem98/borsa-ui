@@ -21,7 +21,7 @@ const MessagingScreen = () => {
   const {chatId} = route.params;
   const {userSelected} = route.params;
   const [messages, setMessages] = useState([])
-  const ENDPOINT = "http://192.168.100.2:5000"
+  const ENDPOINT = "http://172.20.10.2:5003"
   var socket = useRef(null)
   var selectedChatCompare = null;
   const [socketConnected, setsocketConnected] = useState(false)
@@ -174,7 +174,7 @@ const MessagingScreen = () => {
     }
 
     setNewMessage("")
-    const {data} = await axios.post('http://192.168.100.2:5000/api/message/', {
+    const {data} = await axios.post('http://172.20.10.2:5003/api/message/', {
       content : newmessage,
       chatId: chatId
     },
@@ -202,7 +202,7 @@ const MessagingScreen = () => {
     }
 
    
-    const {data} = await axios.get(`http://192.168.100.2:5000/api/message/${chatId}`,
+    const {data} = await axios.get(`http://172.20.10.2:5003/api/message/${chatId}`,
     config)
     
     // console.log(data)
@@ -284,7 +284,7 @@ const MessagingScreen = () => {
   
 
    <SafeAreaView   style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
-   backgroundColor: "transparent",
+   backgroundColor: "#f9f8fc",
    padding: 5,
    paddingHorizontal: 10,}}
    behavior="position"> 
