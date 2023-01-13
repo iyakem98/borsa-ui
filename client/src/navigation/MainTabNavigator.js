@@ -105,6 +105,12 @@ const MainTabNavigator = () => {
             ),
             headerShown: false
         }} />
+         <Tab.Screen name="Logger" component={LoginScreen} options={{
+            tabBarIcon: ({color, size}) => (
+                <AntDesign name="user" size={size} color= 'orange' />
+            ),
+            headerShown: false
+        }} />
         {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="user" size={size} color={color} />
