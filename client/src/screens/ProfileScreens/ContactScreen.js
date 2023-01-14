@@ -1,7 +1,8 @@
 import { View, Text, Pressable, Stylesheet, TextInput, Image, StyleSheet } from "react-native"
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
-
+import emailjs from '@emailjs/browser';
 const ContactScreen = () => {
+
   return (
     <View style = {{
         //paddingTop: 20,
@@ -84,7 +85,7 @@ const ContactScreen = () => {
 
         </View>
 
-        <View style = {{
+        <View  style = {{
           height: "50%",
           width: "100%",
           alignItems: 'center',
