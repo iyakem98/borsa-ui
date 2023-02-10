@@ -4,13 +4,17 @@ import { AntDesign } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { login } from '../../features/auth/authSlice';
-
-
+import { ChatState } from '../../context/ChatProvider';
+import io from 'socket.io-client'
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {onlineStatus, setonlineStatus} = ChatState()
   const dispatch = useDispatch();
-  
+  const ENDPOINT = "http://192.168.100.2:5000"
+  // var socket = useRef(null)
+  var socket = io(ENDPOINT)
+  const [socketConnected, setsocketConnected] = useState(false)
   // const navigation = useNavigation()
 
   const navigate = useNavigation()
@@ -24,8 +28,17 @@ const LoginScreen = () => {
           email,
           password,
         }
-      dispatch(login(userData)) 
-      
+   
+      dispatch(login(userData))
+     
+    
+      // setonlineStatus(true)
+      // socket.on('connect', () => {
+      //   socket.emit('user_online', user)
+      // })
+     
+        
+    
       navigate.navigate('Chats')
       alert("login successful")
    

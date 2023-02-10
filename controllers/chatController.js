@@ -148,7 +148,63 @@ const tryChats = asyncHandler(async(req, res) => {
 
   res.status(200).json(t)
 })
-export{accessChat, fetchChats, tryChats}
+const deleteChat = asyncHandler(async(req, res) => {
+  const chatID = req.body
+  const userID = req.user._id
+  try{
+    // if (chatID.match(/^[0-9a-fA-F]{24}$/)) {
+    //   // Yes, it's a valid ObjectId, proceed with `findById` call.
+    //   const chat =  await  Chat.findById(chatID)
+    //  console.log(chatID.chatID)
+    //   res.status(200).json({message: chat})
+    // }
+    if(userID){
+    const chat =  await  Chat.findByIdAndRemove(chatID.chatID)
+    res.status(200).json({message: "chat deleted succesfully"})
+    }
+    else{
+      res.status(400).json({err: "chat not found"})
+    }
+    
+    
+  }
+  catch(err){
+    res.status(400).json({message: "chat not deleted successfully"})
+    // console.log("cannot delete chat")
+  }
+  // console.log(chatID)
+  // console.log(`chat deleted sucessfully with ID ${chatID.chatID}`)
+ 
+ })
+const checkUserID = asyncHandler(async(req, res) => {
+  
+  // const userID = req.user._id
+
+
+    // if (chatID.match(/^[0-9a-fA-F]{24}$/)) {
+    //   // Yes, it's a valid ObjectId, proceed with `findById` call.
+    //   const chat =  await  Chat.findById(chatID)
+    //  console.log(chatID.chatID)
+    //   res.status(200).json({message: chat})
+    // }
+    // console.log(userID)
+    
+      return   res.status(200).json({message: "success message recieved"})
+    
+  
+    
+    
+  
+  
+  //  return  res.status(400).json({message: err})
+  //   // console.log("cannot delete chat")
+  // }
+  // console.log(chatID)
+  // console.log(`chat deleted sucessfully with ID ${chatID.chatID}`)
+ 
+ })
+ 
+export{accessChat, fetchChats, tryChats, deleteChat, checkUserID}
 
 
 /*
@@ -194,3 +250,4 @@ const {userId} = req.body
     } 
 
 */
+

@@ -1,8 +1,50 @@
 import {View, Image, Text, StyleSheet, ImageBackground, Pressable} from 'react-native'
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
-
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { accessChat } from '../../features/chat/chatSlice';
+import { useNavigation } from '@react-navigation/native';
+import { getSenderFull } from '../../ChatConfig/ChatLogics'
+import { ChatState } from '../../context/ChatProvider';
 
 const TravelerCard = ({traveler}) => {
+    const { user } = useSelector((state) => state.auth)
+    // const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
+    const dispatch = useDispatch()
+    const navigation = useNavigation();
+    var travelerId = useRef(null)
+    
+    const moveToChatScreen = async(travId) => {
+        const userId = travId
+        console.log(userId)
+        // console.log(travelerId.current)
+        try{
+            const config = {
+              headers: {
+                  Authorization: `Bearer ${user.token}`
+        
+              }
+          }
+            const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+            // console.log(data._id)
+            setchatSelected(true)
+        
+            navigation.navigate('Messaging', {chatId: data._id, userSelected:
+            
+                user != null ? getSenderFull(user, data.users).userName : null })
+                
+            }
+            // return data
+            
+            
+        catch(err){
+            console.log(err)
+        }
+    }
+
+    
   return (
     <View style = {styles.container}>
         <View style = {{
@@ -36,7 +78,7 @@ const TravelerCard = ({traveler}) => {
                 fontSize: 20,
                 marginTop: 2
             }}>
-                {traveler.name}
+                {traveler.firstName + " " + traveler.lastName}
             </Text>
             <View style = {styles.destination}>
            <MaterialIcons name="flight-takeoff" size={24} color="#593196" style = {{
@@ -87,13 +129,24 @@ const TravelerCard = ({traveler}) => {
                 alignItems: 'center',
                 marginVertical: 4,
                 paddingVertical: 5,
-                borderRadius: 30
+                // borderRadius: 30
 
-            }}>
+            }}
+            onPress={() => moveToChatScreen(traveler._id)}>
                 <Text style = {{
                     fontSize: 18
                 }}>
                     Start chatting
+                </Text>
+            </Pressable>
+        </View>
+        <View>
+            <Pressable>
+                <Text style = {{
+                    color: "black",
+                    fontSize: 18,
+                }}>
+                    View profile
                 </Text>
             </Pressable>
         </View>
@@ -129,7 +182,7 @@ const styles = StyleSheet.create({
     image: {
         height: 100,
         width: 100,
-        borderRadius: "50%",
+        // borderRadius: "50%",
         borderStyle: 'solid',
         borderWidth: 2,
         borderColor: '#13b955'

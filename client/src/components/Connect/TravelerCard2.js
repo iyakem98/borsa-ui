@@ -192,6 +192,16 @@ const TravelerCard = ({traveler}) => {
                 </Text>
             </Pressable>
         </View>
+        <View>
+            <Pressable>
+                <Text style = {{
+                    color: "black",
+                    fontSize: 18,
+                }}>
+                    View profile
+                </Text>
+            </Pressable>
+        </View>
     </View>
   )
 }

@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native"
 import {NavigationContainer} from '@react-navigation/native'
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createStackNavigator } from "@react-navigation/stack"
 import MessagingScreen from "../screens/MessagingScreen"
 import ChatScreen from "../screens/ChatScreen"
 import LoginScreen from "../screens/AuthScreens/LoginScreen"
@@ -21,21 +21,37 @@ import EditTravelerDetails from "../screens/MyCardsEditScreen/EditTravelerDetail
 import EditSpace from "../screens/MyCardsEditScreen/EditSpace"
 import MainTabNavigator from "./MainTabNavigator"
 import HomeScreen from "../screens/AuthScreens/HomeScreen"
+import OtherProfile from "../components/Connect/OtherProfile"
+import ConnectScreen from "../screens/ConnectScreen"
 import { useSelector } from "react-redux"
+import Test from "../screens/Test"
+import Test2 from "../screens/Test2"
+import TestImg from "../screens/TestImg"
+import { ChatState } from "../context/ChatProvider"
 
-const Stack = createNativeStackNavigator();
 
+const Stack = createStackNavigator();
 const Navigator = () => {
   const { user } = useSelector((state) => state.auth)
+  const {messageHeader, setmessageHeader} = ChatState()
   return (
    <NavigationContainer>
    {user ? (
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
     <Stack.Screen name="Chats" component={ChatScreen} />
-    <Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
-    title: route.params.userSelected
-  })} />
+    {/* <Stack.Screen name="Chats" component={Test} /> */}
+    {/* <Stack.Screen name="Chats" component={Test2} /> */}
+    <Stack.Screen name="User Details" component={OtherProfile} />
+    { messageHeader ? (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
+    title: route.params.userSelected,
+    headerShown: false
+  })}/>) :  (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
+    title: route.params.userSelected,
+    headerShown: true
+  })}/>) }
+   
+   
     <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>
     <Stack.Screen name="Settings" component={SettingsScreen}/>
     <Stack.Screen name="Security" component={SecurityScreen}/>

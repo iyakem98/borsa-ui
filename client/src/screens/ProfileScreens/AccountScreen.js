@@ -2,8 +2,9 @@ import { View, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet }
 import profile from '../../../assets/data/profile.json'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-
+import { useSelector } from "react-redux";
 const AccountScreen = () => {
+  const { user } = useSelector((state) => state.auth)
   const navigation = useNavigation()
   return (
     <View style = {{
@@ -46,12 +47,12 @@ const AccountScreen = () => {
           fontSize: 25,
           marginTop: 10
         }}>
-          Abel Tesfaye
+          {user.firstName + ' ' + user.lastName}
         </Text>
         <Text style = {{
           color:'gray',
         }}>
-          @theweeknd
+          {user.userName}
         </Text>
       </View>
 
@@ -77,7 +78,7 @@ const AccountScreen = () => {
               marginRight: 10,
               fontSize: 16,
             }}>
-              @weeknd101 
+              {user.userName}
             </Text>
             <AntDesign name="right" size={17} color="gray" />
           </View>
@@ -101,7 +102,7 @@ const AccountScreen = () => {
               marginRight: 10,
               fontSize: 16,
             }}>
-              Abel Tesfaye 
+              {user.firstName + ' ' + user.lastName} 
             </Text>
             <AntDesign name="right" size={17} color="gray" />
           </View>
@@ -124,7 +125,7 @@ const AccountScreen = () => {
               marginRight: 10,
               fontSize: 16,
             }}>
-              theweeknd@gmail.com 
+              {user.email}
             </Text>
             <AntDesign name="right" size={17} color="gray" />
           </View>
@@ -147,7 +148,7 @@ const AccountScreen = () => {
               marginRight: 10,
               fontSize: 16,
             }}>
-               Toronto, Canada 
+               {user.city + ', ' + user.country}
             </Text>
             <AntDesign name="right" size={17} color="gray" />
           </View>
@@ -189,13 +190,24 @@ const AccountScreen = () => {
           <View style = {{
             flexDirection: 'row'
           }}>
-            <Text style = {{
-              color: "gray",
-              marginRight: 10,
-              fontSize: 16,
-            }}>
-              Yes 
-            </Text>
+            {user.isTraveler? (
+                <Text style = {{
+                  color: "gray",
+                  marginRight: 10,
+                  fontSize: 16,
+                }}>
+                  Yes 
+                </Text>
+            ): (
+              <Text style = {{
+                color: "gray",
+                marginRight: 10,
+                fontSize: 16,
+              }}>
+                Yes 
+              </Text>
+            )}
+            
             <AntDesign name="right" size={17} color="gray" />
           </View>
 

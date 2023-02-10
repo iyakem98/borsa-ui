@@ -5,6 +5,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useDispatch } from 'react-redux';
 import { login } from '../features/auth/authSlice';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { reset } from '../features/chat/chatSlice';
 
 
 
@@ -14,6 +16,7 @@ const LoginScreen = ({navigation}) => {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigation()
+    const {onlineStatus, setonlineStatus} = ChatState()
     const handleSubmit = async () => {
         if ( email === '' || password === '') {
             alert("All fields are required");
@@ -24,9 +27,17 @@ const LoginScreen = ({navigation}) => {
             email,
             password,
           }
-        dispatch(login(userData))  
+        dispatch(login(userData)) 
+        setonlineStatus(true)
+        setonlineStatus((state) => {
+            // console.log(state)
+            return state
+          })
         alert("Sign In Successful");
         navigation.navigate("Chats")
+        // const user =  await AsyncStorage.getItem("user")
+        // const user1 = JSON.parse(user)
+        // console.log(user1)
 
     };
     return (

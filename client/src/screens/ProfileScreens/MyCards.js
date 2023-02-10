@@ -1,7 +1,7 @@
 import {View, Text, Image, StyleSheet, ImageBackground, Pressable, ScrollView} from 'react-native'
 import { FontAwesome, FontAwesome5, MaterialIcons, AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-//  import MyTravelerCard from '../../components/MyCards/MyTravelerCard';
-// import MyBuyerCard from '../../components/MyCards/MyBuyerCard';
+import MyTravelerCard from '../../components/MyCards/MyTravelerCard';
+import MyBuyerCard from '../../components/MyCards/MyBuyerCard';
 
 const MyCards = () => {
   return (

@@ -65,10 +65,39 @@ const fetchChat = async () => {
   
  
   }
+// const deleteChat = async (chatID) => {
+//   const user1 = await  AsyncStorage.getItem("user")
+//   const user = JSON.parse(user1)
+ 
+//   try{
+//     const config = {
+//       headers: {
+//         Authorization: `Bearer ${user.token}`,
+//       },
+      
+//     }
+//     console.log(chatID)
+//     // console.log('fetchin in chatService')
+//     // const response = await axios.get(API_URL, config)
+    
+//     // const response =  await axios.get("http://localhost:5000/api/chat/remove", chatID, config)
+//     const response =  await axios.get(API_URL + "remove",config)
+    
+//     console.log(response)
+//   }
+//   catch(err){
+//     console.log(err)
+//   }
+    
+   
+  
+ 
+//   }
 
 const chatService = {
     accessChat,
     fetchChat,
-    tryChat
+    tryChat,
+   
 }
 export default chatService

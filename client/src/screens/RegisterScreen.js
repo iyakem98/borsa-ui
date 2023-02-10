@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { register } from '../features/auth/authSlice';
+import { reset } from '../features/chat/chatSlice';
 
 const RegisterScreen = ({navigation}) => {
     const [firstName, setFirstName] = useState("");
@@ -12,6 +13,11 @@ const RegisterScreen = ({navigation}) => {
     const [userName, setuserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isTraveler, setIsTraveler] = useState(false);
+    const [profilePic, setProfilePic] = useState("xox");
+    const [city, setCity] = useState("amerstadam");
+    const [country, setCountry] = useState("holland");
+
     const dispatch = useDispatch();
     const navigate = useNavigation()
     const handleSubmit = async () => {
@@ -19,15 +25,22 @@ const RegisterScreen = ({navigation}) => {
             alert("All fields are required");
             return;
         }
-        // await axios.post("http://192.168.100.2:5002/api/users/login", {email, password});
+       
         const userData = {
             firstName,
             lastName,
-            userName,
             email,
-            password
+            password,
+            userName,
+            isTraveler,
+            profilePic,
+            city,
+            country
+
           }
-        dispatch(register(userData))  
+        //   await axios.post("http://192.168.100.2:5002/api/users/", userData);
+        dispatch(register(userData)) 
+        dispatch(reset()) 
         alert("Sign In Successful");
         navigation.navigate("Chats")
 
@@ -60,6 +73,7 @@ const RegisterScreen = ({navigation}) => {
             <Text style={{ fontSize: 16, color: '#8e93a1' }}>PASSWORD</Text>
             <TextInput style={styles.signupInput} value={password} onChangeText={text => setPassword(text)} secureTextEntry={true} autoComplteType="password" />
         </View>
+      
         <TouchableOpacity onPress={handleSubmit} style={styles.buttonStyle}>
             <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>

@@ -8,7 +8,16 @@ const messageSchema = mongoose.Schema ({
     content: {
         type: String,
         trim: true,
+        default: ""
+
     },
+    image: {
+        type: String,
+        required: false,
+        default: ""
+        
+    },
+
 
     chat: { 
         type: mongoose.Schema.Types.ObjectId, ref: "Chat" 

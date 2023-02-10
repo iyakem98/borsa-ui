@@ -1,17 +1,40 @@
-import {View, Image, Text, StyleSheet, ImageBackground, Pressable} from 'react-native'
+import {View, Image, Text, StyleSheet, ImageBackground, Pressable, ScrollView} from 'react-native'
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 
 
 const TravelerCard = ({traveler}) => {
+    const { user } = useSelector((state) => state.auth)
+    const TravelerChat = async(travelerID)=> {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+    
+            }
+        }
+    
+        // console.log(userId)
+    
+        const response = axios.post(API_URL, userId, config)
+    
+        console.log(response)
+        
+    
+        return response.data 
+
+    }
+    
   return (
+    
     <View style = {styles.container}>
         <View>
         <ImageBackground  source={{uri: traveler.profilePic}}  
            style = {styles.image} resizeMode= 'cover'>
             <View style = {styles.overlay}>
             <Text style = {styles.name}>
-                {traveler.name}
+                {traveler.firstName + " " + traveler.lastName}
             </Text>
 
             <View style = {styles.location_container}>
@@ -103,7 +126,9 @@ const TravelerCard = ({traveler}) => {
                 Start chatting!
             </Text>
            </Pressable>
-    </View>
+     </View>
+     
+   
     )
 }
 

@@ -13,7 +13,7 @@ const InputBox = () => {
         console.log('sending a new message')
     }
   return (
-    <SafeAreaView edges={'bottom'} style = {styles.container}>
+    <SafeAreaView edges={['top']} style = {styles.container}>
         <AntDesign name='plus' size = {24} color = "#593196"/>
         <TextInput 
             value={newMessage}
