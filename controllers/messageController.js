@@ -10,6 +10,7 @@ const sendMessage = ayncHandler(async (req, res) => {
     // console.log(req)
     const content = req.body.content
     const chatId = req.body.chatId
+    const receiver = req.body.receiver
     // var image =  req.file.filename || req.body.image
     var image = req.file.filename
     // console.log(globalFile)
@@ -38,6 +39,7 @@ const sendMessage = ayncHandler(async (req, res) => {
 
     var newMessage = {
         sender: req.user._id,
+        receiver: receiver,
         content: content,
         chat: chatId,
         image: image,
@@ -47,7 +49,8 @@ const sendMessage = ayncHandler(async (req, res) => {
 
     try {
         var message = await Message.create(newMessage) 
-        message = await message.populate("sender", "firstName lastName userName profilePic isTraveler city country")
+        message = await message.populate("sender", "firstName lastName userName profilePic isTraveler city country status lastSeen route marked")
+        message = await message.populate("receiver", "firstName lastName userName profilePic isTraveler city country status lastSeen route marked")
         message = await message.populate("chat")
         message = await User.populate(message, {
             path:"chat.users",
@@ -72,6 +75,7 @@ const sendMessage2 = ayncHandler(async (req, res) => {
     // console.log(req)
     const content = req.body.content
     const chatId = req.body.chatId
+    const receiver = req.body.receiver
     // var image =  req.file.filename || req.body.image
     
     var image = req.body.image
@@ -101,6 +105,7 @@ const sendMessage2 = ayncHandler(async (req, res) => {
 
     var newMessage = {
         sender: req.user._id,
+        receiver: receiver,
         content: content,
         chat: chatId,
         image: image,
@@ -110,7 +115,8 @@ const sendMessage2 = ayncHandler(async (req, res) => {
 
     try {
         var message = await Message.create(newMessage) 
-        message = await message.populate("sender", "firstName lastName userName profilePic isTraveler city country")
+        message = await message.populate("sender", "firstName lastName userName profilePic isTraveler city country status lastSeen route marked")       
+        message = await message.populate("receiver", "firstName lastName userName profilePic isTraveler city country status lastSeen route marked")       
         message = await message.populate("chat")
         message = await User.populate(message, {
             path:"chat.users",
@@ -129,15 +135,40 @@ const sendMessage2 = ayncHandler(async (req, res) => {
 
 
 })
+const updateMessageMarkedStatus = ayncHandler(async (req, res) => {
+    
+    const messId = req.body.messId
+    const markedStatus = req.body.markedStatus
+    
+    
+    try {
+        var Updatedmessage = await Message.findByIdAndUpdate(messId, {
+            marked : markedStatus
+        }) 
+       
+
+        res.json({
+            mess: "message marked status updated"
+        });
+    } catch (error) {
+        res.json(400)
+        throw new Error (error.message)
+    }
+
+
+})
 
 const allMessages = ayncHandler(async (req, res) => {
 
     try {
         const messages = await Message.find({chat: req.params.chatId})
-            .populate("sender", "firstName lastName userName profilePic isTraveler")
+            .populate("sender", "firstName lastName userName profilePic isTraveler status lastSeen route marked")
+            .populate("receiver", "firstName lastName userName profilePic isTraveler status lastSeen route marked")
             .populate("chat")
-
-        res.json(messages)
+        // for(var i = 0; i < messages.length; i++){
+            res.status(200).json(messages)
+        // }
+       
 
     } catch (error) {
         res.status(400)
@@ -146,4 +177,4 @@ const allMessages = ayncHandler(async (req, res) => {
     
 })
 
-export {sendMessage, allMessages, sendMessage2}
+export {sendMessage, allMessages, sendMessage2, updateMessageMarkedStatus}

@@ -65,6 +65,32 @@ const fetchChat = async () => {
   
  
   }
+// const singleChat = async (chatId) => {
+//   console.log(chatId)
+//   // console.log('in single chat service')
+//   const user1 = await  AsyncStorage.getItem("user")
+//   const user = JSON.parse(user1)
+//   // console.log(user)
+
+//     const config = {
+//       headers: {
+//         Authorization: `Bearer ${user.token}`,
+//       },
+//     }
+//     try{
+//       const {data} = await axios.get(`http://192.168.100.2:5000/api/chat/single/${chatId}`, config)
+//       console.log(data)
+//     }
+//     catch(err){
+//       console.log(err)
+//     }
+//     // console.log('fetchin in chatService')
+//     // const response = await axios.get(API_URL, config)
+   
+//     // return data
+  
+ 
+//   }
 // const deleteChat = async (chatID) => {
 //   const user1 = await  AsyncStorage.getItem("user")
 //   const user = JSON.parse(user1)
@@ -98,6 +124,7 @@ const chatService = {
     accessChat,
     fetchChat,
     tryChat,
+    // singleChat
    
 }
 export default chatService

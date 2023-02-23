@@ -41,7 +41,26 @@ const initialState = {
       }
     }
   )
-
+  
+  export const singleChat = createAsyncThunk(
+    'chat/single',
+    async (chatId, thunkAPI) => {
+      try {
+        // const token = thunkAPI.getState().auth.user.token
+  
+        console.log('fetching in chatSlice')
+        return await chatService.singleChat(chatId)
+      } catch (error) {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString()
+        return thunkAPI.rejectWithValue(message)
+      }
+    }
+  )
   export const fetchChat = createAsyncThunk(
     'chat/get',
     async (_, thunkAPI) => {
@@ -133,6 +152,19 @@ const initialState = {
           state.chattts = action.payload
         })
         .addCase(fetchChat.rejected, (state, action) => {
+          state.isLoading = false
+          state.isError = true
+          state.message = action.payload
+        })
+        .addCase(singleChat.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(singleChat.fulfilled, (state, action) => {
+          state.isLoading = false
+          state.isSuccess = true
+          state.chattts = action.payload
+        })
+        .addCase(singleChat.rejected, (state, action) => {
           state.isLoading = false
           state.isError = true
           state.message = action.payload

@@ -37,7 +37,7 @@ const TravelerCard = ({traveler}) => {
         
             navigation.navigate('Messaging', {chatId: data._id, userSelected:
             
-                user != null ? getSenderFull(user, data.users).userName : null })
+                user != null ? getSenderFull(user, data.users) : null })
                 
             }
             // return data

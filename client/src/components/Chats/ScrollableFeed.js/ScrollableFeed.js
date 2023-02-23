@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
+import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { Text, View, ScrollView, StyleSheet, Image, ImageBackground } from 'react-native'
 import { useSelector } from 'react-redux'
@@ -33,7 +34,8 @@ const ScrollableFeed = ({messages}) => {
     {messages && messages.map((m, i) => {
       // console.log(m.image)
       // <Text>{m.sender._id}</Text>
-    console.log(m.image)
+    // console.log(m.createdAt)
+    const formatted_date = moment(m.createdAt).format("LT")
       return <>
         {m.content == "" ? 
         <View style = {[styles.container2, {
@@ -50,7 +52,7 @@ const ScrollableFeed = ({messages}) => {
                 m.sender._id === user._id ? "white" : "black"
             }`, flex: 1, height: 200,}}>
                 {
-           sentMessage &&  m.sender._id === user._id &&
+            m.sender._id === user._id &&
          
         //  <Ionicons name="checkmark-outline" size={20} color="white" />
         // <Text style={{color: "red", marginTop:170}}>Sent</Text>
@@ -143,7 +145,8 @@ const ScrollableFeed = ({messages}) => {
        )
       } */}
       {
-         sentMessage &&  m.sender._id === user._id &&
+          m.sender._id === user._id && m.receiver.route === "Messaging" && m.receiver != null && 
+          // m.sender._id === user._id && 
        
       //  <Ionicons name="checkmark-outline" size={20} color="white" />
       <Text>Sent</Text>
@@ -155,6 +158,7 @@ const ScrollableFeed = ({messages}) => {
        
         // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
       }
+      <Text>{formatted_date}</Text>
       {/* {
         receivedMessage && m.sender._id === user._id &&
         <Text>recieve</Text>

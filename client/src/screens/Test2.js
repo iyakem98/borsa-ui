@@ -12,9 +12,9 @@ function Test2() {
     const [image, setImage] = useState(null)
     const [getPics, setgetPics] = useState([])
     const [cameraOnOff, setcameraOnOff] = useState(true)
-    const [type, setType] = useState(Camera.Constants.Type.back)
-    const [flash, setFlash] = useState(Camera.Constants.FlashMode.off)
-    const [toggleCamera, settoggleCamera] = useState(true)
+    // const [type, setType] = useState(Camera.Constants.Type.back)
+    // const [flash, setFlash] = useState(Camera.Constants.FlashMode.off)
+    // const [toggleCamera, settoggleCamera] = useState(true)
     const publicFolder = "http://192.168.100.2:5000/images/"
     const cameraRef = useRef()
    

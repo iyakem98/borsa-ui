@@ -5,6 +5,10 @@ const messageSchema = mongoose.Schema ({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
     },
+    receiver: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
+    }, 
     content: {
         type: String,
         trim: true,
@@ -17,6 +21,13 @@ const messageSchema = mongoose.Schema ({
         default: ""
         
     },
+    marked: {
+        type: Boolean,
+        required: true,
+        default: false
+        
+    },
+    
 
 
     chat: { 

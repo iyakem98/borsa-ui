@@ -1,19 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authService'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 
 // Get user from localStorage/AsyncStorage
 // const user = JSON.parse(localStorage.getItem('user'))
 const getUser = async() => {
-  const user1 = await  AsyncStorage.getItem('user')
-  const user = JSON.parse(user1)
+  const user = await  AsyncStorage.getItem('user')
+  // console.log(user)
+  // const user = JSON.parse(user1)
 
   return user
 }
 
 
+
 const initialState = { 
-  user: getUser() ? getUser() : null,
+  user: getUser() ? getUser() : null,  
   // user:  null,
   travelers: [],
   consumers: [],
@@ -25,7 +28,12 @@ const initialState = {
   userDetails: {},
   onlineStatus: false
 }
+// const getUser = async() => {
+//   const user = await  AsyncStorage.getItem('user')
+//   // const user = JSON.parse(user1)
 
+//   return user
+// }
 // Register user
 export const register = createAsyncThunk(
   'auth/register',
@@ -61,8 +69,21 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
 
 export const getUserDetails = createAsyncThunk('auth/getUserDetails', async (userId, thunkAPI) => {
   try {
-    console.log(userId + 'getuserslice')
+    // console.log(userId + 'getuserslice')
     return await authService.getUserDetails(userId)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+export const  UpdateLastSeenAndStatus  = createAsyncThunk('auth/UpdateLastSeenAndStatus', async ( userData, thunkAPI) => {
+  try {
+    console.log(userData)
+    // console.log(userId + 'getuserslice')
+    return await authService.UpdateLastSeenAndStatus(userData)
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -99,7 +120,7 @@ export const getConsumers = createAsyncThunk('auth/consumers', async (thunkAPI) 
       return thunkAPI.rejectWithValue(message)
     }
   })
-
+ 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -186,6 +207,22 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload
+      })
+      .addCase(UpdateLastSeenAndStatus.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(UpdateLastSeenAndStatus.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.user = action.payload
+       
+      
+      })
+      .addCase(UpdateLastSeenAndStatus.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.user = null
+       
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null

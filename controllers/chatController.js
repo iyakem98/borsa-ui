@@ -114,6 +114,34 @@ if (isChat.length > 0) {
   
 });
 
+const singleChat = asyncHandler(async(req, res) => {
+  const chatId = req.params.id
+
+  try {
+    const chat = await Chat.findById(chatId).populate("users", "-password")
+    res.status(200).json({
+      users : chat.users,
+
+      
+    })
+      // Chat.find({users: {$elemMatch: {$eq: req.user._id}}})
+      //     .populate("users", "-password")
+      //     .populate("latestMessage")
+      //         .sort({updatedAt: -1})
+      //         .then(async(results)=> {
+      //             results = await User.populate(results, {
+      //                 path: "latestMessage.sender",
+      //                 select: "firstName profilePic email isTraveler"
+      //             })
+      //             console.log(`we fetching on ${req.user._id}`)
+      //             res.status(200).send(results)
+      //         })
+      
+  } catch (error) {
+      res.status(400)
+      throw new Error(error.message);
+  }
+})
 
 const fetchChats = asyncHandler(async(req, res) => {
     try {
@@ -123,8 +151,8 @@ const fetchChats = asyncHandler(async(req, res) => {
                 .sort({updatedAt: -1})
                 .then(async(results)=> {
                     results = await User.populate(results, {
-                        path: "latestMessage.sender",
-                        select: "firstName profilePic email isTraveler"
+                        path: "latestMessage.sender  latestMessage.receiver",  
+                        select: "firstName lastName email userName profilePic isTraveler city country status lastSeen route marked"
                     })
                     console.log(`we fetching on ${req.user._id}`)
                     res.status(200).send(results)
@@ -204,7 +232,7 @@ const checkUserID = asyncHandler(async(req, res) => {
  
  })
  
-export{accessChat, fetchChats, tryChats, deleteChat, checkUserID}
+export{accessChat, fetchChats, tryChats, deleteChat, checkUserID, singleChat}
 
 
 /*

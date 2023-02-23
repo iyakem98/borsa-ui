@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, AppState } from "react-native"
 import {NavigationContainer} from '@react-navigation/native'
 import { createStackNavigator } from "@react-navigation/stack"
 import MessagingScreen from "../screens/MessagingScreen"
@@ -28,26 +28,76 @@ import Test from "../screens/Test"
 import Test2 from "../screens/Test2"
 import TestImg from "../screens/TestImg"
 import { ChatState } from "../context/ChatProvider"
+import RecentlyTest from "../screens/RecentlyTest"
+import UserRecently from "../screens/UserRecently"
+import { useRef } from "react"
+import { useEffect } from "react"
+import UserTest from "../screens/UserTest"
+import PushScreen from "../screens/PushScreen"
 
 
 const Stack = createStackNavigator();
 const Navigator = () => {
+  // const appState = useRef(AppState.currentState);
   const { user } = useSelector((state) => state.auth)
   const {messageHeader, setmessageHeader} = ChatState()
+  // useEffect(() =>{
+
+  //   const subscription = AppState.addEventListener('change', nextAppState => {
+  //     // console.log(nextAppState)
+  //     // if (
+  //     //   appState.current.match(/inactive|background/) &&
+  //     //   nextAppState === 'active'
+  //     // ) {
+  //     //   console.log('App has come to the foreground!');
+  //     // }
+  //   //   if(appState.current.match(/background/) &&
+  //   //   nextAppState === 'background'){
+  //   //     console.log('display that the user is away')
+  //   //   }
+    
+  //   // if(nextAppState === 'background'){
+  //   //   dispatch(fetchChat())
+  //   // }
+  //   // if(nextAppState === 'active'){
+  //   //   dispatch(fetchChat())
+  //   // }
+  //   // else if(nextAppState === 'active'){
+  //   //   console.log('return user to online status')
+  //   // }
+  //   // console.log(user)
+  //   //   appState.current = nextAppState;
+  //   //   setAppStateVisible(appState.current);
+  //   //   console.log('AppState', appState.current);
+  //   });
+    
+  
+  //   return () => {
+  //     subscription.remove();
+  //   };
+      
+    
+  // }, [])
   return (
    <NavigationContainer>
    {user ? (
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
+    {/* <Stack.Screen name="Chats" component={RecentlyTest} /> */}
     <Stack.Screen name="Chats" component={ChatScreen} />
-    {/* <Stack.Screen name="Chats" component={Test} /> */}
+    {/* <Stack.Screen name="Chats" component={PushScreen} /> */}
     {/* <Stack.Screen name="Chats" component={Test2} /> */}
+   
     <Stack.Screen name="User Details" component={OtherProfile} />
     { messageHeader ? (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
-    title: route.params.userSelected,
+  
+    // title: route.params.userSelected,
+     
+    title: <UserRecently data={route.params.chatId} user={route.params.userSelected}/>,
     headerShown: false
   })}/>) :  (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
-    title: route.params.userSelected,
+    // title: route.params.userSelected,
+     title: <UserRecently data={route.params.chatId} userData={route.params.userSelected}/>,
     headerShown: true
   })}/>) }
    

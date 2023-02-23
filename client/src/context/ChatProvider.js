@@ -17,6 +17,7 @@ const ChatProvider = ({ children }) => {
   const [chats, setChats] = useState();
   const [triggerChange, settriggerChange] = useState(true);
   const [messageHeader, setmessageHeader] = useState(false);
+  const [date, setDate] = useState(null)
 
 
   
@@ -49,7 +50,9 @@ const ChatProvider = ({ children }) => {
         triggerChange, 
         settriggerChange,
         messageHeader, 
-        setmessageHeader
+        setmessageHeader,
+        date,
+        setDate
 
       }}
     >

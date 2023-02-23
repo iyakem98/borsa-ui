@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import {View, Text,FlatList, StyleSheet, Pressable, TouchableOpacity, Image, ScrollView} from 'react-native'
+import {View, Text,FlatList, StyleSheet, Pressable, TouchableOpacity, Image, ScrollView, AppState} from 'react-native'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import ChatListItem from '../components/Chats/ChatListItem'
 // import ChatListHeader from '../components/Chats/ChatListItem/ChatListHeader'
@@ -19,6 +19,7 @@ import ChatListHeader from '../components/Chats/ChatListItem/ChatListHeader'
 import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import io from 'socket.io-client'
 import { useRoute } from '@react-navigation/native'
+import moment from 'moment/moment'
 
 
 
@@ -29,6 +30,8 @@ const ChatScreen = () => {
    
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
+    const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
     // const { onlineStatus } = useSelector((state) => state.auth)
     const [onlineStatus, setonlineStatus] = useState(false)
     const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
@@ -49,11 +52,13 @@ const ChatScreen = () => {
     const [visible, setVisible] = useState(false);
     const ENDPOINT = "http://192.168.100.2:5000"
     // var socket = useRef(null)
+    var formatted_date = null
     var socket = io(ENDPOINT)
     const chatArr = []
     const chatArr2 = []
     
     const route = useRoute()
+    
     const [users, setUsers] = useState({})
     const [socketConnected, setsocketConnected] = useState(false)
     const [storedNotifications, setstoredNotifications] = useState([])
@@ -130,6 +135,49 @@ useEffect(() =>{
   
 }, [user])
 // useEffect(() =>{
+
+//   const subscription = AppState.addEventListener('change', nextAppState => {
+//     console.log(nextAppState)
+//     // if (
+//     //   appState.current.match(/inactive|background/) &&
+//     //   nextAppState === 'active'
+//     // ) {
+//     //   console.log('App has come to the foreground!');
+//     // }
+//   //   if(appState.current.match(/background/) &&
+//   //   nextAppState === 'background'){
+//   //     console.log('display that the user is away')
+//   //   }
+  
+//   if(nextAppState === 'background'){
+//     dispatch(fetchChat())
+//   }
+//   if(nextAppState === 'active'){
+//     dispatch(fetchChat())
+//   }
+//   // else if(nextAppState === 'active'){
+//   //   console.log('return user to online status')
+//   // }
+//   // console.log(user)
+//   //   appState.current = nextAppState;
+//   //   setAppStateVisible(appState.current);
+//   //   console.log('AppState', appState.current);
+//   });
+  
+
+//   return () => {
+//     subscription.remove();
+//   };
+    
+  
+// }, [])
+// useEffect(() =>{
+
+//     dispatch(fetchChat())
+    
+  
+// }, [AppState.currentState])
+// useEffect(() =>{
 //   dispatch(fetchChat())
 // }, [selectedChat])
 
@@ -141,7 +189,8 @@ useEffect(() =>{
 // }, [])    
 
 useEffect(() =>{
-  // getNotif()
+  // navigation.addListener('focus', getNotif)
+  getNotif()
   // console.log(storedNotifications)
 }, [])
 
@@ -177,13 +226,53 @@ useEffect(()=> {
   // socket.on('usersResponse', (data) => setUsers(data));
   // console.log(chatArr)
 }, [])
+useEffect(() => {
+  navigation.addListener('focus', UpdateUserRoute)
+  // UpdateUserRoute()
+ //  console.log(route.name)
+   // setImage(null)
+  }, [])
+const UpdateUserRoute = async () => {
+    
+  try{
+    console.log(route.name)
+    const userId = user._id
+    console.log(userId)
+    const   config = {
+        
+      headers: {
+       
+        Authorization: `Bearer ${user.token}`
+      },
+      // body: JSON.stringify({
+      //   imgsource: newPhoto.base64,
+      // }),
+      // body: formData
+     };
+
+    const {data} = await axios.put(`http://192.168.100.2:5000/api/users/route`,{
+      userId: user._id,
+      route: route.name
+      
+    }, config)
+    console.log('user route updated')
+    // console.log(data.lastSeen)
+    // setlastseendateandtime(moment(data.lastSeen).format("dddd, MMMM Do YYYY") + " " + moment(data.lastSeen).format("LT"))
+
+  }
+  catch(err){
+    console.log(err)
+  }
+  
+ }
   const getNotif = async() =>{
+    // console.log('get notif function')
         const notif  = await AsyncStorage.getItem('notification')
         const notifChat =  await AsyncStorage.getItem('notifChat')
         const parsedNotif = JSON.parse(notif)
         const parsedChat = JSON.parse(notifChat)
        
-        // console.log(getSenderFull(user, parsedChat.users).firstName)
+        // // console.log(getSenderFull(user, parsedChat.users).firstName)
         // console.log(parsedNotif)
         // console.log(parsedChat._id)
         setstoredNotifications(parsedNotif)
@@ -213,10 +302,10 @@ useEffect(()=> {
         <View>
         {/* <Feather name="bell" size={24} color="black" /> */}
         
-          {/* <Text> */}
-          {/* {storedNotifications.length  ? `new messages of length ${storedNotifications.length}` : "no new messages"} */}
+          <Text>
+          {storedNotifications && storedNotifications.length  ? `new messages of length ${storedNotifications.length}` : "no new messages"}
             {/* {storedNotifications.length && `new messages of length ${storedNotifications.length}`} */}
-          {/* </Text> */}
+          </Text>
           {/* <Text>
 
             {!storedNotifications.length  && "no new messages"}
@@ -259,7 +348,24 @@ useEffect(()=> {
           //   setmessageOnce(true)
           // }
           // 
+          // setfetchAgain(true)
           if(chat != null){
+            // var formatted_date = null
+            // console.log(chat.latestMessage)
+            if(chat.lastestMessage !== null){
+              // formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+              // console.log(formatted_date)
+              // console.log('4444s')
+            }
+          
+            
+          //   if(chat.lastestMessage){
+          //     console.log('455')
+          //   // formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+          //   // console.log(formatted_date)
+          // }
+         
+          // console.log(formatted_date)
           chatArr.push(chat)
           chatArr2.push(chat)
           setSelectedChat(chat)
@@ -323,7 +429,7 @@ useEffect(()=> {
                  
                   navigation.navigate('Messaging', {chatId: chat._id, userSelected:
                     
-                  user != null ? getSenderFull(user, chat.users).userName : null })}}  style={styles.container}>
+                  user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
                       <View>
                       <Image 
                           source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
@@ -343,7 +449,8 @@ useEffect(()=> {
                                   {user != null ? getSenderFull(user, chat.users).firstName : null}
                               </Text> 
                                 <Text style = {styles.subTitle}>
-                                  {dayjs(chat.latestMessage).fromNow(true)}
+                                  {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                                  {formatted_date}
                               </Text>   
                           </View>
                           
@@ -388,7 +495,7 @@ useEffect(()=> {
                           //     {chat.latestMessage.content}
                           //   </Text>
                           // </View>
-                          <Text>File not uploaded</Text>
+                          <Text> {chat.latestMessage.content}</Text>
                           
                              : <Text>File Uploaded</Text> }
                            
@@ -400,6 +507,17 @@ useEffect(()=> {
             }
           }
           else{
+            // var formatted_date2 = null
+            // if(chat.lastestMessage){
+            //   formatted_date2 = moment(chat.latestMessage.createdAt).format("LT")
+            // }
+            // console.log(formatted_date2)
+            //   if(chat.lastestMessage !== null){
+            //     // console.log('455')
+            //   formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+            //   // console.log(formatted_date)
+            // }
+            // {chat.lastestMessage && chat.lastestMessage.content && console.log('4444')}
             if(chat.latestMessage != null && triggerChange){
                 return <Pressable key={chat._id} onPress={() => 
                 {
@@ -456,7 +574,7 @@ useEffect(()=> {
                
                 navigation.navigate('Messaging', {chatId: chat._id, userSelected:
                   
-                user != null ? getSenderFull(user, chat.users).userName : null })}}  style={styles.container}>
+                user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
                     <View>
                     <Image 
                         source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
@@ -476,7 +594,8 @@ useEffect(()=> {
                                 {user != null ? getSenderFull(user, chat.users).firstName : null}
                             </Text> 
                               <Text style = {styles.subTitle}>
-                                {dayjs(chat.latestMessage).fromNow(true)}
+                                {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                              {formatted_date}
                             </Text>   
                         </View>
                         

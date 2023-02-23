@@ -19,6 +19,9 @@ import ChatScreen from '../screens/ChatScreen';
 import { useNavigation } from '@react-navigation/native';
 import Test2 from '../screens/Test2';
 import TestImg from '../screens/TestImg';
+import RecentlyTest from '../screens/RecentlyTest';
+import UserTest from '../screens/UserTest';
+import PushScreen from '../screens/PushScreen';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -53,7 +56,7 @@ const MainTabNavigator = () => {
         // console.log(storedNotifications)
         // return JSON.parse(notif);
       } 
-      const BadgedIcon = withBadge(storedNotifications.length)(Icon);
+    //   const BadgedIcon = withBadge(storedNotifications.length)(Icon);
   return (
     <Tab.Navigator initialRouteName='Chats' screenOptions={{tabBarActiveTintColor: '#593196', tabBarStyle: {
         backgroundColor: '#f9f8fc'

@@ -157,6 +157,22 @@ const userSchema = mongoose.Schema({
         required: true,
         default: false
     },
+    status: {
+        type: String,
+        required: true,
+        default: "online"
+    },
+    lastSeen: {
+        type: Date,
+        default: Date.now
+        // required: true,
+        
+    },
+    route: {
+        type: String,
+        default: "Main"
+    },
+
 
     
 
