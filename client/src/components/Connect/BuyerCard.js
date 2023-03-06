@@ -12,31 +12,62 @@ import axios from 'axios';
 const BuyerCard = ({buyer}) => {
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected, chattId, setchattId} = ChatState(); 
     const navigation = useNavigation();
-    const BuyerChat = async(buyerID)=> {
-        const userId = buyerID
-        try{
+    const BuyerChat = async(buyerData)=> {
+        const userId = buyerData._id
+        // try{
             const config = {
                 headers: {
                     Authorization: `Bearer ${user.token}`
         
                 }
             }
-            const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
-            // console.log(data._id)
-            setchatSelected(true)
+        //     const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+        //     // console.log(data._id)
+        //     setchatSelected(true)
         
-            navigation.navigate('Messaging', {chatId: data._id, userSelected:
+        //     navigation.navigate('Messaging', {chatId: data._id, userSelected:
             
-                user != null ? getSenderFull(user, data.users) : null })
+        //         user != null ? getSenderFull(user, data.users) : null })
                 
             
-            // return data
-        }
-        catch(err){
-            console.log(err)
-        }
+        //     // return data
+        // }
+        // catch(err){
+        //     console.log(err)
+        // }
+        // console.log(travData.userName)
+        // const userId = travId
+        // console.log(userId)
+        // console.log(travelerId.current)
+        // try{
+        //     const config = {
+        //       headers: {
+        //           Authorization: `Bearer ${user.token}`
+        
+        //       }
+        //   }
+        //     const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+        //     // console.log(data._id)
+        //     setchatSelected(true)
+        
+            // navigation.navigate('Messaging', {chatId: data._id, userSelected:
+            
+            //     user != null ? getSenderFull(user, data.users) : null })
+            navigation.navigate('Messaging', {userSelected:
+            
+                buyerData})
+                const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+                setchattId(data._id)
+                
+            // }
+        //     // return data
+            
+            
+        // catch(err){
+        //     console.log(err)
+        // }
     }
 
     const goToUserProfile = async () => {
@@ -165,7 +196,7 @@ const BuyerCard = ({buyer}) => {
                 paddingVertical: 5,
                 borderRadius: 30
 
-            }} onPress= {() => BuyerChat(buyer._id)}>
+            }} onPress= {() => BuyerChat(buyer)}>
                 <Text style = {{
                     fontSize: 18,
                     color: 'white'

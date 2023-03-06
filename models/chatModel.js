@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 const chatSchema = mongoose.Schema ({
     chatName: {
         type: String,
-        trim: true
+        trim: true,
+        default: "sender"
     },
 
     /*text: {

@@ -22,6 +22,9 @@ import TestImg from '../screens/TestImg';
 import RecentlyTest from '../screens/RecentlyTest';
 import UserTest from '../screens/UserTest';
 import PushScreen from '../screens/PushScreen';
+import UserRouteTest from '../screens/UserRouteTest';
+import TestChat from '../screens/TestChat';
+import TestMess from '../screens/TestMess';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -74,7 +77,7 @@ const MainTabNavigator = () => {
         {/* <Tab.Screen name="Login" component={LoginScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="user" size={size} color={color} />
-            ),
+            ),S
             headerShown: false
         }} /> */}
         

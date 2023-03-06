@@ -22,7 +22,8 @@ const MessagingScreen = () => {
   const [newmessage, setNewMessage] = useState();
   const route = useRoute()
   const dispatch = useDispatch()
-  const {chatId} = route.params;
+  // const {chatId} = route.params;
+  // var chatId = null;
   const {userSelected} = route.params;
   const [messages, setMessages] = useState([])
   const ENDPOINT = "http://192.168.100.2:5000"
@@ -30,8 +31,11 @@ const MessagingScreen = () => {
   var selectedChatCompare = null;
   var chatRouteCompare = null
   const [socketConnected, setsocketConnected] = useState(false)
+  // const [chatId, setchatId] = useState()
   const [typing, setTyping] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
+  const [latestMess, setlatestMess] = useState()
+
   const { 
     selectedChat, 
     setSelectedChat,
@@ -46,7 +50,10 @@ const MessagingScreen = () => {
      receivedMessage, 
     setreceivedMessage,
     messageSentOrReceived, setmessageSentOrReceived,
-    chatRoute, setchatRoute
+    chatRoute, setchatRoute,
+    NewwMessage,setNewwMessage,
+    chatSelected, setchatSelected,
+    chattId,setchatId
     } = ChatState(); 
   // const [mesages, setMesages] = useState()
   // const defaultOptions = {
@@ -79,11 +86,16 @@ const MessagingScreen = () => {
     }),
   });
   // console.log(messageHeader)
-  console.log(image)
+  // console.log(image)
   const cameraRef = useRef()
+  //   useEffect(() =>{
+  //  accessChat()
+  // //  fetchMessage()
+  // }, [])
   useLayoutEffect(() => {
-  
-    // fetchMessage()
+    accessChat() 
+    console.log(chattId) 
+    fetchMessage()
     socket.current = io(ENDPOINT)
     socket.current.emit("setup", user);
     // socket.emit("findChat", chatId)
@@ -94,8 +106,12 @@ const MessagingScreen = () => {
    
     
   }, [])
+  // useEffect(() =>{
+   
+  
+  // }, [])
   useEffect(() =>{
-    fetchMessage()
+    // fetchMessage()
     selectedChatCompare = selectedChat
     // console.log(notification)
    
@@ -150,45 +166,78 @@ const MessagingScreen = () => {
    
   // })
   useEffect(() => {
-    // socket.current.on("message recieved", (newMessageReceived) => {
+    socket.current.on("message recieved", (newMessageReceived) => {
+      setMessages([...messages, newMessageReceived])
+      // console.log(route.name)
+      // console.log('mess received')
+      
+      // console.log(newMessageReceived)
+    //   if(newMessageReceived.receiver.route != "Messaging")
+      // testNotif(newMessageReceived)
+    //  console.log(newMessageReceived.chat._id)
+    //  console.log(newMessageReceived.chat)
+    //  if((!selectedChatCompare)  ||  selectedChatCompare._id !== newMessageReceived.chat._id ){
+    //   // console.log(notisfication)
     //   // console.log('message received')
-    //   // if(newMessageReceived.receiver.route != "Messaging")
-    //   // testNotif(newMessageReceived)
-    // //  console.log(newMessageReceived.chat._id)
-    // //  console.log(newMessageReceived.chat)
-    // //  if((!selectedChatCompare)  ||  selectedChatCompare._id !== newMessageReceived.chat._id || (chatRouteCompare)  ){
-    // //  if((newMessageReceived.receiver.route == "Chats")){
-    // //   console.log('notif received')
-    // // if (!notification.includes({newMessageReceived})) {
-    // //     // console.log(newMessageReceived.chat)
-    // //             setNotification([...notification,  newMessageReceived]);
-    // //             // console.log(notification)
-    // //             setNotification((state) => {
-    // //               // console.log(state)
-    // //               return state
-    // //             })
-    // //             // console.log(notification)
-    // //             storeNotifcation(notification, {chatUsers: newMessageReceived.chat.users, chatId: newMessageReceived.chat._id })
-    // //             // storeNotifcation(notification)
+    // // //  if((newMessageReceived.receiver.route == "Chats")){
+    // // //   console.log('notif received')
+    // if (!notification.includes({newMessageReceived})) {
+    //     // console.log(newMessageReceived.chat)
+    //             setNotification([...notification,  newMessageReceived]);
+    //             // console.log(notification)
+    //             setNotification((state) => {
+    //               // console.log(state)
+    //               return state
+    //             })
+    //             // console.log(notification)
+    //             storeNotifcation(notification, {chatUsers: newMessageReceived.chat.users, chatId: newMessageReceived.chat._id })
+    //             // storeNotifcation(notification)
                
                 
-    // //             setfetchAgain(!fetchAgain)
-    // //             setfetchAgain((state) => {
-    // //               // console.log(state)
-    // //               return state
-    // //             })
-    // //             // console.log(fetchAgain)
-    // //  }
+    //             setfetchAgain(!fetchAgain)
+    //             setfetchAgain((state) => {
+    //               // console.log(state)
+    //               return state
+    //             })
+    //             // console.log(fetchAgain)
+    //  }
 
-    // // }
-    // // else{
-    // //   console.log('notif not received')
-    // //   setMessages([...messages, newMessageReceived])
-    // //   // setreceivedMessage(true)
-    // // }   
+    // // console.log('message received')
+    // //  testNotif(newMessageReceived)
+     
+    // }
+    // if (!notification.includes({newMessageReceived})) {
+    //     // console.log(newMessageReceived.chat)
+    //             setNotification([...notification,  newMessageReceived]);
+    //             // console.log(notification)
+    //             setNotification((state) => {
+    //               // console.log(state)
+    //               return state
+    //             })
+    //             // console.log(notification)
+    //             storeNotifcation(notification, {chatUsers: newMessageReceived.chat.users, chatId: newMessageReceived.chat._id })
+    //             // storeNotifcation(notification)
+               
+                
+    //             setfetchAgain(!fetchAgain)
+    //             setfetchAgain((state) => {
+    //               // console.log(state)
+    //               return state
+    //             })
+    //             // console.log(fetchAgain)
+     
+
+    // }
+    // else{
+    //   console.log('notif not received')
+    //  
+    //   // setreceivedMessage(true)
+    // }   
 
          
-    //  })
+     
+    })
+    
 
   })
   useEffect(() => {
@@ -212,7 +261,7 @@ const MessagingScreen = () => {
   testCamera();
  }, [])
  useEffect(() => {
- null
+ 
   // setImage(null)
  }, [refresh])
  useEffect(() => {
@@ -222,16 +271,17 @@ const MessagingScreen = () => {
  }, [])
  useEffect(() => {
 //  UpdateUserRoute()
- console.log(route.params.userSelected._id)
+//  console.log(route.params.userSelected._id)
   // setImage(null)
  }, [])
- async function sendPushNotification(expoPushToken) {
+ async function sendPushNotification(expoPushToken, newMessage) {
+  // console.log(newMessage.sender.firstName)
   const message = {
     to: expoPushToken,
     sound: 'default',
-    title: 'Original Title',
-    body: 'And here is the body!',
-    data: { someData: 'goes here' },
+    title: newMessage.sender.firstName,
+    body: newMessage.content,
+    // data: { someData: 'goes here' },
   };
 
   await fetch('https://exp.host/--/api/v2/push/send', {
@@ -244,29 +294,49 @@ const MessagingScreen = () => {
     body: JSON.stringify(message),
   });
 }
+const accessChat = async() => {
+  console.log('acccessing chat')
+  // const userId = userSelected._id
+  // const config = {
+  //         headers: {
+  //             Authorization: `Bearer ${user.token}`
+    
+  //         }
+  //     }
+  //     const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+  //         // console.log("chat created ")
+  //       console.log(data._id)
+  //         // setchatId(data._id)
+  //         // setchatId(data._id)
+  //         chatId = data._id
+  //         setchatSelected(true)
+  //         fetchMessage()
+          
+
+}
 const testNotif = async (Newmessage) => {
   
-  console.log(Newmessage.sender._id)
-  // socket.current.on("message recieved", (newMessageReceived) => {
-  //   console.log('notification received')
+  // console.log(Newmessage.sender._id)
+  // // socket.current.on("message recieved", (newMessageReceived) => {
+  // //   console.log('notification received')
    
        
-  //  })
-  var chat = Newmessage.chat;
-  // //   console.log( message.receiver._id)
-  //   if (!chat.users) return console.log("chat.users not defined");
+  // //  })
+  // var chat = Newmessage.chat;
+  // // //   console.log( message.receiver._id)
+  // //   if (!chat.users) return console.log("chat.users not defined");
     
 
-    chat.users.forEach( (tuser) => {
-      if (tuser._id == Newmessage.sender._id && Newmessage.receiver ) console.log('notif received')
-        // console.log('push notif recieved')
-        // await sendPushNotification(expoPushToken);
-      ;
+  //   chat.users.forEach( (tuser) => {
+  //     if (tuser._id == Newmessage.sender._id && Newmessage.receiver ) console.log('notif received')
+  //       // console.log('push notif recieved')
+  //       // await sendPushNotification(expoPushToken);
+  //     ;
       
       
-    });
+  //   });
   // console.log(message.receiver.route)
-  // await sendPushNotification(expoPushToken);
+  await sendPushNotification(expoPushToken, Newmessage);
    
     
   }
@@ -396,12 +466,10 @@ const CameraFeature = () => {
 }
   const sendMessage = async() => {
     try{
-    //   const config = {
-    //     headers: {
-    //         Authorization: `Bearer ${user.token}`
-
-    //     }
-    // }
+      // setNewMessage("")
+      var cancelToken;
+     
+     
     // let options = {
     //   quality: 1,
     //   base64: false,
@@ -414,33 +482,62 @@ const CameraFeature = () => {
     // const formData = new FormData()
     // let newPhoto = await cameraRef.current.takePictureAsync(options);
     // setImage(newPhoto)
-    setNewMessage("")
+   
     
       const config = {
           
         headers: {
          
           Authorization: `Bearer ${user.token}`
-        },
+        }
+        
+          // cancelToken: cancelToken.token
+        
         // body: JSON.stringify({
         //   imgsource: newPhoto.base64,
         // }),
-        // body: formData
+        // body: formData,
+
        };
+      var storeNewMessage = newmessage
+    
+      setlatestMess(newmessage)
+       setNewwMessage(true)
+       setNewMessage('')
+      console.log('timeout')
+      // await new Promise(r => setTimeout(r, 1000));
+      // setNewwMessage(false)
+      // console.log('timeon')
      
+    //  console.log('phase1')
    
- 
+    //    if(typeof cancelToken != typeof  undefined){
+    //     cancelToken.cancel("Cancelling the prev req")
+    //   }
+    //   cancelToken = axios.CancelToken.source()
+    //   const config = {
+    //     headers: {
+    //         Authorization: `Bearer ${user.token}`
+
+    //     },
+    //      cancelToken: cancelToken.token
+        
+    // }
     const {data} = await axios.post('http://192.168.100.2:5000/api/message/send2', {
-      content : newmessage,
-      chatId: chatId,
+      content : storeNewMessage,
+      chatId: chattId,
       image: "",
       receiver: route.params.userSelected._id
       
       
     },
     config)
-    testNotif(data)
+   
+    // console.log('phase2')
+    // testNotif(data)
     setImage(null)
+    // setNewMessage('')
+    // setlatestMess('')
     console.log("message sent successfully")
    
     
@@ -449,20 +546,24 @@ const CameraFeature = () => {
   setmessageSentOrReceived(false)
   setfetchAgain(true)
   setfetchAgain(false)
+  setNewwMessage(false)
   
   return data
     
-    
+  //  console.log('message sent faster') 
    
   
    
     }
-    catch(error){
-      // console.log('sending message is not possible')
+    catch(err){
+      console.log(err)
     }
   }
   
   const fetchMessage = async() => {
+    console.log('fetching messages')
+    // console.log(chatId)
+
     try{
       const config = {
         headers: {
@@ -472,7 +573,7 @@ const CameraFeature = () => {
     }
 
    
-    const {data} = await axios.get(`http://192.168.100.2:5000/api/message/${chatId}`,
+    const {data} = await axios.get(`http://192.168.100.2:5000/api/message/${chattId}`,
     config)
     
     // console.log(data)
@@ -482,12 +583,12 @@ const CameraFeature = () => {
       // console.log(state)
       return state
     })
-    socket.current.emit("join chat", chatId)
+    socket.current.emit("join chat", chattId)
     return data;
    
     }
     catch(error){
-      // console.log('fetching message is not possible')
+      console.log(error)
     }
 
   }
@@ -504,7 +605,7 @@ const CameraFeature = () => {
     const formData = new FormData()
    const testData ={
     content: "",
-    chatId: chatId
+    chatId: chattId
    }
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     setImage(newPhoto)
@@ -598,7 +699,7 @@ const CameraFeature = () => {
     
   }
   const typingHandler = (e) => {
-    setNewMessage(e.target.value)
+    setNewMessage(e)
      
     if(!socketConnected) return
 
@@ -729,7 +830,7 @@ if(cameratest){
 //  </KeyboardAvoidingView>*/
 <>
     <View>
-    <ScrollableFeed messages={messages} />
+    <ScrollableFeed messages={messages} latestMessage={latestMess}/>
     </View>
   
 
@@ -740,12 +841,19 @@ if(cameratest){
    behavior="position"> 
    {/* <AntDesign name='plus' size = {24} color = "#593196"/> */}
     {isTyping ? <View>
-    <Text> isloading... </Text>
+    <Text> isTyping... </Text>
     </View> : null}
    <TextInput 
       value={newmessage}
       onChangeText={setNewMessage}
-      onChange={typingHandler}
+      // onChange={() => {
+      //   setNewMessage()
+      //   // typingHandler()
+       
+
+      // }
+      // }
+      // onChange={setNewMessage}
       style = {styles.input} 
       placeholder='type your message...'/>
     <Pressable onPress={() => {

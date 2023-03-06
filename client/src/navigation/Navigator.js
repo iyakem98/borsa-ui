@@ -34,13 +34,15 @@ import { useRef } from "react"
 import { useEffect } from "react"
 import UserTest from "../screens/UserTest"
 import PushScreen from "../screens/PushScreen"
+import UserRouteTest from "../screens/UserRouteTest"
+import TestChat from "../screens/TestChat"
 
 
 const Stack = createStackNavigator();
 const Navigator = () => {
   // const appState = useRef(AppState.currentState);
   const { user } = useSelector((state) => state.auth)
-  const {messageHeader, setmessageHeader} = ChatState()
+  const {messageHeader, setmessageHeader, chattId, setchatId} = ChatState()
   // useEffect(() =>{
 
   //   const subscription = AppState.addEventListener('change', nextAppState => {
@@ -85,19 +87,23 @@ const Navigator = () => {
     <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
     {/* <Stack.Screen name="Chats" component={RecentlyTest} /> */}
     <Stack.Screen name="Chats" component={ChatScreen} />
+    {/* <Stack.Screen name="Chats" component={TestChat} /> */}
+    {/* <Stack.Screen name="Chats" component={UserRouteTest} /> */}
     {/* <Stack.Screen name="Chats" component={PushScreen} /> */}
     {/* <Stack.Screen name="Chats" component={Test2} /> */}
    
     <Stack.Screen name="User Details" component={OtherProfile} />
     { messageHeader ? (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
   
-    // title: route.params.userSelected,
+    title: route.params.userSelected.userName,
      
-    title: <UserRecently data={route.params.chatId} user={route.params.userSelected}/>,
+    // title: <UserRecently  user={route.params.userSelected}/>,
+    // title: <UserRecently  user={route.params.userSelected}/>,
     headerShown: false
   })}/>) :  (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
-    // title: route.params.userSelected,
-     title: <UserRecently data={route.params.chatId} userData={route.params.userSelected}/>,
+    title: route.params.userSelected.userName,
+    //  title: <UserRecently  userData={route.params.userSelected}/>,
+    //  title: <UserRecently userData={route.params.userSelected}/>,
     headerShown: true
   })}/>) }
    

@@ -50,8 +50,9 @@ const ChatScreen = () => {
             } = ChatState();
     const navigation = useNavigation();
     const [visible, setVisible] = useState(false);
+    // const [socketConnected, setsocketConnected] = useState(false)
     const ENDPOINT = "http://192.168.100.2:5000"
-    // var socket = useRef(null)
+    var socket1 = useRef(null)
     var formatted_date = null
     var socket = io(ENDPOINT)
     const chatArr = []
@@ -85,6 +86,18 @@ const ChatScreen = () => {
     //   getNotif()
     //   // console.log(notificationstored)
     // }, [])
+    useLayoutEffect(() => {
+  
+      // fetchMessage()
+      socket1.current = io(ENDPOINT)
+      socket1.current.emit("setup", user);
+      // socket.emit("findChat", chatId)
+      socket1.current.on("connected", () => setsocketConnected(true) )
+     
+     
+     
+      
+    }, [])
     useEffect(() => {
       
         // if (isError) {
@@ -122,18 +135,87 @@ useEffect(() =>{
     
   
 }, [fetchAgain])
-useEffect(() =>{
 
-    console.log(route.name)
-    
-  
-}, [])
 useEffect(() =>{
 
     dispatch(fetchChat())
     
   
 }, [user])
+useEffect(() => {
+  socket1.current.on("message recieved", (newMessageReceived) => {
+    console.log(route.name)
+    // console.log('mess received')
+    
+    console.log(newMessageReceived.content)
+  //   if(newMessageReceived.receiver.route != "Messaging")
+    // testNotif(newMessageReceived)
+  //  console.log(newMessageReceived.chat._id)
+  //  console.log(newMessageReceived.chat)
+  //  if((!selectedChatCompare)  ||  selectedChatCompare._id !== newMessageReceived.chat._id || (chatRouteCompare) ){
+  //   // console.log(notisfication)
+  //   // console.log('message received')
+  // // //  if((newMessageReceived.receiver.route == "Chats")){
+  // // //   console.log('notif received')
+  // if (!notification.includes({newMessageReceived})) {
+  //     // console.log(newMessageReceived.chat)
+  //             setNotification([...notification,  newMessageReceived]);
+  //             // console.log(notification)
+  //             setNotification((state) => {
+  //               // console.log(state)
+  //               return state
+  //             })
+  //             // console.log(notification)
+  //             storeNotifcation(notification, {chatUsers: newMessageReceived.chat.users, chatId: newMessageReceived.chat._id })
+  //             // storeNotifcation(notification)
+             
+              
+  //             setfetchAgain(!fetchAgain)
+  //             setfetchAgain((state) => {
+  //               // console.log(state)
+  //               return state
+  //             })
+  //             // console.log(fetchAgain)
+  //  }
+
+  // console.log('message received')
+  //  testNotif(newMessageReceived)
+   
+  // }
+  // if (!notification.includes({newMessageReceived})) {
+  //     // console.log(newMessageReceived.chat)
+  //             setNotification([...notification,  newMessageReceived]);
+  //             // console.log(notification)
+  //             setNotification((state) => {
+  //               // console.log(state)
+  //               return state
+  //             })
+  //             // console.log(notification)
+  //             storeNotifcation(notification, {chatUsers: newMessageReceived.chat.users, chatId: newMessageReceived.chat._id })
+  //             // storeNotifcation(notification)
+             
+              
+  //             setfetchAgain(!fetchAgain)
+  //             setfetchAgain((state) => {
+  //               // console.log(state)
+  //               return state
+  //             })
+  //             // console.log(fetchAgain)
+   
+
+  // }
+  // else{
+  //   console.log('notif not received')
+  //   setMessages([...messages, newMessageReceived])
+  //   // setreceivedMessage(true)
+  // }   
+
+       
+   
+  })
+  
+
+})
 // useEffect(() =>{
 
 //   const subscription = AppState.addEventListener('change', nextAppState => {
@@ -267,6 +349,9 @@ const UpdateUserRoute = async () => {
  }
   const getNotif = async() =>{
     // console.log('get notif function')
+        //   await AsyncStorage.removeItem('notification')
+        // await AsyncStorage.removeItem('notifChat')
+    
         const notif  = await AsyncStorage.getItem('notification')
         const notifChat =  await AsyncStorage.getItem('notifChat')
         const parsedNotif = JSON.parse(notif)
@@ -303,7 +388,7 @@ const UpdateUserRoute = async () => {
         {/* <Feather name="bell" size={24} color="black" /> */}
         
           <Text>
-          {storedNotifications && storedNotifications.length  ? `new messages of length ${storedNotifications.length}` : "no new messages"}
+          {/* {storedNotifications && storedNotifications.length  ? `new messages of length ${storedNotifications.length}` : "no new messages"} */}
             {/* {storedNotifications.length && `new messages of length ${storedNotifications.length}`} */}
           </Text>
           {/* <Text>
@@ -351,8 +436,10 @@ const UpdateUserRoute = async () => {
           // setfetchAgain(true)
           if(chat != null){
             // var formatted_date = null
-            // console.log(chat.latestMessage)
-            if(chat.lastestMessage !== null){
+            // console.log(chat.latestMessage.content)
+           
+            if(chat.lastestMessage !== null ){
+              // console.log(chat.latestMessage)
               // formatted_date = moment(chat.latestMessage.createdAt).format("LT")
               // console.log(formatted_date)
               // console.log('4444s')
@@ -495,7 +582,11 @@ const UpdateUserRoute = async () => {
                           //     {chat.latestMessage.content}
                           //   </Text>
                           // </View>
-                          <Text> {chat.latestMessage.content}</Text>
+                          <View>
+                              <Text> {chat.latestMessage.content}</Text>
+                              <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text>
+                            </View>
+                        
                           
                              : <Text>File Uploaded</Text> }
                            
@@ -635,10 +726,13 @@ const UpdateUserRoute = async () => {
       
                         
                           {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
-                          
-                           <Text  numberOfLines={2} style = {styles.subTitle}>
+                          <View>
+                          <Text  numberOfLines={2} style = {styles.subTitle}>
                             {chat.latestMessage.content}
                           </Text>
+                              <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text>
+                            </View>
+                           
                         </View>
                         
                            : <Text>File Uploaded</Text> }

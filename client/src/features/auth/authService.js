@@ -13,7 +13,7 @@ const register = async (userData) => {
     if (data) {
       const user = await AsyncStorage.setItem('user', JSON.stringify(data))
       const user1 = await AsyncStorage.getItem('user')
-      console.log(JSON.stringify(user1))
+      // console.log(JSON.stringify(user1))
       return data;
     }
   }
@@ -37,7 +37,7 @@ const login = async (userData) => {
       // localStorage.setItem('user', JSON.stringify(response.data))
       const user = await AsyncStorage.setItem('user', JSON.stringify(data))
       const user1 = await AsyncStorage.getItem('user')
-      console.log(JSON.stringify(user1))
+      // console.log(JSON.stringify(user1))
       socket.emit('user_online', { data, socketID : socket.id})
       return data;
       

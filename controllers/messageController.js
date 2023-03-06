@@ -112,15 +112,18 @@ const sendMessage2 = ayncHandler(async (req, res) => {
     }
 
     console.log('aaaa')
+    // res.json({succ: "mess sent"})
+    
 
     try {
         var message = await Message.create(newMessage) 
-        message = await message.populate("sender", "firstName lastName userName profilePic isTraveler city country status lastSeen route marked")       
-        message = await message.populate("receiver", "firstName lastName userName profilePic isTraveler city country status lastSeen route marked")       
+        message = await message.populate("sender receiver", "userName status lastSeen route marked")
+               
+        // message = await message.populate("receiver", "userName status lastSeen route marked")       
         message = await message.populate("chat")
         message = await User.populate(message, {
             path:"chat.users",
-            select: "firstName lastName userName profilePic"
+            select: "userName "
         })
 
         await Chat.findByIdAndUpdate(req.body.chatId, {
@@ -128,6 +131,7 @@ const sendMessage2 = ayncHandler(async (req, res) => {
         })
 
         res.json(message);
+        // res.json({succ: "mess sent"})
     } catch (error) {
         res.json(400)
         throw new Error (error.message)

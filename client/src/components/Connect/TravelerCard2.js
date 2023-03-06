@@ -11,7 +11,7 @@ import axios from 'axios';
 const TravelerCard = ({traveler}) => {
     const { user } = useSelector((state) => state.auth)
     // const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId } = ChatState(); 
     const dispatch = useDispatch()
     const navigation = useNavigation();
     var travelerId = useRef(null)
@@ -20,32 +20,38 @@ const TravelerCard = ({traveler}) => {
         setIsBuyer(!isBuyer)
     }
     
-    const TravelerChat = async(travId) => {
-        const userId = travId
-        console.log(userId)
+    const TravelerChat = async(travData) => {
+        console.log(travData.userName)
+        const userId = travData._id
+        // console.log(userId)
         // console.log(travelerId.current)
-        try{
+        // try{
             const config = {
               headers: {
                   Authorization: `Bearer ${user.token}`
         
               }
           }
-            const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
-            // console.log(data._id)
-            setchatSelected(true)
+           
+        //     // console.log(data._id)
+        //     setchatSelected(true)
         
-            navigation.navigate('Messaging', {chatId: data._id, userSelected:
+            // navigation.navigate('Messaging', {chatId: data._id, userSelected:
             
-                user != null ? getSenderFull(user, data.users) : null })
+            //     user != null ? getSenderFull(user, data.users) : null })
+            navigation.navigate('Messaging', {userSelected:
+            
+                travData})
+            const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+            setchattId(data._id)
                 
-            }
-            // return data
+            // }
+        //     // return data
             
             
-        catch(err){
-            console.log(err)
-        }
+        // catch(err){
+        //     console.log(err)
+        // }
     }
   return (
     <View style = {styles.container}>
@@ -183,7 +189,7 @@ const TravelerCard = ({traveler}) => {
                 paddingVertical: 5,
                 borderRadius: 30
 
-            }} onPress={() => TravelerChat(traveler._id)}>
+            }} onPress={() => TravelerChat(traveler)}>
                 <Text style = {{
                     fontSize: 18,
                     color: 'white'

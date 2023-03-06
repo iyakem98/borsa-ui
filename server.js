@@ -13,6 +13,8 @@ import { createServer } from 'http';
 import { Server } from 'socket.io'; //replaces (import socketIo from 'socket.io')
 // import socketio from "socket.io"
 import { LocalStorage } from "node-localstorage";
+import compression from 'compression'
+
 
 var localStorage = new LocalStorage('./scratch');
 
@@ -28,8 +30,18 @@ dotenv.config()
 connectDB()
 
 const app = express()
-
+// app.use(compression())
 app.use(cors());
+// app.use(compression({
+//   level: 6,
+//   threshold: 0,
+//   // filter: (req, res) => {
+//   //   if(req.headers['x-no-compression']){
+//   //     return false
+//   //   }
+//   //   return compression.filter(req,res)
+//   // }
+// }))
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/images', express.static('images')); 
@@ -65,7 +77,7 @@ const io = new Server(serv,
 var users = []
 var users2 = []
 var chatArr = []
-
+var testUsrArr = []
 let userID = null
 
 io.on("connection", (socket) => {
@@ -256,7 +268,20 @@ let counter = 0;
     // socket.disconnect();
 
   })
+  
+  socket.on("check route", (LoggedUserData) => {
+  //  console.log(LoggedUserData.userID)
+  //  users.push()
+  // const otherUsersID = null
+  testUsrArr.push(LoggedUserData)
+  console.log(testUsrArr)
+  // return testUsrArr
+  socket.emit('receiverID', testUsrArr)
+  // for(var i = 0; i < testUsrArr.length; i++){
+  //   if()
+  // }
 
+  });
   socket.on("join chat", (room) => {
     socket.join(room);
     console.log("User Joined Room: " + room);

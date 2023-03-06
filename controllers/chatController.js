@@ -64,13 +64,15 @@ const accessChat = asyncHandler(async(req, res) => {
   const { userId } = await req.body;
   console.log('access phase 1')
 
-if (!userId) {
-  console.log("UserId param not sent with request");
-  return res.sendStatus(400);
-}
+// if (!userId) {
+//   console.log("UserId param not sent with request");
+//   return res.sendStatus(400);
+// }
+// res.json({
+//   sucess: "success"
+// })
 
 var isChat = await Chat.find({
-  isGroupChat: false,
   $and: [
     { users: { $elemMatch: { $eq: req.user._id } } },
     { users: { $elemMatch: { $eq: userId } } },
@@ -78,38 +80,43 @@ var isChat = await Chat.find({
 })
   .populate("users", "-password")
   .populate("latestMessage");
-
+// res.json({
+//   sucess: "success"
+// })
 isChat = await User.populate(isChat, {
   path: "latestMessage.sender",
-  select: "firstName profilePic email isTraveler",
+  select: "firstName  email isTraveler",
 });
 
-console.log('access phase 2')
+// console.log('access phase 2')
 
 if (isChat.length > 0) {
   res.send(isChat[0]);
-} else {
+} 
+else {
   var chatData = {
-    chatName: "sender",
-    isGroupChat: false,
     users: [req.user._id, userId],
   };
 
-  console.log('access phase 3')
+//   console.log('access phase 3')
 
-  try {
+//   try {
     const createdChat = await Chat.create(chatData);
-    const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
+    // const FullChat = await Chat.findById({ _id: createdChat._id }).populate(
+    //   "users",
+    //   "-password"
+    // );
+    const FullChat = await Chat.findById(createdChat._id).populate(
       "users",
       "-password"
     );
-    console.log('access phase 4')
+    // console.log('access phase 4')
     res.status(200).json(FullChat);
-  } catch (error) {
-    console.log('bro this an access phase error')
-    res.status(400);
-    throw new Error(error.message);
-  }
+//   } catch (error) {
+//     console.log('bro this an access phase error')
+//     res.status(400);
+//     throw new Error(error.message);
+//   }
 }
   
 });
@@ -121,6 +128,35 @@ const singleChat = asyncHandler(async(req, res) => {
     const chat = await Chat.findById(chatId).populate("users", "-password")
     res.status(200).json({
       users : chat.users,
+
+      
+    })
+      // Chat.find({users: {$elemMatch: {$eq: req.user._id}}})
+      //     .populate("users", "-password")
+      //     .populate("latestMessage")
+      //         .sort({updatedAt: -1})
+      //         .then(async(results)=> {
+      //             results = await User.populate(results, {
+      //                 path: "latestMessage.sender",
+      //                 select: "firstName profilePic email isTraveler"
+      //             })
+      //             console.log(`we fetching on ${req.user._id}`)
+      //             res.status(200).send(results)
+      //         })
+      
+  } catch (error) {
+      res.status(400)
+      throw new Error(error.message);
+  }
+})
+const singleChat2 = asyncHandler(async(req, res) => {
+  const chatId = req.params.id
+
+  try {
+    const chat = await Chat.findById(chatId).populate("users", "-password")
+    
+    res.status(200).json({
+      chat
 
       
     })
@@ -232,7 +268,7 @@ const checkUserID = asyncHandler(async(req, res) => {
  
  })
  
-export{accessChat, fetchChats, tryChats, deleteChat, checkUserID, singleChat}
+export{accessChat, fetchChats, tryChats, deleteChat, checkUserID, singleChat, singleChat2}
 
 
 /*
