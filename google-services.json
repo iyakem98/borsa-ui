@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "93332937759",
+    "project_id": "borsa-app-6336b",
+    "storage_bucket": "borsa-app-6336b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93332937759:android:bb56a87842b751aab1092a",
+        "android_client_info": {
+          "package_name": "com.Borsa.BorsaApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93332937759-tnqbi2b4p1rg0bfeopkg27o6acc57rtn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC428PrlRS8TXNHQ52ejqM6Wus0IBRSbpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93332937759-tnqbi2b4p1rg0bfeopkg27o6acc57rtn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
