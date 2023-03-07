@@ -11,6 +11,7 @@ router.route('/travelers').get(getTravelers)
 router.route('/consumers').get(getConsumers)
 router.route('/route').put(protect, updateRoute)
 router.route('/ret/:id').get(protect, getUserData)
+router.route('/ret/rec/:id').get(getUserData)
 router.route('/stat').put(protect,updateStatus)
 
 

@@ -7,6 +7,7 @@ import { getSenderFull } from '../../ChatConfig/ChatLogics';
 import { getUserDetails } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import moment from 'moment';
 
 
 const BuyerCard = ({buyer}) => {
@@ -14,6 +15,7 @@ const BuyerCard = ({buyer}) => {
     const { user } = useSelector((state) => state.auth)
     const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected, chattId, setchattId} = ChatState(); 
     const navigation = useNavigation();
+    const now = moment(buyer.lastSeen).format("LT")
     const BuyerChat = async(buyerData)=> {
         const userId = buyerData._id
         // try{
@@ -78,6 +80,9 @@ const BuyerCard = ({buyer}) => {
 
     };
   return (
+    // <View>
+    //    <Text>{now}</Text> 
+    // </View>
     <View style = {styles.container}>
         <View style = {{
             width: '35%'

@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { ChatState } from '../../context/ChatProvider';
 import { getSenderFull } from '../../ChatConfig/ChatLogics';
 import axios from 'axios';
+import moment from 'moment';
 
 
 const TravelerCard = ({traveler}) => {
@@ -16,6 +17,7 @@ const TravelerCard = ({traveler}) => {
     const navigation = useNavigation();
     var travelerId = useRef(null)
     const [isBuyer, setIsBuyer] = useState(false)
+    const now = moment(traveler.lastSeen).format("LT")
     function tweakBuyer() {
         setIsBuyer(!isBuyer)
     }
@@ -54,6 +56,9 @@ const TravelerCard = ({traveler}) => {
         // }
     }
   return (
+        // <View>
+        //    <Text>{now}</Text> 
+        // </View>
     <View style = {styles.container}>
         <View style = {{
             width: '35%'

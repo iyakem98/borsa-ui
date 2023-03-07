@@ -95,14 +95,14 @@ const Navigator = () => {
     <Stack.Screen name="User Details" component={OtherProfile} />
     { messageHeader ? (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
   
-    title: route.params.userSelected.userName,
+    // title: route.params.userSelected.userName,
      
-    // title: <UserRecently  user={route.params.userSelected}/>,
+    title: <UserRecently  user={route.params.userSelected}/>,
     // title: <UserRecently  user={route.params.userSelected}/>,
     headerShown: false
   })}/>) :  (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
-    title: route.params.userSelected.userName,
-    //  title: <UserRecently  userData={route.params.userSelected}/>,
+    // title: route.params.userSelected.userName,
+     title: <UserRecently  userData={route.params.userSelected}/>,
     //  title: <UserRecently userData={route.params.userSelected}/>,
     headerShown: true
   })}/>) }

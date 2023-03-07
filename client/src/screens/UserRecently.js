@@ -7,35 +7,51 @@ import { AppState, Pressable, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { singleChat } from '../features/chat/chatSlice'
 
-function UserRecently({data, userData}) {
+function UserRecently({userData}) {
   const navigation = useNavigation()
-  // console.log(data)
   const [selectedUserData, setselectedUserData] = useState([])
+  const [lastSeen, setlastSeen] = useState()
   const { user } = useSelector((state) => state.auth)
- var lastSeen = userData.lastSeen
+  var formatted_date = null
+//  var lastSeen = userData.lastSeen
+//  var lastSeen = null
+ const userId = userData._id
   const [userName, setUsername] = useState(userData.userName)
-  var now = moment(lastSeen).format("MMMM Do LT")
+  // var now = moment(lastSeen).format("MMMM Do LT")
   const [status, setStatus] = useState()
 
-  console.log(now)
+  // console.log(now)
 
   // if(data){
   //   const formatted_date = data.lastSeen
   //   const [lastSeen, setlastSeen] = useState(moment(formatted_date).format("MMMM Do LT"))
   // }
 
-  
-  // useEffect(() => {
-  //   singleChat()
-  //   // displaySelectedUserDetails()
-  //   }, [])
+  console.log(lastSeen)
+  useEffect(() => {
+    getUserDetails()
+    // singleChat()
+    // displaySelectedUserDetails()
+    }, [])
     // useEffect(() => {
     //   navigation.addListener('focus', displaySelectedUserDetails())
     //   // UpdateUserRoute()
     //  //  console.log(route.name)
     //    // setImage(null)
     //   }, [])
-
+  const getUserDetails = async() => {
+    
+    try{
+      const {data} = await axios.get(`http://192.168.100.2:5000/api/users/ret/rec/${userId}`)
+      setlastSeen(moment(data.lastSeen).format("MMMM Do LT"))
+      // formatted_date = moment(lastSeen).format("LT")
+      setStatus(data.status)
+      console.log(data)
+  }
+  catch(err){
+    console.log(err)
+  }
+}
     const singleChat = async () => {
       const chatId = data
         // console.log(data)
@@ -121,8 +137,8 @@ function UserRecently({data, userData}) {
     <Text>press herr to get updated chat info</Text>
         </Pressable> */}
         {/* <Text>{lastSeen}</Text> */}
-       {/* { status === "online" ?  <Text>Online</Text> : null}
-       { status === "away" ?  <Text>last seen at {lastSeen} </Text>  : null} */}
+       { status === "online" ?  <Text>Online</Text> : null}
+       { status === "away" ?  <Text>last seen at {lastSeen} </Text>  : null}
         {/* <Text>last seen at {lastSeen} </Text> */}
         
     </View>

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
@@ -14,7 +15,7 @@ const ConnectScreen = () => {
   const { travelers} = useSelector(
     (state) => state.auth
   )
-  
+    const navigation = useNavigation()
     const dispatch = useDispatch()
     const [isBuyer, setIsBuyer] = useState(false)
     const [isTraveler, setIsTraveler] = useState(false)
@@ -44,14 +45,25 @@ const ConnectScreen = () => {
     //   }
          
     //     }
-        useEffect(() => {
-           dispatch(getTravelers())
-          //  console.log(travelers)
-           dispatch(getConsumers())
-          //  console.log(consumers)
-          //  console.log(isBuyer)
-        }, [])
-        
+    useEffect(() => {
+      navigation.addListener('focus', callTravBuyer)
+      // UpdateUserRoute()
+     //  console.log(route.name)
+       // setImage(null)
+      }, [])
+        // useEffect(() => {
+        //    dispatch(getTravelers())
+        //   //  console.log(travelers)
+        //    dispatch(getConsumers())
+        //   //  console.log(consumers)
+        //   //  console.log(isBuyer)
+        // }, [])
+       const callTravBuyer = () => {
+        console.log('calling traveler function')
+        dispatch(getTravelers())
+        console.log('calling buyer function')
+        dispatch(getConsumers())
+       } 
   return (
   //  <ScrollView>
   //  {travelers  && travelers.map((traveler) => (

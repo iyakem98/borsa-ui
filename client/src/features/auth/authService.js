@@ -136,15 +136,15 @@ const logout = async() => {
 // //get list of all travelers
 const getTravelers = async () => {
   console.log('traveler slice activated')
-  const response = await axios.get(API_URL + 'travelers')
-
+  const response = await axios.get('http://192.168.100.2:5000/api/users/travelers')
+  console.log(response.data)
   return response.data
 }
 
 // //get list of all consumers
 const getConsumers = async () => {
   console.log('buyer slice activated')
-  const response = await axios.get(API_URL + 'consumers')
+  const response = await axios.get('http://192.168.100.2:5000/api/users/consumers')
 
   return response.data
 }
