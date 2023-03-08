@@ -93,44 +93,7 @@ const HomeScreen = () => {
                 flexDirection:"row"
             }}
             >
-                 <TouchableOpacity onPress={() => navigation.navigate('LoginWithGoogle')}
-            style={{
-                backgroundColor: 'white',
-                color:"#fff",
-                width: '80px',
-                height: '47px',
-                borderRadius: 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 6,
-                letterSpacing:2
-            }}>
-                <Image 
-                source = {require ('../../../assets/images/google.png')} 
-                style = {{
-                    width: 24,
-                    height: 24,
-                   
-                }}
-                />
-            
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigation.navigate('LoginWithFacebook')}
-            style={{
-                backgroundColor: 'white',
-                color:"#fff",
-                width: '80px',
-                height: '47px',
-                borderRadius: 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 6,
-                letterSpacing:2,
-                marginLeft:30
-            }}>
-                 <Entypo name="facebook" size={24} color="#4267B2" />
-            </TouchableOpacity>
+           
             
            
             </View>
