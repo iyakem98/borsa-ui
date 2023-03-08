@@ -78,6 +78,8 @@ const ScrollableFeed = ({messages}) => {
         </View>
         
         :
+
+        
         <View style = {[styles.container, {
         backgroundColor:  `${
           m.sender._id === user._id ? "#E8E8E8" : "#593196" 
