@@ -76,7 +76,9 @@ const ScrollableFeed = ({messages}) => {
                </ImageBackground>
        
         </View>
-        :<View style = {[styles.container, {
+        
+        :
+        <View style = {[styles.container, {
         backgroundColor:  `${
           m.sender._id === user._id ? "#E8E8E8" : "#593196" 
       }`,
@@ -105,7 +107,8 @@ const ScrollableFeed = ({messages}) => {
       <Ionicons name="checkmark-outline" size={14} color="white" />
       <Ionicons name="checkmark-outline" size={14} color="white" style={{opacity:.5}}/>
       </Text>
-   </View>} 
+   </View>
+   } 
       </>
      
       
