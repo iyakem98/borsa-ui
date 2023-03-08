@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 import MessagingScreen from "../screens/MessagingScreen"
 import ChatScreen from "../screens/ChatScreen"
 import LoginScreen from "../screens/AuthScreens/LoginScreen"
-import LoginWithGoogle from "../screens/AuthScreens/LoginWithGoogle"
+// import LoginWithGoogle from "../screens/AuthScreens/LoginWithGoogle"
 import RegisterScreen from "../screens/AuthScreens/RegisterScreen"
 import AccountScreen from '../screens/ProfileScreens/AccountScreen'
 import SettingsScreen from '../screens/ProfileScreens/SettingsScreen'
@@ -131,7 +131,7 @@ const Navigator = () => {
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
      <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} />
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
-      <Stack.Screen name="LoginWithGoogle" component={LoginWithGoogle} options={{headerShown: false, headerTintColor: '#593196'}}/>
+      {/* <Stack.Screen name="LoginWithGoogle" component={LoginWithGoogle} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
     <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
     </Stack.Navigator>
 
