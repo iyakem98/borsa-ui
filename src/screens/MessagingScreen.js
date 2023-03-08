@@ -17,11 +17,11 @@ import * as MediaLibrary from "expo-media-library"
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { API_BASE_URL } from '../utils/config';
-import { MMKV } from 'react-native-mmkv'
+// import { MMKV } from 'react-native-mmkv'
 
 
 
-export const storage = new MMKV()
+// export const storage = new MMKV()
 
 const MessagingScreen = () => {
  
@@ -779,25 +779,9 @@ if(cameratest){
     </Pressable>
     {/* <Pressable onPress={() => sendMessage()}> */}
     <Pressable onPress={() => {
-      if(user._id){
-        let newMessages = messages.concat([
-          {
-            content: newmessage,
-            created_at: new Date(),
-            sender_id: user._id
-          }
-  
-  
-        ]
-        )
-        storage.set('message', JSON.stringify(newMessages))
-        let mm = JSON.parse(storage.getString('message'))
-  
-        console.log("message updated:", mm)
-        setMessages(mm)
+     sendMessage()
       }
-     
-    }}>
+    }>
     <MaterialIcons  name='send' size={24} color = "#17141f"/>
     </Pressable>
   
