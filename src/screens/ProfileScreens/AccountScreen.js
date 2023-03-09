@@ -1,4 +1,4 @@
-import { View, Button, CheckBox, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform } from "react-native"
+import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform } from "react-native"
 import profile from '../../../assets/data/profile.json'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
@@ -477,7 +477,7 @@ style={{
         }
      
 
-        <View style={{display:"flex", flexDirection:"row", justifyContent:"center", width:"100%"}}>
+        {/* <View style={{display:"flex", flexDirection:"row", justifyContent:"center", width:"100%"}}>
         <View style={{display:"flex", flexDirection:"row"}}>
         <CheckBox
            value={isBuyer}
@@ -505,7 +505,7 @@ style={{
         />
         <Text style={{marginLeft:20}}>Traveler</Text>
         </View>
-        </View>
+        </View> */}
        
         
        

@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
@@ -12,6 +13,9 @@ const ConnectScreen = () => {
     (state) => state.auth
   )
   const { travelers} = useSelector(
+    (state) => state.auth
+  )
+  const { user} = useSelector(
     (state) => state.auth
   )
   
@@ -50,7 +54,11 @@ const ConnectScreen = () => {
            dispatch(getConsumers())
           //  console.log(consumers)
           //  console.log(isBuyer)
-        }, [])
+          console.log("my travelerrrrrrrs are:", travelers)
+          console.log("my buyerrrrrrrrs are:", consumers)
+          let u = AsyncStorage.getItem('user')
+          console.log("userrrrrr:", user)
+        }, [travelers, consumers])
         
   return (
   //  <ScrollView>

@@ -137,15 +137,15 @@ const logout = async() => {
 // //get list of all travelers
 const getTravelers = async () => {
   console.log('traveler slice activated')
-  const response = await axios.get(`${API_BASE_URL}travels/`)
-  console.log(response.data.data)
+  const response = await axios.get(`${API_BASE_URL}travels/`, config)
+  console.log("my travelerssssssss are:", response.data.data)
   return response.data.data
 }
 
 // //get list of all consumers
 const getConsumers = async () => {
   console.log('buyer slice activated')
-  const response = await axios.get(`${API_BASE_URL}buyers/`)
+  const response = await axios.get(`${API_BASE_URL}buyers/`, config)
   console.log("buyers areeeeeeeeee:", response.data.data)
 
   return response.data.data
