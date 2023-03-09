@@ -1,4 +1,4 @@
-import {View, Text, CheckBox, ImageBackground, Image, SafeAreaView, TextInput, StyleSheet, Pressable, TouchableOpacity} from 'react-native'
+import {View, Text, ImageBackground, Image, SafeAreaView, TextInput, StyleSheet, Pressable, TouchableOpacity} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
@@ -229,7 +229,7 @@ const LoginScreen = () => {
 
               </View>
 
-        <View style={{display:"flex", flexDirection:"row", marginTop:10}}>
+        {/* <View style={{display:"flex", flexDirection:"row", marginTop:10}}>
         <CheckBox
            value={remember}
            onValueChange={()=>{
@@ -238,7 +238,7 @@ const LoginScreen = () => {
          
         />
         <Text style={{marginLeft:20}}>Remember me</Text>
-        </View>
+        </View> */}
 
               <span 
                 style={{

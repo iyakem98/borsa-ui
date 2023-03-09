@@ -55,7 +55,7 @@ const TravelerCard = ({traveler}) => {
             width: '35%'
         }}>
             <Image 
-                source={{uri: traveler.profilePic}}
+                source={{uri: traveler.user.profilePic}}
                 alt="user"  
                 style = {styles.image}
                 resizeMode = 'cover'

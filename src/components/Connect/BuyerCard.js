@@ -64,7 +64,7 @@ const BuyerCard = ({buyer}) => {
             width: '35%'
         }}>
             <Image 
-                source={{uri: buyer.profilePic}}  
+                source={{uri: buyer.user.profilePic}}  
                 style = {styles.image}
                 resizeMode = 'cover'
              />
