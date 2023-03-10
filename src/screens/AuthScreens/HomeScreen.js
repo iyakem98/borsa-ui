@@ -63,7 +63,7 @@ const HomeScreen = () => {
                 letterSpacing:2
 
             }}>
-                Login
+               <Text>Log In</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate('Register')}
@@ -78,7 +78,7 @@ const HomeScreen = () => {
                 marginBottom: 6,
                 letterSpacing:2
             }}>
-                Sign Up
+                <Text>Sign Up</Text>
             </TouchableOpacity>
        </View>
 
