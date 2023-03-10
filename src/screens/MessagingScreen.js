@@ -235,6 +235,15 @@ const MessagingScreen = () => {
 //  UpdateUserRoute()
  console.log(route.params.userSelected._id)
  console.log("messagessssssssssssssssss are:", messages)
+
+console.log("messssssssage infooooooo:",
+{
+content : newmessage,
+chatId: chatId,
+image: "",
+receiver: route.params.userSelected._id
+}
+)
   // setImage(null)
  }, [])
  async function sendPushNotification(expoPushToken) {

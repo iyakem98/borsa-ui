@@ -46,7 +46,7 @@ const HomeScreen = () => {
                     color:"#fff",
                     letterSpacing:6,
                     fontWeight:700,
-                    }}>BORSA</Text>
+                    }}>borsa</Text>
        </View>
 
        <View 
@@ -78,11 +78,11 @@ const HomeScreen = () => {
                 marginBottom: 6,
                 letterSpacing:2
             }}>
-                <Text>Sign Up</Text>
+                <Text style={{color:"white"}}>Sign Up</Text>
             </TouchableOpacity>
        </View>
 
-       <View style={{
+       {/* <View style={{
         marginTop:20,
         textAlign:"center",
         letterSpacing:4
@@ -98,7 +98,7 @@ const HomeScreen = () => {
            
             </View>
         
-    </View>
+    </View> */}
 
     </View>
 
@@ -131,7 +131,7 @@ const HomeScreen = () => {
                     color:"#fff",
                     letterSpacing:6,
                     fontWeight:700,
-                    }}>BORSA</Text>
+                    }}>borsa</Text>
         
         </View> 
     </View>

@@ -88,19 +88,19 @@ const ConnectScreen = () => {
             shadowColor='black'
             shadowOpacity={0.1}
             >
-                <Pressable style = {isBuyer  ? styles.pressDisabled : styles.pressActive} 
+                <Pressable style = {isBuyer  ? styles.pressDisabledT : styles.pressActiveT} 
                  onPress={() => {isBuyer ? setIsBuyer(false) : null}}
                 >
                     <Text style = {{
                         fontSize: 18,
-                        color: isBuyer? 'black' : '#593196',
+                        color: isBuyer? 'black' : 'green',
                         fontWeight: isBuyer? '0' : 'bold'
                     }}>
                         Travelers
                     </Text>
                 </Pressable>
 
-                <Pressable style = {isBuyer  ? styles.pressActive : styles.pressDisabled} 
+                <Pressable style = {isBuyer  ? styles.pressActiveB : styles.pressDisabledB} 
                   onPress={() => {!isBuyer ? setIsBuyer(true) : null}}
                 >
                     <Text style = {{
@@ -187,7 +187,7 @@ const ConnectScreen = () => {
 export default ConnectScreen
 
 const styles = StyleSheet.create({
-  pressActive: {
+  pressActiveB: {
       //backgroundColor: '#593196',
       //borderRadius: 30,
       padding: 10,
@@ -200,10 +200,30 @@ const styles = StyleSheet.create({
 
   },
 
-  pressDisabled : {
+  pressDisabledB : {
       alignItems: 'center',
       padding: 10,
       width: 100,
       
-  }
+  },
+
+  pressActiveT: {
+    //backgroundColor: '#593196',
+    //borderRadius: 30,
+    padding: 10,
+    width: 100,
+    alignItems: 'center',
+    borderStyle: 'solid',
+    borderBottomWidth: 2,
+    borderColor: 'green'
+
+
+},
+
+pressDisabledT : {
+    alignItems: 'center',
+    padding: 10,
+    width: 100,
+    
+}
 })

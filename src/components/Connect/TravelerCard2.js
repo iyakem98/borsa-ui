@@ -1,5 +1,5 @@
-import {View, Image, Text, StyleSheet, ImageBackground, Pressable} from 'react-native'
-import { Entypo, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import {View, Image, Modal, Text, StyleSheet, ImageBackground, Pressable} from 'react-native'
+// import { Entypo, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { useRef, useState } from 'react';
@@ -7,6 +7,7 @@ import { ChatState } from '../../context/ChatProvider';
 import { getSenderFull } from '../../ChatConfig/ChatLogics';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/config';
+import { Entypo, MaterialIcons, Octicons, Ionicons, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 const TravelerCard = ({traveler}) => {
@@ -20,6 +21,11 @@ const TravelerCard = ({traveler}) => {
     function tweakBuyer() {
         setIsBuyer(!isBuyer)
     }
+
+    const [modal, setModal] = useState(false)
+
+    const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
+  const [image, setImage] = useState(def);
 
     
     const TravelerChat = async(travId) => {
@@ -139,7 +145,7 @@ const TravelerCard = ({traveler}) => {
                     marginTop: 5,
                     //color: '#593196'
                 }}>
-                    {traveler.destination_country}
+                    {traveler.destination}
                 </Text>
            </View>
            <View style = {{
@@ -150,7 +156,7 @@ const TravelerCard = ({traveler}) => {
             <Text style = {{
                 color: '#343a40'
             }}>
-                {traveler.flight_date}
+                {traveler.departureDate}
             </Text>
            
             </View>
@@ -165,7 +171,7 @@ const TravelerCard = ({traveler}) => {
                 fontWeight: 'bold',
                  fontSize: 18,  
             }}>
-                {traveler.space_left}
+                {traveler.luggageSpace}
             </Text>
 
 
@@ -194,7 +200,33 @@ const TravelerCard = ({traveler}) => {
                     Start chatting
                 </Text>
             </Pressable>
+
+            <Pressable style = {{
+                border: '1px solid green',
+                //backgroundColor: '#a991d4',
+                width: "70%",
+                alignItems: 'center',
+                marginVertical: 4,
+                paddingVertical: 5,
+                borderRadius: 30
+
+            }} 
+             onPress= {() => {
+                setModal(true)
+                console.log("traveler:", traveler)
+             }}
+            >
+                <Text style = {{
+                    fontSize: 18,
+                    color: 'green'
+                }}>
+                    View Profile
+                </Text>
+            </Pressable>
+
         </View>
+        
+
         <View>
             <Pressable>
                 <Text style = {{
@@ -205,6 +237,85 @@ const TravelerCard = ({traveler}) => {
                 </Text>
             </Pressable>
         </View>
+
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modal}
+        onRequestClose={() => {
+          console.log('Modal has been closed.');
+          setModal(false);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+                      <Image source={{ uri: image }} style={{ 
+                        width: 200,
+                        height: 200,
+                        borderRadius: "100%",
+                        alignItems: 'flex-end',
+                        justifyContent: 'flex-end',
+                        }} />
+                    <View style={{
+                        marginTop:10,
+                        fontSize:20,
+                        fontWeight:700
+                    }}>
+                        {traveler.user.firstName+' '+traveler.user.lastName}
+                    </View>
+
+                    <View style={{
+                        marginTop:10,
+                        fontSize:18,
+                        display:"flex",
+                        flexDirection:"row"
+                    }}>
+                        <Ionicons name="location" size={20} color="black" />
+                        &nbsp; &nbsp;
+                        {traveler.user.address}
+                    </View>
+
+                    <View style={{
+                        marginTop:10,
+                        fontSize:18,
+                        display:"flex",
+                        flexDirection:"row"
+                    }}>
+                         <Foundation name="shopping-bag" size={20} color="black" />
+                        &nbsp; &nbsp;
+                        {traveler.item}
+                    </View>
+
+                    <View style={{
+                        marginTop:10,
+                        fontSize:18,
+                        display:"flex",
+                        flexDirection:"row"
+                    }}>
+                         <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
+                        &nbsp; &nbsp;
+                        {traveler.TotalWeight}
+                    </View>
+
+                    <View style={{
+                        marginTop:10,
+                        fontSize:18,
+                        display:"flex",
+                        flexDirection:"row"
+                    }}>
+                        <MaterialIcons name="pending-actions" size={20} color="black" />
+                        &nbsp; &nbsp;
+                        {traveler.status}
+                    </View>
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModal(false)}>
+              <Text style={styles.textStyle}>&times;</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
     </View>
   )
 }
@@ -254,6 +365,49 @@ const styles = StyleSheet.create({
         paddingHorizontal: 6,
         width: 220
     },
+
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+      },
+      buttonOpen: {
+        backgroundColor: '#593196',
+      },
+      buttonClose: {
+        backgroundColor: 'green',
+      },
+      textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize:19
+      },
+      modalText: {
+        marginBottom: 16,
+        textAlign: 'center',
+      },
 
     
 })

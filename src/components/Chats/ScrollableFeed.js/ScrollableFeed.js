@@ -105,9 +105,9 @@ const ScrollableFeed = ({messages}) => {
        
       <Text style={{color:`${ m.sender._id == user._id ? "black" : "white"}`}}>{formatted_date}
       &nbsp;&nbsp;
-      <Ionicons name="checkmark-done" size={14} color="white" />
+      {/* <Ionicons name="checkmark-done" size={14} color="white" /> */}
       <Ionicons name="checkmark-outline" size={14} color="white" />
-      <Ionicons name="checkmark-outline" size={14} color="white" style={{opacity:.5}}/>
+      {/* <Ionicons name="checkmark-outline" size={14} color="white" style={{opacity:.5}}/> */}
       </Text>
    </View>
    } 
