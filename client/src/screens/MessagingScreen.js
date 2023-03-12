@@ -16,6 +16,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as MediaLibrary from "expo-media-library"
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import { BASE_URL } from '../BaseURL';
 const MessagingScreen = () => {
  
   const { user } = useSelector((state) => state.auth)
@@ -96,7 +97,8 @@ const MessagingScreen = () => {
     accessChat() 
     console.log(chattId) 
     fetchMessage()
-    socket.current = io(ENDPOINT)
+    // socket.current = io(ENDPOINT)
+    socket.current = io(BASE_URL)
     socket.current.emit("setup", user);
     // socket.emit("findChat", chatId)
     socket.current.on("connected", () => setsocketConnected(true) )
@@ -523,7 +525,16 @@ const CameraFeature = () => {
     //      cancelToken: cancelToken.token
         
     // }
-    const {data} = await axios.post('http://192.168.100.2:5000/api/message/send2', {
+    // const {data} = await axios.post('http://192.168.100.2:5000/api/message/send2', {
+    //   content : storeNewMessage,
+    //   chatId: chattId,
+    //   image: "",
+    //   receiver: route.params.userSelected._id
+      
+      
+    // },
+    // config)
+    const {data} = await axios.post(BASE_URL + 'message/send2', {
       content : storeNewMessage,
       chatId: chattId,
       image: "",
@@ -573,7 +584,9 @@ const CameraFeature = () => {
     }
 
    
-    const {data} = await axios.get(`http://192.168.100.2:5000/api/message/${chattId}`,
+    // const {data} = await axios.get(`http://192.168.100.2:5000/api/message/${chattId}`,
+    // config)
+    const {data} = await axios.get(BASE_URL + `message/${chattId}`,
     config)
     
     // console.log(data)
@@ -605,7 +618,8 @@ const CameraFeature = () => {
     const formData = new FormData()
    const testData ={
     content: "",
-    chatId: chattId
+    chatId: chattId,
+    receiver: route.params.userSelected._id
    }
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     setImage(newPhoto)
@@ -658,7 +672,8 @@ const CameraFeature = () => {
         // body: formData
        };
 
-    const {data} = await axios.post("http://192.168.100.2:5000/api/message/",formData, config)
+    // const {data} = await axios.post("http://192.168.100.2:5000/api/message/",formData, config)
+        const {data} = await axios.post(BASE_URL + 'message/',formData, config)
     //   headers: {
     //     Accept: 'application/json',
     //     'Content-Type': 'multipart/form-data',

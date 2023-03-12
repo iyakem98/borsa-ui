@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
+import { BASE_URL } from '../../BaseURL';
 
 const API_URL = 'http://192.168.100.2:5000/api/message/'
 const fetchMessages = async(selectedChat, user, setLd, setMessages, socket) =>{
@@ -17,6 +18,9 @@ const fetchMessages = async(selectedChat, user, setLd, setMessages, socket) =>{
 
     setLd(true)
     console.log('fetching in messageService')
+    // const { data } = await axios.get(
+    // `/api/message/${selectedChat._id}`,
+    // config)
     const { data } = await axios.get(
     `/api/message/${selectedChat._id}`,
     config)
@@ -81,7 +85,8 @@ const sendMessage = async(content, chatId, token) => {
     console.log(content) */
 
 
-    const response = axios.post(API_URL, content, chatId, config)
+    // const response = axios.post(API_URL, content, chatId, config)
+    const response = axios.post(BASE_URL + "message/", content, chatId, config)
 
     console.log(response)
     
@@ -100,7 +105,8 @@ const allMessages = async (chatId) => {
     }
     
     console.log('fetchin in messageService')
-    const response = await axios.get(API_URL + chatId , config)
+    // const response = await axios.get(API_URL + chatId , config)
+    const response = await axios.get(BASE_URL + `message/${chatId}` , config)
   
     return response.data
   }

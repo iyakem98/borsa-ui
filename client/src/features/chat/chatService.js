@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-
+import { BASE_URL } from '../../BaseURL'
 const API_URL = 'http://192.168.100.2:5000/api/chat/'
 const accessChat = async(userId) => {
   const user1 = await  AsyncStorage.getItem("user")
@@ -12,7 +12,8 @@ const accessChat = async(userId) => {
 
       }
   }
-    const {data} = await axios.post(API_URL, userId, config)
+    // const {data} = await axios.post(API_URL, userId, config)
+    const {data} = await axios.post(BASE_URL + 'chat/', userId, config)
 
     console.log(data)
     return data
@@ -59,7 +60,8 @@ const fetchChat = async () => {
     
     console.log('fetchin in chatService')
     // const response = await axios.get(API_URL, config)
-    const {data} = await axios.get(API_URL, config)
+    // const {data} = await axios.get(API_URL, config)
+    const {data} = await axios.get(BASE_URL + 'chat/', config)
   
     return data
   

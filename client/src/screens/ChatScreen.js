@@ -20,6 +20,7 @@ import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import io from 'socket.io-client'
 import { useRoute } from '@react-navigation/native'
 import moment from 'moment/moment'
+import { BASE_URL } from '../BaseURL'
 
 
 
@@ -54,7 +55,8 @@ const ChatScreen = () => {
     const ENDPOINT = "http://192.168.100.2:5000"
     var socket1 = useRef(null)
     var formatted_date = null
-    var socket = io(ENDPOINT)
+    // var socket = io(ENDPOINT)
+    var socket = io(BASE_URL)
     const chatArr = []
     const chatArr2 = []
     
@@ -383,7 +385,7 @@ const UpdateUserRoute = async () => {
           backgroundColor: '#fff'
         }}>
          
-         <ChatListHeader chatArr={chatArr2}/>
+         {/* <ChatListHeader chatArr={chatArr2}/> */}
         <View>
         {/* <Feather name="bell" size={24} color="black" /> */}
         

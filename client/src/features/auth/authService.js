@@ -2,13 +2,14 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import io from 'socket.io-client'
 import moment from 'moment';
-
+import { BASE_URL } from '../../BaseURL';
 // const API_URL = '/api/users/'
 const API_URL = 'http://192.168.100.2:5000/api/users/'
 const ENDPOINT = "http://192.168.100.2:5000"
 // Register user
 const register = async (userData) => {
-  const {data} = await axios.post(API_URL, userData)
+  // const {data} = await axios.post(API_URL, userData)
+  const {data} = await axios.post(BASE_URL + "users/", userData)
   try{
     if (data) {
       const user = await AsyncStorage.setItem('user', JSON.stringify(data))
@@ -28,9 +29,11 @@ const register = async (userData) => {
 // Login user
 const login = async (userData) => {
   // console.log(userData)
-  var socket = io(ENDPOINT)
+  // var socket = io(ENDPOINT)
+  var socket = io(BASE_URL)
   try{
-    const {data} = await axios.post(API_URL + 'login', userData)
+    // const {data} = await axios.post(API_URL + 'login', userData)
+    const {data} = await axios.post(BASE_URL + 'users/login', userData)
     // console.log(data)
   
     if (data) {
@@ -50,6 +53,7 @@ const login = async (userData) => {
 
  
 }
+// 
 const UpdateLastSeenAndStatus = async(userData) =>{
   // console.log(`in updated slice of id ${userData}`)
   const user1 = await  AsyncStorage.getItem("user")
@@ -101,7 +105,8 @@ catch(error){
 const getUserDetails = async (userId) => {
   console.log(userId + 'detailservice')
   try{
-    const {data} = await axios.get(API_URL + 'profile', {userId})
+    // const {data} = await axios.get(API_URL + 'profile', {userId})
+    const {data} = await axios.get(BASE_URL + 'users/profile', {userId})
     
     // console.log(data)
   
@@ -136,7 +141,9 @@ const logout = async() => {
 // //get list of all travelers
 const getTravelers = async () => {
   console.log('traveler slice activated')
-  const response = await axios.get('http://192.168.100.2:5000/api/users/travelers')
+
+  // const response = await axios.get('http://192.168.100.2:5000/api/users/travelers')
+  const response = await axios.get(BASE_URL + "travels/")
   console.log(response.data)
   return response.data
 }
@@ -144,7 +151,8 @@ const getTravelers = async () => {
 // //get list of all consumers
 const getConsumers = async () => {
   console.log('buyer slice activated')
-  const response = await axios.get('http://192.168.100.2:5000/api/users/consumers')
+  // const response = await axios.get('http://192.168.100.2:5000/api/users/consumers')
+  const response = await axios.get(BASE_URL + 'buyers/')
 
   return response.data
 }

@@ -61,8 +61,8 @@ const ChatListHeader = ({chatArr}) => {
                 {/* add triggerchange2 event */}
             </View>
             <View>
-                {chatArr &&    chatArr.map(chat => {
-                    if( chat != null &&  chat.latestMessage != null){
+                { chatArr != null  &&    chatArr.map(chat => {
+                    if( chat != null  &&  chat.latestMessage != null){
                         if(chat.users && (chat.users[1].firstName.toLowerCase().includes(query) || chat.users[1].lastName.toLowerCase().includes(query) || chat.users[1].userName.toLowerCase().includes(query) || chat.users[0].firstName.toLowerCase().includes(query) ) && chat.latestMessage != null )
                         {
                             return  <View key={chat._id}> 

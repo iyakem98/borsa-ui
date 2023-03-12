@@ -5,6 +5,7 @@ import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
 import { Text, View, ScrollView, StyleSheet, Image, ImageBackground } from 'react-native'
 import { useSelector } from 'react-redux'
+import { BASE_URL } from '../../../BaseURL'
 import { isSameSender, isLastMessage, isSameSenderMargin, isSameUser, getSender } from '../../../ChatConfig/ChatLogics'
 import { ChatState } from '../../../context/ChatProvider'
 const ScrollableFeed = ({messages, latestMessage}) => {
@@ -38,7 +39,14 @@ const ScrollableFeed = ({messages, latestMessage}) => {
         
        };
   
-      const {data} = await axios.put(`http://192.168.100.2:5000/api/message/marked`,{
+      // const {data} = await axios.put(`http://192.168.100.2:5000/api/message/marked`,{
+       
+      //   messId: messId,
+      //   markedStatus: true
+
+        
+      // }, config)
+      const {data} = await axios.put(BASE_URL + 'message/marked',{
        
         messId: messId,
         markedStatus: true
@@ -83,9 +91,9 @@ const ScrollableFeed = ({messages, latestMessage}) => {
     {messages && messages.map((m, i) => {
 
       // console.log(m.receiver.route)
-      if(m.receiver.route == "Messaging"){
-        updateMessStatus(m._id)
-      }
+      // if(m.receiver.route == "Messaging"){
+      //   updateMessStatus(m._id)
+      // }
       console.log(m.marked)
       // console.log(m.content)
       // console.log(latestMessage)

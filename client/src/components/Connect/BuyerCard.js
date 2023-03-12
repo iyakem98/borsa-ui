@@ -8,6 +8,7 @@ import { getUserDetails } from '../../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
+import { BASE_URL } from '../../BaseURL';
 
 
 const BuyerCard = ({buyer}) => {
@@ -60,7 +61,8 @@ const BuyerCard = ({buyer}) => {
             navigation.navigate('Messaging', {userSelected:
             
                 buyerData})
-                const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+                // const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+                const {data} = await axios.post(BASE_URL + 'chat/', {userId}, config)
                 setchattId(data._id)
                 
             // }

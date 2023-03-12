@@ -44,7 +44,8 @@ const TravelerCard = ({traveler}) => {
             navigation.navigate('Messaging', {userSelected:
             
                 travData})
-            const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+            // const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+            const {data} = await axios.post(BASE_URL + 'chat/', {userId}, config)
             setchattId(data._id)
                 
             // }
