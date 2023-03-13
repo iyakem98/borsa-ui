@@ -27,16 +27,16 @@ const ScrollableFeed = ({messages}) => {
   }, [])
   const publicFolder = "http://192.168.100.2:5000/images/"
   return (
-    <KeyboardAvoidingView
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    style={styles.keyboardAvoiding}>
+    // <KeyboardAvoidingView
+    // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    // style={styles.keyboardAvoiding}>
    <ScrollView
     ref={scrollViewRef}
     onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: false })}
     style = {{
       backgroundColor: "#fff", 
-      height: "80%",
-      paddingBottom: 1,
+      height: "90%",
+      paddingBottom: 0,
       }}>
     {messages && messages.map((m, i) => {
       // console.log(m.image)
@@ -45,7 +45,9 @@ const ScrollableFeed = ({messages}) => {
     const formatted_date = moment(m.createdAt).format("LT")
       return <>
         {m.content == "" ? 
-        <View style = {[styles.container2, {
+        <View 
+        key={i}
+        style = {[styles.container2, {
           backgroundColor:  `${
             m.sender._id === user._id ? "#593196" : "#E8E8E8"
         }`,
@@ -55,7 +57,7 @@ const ScrollableFeed = ({messages}) => {
         marginTop: isSameUser(messages, m , i , user._id)? 3: 10, 
       }]}>
           
-        <ImageBackground  source={{uri: `http://192.168.100.2:5000/images/${m.image}` }} resizeMode= 'cover' style={{color: `${
+        {/* <ImageBackground  source={{uri: `http://192.168.100.2:5000/images/${m.image}` }} resizeMode= 'cover' style={{color: `${
                 m.sender._id === user._id ? "white" : "black"
             }`, flex: 1, height: 200,}}>
                 {
@@ -65,26 +67,20 @@ const ScrollableFeed = ({messages}) => {
         // <Text style={{color: "red", marginTop:170}}>Sent</Text>
         
         <Ionicons name="checkmark-done-sharp" size={40} style={{color: "purple", marginTop:160}} />
-        
-         
-         
-         
-          // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
+       
         }
           
-         
         
-        
-        {/* <Ionicons name="checkmark-done-sharp" size={40} style={{color: "purple", marginTop:160}} /> */}
-        
-               </ImageBackground>
+               </ImageBackground> */}
        
         </View>
         
         :
 
         
-        <View style = {[styles.container, {
+        <View 
+        key={i}
+        style = {[styles.container, {
         backgroundColor:  `${
           m.sender._id === user._id ? "#E8E8E8" : "#593196" 
       }`,
@@ -121,7 +117,7 @@ const ScrollableFeed = ({messages}) => {
        
 })}
    </ScrollView>
-   </KeyboardAvoidingView>
+  //  </KeyboardAvoidingView>
   )
 }
 const styles = StyleSheet.create({
@@ -129,7 +125,7 @@ const styles = StyleSheet.create({
       //backgroundColor: "#E8E8E8",
       backgroundColor: '#fff',
       marginHorizontal: 10,
-      padding: 10,
+      padding: 5,
       borderRadius: 10,
       maxWidth: '80%',
 

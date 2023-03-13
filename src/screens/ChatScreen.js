@@ -396,7 +396,7 @@ useEffect(() => {
                           
                           <Text> {chat.latestMessage.content}</Text>
                           
-                             : <Text>File Uploaded</Text> }
+                             : "" }
                        
                       </View>
                       </Pressable>

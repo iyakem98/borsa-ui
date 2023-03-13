@@ -10,9 +10,9 @@ const HomeScreen = () => {
 
     const navigation = useNavigation()
 
-    useEffect(() => {  
-        setInterval(function(){setIsLoading(!isLoading)},4000);
-     }, [])
+    // useEffect(() => {  
+    //     setInterval(function(){setIsLoading(!isLoading)},4000);
+    //  }, [])
 
   return (
     <View style = {{
@@ -23,7 +23,7 @@ const HomeScreen = () => {
         paddingTop: 40
     }}>
        
-    <View style={{ display:`${isLoading ? "none" : ""}`}}>
+    <View style={{ display:""}}>
        <View style = {{
             alignItems: 'center',
             marginTop:20
@@ -45,7 +45,7 @@ const HomeScreen = () => {
                     fontSize:29,
                     color:"#fff",
                     letterSpacing:6,
-                    fontWeight:700,
+                    // fontWeight:700,
                     }}>borsa</Text>
        </View>
 
@@ -54,8 +54,8 @@ const HomeScreen = () => {
             <TouchableOpacity onPress={() => navigation.navigate('Login')}
             style={{
                 backgroundColor: 'white',
-                width: '200px',
-                height: '47px',
+                width: 200,
+                height: 47,
                 borderRadius: 10,
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -70,8 +70,8 @@ const HomeScreen = () => {
             style={{
                 backgroundColor: 'green',
                 color:"#fff",
-                width: '200px',
-                height: '47px',
+                width: 200,
+                height: 47,
                 borderRadius: 10,
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -104,7 +104,7 @@ const HomeScreen = () => {
 
    
 
-    <View style={{
+    {/* <View style={{
         position:"absolute",
         top:"50%",
         left:"50%",
@@ -122,18 +122,18 @@ const HomeScreen = () => {
                    
                 }}
                 />
-                <br></br>
                 <Text 
                 style={{
                     display:"flex", 
                     justifyContent:"center",
                     fontSize:29,
                     color:"#fff",
+                    marginTop:10,
                     letterSpacing:6,
                     fontWeight:700,
                     }}>borsa</Text>
         
-        </View> 
+        </View>  */}
     </View>
   )
 }

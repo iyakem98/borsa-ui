@@ -73,12 +73,12 @@ const TravelerCard = ({traveler}) => {
                 <Entypo name="location-pin" size={20} color="red" />
                 <View>
                     <Text style = {styles.text_loc}>
-                        {traveler.user.city ? traveler.user.city+',' : "Unknown city"}
+                        {traveler.user.address ? traveler.user.address : "Unknown city"}
                     </Text>
 
-                    <Text style = {styles.text_loc2}>
+                    {/* <Text style = {styles.text_loc2}>
                     {traveler.user.country ? traveler.user.country : "Unknown country"}
-                    </Text>
+                    </Text> */}
 
              </View>
              </View>
@@ -260,7 +260,7 @@ const TravelerCard = ({traveler}) => {
                         fontSize:20,
                         fontWeight:700
                     }}>
-                        {traveler.user.firstName+' '+traveler.user.lastName}
+                        <Text>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
                     </View>
 
                     <View style={{
@@ -270,8 +270,7 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
-                        &nbsp; &nbsp;
-                        {traveler.user.city}
+                       <Text> &nbsp; &nbsp; {traveler.user.address}</Text>
                     </View>
 
                     <View style={{
@@ -281,8 +280,7 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
-                        &nbsp; &nbsp;
-                        Unknown
+                         <Text> &nbsp; &nbsp; Unknown</Text>
                     </View>
 
                     <View style={{
@@ -292,8 +290,7 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-                        &nbsp; &nbsp;
-                        {traveler.luggageSpace}
+                         <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text>
                     </View>
 
                     <View style={{
@@ -303,8 +300,7 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
-                        &nbsp; &nbsp;
-                        {traveler.status}
+                        <Text> &nbsp; &nbsp; {traveler.status}</Text>
                     </View>
 
             <Pressable

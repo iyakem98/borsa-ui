@@ -1,4 +1,4 @@
-import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform } from "react-native"
+import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView } from "react-native"
 import profile from '../../../assets/data/profile.json'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
@@ -148,10 +148,17 @@ const AccountScreen = () => {
 
 
   return (
+    <SafeAreaView style={{flex: 1,
+    }}>
+        <ScrollView style={{
+
+        }}>
     <View style = {{
         paddingTop: 30,
         backgroundColor: '#fff',
-        height: "100%",
+        height: 800,
+        overflow:"hidden",
+        overflowY:"scroll",
         width: "100%",
         alignItems: 'center'
     }}>
@@ -161,12 +168,12 @@ const AccountScreen = () => {
 
           <TouchableOpacity style={{
             position:"absolute",
-            top:"1.2em",
-            right:"10px",
+            top:5,
+            right:10,
             backgroundColor: '#593196',
             color:"white",
-            width: '100px',
-            height: '40px',
+            width: 100,
+            height: 40,
             borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center',
@@ -174,7 +181,7 @@ const AccountScreen = () => {
           }}
           onPress={()=> setIsEditing(!isEditing)}
           >
-            Edit
+           <Text style={{color:'#fff'}}>Edit</Text>
           </TouchableOpacity>
         }
 
@@ -183,12 +190,12 @@ const AccountScreen = () => {
         <>
           <TouchableOpacity style={{
             position:"absolute",
-            top:"1.2em",
-            right:"167px",
+            top:5,
+            right:167,
             border: '1px solid #593196',
             color:"black",
-            width: '150px',
-            height: '40px',
+            width: 150,
+            height: 40,
             borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center',
@@ -207,17 +214,17 @@ const AccountScreen = () => {
             setImage(def)
           }}
           >
-            Cancel
+             <Text>Cancel</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={{
             position:"absolute",
-            top:"1.2em",
-            right:"10px",
+            top:5,
+            right:10,
             backgroundColor: '#593196',
             color:"white",
-            width: '150px',
-            height: '40px',
+            width: 150,
+            height: 40,
             borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center',
@@ -227,7 +234,7 @@ const AccountScreen = () => {
            handleUpdate()
           }}
           >
-            Save Changes
+            <Text style={{color:'#fff'}}>Save Changes</Text>
           </TouchableOpacity>
           </>
         }
@@ -236,7 +243,7 @@ const AccountScreen = () => {
           display:"flex",
           alignItems:"center",
           justifyContent:"center",
-          marginTop:50
+          marginTop:20
         }}>
           
 
@@ -263,16 +270,6 @@ style={{
 }}
 />
 
-        {/* <View style = {{
-                    borderRadius: "50%",
-                    backgroundColor: '#593196',
-                    backgroundColor: '#a991d4',
-                    paddingHorizontal: 2,
-                    paddingVertical: 2,
-                    marginRight: 20
-                  }}>
-                    {/* <Entypo name="pencil" size={24} color="black" /> */}
-                  
 
         <Text style={styles.fullname}>
           {firstName+' '+lastName}
@@ -295,9 +292,9 @@ style={{
            margin: 15,
            height: 50,
            borderRadius:10,
-           width:"80vw",
-           marginLeft:"10vw",
-           marginRight:"10vw",
+           width:300,
+          //  marginLeft:"10%",
+          //  marginRight:"10%",
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
@@ -321,9 +318,9 @@ style={{
            margin: 15,
            height: 50,
            borderRadius:10,
-           width:"80vw",
-           marginLeft:"10vw",
-           marginRight:"10vw",
+           width:300,
+          //  marginLeft:"10vw",
+          //  marginRight:"10vw",
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
@@ -347,9 +344,9 @@ style={{
            margin: 15,
            height: 50,
            borderRadius:10,
-           width:"80vw",
-           marginLeft:"10vw",
-           marginRight:"10vw",
+           width:300,
+          //  marginLeft:"10vw",
+          //  marginRight:"10vw",
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
@@ -373,9 +370,9 @@ style={{
            margin: 5,
            height: 50,
            borderRadius:10,
-           width:"80vw",
-           marginLeft:"10vw",
-           marginRight:"10vw",
+           width:300,
+          //  marginLeft:"10vw",
+          //  marginRight:"10vw",
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
@@ -400,9 +397,9 @@ style={{
            margin: 15,
            height: 50,
            borderRadius:10,
-           width:"80vw",
-           marginLeft:"10vw",
-           marginRight:"10vw",
+           width:300,
+          //  marginLeft:"10vw",
+          //  marginRight:"10vw",
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
@@ -438,9 +435,9 @@ style={{
            height: 50,
            backgroundColor:"white",
            borderRadius:10,
-           width:"80vw",
-           marginLeft:"10vw",
-           marginRight:"10vw",
+           width:300,
+          //  marginLeft:"10vw",
+          //  marginRight:"10vw",
            padding:5,
            opacity:`${isEditing? 1 : .5}`,
            height:"auto",
@@ -689,6 +686,8 @@ style={{
     
         
     </View>
+    </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -717,7 +716,7 @@ const styles = StyleSheet.create({
   fullname: {
     fontSize:30,
     letterSpacing: 3,
-    fontWeight:700,
+    // fontWeight:700,
     marginTop:20,
     marginBottom: 30,
     opacity:.7
@@ -726,14 +725,14 @@ const styles = StyleSheet.create({
   username: {
     fontSize:20,
     letterSpacing: 3,
-    fontWeight:500,
+    // fontWeight:500,
     marginTop:-20,
     marginBottom: 10,
     opacity:.7
   },
 
   divider: {
-    width:"100vw",
+    width:"100%",
     height:.2,
     backgroundColor:"#593196",
     opacity: .5

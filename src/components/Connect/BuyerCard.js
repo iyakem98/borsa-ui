@@ -235,7 +235,7 @@ const BuyerCard = ({buyer}) => {
                         fontSize:20,
                         fontWeight:700
                     }}>
-                        {buyer.user.firstName+' '+buyer.user.lastName}
+                        <Text>{buyer.user.firstName+' '+buyer.user.lastName}</Text>
                     </View>
 
                     <View style={{
@@ -245,8 +245,7 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
-                        &nbsp; &nbsp;
-                        {buyer.user.address}
+                        <Text> &nbsp; &nbsp; {buyer.user.address}</Text>
                     </View>
 
                     <View style={{
@@ -256,8 +255,7 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
-                        &nbsp; &nbsp;
-                        {buyer.item}
+                         <Text> &nbsp; &nbsp; {buyer.item}</Text>
                     </View>
 
                     <View style={{
@@ -267,8 +265,7 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-                        &nbsp; &nbsp;
-                        {buyer.TotalWeight}
+                         <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text>
                     </View>
 
                     <View style={{
@@ -278,8 +275,7 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
-                        &nbsp; &nbsp;
-                        {buyer.status}
+                        <Text> &nbsp; &nbsp; {buyer.status}</Text>
                     </View>
 
             <Pressable

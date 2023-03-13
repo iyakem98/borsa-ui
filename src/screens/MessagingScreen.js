@@ -1,4 +1,4 @@
-import { ActivityIndicator, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform} from 'react-native';
+import { ActivityIndicator, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard} from 'react-native';
 
 import { useDispatch, useSelector } from "react-redux";
 import {AntDesign, MaterialIcons} from '@expo/vector-icons'
@@ -24,6 +24,8 @@ import { API_BASE_URL } from '../utils/config';
 // export const storage = new MMKV()
 
 const MessagingScreen = () => {
+
+ 
  
   const { user } = useSelector((state) => state.auth)
   const [newmessage, setNewMessage] = useState();
@@ -82,13 +84,13 @@ const MessagingScreen = () => {
   const responseListener = useRef();
   const {messageHeader, setmessageHeader} = ChatState()
   const publicFolder = "http://192.168.100.2:5000/images/"
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
+  // Notifications.setNotificationHandler({
+  //   handleNotification: async () => ({
+  //     shouldShowAlert: true,
+  //     shouldPlaySound: false,
+  //     shouldSetBadge: false,
+  //   }),
+  // });
   // console.log(messageHeader)
   console.log(image)
   const cameraRef = useRef()
@@ -106,8 +108,7 @@ const MessagingScreen = () => {
     
   }, [])
   useEffect(() =>{
-
-    console.log("Platfffffffffform", Platform.OS)
+// console.log("Platfffffffffform", Platform.OS)
     fetchMessage()
     selectedChatCompare = selectedChat
     // console.log(notification)
@@ -205,20 +206,20 @@ const MessagingScreen = () => {
 
   })
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    // registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
+    // notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+    //   setNotification(notification);
+    // });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
+    // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+    //   console.log(response);
+    // });
 
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
+    // return () => {
+    //   Notifications.removeNotificationSubscription(notificationListener.current);
+    //   Notifications.removeNotificationSubscription(responseListener.current);
+    // };
   }, []);
   // search how to run an async func in react 
  useEffect(() => {
@@ -418,6 +419,7 @@ const CameraFeature = () => {
   //     </View>
 }
   const sendMessage = async() => {
+    console.log("sendinggggggggggggggg")
     try{
     //   const config = {
     //     headers: {
@@ -647,15 +649,27 @@ const CameraFeature = () => {
  }
 
  if (hasPermissions === undefined) {
-  return <Text>Requesting permissions...</Text>
+  return 
+  (
+    <>
+  <Text>Requesting permissions...</Text>
+  </>
+  )
 } else if (!hasPermissions) {
-  return <Text style={{position:"fixed", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>
+  return 
+  (
+    <>
+  <Text style={{position:"fixed", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>
     Permission for camera not granted. Please change this in settings.</Text>
+    </>
+  )
 }
 
 if(cameratest){
   // return <Text style={styles.text}>cemera test</Text>
-  return <View style={styles.container2}>
+  return 
+  (
+  <View style={styles.container2}>
   
    
     <Camera
@@ -702,6 +716,7 @@ if(cameratest){
  
  
 </View>
+  )
 }
 
 // if(image){
@@ -755,12 +770,12 @@ if(cameratest){
  > 
 //  </KeyboardAvoidingView>*/
 <>
-    <View ref={myRef} style={{marginBottom:20, paddingBottom:25}}>
+    <View ref={myRef} style={{}}>
     <ScrollableFeed messages={messages} />
     </View>
   
 
-   <SafeAreaView   style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
+   <SafeAreaView style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
    backgroundColor: "#f9f8fc",
    padding: 5,
    paddingHorizontal: 10,}}
@@ -771,8 +786,7 @@ if(cameratest){
     </View> : null}
    <TextInput 
       value={newmessage}
-      
-      onChangeText={setNewMessage}
+      onChangeText={(newText)=>setNewMessage(newText)}
       onChange={typingHandler}
       style = {styles.input}
       placeholder='Type your message...'
@@ -782,12 +796,12 @@ if(cameratest){
         }
       }}
       />
-    <Pressable onPress={() => {
-      CameraFeature()
-      setmessageHeader(true)
+    {/* <Pressable onPress={() => {
+      // CameraFeature()
+      // setmessageHeader(true)
       }}>
     <AntDesign name="camera" size={24} color="black" />
-    </Pressable>
+    </Pressable> */}
     {/* <Pressable onPress={() => sendMessage()}> */}
     <Pressable onPress={() => {
      sendMessage()

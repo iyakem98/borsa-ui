@@ -226,6 +226,8 @@ const ProfileScreen = ({navigation}) => {
                             </Text>
                             
                         </Pressable>
+
+                        
                     </View>
                     <View style = {{
                         width: "100%",
@@ -422,7 +424,7 @@ const styles = StyleSheet.create({
 
     imagebk: {
         width: "100%",
-        height: 400,
+        height: 200,
         resizeMode: 'cover',
         
         

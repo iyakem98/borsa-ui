@@ -1,4 +1,4 @@
-import {View, Text, ImageBackground, Image, SafeAreaView, TextInput, StyleSheet, Pressable, TouchableOpacity} from 'react-native'
+import {View, Text, ImageBackground, Image, SafeAreaView, TextInput, StyleSheet, Pressable, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
@@ -151,21 +151,22 @@ const LoginScreen = () => {
 
         </View>
 
-            <span 
+            <Text 
                 style={{
                   color:"red",
                   fontSize:12,
                   marginTop:5,
-                  margin:"0 auto",
+                  margin:0,
                   display:`${invalidArgs ? '' : 'none'}`
               }}
                 >
                   <MaterialIcons name="error-outline" size={14} color="red" />
-                  &nbsp;&nbsp;Invalid email or password. Please retry!
-                </span>
+                  <Text>&nbsp;&nbsp;Invalid email or password. Please retry!</Text>
+                </Text>
 
-        <View style = {{
+        <KeyboardAvoidingView style = {{
           alignItems: 'center',
+          behaviour: `${Platform.OS=="ios" ? 'padding' : 'height'}`,
           paddingVertical: 40,
           width: '100%',
           backgroundColor: 'white'
@@ -186,7 +187,7 @@ const LoginScreen = () => {
                 }}
                 value={email} onChangeText={text => setEmail(text)} autoCompleteType="email" keyboardType="email-address"
                 />
-                <span 
+                <Text 
                 style={{
                   color:"red",
                   fontSize:12,
@@ -194,7 +195,7 @@ const LoginScreen = () => {
                   display:`${email.length && !validateEmail(email) ? '' : 'none'}`
               }}
                 >Invalid email.
-                </span>
+                </Text>
 
               <View style = {{
                 width: "85%",
@@ -229,18 +230,8 @@ const LoginScreen = () => {
 
               </View>
 
-        {/* <View style={{display:"flex", flexDirection:"row", marginTop:10}}>
-        <CheckBox
-           value={remember}
-           onValueChange={()=>{
-              setRemember(!remember)
-           }}
-         
-        />
-        <Text style={{marginLeft:20}}>Remember me</Text>
-        </View> */}
 
-              <span 
+              <Text 
                 style={{
                   color:"red",
                   fontSize:12,
@@ -248,7 +239,7 @@ const LoginScreen = () => {
                   display:`${validatePassword(password) ? 'none' : ''}`
               }}
                 >Password must be atleast 8 characters.
-                </span>
+                </Text>
 
               <TouchableOpacity style = {{
                 backgroundColor: '#13b955',
@@ -306,7 +297,7 @@ const LoginScreen = () => {
                   Create a new account!
                 </Text>
               </Pressable>
-        </View>
+        </KeyboardAvoidingView>
     </View>
   )
 }
