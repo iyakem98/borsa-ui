@@ -82,22 +82,7 @@ const ChatScreen = () => {
     //   // console.log(notificationstored)
     // }, [])
     useEffect(() => {
-      
-      let config = {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDQ5NWE1MGI1Y2NkYzIyMDk2MDNmYSIsImlhdCI6MTY3ODAyMjA1NCwiZXhwIjoxNjg2NjYyMDU0fQ.b5ZajcztGkblmmk8G-cNtLuKjJTWmD1wQcsu0Jagg2Y`
-        }
-      }
-      axios .get(`${API_BASE_URL}chat`, config,
-      { headers: {
-        'Content-Type': 'application/json',
-    }})
-          .then((data) => {
-           console.log("my chattttttttttttttttttttttts:", data.data)
-           })
-          .catch((err) => {
-            console.log("errrrrrrrrrrrrrrrrrrrror", err)
-          });
+     
       
       http://143.198.168.244/api/chat/
       
@@ -205,7 +190,7 @@ useEffect(() =>{
 
 useEffect(() =>{
   // navigation.addListener('focus', getNotif)
-  getNotif()
+  // getNotif()
   // console.log(storedNotifications)
 }, [])
 
@@ -242,44 +227,44 @@ useEffect(()=> {
   // console.log(chatArr)
 }, [])
 useEffect(() => {
-  navigation.addListener('focus', UpdateUserRoute)
+  //navigation.addListener('focus', UpdateUserRoute)
   // UpdateUserRoute()
  //  console.log(route.name)
    // setImage(null)
   }, [])
-const UpdateUserRoute = async () => {
+// const UpdateUserRoute = async () => {
     
-  try{
-    console.log(route.name)
-    const userId = user._id
-    console.log(userId)
-    const   config = {
+//   try{
+//     console.log(route.name)
+//     const userId = user._id
+//     console.log(userId)
+//     const   config = {
         
-      headers: {
+//       headers: {
        
-        Authorization: `Bearer ${user.token}`
-      },
-      // body: JSON.stringify({
-      //   imgsource: newPhoto.base64,
-      // }),
-      // body: formData
-     };
+//         Authorization: `Bearer ${user.token}`
+//       },
+//       // body: JSON.stringify({
+//       //   imgsource: newPhoto.base64,
+//       // }),
+//       // body: formData
+//      };
 
-    const {data} = await axios.put(`http://192.168.100.2:5000/api/users/route`,{
-      userId: user._id,
-      route: route.name
+//     const {data} = await axios.put(`http://192.168.100.2:5000/api/users/route`,{
+//       userId: user._id,
+//       route: route.name
       
-    }, config)
-    console.log('user route updated')
-    // console.log(data.lastSeen)
-    // setlastseendateandtime(moment(data.lastSeen).format("dddd, MMMM Do YYYY") + " " + moment(data.lastSeen).format("LT"))
+//     }, config)
+//     console.log('user route updated')
+//     // console.log(data.lastSeen)
+//     // setlastseendateandtime(moment(data.lastSeen).format("dddd, MMMM Do YYYY") + " " + moment(data.lastSeen).format("LT"))
 
-  }
-  catch(err){
-    console.log(err)
-  }
+//   }
+//   catch(err){
+//     console.log(err)
+//   }
   
- }
+//  }
   const getNotif = async() =>{
     // console.log('get notif function')
         const notif  = await AsyncStorage.getItem('notification')
@@ -390,7 +375,8 @@ const UpdateUserRoute = async () => {
           // })
           if(chat._id === users.chatID && triggerChange)  {
             if(chat.latestMessage != null){
-            return <Pressable key={chat._id} onPress={() => 
+            return 
+            <Pressable key={chat._id} onPress={() => 
                   {
                     
                     {chat.latestMessage && chat.latestMessage.sender
@@ -412,9 +398,7 @@ const UpdateUserRoute = async () => {
                        else{
                         null              }
                       }
-                    {
-        
-                    }
+                    
                    
                   //     setmessageSentOrReceived(true)
                   //     // recieiver logic 

@@ -271,7 +271,7 @@ const TravelerCard = ({traveler}) => {
                     }}>
                         <Ionicons name="location" size={20} color="black" />
                         &nbsp; &nbsp;
-                        {traveler.user.address}
+                        {traveler.user.city}
                     </View>
 
                     <View style={{
@@ -282,7 +282,7 @@ const TravelerCard = ({traveler}) => {
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
                         &nbsp; &nbsp;
-                        {traveler.item}
+                        Unknown
                     </View>
 
                     <View style={{
@@ -293,7 +293,7 @@ const TravelerCard = ({traveler}) => {
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
                         &nbsp; &nbsp;
-                        {traveler.TotalWeight}
+                        {traveler.luggageSpace}
                     </View>
 
                     <View style={{
