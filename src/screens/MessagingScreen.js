@@ -1,4 +1,4 @@
-import { ActivityIndicator, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard} from 'react-native';
+import { ActivityIndicator, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView} from 'react-native';
 
 import { useDispatch, useSelector } from "react-redux";
 import {AntDesign, MaterialIcons} from '@expo/vector-icons'
@@ -17,6 +17,7 @@ import * as MediaLibrary from "expo-media-library"
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { API_BASE_URL } from '../utils/config';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import { MMKV } from 'react-native-mmkv'
 
 
@@ -770,7 +771,11 @@ if(cameratest){
  > 
 //  </KeyboardAvoidingView>*/
 <>
-    <View ref={myRef} style={{}}>
+
+<ScrollView>
+
+  <KeyboardAwareScrollView>
+    <View ref={myRef} style={{marginBottom:-610}}>
     <ScrollableFeed messages={messages} />
     </View>
   
@@ -811,6 +816,8 @@ if(cameratest){
     </Pressable>
   
 </SafeAreaView> 
+</KeyboardAwareScrollView>
+</ScrollView>
 
 </>  
     

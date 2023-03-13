@@ -11,6 +11,7 @@ import { getUserDetails, logout } from '../../features/auth/authSlice';
 import io from 'socket.io-client'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 const AccountScreen = () => {
@@ -106,7 +107,7 @@ const AccountScreen = () => {
         });
   }
 
-  const findPlaces = async (newText) => {
+  const findPlaces = (newText) => {
     axios .get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${newText}&apiKey=8cb194b9c3384d909b48ba0c3adf1ab0`)
         .then((data) => {
           setAddress(newText)
@@ -156,20 +157,20 @@ const AccountScreen = () => {
     <View style = {{
         paddingTop: 30,
         backgroundColor: '#fff',
-        height: 800,
-        overflow:"hidden",
-        overflowY:"scroll",
+        height: 900,
         width: "100%",
         alignItems: 'center'
     }}>
+
+      <KeyboardAwareScrollView>
 
         {
           !isEditing &&
 
           <TouchableOpacity style={{
-            position:"absolute",
+            position:"relative",
             top:5,
-            right:10,
+            left:10,
             backgroundColor: '#593196',
             color:"white",
             width: 100,
@@ -187,11 +188,11 @@ const AccountScreen = () => {
 
       {
           isEditing &&
-        <>
+        <View style={{display:"flex", flexDirection:"row"}}>
           <TouchableOpacity style={{
-            position:"absolute",
+            position:"relative",
             top:5,
-            right:167,
+            left:10,
             border: '1px solid #593196',
             color:"black",
             width: 150,
@@ -218,9 +219,9 @@ const AccountScreen = () => {
           </TouchableOpacity>
 
           <TouchableOpacity style={{
-            position:"absolute",
+            position:"relative",
             top:5,
-            right:10,
+            left:15,
             backgroundColor: '#593196',
             color:"white",
             width: 150,
@@ -236,7 +237,7 @@ const AccountScreen = () => {
           >
             <Text style={{color:'#fff'}}>Save Changes</Text>
           </TouchableOpacity>
-          </>
+          </View>
         }
 
         <View style={{
@@ -250,6 +251,7 @@ const AccountScreen = () => {
 <Image source={{ uri: image }} style={{ 
   width: 200,
   height: 200,
+  marginTop:60,
   borderRadius: "100%",
   alignItems: 'flex-end',
   justifyContent: 'flex-end',
@@ -371,6 +373,7 @@ style={{
            height: 50,
            borderRadius:10,
            width:300,
+           marginLeft:15,
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
            padding:5,
@@ -431,7 +434,7 @@ style={{
           style={{
             display:"flex",
             margin: 15,
-            marginTop:"-20px",
+            marginTop:-20,
            height: 50,
            backgroundColor:"white",
            borderRadius:10,
@@ -684,7 +687,7 @@ style={{
       </View> */}
 
     
-        
+</KeyboardAwareScrollView>    
     </View>
     </ScrollView>
     </SafeAreaView>
