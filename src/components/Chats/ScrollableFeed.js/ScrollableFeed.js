@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import moment from 'moment'
 import React, { useEffect, useRef, useState } from 'react'
-import { Text, View, ScrollView, StyleSheet, Image, ImageBackground } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, Image, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import { isSameSender, isLastMessage, isSameSenderMargin, isSameUser, getSender } from '../../../ChatConfig/ChatLogics'
 import { ChatState } from '../../../context/ChatProvider'
@@ -22,10 +22,14 @@ const ScrollableFeed = ({messages}) => {
     // console.log(messages)
     // console.log(messageSentOrReceived)
     console.log(sentMessage)
+    console.log("platformmm", Platform.OS)
     // console.log(receivedMessage)
   }, [])
   const publicFolder = "http://192.168.100.2:5000/images/"
   return (
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={styles.keyboardAvoiding}>
    <ScrollView
     ref={scrollViewRef}
     onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: false })}
@@ -117,6 +121,7 @@ const ScrollableFeed = ({messages}) => {
        
 })}
    </ScrollView>
+   </KeyboardAvoidingView>
   )
 }
 const styles = StyleSheet.create({
@@ -167,6 +172,9 @@ const styles = StyleSheet.create({
   },
   time: {
       alignSelf: "flex-end"
+  },
+  keyboardAvoiding: {
+    flex: 1,
   }
 })
 export default ScrollableFeed

@@ -1,4 +1,4 @@
-import { ActivityIndicator, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image} from 'react-native';
+import { ActivityIndicator, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform} from 'react-native';
 
 import { useDispatch, useSelector } from "react-redux";
 import {AntDesign, MaterialIcons} from '@expo/vector-icons'
@@ -106,6 +106,8 @@ const MessagingScreen = () => {
     
   }, [])
   useEffect(() =>{
+
+    console.log("Platfffffffffform", Platform.OS)
     fetchMessage()
     selectedChatCompare = selectedChat
     // console.log(notification)
