@@ -44,7 +44,7 @@ const HomeScreen = () => {
                     justifyContent:"center",
                     fontSize:29,
                     color:"#fff",
-                    letterSpacing:1,
+                    letterSpacing:6,
                     fontWeight:700,
                     }}>borsa</Text>
        </View>
@@ -129,7 +129,7 @@ const HomeScreen = () => {
                     justifyContent:"center",
                     fontSize:29,
                     color:"#fff",
-                    letterSpacing:1,
+                    letterSpacing:6,
                     fontWeight:700,
                     }}>borsa</Text>
         
