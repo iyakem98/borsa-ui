@@ -743,47 +743,21 @@ if(cameratest){
 
   return (
    
-  //     <GiftedChat
-  //   // messages={messages}
-  //   // onSend={newMessage => handleSend(newMessage)}
-  //   onSend={sendMessage()}
-    
-  //   user={{ _id: 1 }}
-  //   placeholder="Type your message here"
-  //   alwaysShowSend
-  //   renderSend={renderSend}
-  //   scrollToBottom
-  //   renderLoading={renderLoading}
-
-  // />
-//   <SafeAreaView edges={['top']} style = {styles.container}>
-//   <AntDesign name='plus' size = {24} color = "#593196"/>
-//   <TextInput 
-//       value={newmessage}
-//       onChangeText={setNewMessage}
-//       style = {styles.input} 
-//       placeholder='type your message...'/>
-//   <MaterialIcons style = {styles.send} name='send' size={24} color = "#17141f"/>
-// </SafeAreaView>
-/* <KeyboardAvoidingView 
-   style={{position: 'absolute', left: 0, right: 0, bottom: 0}}
-   behavior="position"
- > 
-//  </KeyboardAvoidingView>*/
 <>
 
-<ScrollView>
+<ScrollView style={{}}>
 
   <KeyboardAwareScrollView>
-    <View ref={myRef} style={{marginBottom:-610}}>
+    <View ref={myRef} style={{marginBottom:50}}>
     <ScrollableFeed messages={messages} />
     </View>
   
 
    <SafeAreaView style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
    backgroundColor: "#f9f8fc",
-   padding: 5,
-   paddingHorizontal: 10,}}
+   padding: 0,
+   paddingHorizontal: 10,
+  }}
    behavior="position"> 
    {/* <AntDesign name='plus' size = {24} color = "#593196"/> */}
     {isTyping ? <View>
@@ -812,7 +786,7 @@ if(cameratest){
      sendMessage()
       }
     }>
-    <MaterialIcons  name='send' size={24} color = "#17141f"/>
+    <MaterialIcons name='send' size={24} color = "#17141f"/>
     </Pressable>
   
 </SafeAreaView> 
@@ -873,6 +847,7 @@ input: {
     padding: 5,
     paddingHorizontal: 10,
     marginHorizontal: 10,
+    marginRight:20,
     borderRadius: 50,
     borderColor: "lightgray",
     borderWidth: StyleSheet.hairlineWidth,

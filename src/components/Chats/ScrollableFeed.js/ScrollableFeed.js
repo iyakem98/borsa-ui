@@ -35,7 +35,6 @@ const ScrollableFeed = ({messages}) => {
     onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: false })}
     style = {{
       backgroundColor: "#fff", 
-      height: "90%",
       paddingBottom: 0,
       }}>
     {messages && messages.map((m, i) => {
