@@ -1,5 +1,5 @@
-import { ActivityIndicator, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView} from 'react-native';
-
+import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView} from 'react-native';
+import { Ionicons } from '@expo/vector-icons'
 import { useDispatch, useSelector } from "react-redux";
 import {AntDesign, MaterialIcons} from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -20,13 +20,15 @@ import { API_BASE_URL } from '../utils/config';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import { MMKV } from 'react-native-mmkv'
 
+import moment from 'moment'
+
 
 
 // export const storage = new MMKV()
 
 const MessagingScreen = () => {
 
- 
+  const [newerMessages, setNewerMessages] = useState([])
  
   const { user } = useSelector((state) => state.auth)
   const [newmessage, setNewMessage] = useState();
@@ -421,6 +423,14 @@ const CameraFeature = () => {
 }
   const sendMessage = async() => {
     console.log("sendinggggggggggggggg")
+    let tym = moment(new Date()).format("LT")
+    let nw = {
+      content: newmessage,
+      time: tym
+    }
+    let m = newerMessages
+    m = newerMessages.push(nw)
+    setNewMessage(m)
     try{
     //   const config = {
     //     headers: {
@@ -467,6 +477,7 @@ const CameraFeature = () => {
     setImage(null)
     // console.log("message sent successfully")
     setNewMessage("")
+    setNewerMessages([])
    
     
   socket.current.emit("new message", data)
@@ -748,12 +759,32 @@ if(cameratest){
 <ScrollView style={{}}>
 
   <KeyboardAwareScrollView>
-    <View ref={myRef} style={{marginBottom:50}}>
+    <View ref={myRef} style={{marginBottom:50, backgroundColor:"white"}}>
     <ScrollableFeed messages={messages} />
+    <View style={{backgroundColor:"#fff", marginTop:5}}>
+    {
+              newerMessages &&  newerMessages.map((msg, index) => (
+                   <View key={index} style={{
+                    alignSelf:"flex-end",
+                    marginRight:10,
+                    backgroundColor:"#593196",
+                    padding:6,
+                    marginBottom:5,
+                    borderRadius:8
+                   }}>
+                    <Text style={{color:"white",}}>{msg.content}</Text>
+                    <Text style={{color:"white"}}>{msg.time}
+      &nbsp;&nbsp;
+      <Ionicons name="checkmark-outline" size={14} color="white" style={{opacity:.5}}/>
+      </Text>
+                   </View>
+                ))
+}
+</View>
     </View>
-  
 
-   <SafeAreaView style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
+
+   <SafeAreaView style={{position: 'absolute', left: 0, right: 0, bottom: 5, flexDirection: "row",
    backgroundColor: "#f9f8fc",
    padding: 0,
    paddingHorizontal: 10,
@@ -782,12 +813,12 @@ if(cameratest){
     <AntDesign name="camera" size={24} color="black" />
     </Pressable> */}
     {/* <Pressable onPress={() => sendMessage()}> */}
-    <Pressable onPress={() => {
+    <TouchableOpacity onPress={() => {
      sendMessage()
       }
     }>
     <MaterialIcons name='send' size={24} color = "#17141f"/>
-    </Pressable>
+    </TouchableOpacity>
   
 </SafeAreaView> 
 </KeyboardAwareScrollView>

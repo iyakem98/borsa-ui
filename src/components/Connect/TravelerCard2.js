@@ -119,7 +119,7 @@ const TravelerCard = ({traveler}) => {
             </View>
             <View style = {styles.destination}>
                 <View style = {{
-                    backgroundColor: '#593196',
+                    backgroundColor: 'green',
                     marginRight: 7,
                     borderRadius: 50,
                     padding: 2                

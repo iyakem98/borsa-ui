@@ -403,17 +403,6 @@ useEffect(() => {
             }
           }
           else{
-            // var formatted_date2 = null
-            // if(chat.lastestMessage){
-            //   formatted_date2 = moment(chat.latestMessage.createdAt).format("LT")
-            // }
-            // console.log(formatted_date2)
-            //   if(chat.lastestMessage !== null){
-            //     // console.log('455')
-            //   formatted_date = moment(chat.latestMessage.createdAt).format("LT")
-            //   // console.log(formatted_date)
-            // }
-            // {chat.lastestMessage && chat.lastestMessage.content && console.log('4444')}
             if(chat.latestMessage != null && triggerChange){
                 return <Pressable key={chat._id}
                   style={styles.container}
@@ -428,12 +417,6 @@ useEffect(() => {
                         source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
                         style = {styles.image}
                      />
-                     
-                         {/* { onlineStatus  && <Badge
-                        status="success"
-                        containerStyle={{ position: 'absolute', top: 50, left: 45 }}
-                            />} */}
-                     {/* <Text>badge here</Text> */}
                     </View>
                       
                     <View style = {styles.content}>
@@ -446,54 +429,19 @@ useEffect(() => {
                               {formatted_date}
                             </Text>   
                         </View>
-                        
-                       {/* { messages && messages.map((mess) => {
-                        mess._id == mess.chat.latestMessage ? 
-                          (<Text key={mess._id}  numberOfLines={2} style = {styles.subTitle}>
-                          {mess.chat.latestMessage}
-                           </Text>
-                        }}
-                        // <Text numberOfLines={2} style = {styles.subTitle}>
-                        
-        
-                       ))}  */}
-                       {/* { messages && messages.map((mess) => {
-      
-                        if(mess._id == mess.chat.latestMessage){
-                          return <Text   numberOfLines={2} style = {styles.subTitle}>
-                          latest message : {mess.content}
-                           </Text>
-                        
-                        }
-                        else{
-                          return 
-                        }
-                         
-                          
-                        
-                        // <Text numberOfLines={2} style = {styles.subTitle}>
-                        
-        
-                       })}  */}
                       
                         {chat.latestMessage && chat.latestMessage.content != "" ?
                         <View style = {{
                           flexDirection: 'row'
                         }}>
       
-                        
-                          {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
-                          
                            <Text  numberOfLines={2} style = {styles.subTitle}>
                             {chat.latestMessage.content}
                           </Text>
                         </View>
                         
                            : <Text>File Uploaded</Text> }
-                         
-                      {/* <Text style = {styles.subTitle} >
-                        {chat.latestMessage}
-                      </Text> */}
+                     
                     </View>
                     </Pressable>
             }
