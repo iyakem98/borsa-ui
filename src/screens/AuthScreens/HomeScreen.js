@@ -10,9 +10,9 @@ const HomeScreen = () => {
 
     const navigation = useNavigation()
 
-    // useEffect(() => {  
-    //     setInterval(function(){setIsLoading(!isLoading)},4000);
-    //  }, [])
+    useEffect(() => {  
+        setInterval(function(){setIsLoading(!isLoading)},4000);
+     }, [])
 
   return (
     <View style = {{
@@ -23,7 +23,7 @@ const HomeScreen = () => {
         paddingTop: 40
     }}>
        
-    <View style={{ display:""}}>
+    <View style={{ display:`${isLoading ? "none" : ""}`}}>
        <View style = {{
             alignItems: 'center',
             marginTop:20
@@ -44,8 +44,8 @@ const HomeScreen = () => {
                     justifyContent:"center",
                     fontSize:29,
                     color:"#fff",
-                    letterSpacing:6,
-                    // fontWeight:700,
+                    letterSpacing:1,
+                    fontWeight:700,
                     }}>borsa</Text>
        </View>
 

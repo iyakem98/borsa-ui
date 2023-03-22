@@ -13,7 +13,7 @@ import { Entypo, MaterialIcons, Octicons, Ionicons, Foundation, MaterialCommunit
 const TravelerCard = ({traveler}) => {
     const { user } = useSelector((state) => state.auth)
     // const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId } = ChatState(); 
     const dispatch = useDispatch()
     const navigation = useNavigation();
     var travelerId = useRef(null)
@@ -28,33 +28,52 @@ const TravelerCard = ({traveler}) => {
   const [image, setImage] = useState(def);
 
     
-    const TravelerChat = async(travId) => {
-        const userId = travId
-        console.log(userId)
-        // console.log(travelerId.current)
-        try{
+    // const TravelerChat = async(travId) => {
+    //     const userId = travId
+    //     console.log(userId)
+    //     // console.log(travelerId.current)
+    //     try{
+    //         const config = {
+    //           headers: {
+    //               Authorization: `Bearer ${user.token}`
+        
+    //           }
+    //       }
+    //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+    //         // console.log(data._id)
+    //         setchatSelected(true)
+        
+    //         navigation.navigate('Messaging', {chatId: data._id, userSelected:
+            
+    //             user != null ? getSenderFull(user, data.users) : null })
+                
+    //         }
+    //         // return data
+            
+            
+    //     catch(err){
+    //         console.log(err)
+    //     }
+    // }
+    const TravelerChat = async(travData) => {
+        console.log(travData.userName)
+        const userId = travData._id
             const config = {
               headers: {
                   Authorization: `Bearer ${user.token}`
         
               }
           }
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            // console.log(data._id)
-            setchatSelected(true)
-        
-            navigation.navigate('Messaging', {chatId: data._id, userSelected:
+            navigation.navigate('Messaging', {userSelected:
             
-                user != null ? getSenderFull(user, data.users) : null })
+                travData})
+            
+            const {data} = await axios.post(BASE_URL + 'chat/', {userId}, config)
+            setchattId(data._id)
                 
-            }
-            // return data
-            
-            
-        catch(err){
-            console.log(err)
-        }
+           
     }
+
   return (
     <View style = {styles.container}>
         <View style = {{
@@ -73,12 +92,12 @@ const TravelerCard = ({traveler}) => {
                 <Entypo name="location-pin" size={20} color="red" />
                 <View>
                     <Text style = {styles.text_loc}>
-                        {traveler.user.address ? traveler.user.address : "Unknown city"}
+                        {traveler.user.city ? traveler.user.city+',' : "Unknown city"}
                     </Text>
 
-                    {/* <Text style = {styles.text_loc2}>
+                    <Text style = {styles.text_loc2}>
                     {traveler.user.country ? traveler.user.country : "Unknown country"}
-                    </Text> */}
+                    </Text>
 
              </View>
              </View>
@@ -119,7 +138,11 @@ const TravelerCard = ({traveler}) => {
             </View>
             <View style = {styles.destination}>
                 <View style = {{
+<<<<<<< HEAD
                     backgroundColor: 'green',
+=======
+                    backgroundColor: '#593196',
+>>>>>>> testingBranch
                     marginRight: 7,
                     borderRadius: 50,
                     padding: 2                
@@ -192,7 +215,11 @@ const TravelerCard = ({traveler}) => {
                 paddingVertical: 5,
                 borderRadius: 30
 
+<<<<<<< HEAD
             }} onPress={() => TravelerChat(traveler._id)}>
+=======
+            }} onPress={() => TravelerChat(traveler)}>
+>>>>>>> testingBranch
                 <Text style = {{
                     fontSize: 18,
                     color: 'white'
@@ -260,7 +287,11 @@ const TravelerCard = ({traveler}) => {
                         fontSize:20,
                         fontWeight:700
                     }}>
+<<<<<<< HEAD
                         <Text>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
+=======
+                        {traveler.user.firstName+' '+traveler.user.lastName}
+>>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -270,7 +301,12 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
+<<<<<<< HEAD
                        <Text> &nbsp; &nbsp; {traveler.user.address}</Text>
+=======
+                        &nbsp; &nbsp;
+                        {traveler.user.address}
+>>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -280,7 +316,12 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
+<<<<<<< HEAD
                          <Text> &nbsp; &nbsp; Unknown</Text>
+=======
+                        &nbsp; &nbsp;
+                        {traveler.item}
+>>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -290,7 +331,12 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
+<<<<<<< HEAD
                          <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text>
+=======
+                        &nbsp; &nbsp;
+                        {traveler.TotalWeight}
+>>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -300,7 +346,12 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
+<<<<<<< HEAD
                         <Text> &nbsp; &nbsp; {traveler.status}</Text>
+=======
+                        &nbsp; &nbsp;
+                        {traveler.status}
+>>>>>>> testingBranch
                     </View>
 
             <Pressable

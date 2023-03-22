@@ -1,5 +1,5 @@
-import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView} from 'react-native';
-import { Ionicons } from '@expo/vector-icons'
+import { ActivityIndicator, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image} from 'react-native';
+
 import { useDispatch, useSelector } from "react-redux";
 import {AntDesign, MaterialIcons} from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -17,18 +17,13 @@ import * as MediaLibrary from "expo-media-library"
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { API_BASE_URL } from '../utils/config';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import { MMKV } from 'react-native-mmkv'
-
-import moment from 'moment'
 
 
 
 // export const storage = new MMKV()
 
 const MessagingScreen = () => {
-
-  const [newerMessages, setNewerMessages] = useState([])
  
   const { user } = useSelector((state) => state.auth)
   const [newmessage, setNewMessage] = useState();
@@ -38,7 +33,8 @@ const MessagingScreen = () => {
   const {userSelected} = route.params;
   const [messages, setMessages] = useState([])
   const ENDPOINT = "http://192.168.100.2:5000"
-  var socket = useRef(null)
+  // var socket = useRef(null)
+  var socket1 = useRef(null)
   var selectedChatCompare = null;
   var chatRouteCompare = null
   const [socketConnected, setsocketConnected] = useState(false)
@@ -62,7 +58,9 @@ const MessagingScreen = () => {
      receivedMessage, 
     setreceivedMessage,
     messageSentOrReceived, setmessageSentOrReceived,
-    chatRoute, setchatRoute
+    chatRoute, setchatRoute,
+    NewwMessage,setNewwMessage,
+    chattId,setchatId
     } = ChatState(); 
   // const [mesages, setMesages] = useState()
   // const defaultOptions = {
@@ -87,31 +85,45 @@ const MessagingScreen = () => {
   const responseListener = useRef();
   const {messageHeader, setmessageHeader} = ChatState()
   const publicFolder = "http://192.168.100.2:5000/images/"
-  // Notifications.setNotificationHandler({
-  //   handleNotification: async () => ({
-  //     shouldShowAlert: true,
-  //     shouldPlaySound: false,
-  //     shouldSetBadge: false,
-  //   }),
-  // });
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
   // console.log(messageHeader)
   console.log(image)
   const cameraRef = useRef()
   useLayoutEffect(() => {
-  
-    // fetchMessage()
-    socket.current = io(ENDPOINT)
-    socket.current.emit("setup", user);
+    accessChat() 
+    console.log(chattId) 
+    fetchMessage()
+    // socket.current = io(ENDPOINT)
+    socket1.current = io(BASE_URL)
+    socket1.current.emit("setup", user);
     // socket.emit("findChat", chatId)
-    socket.current.on("connected", () => setsocketConnected(true) )
+    socket1.current.on("connected", () => setsocketConnected(true) )
    
-    socket.current.on("typing", () => setIsTyping(true))
-    socket.current.on("stop typing", () => setIsTyping(false))
+    socket1.current.on("typing", () => setIsTyping(true))
+    socket1.current.on("stop typing", () => setIsTyping(false))
    
     
   }, [])
+  // useLayoutEffect(() => {
+  
+  //   // fetchMessage()
+  //   socket.current = io(ENDPOINT)
+  //   socket.current.emit("setup", user);
+  //   // socket.emit("findChat", chatId)
+  //   socket.current.on("connected", () => setsocketConnected(true) )
+   
+  //   socket.current.on("typing", () => setIsTyping(true))
+  //   socket.current.on("stop typing", () => setIsTyping(false))
+   
+    
+  // }, [])
   useEffect(() =>{
-// console.log("Platfffffffffform", Platform.OS)
     fetchMessage()
     selectedChatCompare = selectedChat
     // console.log(notification)
@@ -127,45 +139,45 @@ const MessagingScreen = () => {
   }, [])
 
   // console.log(notification)
-  // useEffect(() => {
-  //   // console.log(chatId)
-  //   // console.log(socket.current)
-  //   // console.log(selectedChat._id)
-  //   // setNotification([100]);
-  //   //     setNotification((state) => {
-  //   //           console.log(state)
-  //   //           return state
-  //   //         })
-  //   socket.current.on("message recieved", (newMessageReceived) => {
-  //    console.log(newMessageReceived.chat)
-  //     if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id){
-  //       console.log(newMessageReceived.chat)
+  useEffect(() => {
+    // console.log(chatId)
+    // console.log(socket.current)
+    // console.log(selectedChat._id)
+    // setNotification([100]);
+    //     setNotification((state) => {
+    //           console.log(state)
+    //           return state
+    //         })
+    socket1.current.on("message recieved", (newMessageReceived) => {
+     console.log(newMessageReceived.chat)
+      if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id){
+        console.log(newMessageReceived.chat)
         
-  //       if (!notification.includes(newMessageReceived)) {
-  //         setNotification([ newMessageReceived]);
-  //         console.log(notification)
-  //         setNotification((state) => {
-  //           console.log(state)
-  //           return state
-  //         })
-  //         setfetchAgain(!fetchAgain)
-  //         setfetchAgain((state) => {
-  //           console.log(state)
-  //           return state
-  //         })
+        if (!notification.includes(newMessageReceived)) {
+          setNotification([ newMessageReceived]);
+          console.log(notification)
+          setNotification((state) => {
+            console.log(state)
+            return state
+          })
+          setfetchAgain(!fetchAgain)
+          setfetchAgain((state) => {
+            console.log(state)
+            return state
+          })
           
           
-  //       }
+        }
           
-  //       }
+        }
       
-  //     // else{
-  //     //   setMessages([...messages, newMessageReceived])
-  //     // }
+      else{
+        setMessages([...messages, newMessageReceived])
+      }
       
-  //   })
+    })
    
-  // })
+  })
   useEffect(() => {
     // socket.current.on("message recieved", (newMessageReceived) => {
     //   // console.log('message received')
@@ -209,20 +221,20 @@ const MessagingScreen = () => {
 
   })
   useEffect(() => {
-    // registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-    // notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-    //   setNotification(notification);
-    // });
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
 
-    // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-    //   console.log(response);
-    // });
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
 
-    // return () => {
-    //   Notifications.removeNotificationSubscription(notificationListener.current);
-    //   Notifications.removeNotificationSubscription(responseListener.current);
-    // };
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
   }, []);
   // search how to run an async func in react 
  useEffect(() => {
@@ -422,15 +434,6 @@ const CameraFeature = () => {
   //     </View>
 }
   const sendMessage = async() => {
-    console.log("sendinggggggggggggggg")
-    let tym = moment(new Date()).format("LT")
-    let nw = {
-      content: newmessage,
-      time: tym
-    }
-    let m = newerMessages
-    m = newerMessages.push(nw)
-    setNewMessage(m)
     try{
     //   const config = {
     //     headers: {
@@ -463,7 +466,11 @@ const CameraFeature = () => {
         // }),
         // body: formData
        };
-     
+       var storeNewMessage = newmessage
+    
+       setlatestMess(newmessage)
+        setNewwMessage(true)
+        setNewMessage('')
    
  
     const {data} = await axios.post(`${API_BASE_URL}message`, {
@@ -473,19 +480,18 @@ const CameraFeature = () => {
       receiver: route.params.userSelected._id
     },
     config)
-    testNotif(data)
+    // testNotif(data)
     setImage(null)
     // console.log("message sent successfully")
     setNewMessage("")
-    setNewerMessages([])
    
     
-  socket.current.emit("new message", data)
+  socket1.current.emit("new message", data)
   setMessages([...messages, data])
   setmessageSentOrReceived(false)
   setfetchAgain(true)
   setfetchAgain(false)
-
+  setNewwMessage(false)
   myRef.scrollTo(0, myRef.scrollHeight)
   
   return data
@@ -522,7 +528,7 @@ const CameraFeature = () => {
       // console.log(state)
       return state
     })
-    socket.current.emit("join chat", chatId)
+    socket1.current.emit("join chat", chattId)
     return data;
    
     }
@@ -544,7 +550,8 @@ const CameraFeature = () => {
     const formData = new FormData()
    const testData ={
     content: "",
-    chatId: chatId
+    chatId: chattId,
+    receiver: route.params.userSelected._id
    }
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     setImage(newPhoto)
@@ -597,7 +604,7 @@ const CameraFeature = () => {
         // body: formData
        };
 
-    const {data} = await axios.post("http://192.168.100.2:5000/api/message/",formData, config)
+       const {data} = await axios.post(BASE_URL + 'message/send2',formData, config)
     //   headers: {
     //     Accept: 'application/json',
     //     'Content-Type': 'multipart/form-data',
@@ -606,7 +613,7 @@ const CameraFeature = () => {
     // setcameratest(false)
     // setmessageHeader(false)
     // setImage(null)
-    socket.current.emit("new message", data)
+    socket1.current.emit("new message", data)
   setMessages([...messages, data])
   setmessageSentOrReceived(false)
   setfetchAgain(true)
@@ -638,13 +645,14 @@ const CameraFeature = () => {
     
   }
   const typingHandler = (e) => {
-    setNewMessage(e.target.value)
+    // setNewMessage(e.target.value)
+    setNewMessage(e)
      
     if(!socketConnected) return
 
     if(!typing) {
      setTyping(true)
-     socket.current.emit('typing', chatId);
+     socket1.current.emit('typing', chatId);
     }
 
     let lastTypingTime = new Date().getTime()
@@ -661,27 +669,15 @@ const CameraFeature = () => {
  }
 
  if (hasPermissions === undefined) {
-  return 
-  (
-    <>
-  <Text>Requesting permissions...</Text>
-  </>
-  )
+  return <Text>Requesting permissions...</Text>
 } else if (!hasPermissions) {
-  return 
-  (
-    <>
-  <Text style={{position:"fixed", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>
+  return <Text style={{position:"fixed", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>
     Permission for camera not granted. Please change this in settings.</Text>
-    </>
-  )
 }
 
 if(cameratest){
   // return <Text style={styles.text}>cemera test</Text>
-  return 
-  (
-  <View style={styles.container2}>
+  return <View style={styles.container2}>
   
    
     <Camera
@@ -728,7 +724,6 @@ if(cameratest){
  
  
 </View>
-  )
 }
 
 // if(image){
@@ -754,41 +749,43 @@ if(cameratest){
 
   return (
    
+  //     <GiftedChat
+  //   // messages={messages}
+  //   // onSend={newMessage => handleSend(newMessage)}
+  //   onSend={sendMessage()}
+    
+  //   user={{ _id: 1 }}
+  //   placeholder="Type your message here"
+  //   alwaysShowSend
+  //   renderSend={renderSend}
+  //   scrollToBottom
+  //   renderLoading={renderLoading}
+
+  // />
+//   <SafeAreaView edges={['top']} style = {styles.container}>
+//   <AntDesign name='plus' size = {24} color = "#593196"/>
+//   <TextInput 
+//       value={newmessage}
+//       onChangeText={setNewMessage}
+//       style = {styles.input} 
+//       placeholder='type your message...'/>
+//   <MaterialIcons style = {styles.send} name='send' size={24} color = "#17141f"/>
+// </SafeAreaView>
+/* <KeyboardAvoidingView 
+   style={{position: 'absolute', left: 0, right: 0, bottom: 0}}
+   behavior="position"
+ > 
+//  </KeyboardAvoidingView>*/
 <>
-
-<ScrollView style={{}}>
-
-  <KeyboardAwareScrollView>
-    <View ref={myRef} style={{marginBottom:50, backgroundColor:"white"}}>
+    <View ref={myRef} style={{marginBottom:20, paddingBottom:25}}>
     <ScrollableFeed messages={messages} />
-    <View style={{backgroundColor:"#fff", marginTop:5}}>
-    {
-              newerMessages &&  newerMessages.map((msg, index) => (
-                   <View key={index} style={{
-                    alignSelf:"flex-end",
-                    marginRight:10,
-                    backgroundColor:"#593196",
-                    padding:6,
-                    marginBottom:5,
-                    borderRadius:8
-                   }}>
-                    <Text style={{color:"white",}}>{msg.content}</Text>
-                    <Text style={{color:"white"}}>{msg.time}
-      &nbsp;&nbsp;
-      <Ionicons name="checkmark-outline" size={14} color="white" style={{opacity:.5}}/>
-      </Text>
-                   </View>
-                ))
-}
-</View>
     </View>
+  
 
-
-   <SafeAreaView style={{position: 'absolute', left: 0, right: 0, bottom: 5, flexDirection: "row",
+   <SafeAreaView   style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
    backgroundColor: "#f9f8fc",
-   padding: 0,
-   paddingHorizontal: 10,
-  }}
+   padding: 5,
+   paddingHorizontal: 10,}}
    behavior="position"> 
    {/* <AntDesign name='plus' size = {24} color = "#593196"/> */}
     {isTyping ? <View>
@@ -796,7 +793,8 @@ if(cameratest){
     </View> : null}
    <TextInput 
       value={newmessage}
-      onChangeText={(newText)=>setNewMessage(newText)}
+      
+      onChangeText={setNewMessage}
       onChange={typingHandler}
       style = {styles.input}
       placeholder='Type your message...'
@@ -806,23 +804,21 @@ if(cameratest){
         }
       }}
       />
-    {/* <Pressable onPress={() => {
-      // CameraFeature()
-      // setmessageHeader(true)
+    <Pressable onPress={() => {
+      CameraFeature()
+      setmessageHeader(true)
       }}>
     <AntDesign name="camera" size={24} color="black" />
-    </Pressable> */}
+    </Pressable>
     {/* <Pressable onPress={() => sendMessage()}> */}
-    <TouchableOpacity onPress={() => {
+    <Pressable onPress={() => {
      sendMessage()
       }
     }>
-    <MaterialIcons name='send' size={24} color = "#17141f"/>
-    </TouchableOpacity>
+    <MaterialIcons  name='send' size={24} color = "#17141f"/>
+    </Pressable>
   
 </SafeAreaView> 
-</KeyboardAwareScrollView>
-</ScrollView>
 
 </>  
     
@@ -878,7 +874,6 @@ input: {
     padding: 5,
     paddingHorizontal: 10,
     marginHorizontal: 10,
-    marginRight:20,
     borderRadius: 50,
     borderColor: "lightgray",
     borderWidth: StyleSheet.hairlineWidth,

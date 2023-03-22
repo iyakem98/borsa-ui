@@ -18,10 +18,11 @@ const LoginScreen = ({navigation}) => {
     const navigate = useNavigation()
     const {onlineStatus, setonlineStatus} = ChatState()
     const handleSubmit = async () => {
-        if ( !email?.length || !password?.length) {
+        if ( email === '' || password === '') {
             alert("All fields are required");
             return;
         }
+        // await axios.post("http://192.168.100.2:5002/api/users/login", {email, password});
         const userData = {
             email,
             password,
@@ -34,26 +35,36 @@ const LoginScreen = ({navigation}) => {
           })
         alert("Sign In Successful");
         navigation.navigate("Chats")
-       
+        // const user =  await AsyncStorage.getItem("user")
+        // const user1 = JSON.parse(user)
+        // console.log(user1)
 
     };
     return (
-        // <KeyboardAwareScrollView contentCotainerStyle={styles.container}>
+        <KeyboardAwareScrollView contentCotainerStyle={styles.container}>
             <View style={{ marginVertical: 100 }}>
+            {/* <View style={styles.imageContainer}>
+                <Image source={require("../assets/logo.png")} style={styles.imageStyles} />
+            </View> */}
                 <Text style={styles.signupText}>Sign In</Text>
-                <View style={{marginHorizontal:24}}>
-                    <Text style={{ fontSize: 16, color: '#8e93a1'}}>EMAIL</Text>
-                    <TextInput style={styles.signupInput} onChangeText={text => setEmail(text)} autoCompleteType="email" keyboardType="email-address" />
+                <View style={{ marginHorizontal: 24 }}>
+                    <Text style={{ fontSize: 16, color: '#8e93a1' }}>EMAIL</Text>
+                    <TextInput style={styles.signupInput} value={email} onChangeText={text => setEmail(text)} autoCompleteType="email" keyboardType="email-address" />
                 </View>
-                <View style={{marginHorizontal:24}}>
-                    <Text style={{ fontSize: 16, color: '#8e93a1'}}>PASSWORD</Text>
-                    <TextInput style={styles.signupInput} onChangeText={text => setPassword(text)} secureTextEntry={true} autoComplteType="password" />
+                <View style={{ marginHorizontal: 24 }}>
+                    <Text style={{ fontSize: 16, color: '#8e93a1' }}>PASSWORD</Text>
+                    <TextInput style={styles.signupInput} value={password} onChangeText={text => setPassword(text)} secureTextEntry={true} autoComplteType="password" />
                 </View>
-                <TouchableOpacity onPress={()=>{handleSubmit}} style={styles.buttonStyle}>
+                <TouchableOpacity onPress={handleSubmit} style={styles.buttonStyle}>
                     <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
+                {/* <TouchableOpacity style={styles.buttonStyle}>
+                    <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity> */}
+                {/* <Text style={{ fontSize: 12, textAlign: 'center' }}>Not yet registered? Sign Up</Text>
+                <Text style={{ fontSize: 12, textAlign: 'center', marginTop: 10 }}>Forgot Password?</Text> */}
             </View>
-        // </KeyboardAwareScrollView>
+        </KeyboardAwareScrollView>
     )
 }
 

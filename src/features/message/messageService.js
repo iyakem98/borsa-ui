@@ -1,7 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
+import { BASE_URL } from '../../BaseURL';
 
-const API_URL = 'http://192.168.100.2:5000/api/message/'
+// const API_URL = 'http://192.168.100.2:5000/api/message/'
+const API_URL = `${BASE_URL}message/`
 const fetchMessages = async(selectedChat, user, setLd, setMessages, socket) =>{
   if (!selectedChat){
     return

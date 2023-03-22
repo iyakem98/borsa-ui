@@ -109,7 +109,7 @@ export const getTravelers = createAsyncThunk('travels', async (thunkAPI) => {
     }
   })
 
-export const getConsumers = createAsyncThunk('buyers', async (thunkAPI) => {
+export const getConsumers = createAsyncThunk('auth/consumers', async (thunkAPI) => {
     try {
       return await authService.getConsumers()
     } catch (error) {

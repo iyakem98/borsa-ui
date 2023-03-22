@@ -14,7 +14,7 @@ import { useState } from 'react'
 const BuyerCard = ({buyer}) => {
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected, chattId, setchattId } = ChatState(); 
     const navigation = useNavigation();
 
     const [modal, setModal] = useState(false)
@@ -26,29 +26,46 @@ const BuyerCard = ({buyer}) => {
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
 
-    const BuyerChat = async(buyerID)=> {
-        const userId = buyerID
-        try{
+    // const BuyerChat = async(buyerID)=> {
+    //     const userId = buyerID
+    //     try{
+    //         const config = {
+    //             headers: {
+    //                 Authorization: `Bearer ${user.token}`
+        
+    //             }
+    //         }
+    //         const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+    //         // console.log(data._id)
+    //         setchatSelected(true)
+        
+    //         navigation.navigate('Messaging', {chatId: data._id, userSelected:
+            
+    //             user != null ? getSenderFull(user, data.users) : null })
+                
+            
+    //         // return data
+    //     }
+    //     catch(err){
+    //         console.log(err)
+    //     }
+    // }
+    const BuyerChat = async(buyerData)=> {
+        const userId = buyerData._id
             const config = {
                 headers: {
                     Authorization: `Bearer ${user.token}`
         
                 }
             }
-            const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-            // console.log(data._id)
-            setchatSelected(true)
-        
-            navigation.navigate('Messaging', {chatId: data._id, userSelected:
+            navigation.navigate('Messaging', {userSelected:
             
-                user != null ? getSenderFull(user, data.users) : null })
+                buyerData})
+                // const {data} = await axios.post('http://192.168.100.2:5000/api/chat/', {userId}, config)
+                const {data} = await axios.post(BASE_URL + 'chat/', {userId}, config)
+                setchattId(data._id)
                 
-            
-            // return data
-        }
-        catch(err){
-            console.log(err)
-        }
+          
     }
 
     const goToUserProfile = async () => {
@@ -175,7 +192,11 @@ const BuyerCard = ({buyer}) => {
                 paddingVertical: 5,
                 borderRadius: 30
 
+<<<<<<< HEAD
             }} onPress= {() => BuyerChat(buyer._id)}>
+=======
+            }} onPress= {() => BuyerChat(buyer)}>
+>>>>>>> testingBranch
                 <Text style = {{
                     fontSize: 18,
                     color: 'white'
@@ -235,7 +256,11 @@ const BuyerCard = ({buyer}) => {
                         fontSize:20,
                         fontWeight:700
                     }}>
+<<<<<<< HEAD
                         <Text>{buyer.user.firstName+' '+buyer.user.lastName}</Text>
+=======
+                        {buyer.user.firstName+' '+buyer.user.lastName}
+>>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -245,7 +270,12 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
+<<<<<<< HEAD
                         <Text> &nbsp; &nbsp; {buyer.user.address}</Text>
+=======
+                        &nbsp; &nbsp;
+                        {buyer.user.address}
+>>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -255,7 +285,12 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
+<<<<<<< HEAD
                          <Text> &nbsp; &nbsp; {buyer.item}</Text>
+=======
+                        &nbsp; &nbsp;
+                        {buyer.item}
+>>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -265,7 +300,12 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
+<<<<<<< HEAD
                          <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text>
+=======
+                        &nbsp; &nbsp;
+                        {buyer.TotalWeight}
+>>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -275,7 +315,12 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
+<<<<<<< HEAD
                         <Text> &nbsp; &nbsp; {buyer.status}</Text>
+=======
+                        &nbsp; &nbsp;
+                        {buyer.status}
+>>>>>>> testingBranch
                     </View>
 
             <Pressable

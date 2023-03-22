@@ -30,6 +30,16 @@ const ConnectScreen = () => {
         setIsBuyer(true)
         console.log(isBuyer)
     }
+    const callTravBuyer = () => {
+      console.log('calling traveler function')
+      dispatch(getTravelers())
+      console.log('calling buyer function')
+      dispatch(getConsumers())
+      console.log("my travelerrrrrrrs are:", travelers)
+      console.log("my buyerrrrrrrrs are:", consumers)
+      let u = AsyncStorage.getItem('user')
+      console.log("userrrrrr:", user)
+     } 
     
     // const getConsumers = async () => {
     //   try{
@@ -48,47 +58,24 @@ const ConnectScreen = () => {
     //   }
          
     //     }
-    const [t, setT] = useState([])
-    const [b, setB] = useState([])
-
-    const getUsers = async () => {
-
-      const config = {
-      headers: {
-          Authorization: `Bearer ${user.token}`
-        }}
-
-    await axios.get(`http://143.198.168.244/api/travels/`, config)
-        .then((data) => {
-          console.log("tttttttttttttttt:", t)
-         setT(data.data.data)
-         })
-        .catch((err) => {
-         
-        });
-     
-        await axios.get(`http://143.198.168.244/api/buyers/`, config)
-        .then((data) => {
-          console.log("bbbbbbbbbbbbb:", b)
-         setB(data.data.data)
-         })
-        .catch((err) => {
-         
-        });
-    }
-        useEffect(() => {
-          //  dispatch(getTravelers())
-          //  console.log(travelers)
-          //  dispatch(getConsumers())
-           getUsers()
-          //  console.log(consumers)
-          //  console.log(isBuyer)
-          console.log("my travelerrrrrrrs are:", travelers)
-          console.log("my buyerrrrrrrrs are:", consumers)
-          let u = AsyncStorage.getItem('user')
-          console.log("userrrrrr:", user)
-        }, [travelers, consumers])
-        
+    useEffect(() => {
+      navigation.addListener('focus', callTravBuyer)
+      // UpdateUserRoute()
+     //  console.log(route.name)
+       // setImage(null)
+      }, [travelers, consumers])
+        // useEffect(() => {
+        //    dispatch(getTravelers())
+        //   //  console.log(travelers)
+        //    dispatch(getConsumers())
+        //   //  console.log(consumers)
+        //   //  console.log(isBuyer)
+        //   console.log("my travelerrrrrrrs are:", travelers)
+        //   console.log("my buyerrrrrrrrs are:", consumers)
+        //   let u = AsyncStorage.getItem('user')
+        //   console.log("userrrrrr:", user)
+        // }, [travelers, consumers])
+    
   return (
   //  <ScrollView>
   //  {travelers  && travelers.map((traveler) => (
@@ -142,33 +129,52 @@ const ConnectScreen = () => {
                 </Pressable>
 
             </View>
-           
+            {/* {isBuyer ?
+              <View style = {{
+                paddingTop: 50,
+                backgroundColor: 'white'
+            }}>
+                 <FlatList
+            data = {consumers}
+            renderItem = {({item}) => <BuyerCard buyer = {item} 
+        />}
+        />
+            </View>
+
+            
+            : 
+            <View style = {{
+              paddingTop: 50,
+              backgroundColor: 'white'
+          }}>
+               <FlatList
+          data = {travelers}
+          renderItem = {({item}) => <TravelerCard traveler= {item} 
+      />}
+      />
+        </View>
+            } */}
             {isBuyer ? (
             <View style = {{
               paddingTop: 50,
               backgroundColor: 'white'
           }}>
-           <FlatList
-          data = {b}
+           < FlatList
+          data = {consumers}
           renderItem = {({item}) => <BuyerCard buyer= {item} 
+      />}
       />
-    }
-      />
-      
-     
           </View> )
           : (
             <View style = {{
               paddingTop: 50,
               backgroundColor: 'white'
           }}>
-           <FlatList
-          data = {t}
+           < FlatList
+          data = {travelers}
           renderItem = {({item}) => <TravelerCard traveler= {item} 
       />}
-
       />
-     
           </View>
           )
            
