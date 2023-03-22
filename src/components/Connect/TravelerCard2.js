@@ -138,11 +138,7 @@ const TravelerCard = ({traveler}) => {
             </View>
             <View style = {styles.destination}>
                 <View style = {{
-<<<<<<< HEAD
-                    backgroundColor: 'green',
-=======
                     backgroundColor: '#593196',
->>>>>>> testingBranch
                     marginRight: 7,
                     borderRadius: 50,
                     padding: 2                
@@ -215,11 +211,7 @@ const TravelerCard = ({traveler}) => {
                 paddingVertical: 5,
                 borderRadius: 30
 
-<<<<<<< HEAD
-            }} onPress={() => TravelerChat(traveler._id)}>
-=======
             }} onPress={() => TravelerChat(traveler)}>
->>>>>>> testingBranch
                 <Text style = {{
                     fontSize: 18,
                     color: 'white'
@@ -287,11 +279,7 @@ const TravelerCard = ({traveler}) => {
                         fontSize:20,
                         fontWeight:700
                     }}>
-<<<<<<< HEAD
-                        <Text>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
-=======
                         {traveler.user.firstName+' '+traveler.user.lastName}
->>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -301,12 +289,8 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
-<<<<<<< HEAD
-                       <Text> &nbsp; &nbsp; {traveler.user.address}</Text>
-=======
                         &nbsp; &nbsp;
                         {traveler.user.address}
->>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -316,12 +300,8 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
-<<<<<<< HEAD
-                         <Text> &nbsp; &nbsp; Unknown</Text>
-=======
                         &nbsp; &nbsp;
                         {traveler.item}
->>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -331,12 +311,8 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-<<<<<<< HEAD
-                         <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text>
-=======
                         &nbsp; &nbsp;
                         {traveler.TotalWeight}
->>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -346,12 +322,8 @@ const TravelerCard = ({traveler}) => {
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
-<<<<<<< HEAD
-                        <Text> &nbsp; &nbsp; {traveler.status}</Text>
-=======
                         &nbsp; &nbsp;
                         {traveler.status}
->>>>>>> testingBranch
                     </View>
 
             <Pressable

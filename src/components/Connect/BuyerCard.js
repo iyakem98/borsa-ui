@@ -192,11 +192,7 @@ const BuyerCard = ({buyer}) => {
                 paddingVertical: 5,
                 borderRadius: 30
 
-<<<<<<< HEAD
-            }} onPress= {() => BuyerChat(buyer._id)}>
-=======
             }} onPress= {() => BuyerChat(buyer)}>
->>>>>>> testingBranch
                 <Text style = {{
                     fontSize: 18,
                     color: 'white'
@@ -256,11 +252,7 @@ const BuyerCard = ({buyer}) => {
                         fontSize:20,
                         fontWeight:700
                     }}>
-<<<<<<< HEAD
-                        <Text>{buyer.user.firstName+' '+buyer.user.lastName}</Text>
-=======
                         {buyer.user.firstName+' '+buyer.user.lastName}
->>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -270,12 +262,8 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
-<<<<<<< HEAD
-                        <Text> &nbsp; &nbsp; {buyer.user.address}</Text>
-=======
                         &nbsp; &nbsp;
                         {buyer.user.address}
->>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -285,12 +273,8 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
-<<<<<<< HEAD
-                         <Text> &nbsp; &nbsp; {buyer.item}</Text>
-=======
                         &nbsp; &nbsp;
                         {buyer.item}
->>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -300,12 +284,8 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-<<<<<<< HEAD
-                         <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text>
-=======
                         &nbsp; &nbsp;
                         {buyer.TotalWeight}
->>>>>>> testingBranch
                     </View>
 
                     <View style={{
@@ -315,12 +295,8 @@ const BuyerCard = ({buyer}) => {
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
-<<<<<<< HEAD
-                        <Text> &nbsp; &nbsp; {buyer.status}</Text>
-=======
                         &nbsp; &nbsp;
                         {buyer.status}
->>>>>>> testingBranch
                     </View>
 
             <Pressable
