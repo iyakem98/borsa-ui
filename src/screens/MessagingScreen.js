@@ -762,8 +762,8 @@ if(cameratest){
     <View ref={myRef} style={{marginBottom:50, backgroundColor:"white"}}>
     <ScrollableFeed messages={messages} />
     <View style={{backgroundColor:"#fff", marginTop:5}}>
-    {
-              newerMessages &&  newerMessages.map((msg, index) => (
+          {
+              newerMessages && newerMessages.map((msg, index) => (
                    <View key={index} style={{
                     alignSelf:"flex-end",
                     marginRight:10,
@@ -774,12 +774,12 @@ if(cameratest){
                    }}>
                     <Text style={{color:"white",}}>{msg.content}</Text>
                     <Text style={{color:"white"}}>{msg.time}
-      &nbsp;&nbsp;
-      <Ionicons name="checkmark-outline" size={14} color="white" style={{opacity:.5}}/>
-      </Text>
+                      &nbsp;&nbsp;
+                    <Ionicons name="checkmark-outline" size={14} color="white" style={{opacity:.5}}/>
+                </Text>
                    </View>
                 ))
-}
+          }
 </View>
     </View>
 
@@ -806,13 +806,7 @@ if(cameratest){
         }
       }}
       />
-    {/* <Pressable onPress={() => {
-      // CameraFeature()
-      // setmessageHeader(true)
-      }}>
-    <AntDesign name="camera" size={24} color="black" />
-    </Pressable> */}
-    {/* <Pressable onPress={() => sendMessage()}> */}
+   
     <TouchableOpacity onPress={() => {
      sendMessage()
       }
