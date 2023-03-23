@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
 import { reset } from '../../features/chat/chatSlice';
+import axios from 'axios';
+import { API_BASE_URL } from '../../utils/config';
 
 
 const RegisterScreen = () => {
@@ -21,8 +23,13 @@ const RegisterScreen = () => {
   const [country, setCountry] = useState();
   const dispatch = useDispatch();
   const [visibility, setVisibility] = useState(true)
-  const [secureText, setSecureText] = useState(false)
+  const [secureText, setSecureText] = useState(true)
   const [passwordError, setPasswordError] = useState("")
+
+  const [registerForm, setRegisterForm] = useState("")
+  const [verifyForm, setVerifyForm] = useState("none")
+  const [confirm, setConfirm] = useState("")
+  const [mailed, setMailed] = useState("")
 
   const navigate = useNavigation()
   const Icon = <Pressable onPress={() => {
@@ -61,7 +68,7 @@ const RegisterScreen = () => {
     
     
    
-    const userData = {
+    let userData = {
         firstName,
         lastName,
         email,
@@ -74,13 +81,51 @@ const RegisterScreen = () => {
 
       }
       console.log(userData)
-    //   await axios.post("http://192.168.100.2:5002/api/users/", userData);
-    dispatch(register(userData)) 
-    dispatch(reset()) 
-    alert("Sign In Successful");
-    navigate.navigate("Chats")
+      await axios.post(`${API_BASE_URL}users/`, userData);
+   
+    let data = {
+      email: email
+    }
+    axios .post(`${API_BASE_URL}users/email/test`, data)
+        .then((data) => {
+          setRegisterForm("none")
+          setVerifyForm("")
+         })
+        .catch((err) => {
+          alert("Something went wrong try again!")
+        });
+
+
+    setRegisterForm("none")
+    setVerifyForm("")
+    // alert("Sign In Successful");
+    // navigate.navigate("Verifyyy")
 
 };
+
+const handleVerify = (mailed, entered) => {
+  if(confirm.length==4){
+    
+    let userData = {
+      firstName,
+      lastName,
+      email,
+      password,
+      userName,
+      isTraveler,
+      profilePic,
+      city,
+      country
+
+    }
+
+    alert("Verified")
+    dispatch(register(userData)) 
+    dispatch(reset()) 
+  }else{
+    alert("Invalid code!")
+  }
+}
 
   return (
     <View style = {{
@@ -105,15 +150,13 @@ const RegisterScreen = () => {
                 <Text style = {{
                   color: 'white',
                   fontSize: 17,
-                  
-                  
                 }}>
                   Borsa
                 </Text>
   
           </View>
 
-          <ScrollView style = {{backgroundColor: 'white'}}>
+          <ScrollView style = {{backgroundColor: 'white', display:`${registerForm}`}}>
           <View style = {{
             alignItems: 'center',
             paddingVertical: 40,
@@ -320,7 +363,7 @@ const RegisterScreen = () => {
                 onPress={() => handleSubmit()}>
                   <Text style = {{
                     color: 'white',
-                    fontSize: 20,
+                    fontSize: 17,
                   }}>
                     Sign Up
                   </Text>
@@ -346,6 +389,119 @@ const RegisterScreen = () => {
                     fontSize: 16,
                   }}>
                     Already have an account!
+                  </Text>
+                </Pressable>
+          </View>
+          </ScrollView>
+
+          <ScrollView style = {{backgroundColor: 'white', display:`${verifyForm}`}}>
+          <View style = {{
+            alignItems: 'center',
+            paddingVertical: 40,
+            width: '100%',
+            backgroundColor: 'white'
+          }}>
+
+            <Text style={{fontSize:19, marginBottom:10, display:"flex", textAlign:"center"}}>
+              Enter the code sent to {email} to continue.
+            </Text>
+               
+                <TextInput placeholder='Confirmation Code'
+                  style = {{
+                    width: '85%',
+                    paddingHorizontal: 8,
+                    paddingVertical: 8,
+                    borderStyle: 'solid',
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderColor: "lightgray",
+                    fontSize: 18,
+                    marginVertical: 8,
+                    textAlign:"center"
+                  }}
+                  value={confirm} 
+                  onChangeText={text => {
+                    if(text.length<5){
+                      setConfirm(text)
+                    }
+                  }}
+                  />
+
+                
+                  <View>
+                  </View>
+                  {/* <View>
+                    <Text>
+                    {passwordError}
+                    </Text>
+                   
+                  </View> */}
+                <TouchableOpacity style = {{
+                  backgroundColor: '#13b955',
+                  width: "70%",
+                  height: 50,
+                  marginTop: 40,
+                  marginBottom: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 5,
+  
+                  shadowColor: "000",
+                  shadowOffset: {
+                      width: 0,
+                      height: 3,
+                  },
+                  shadowOpacity: 0.28,
+                  shadowRadius: 3.00,
+  
+                  elevation: 1,
+  
+                }} 
+                onPress={() => handleVerify()}>
+                  <Text style = {{
+                    color: 'white',
+                    fontSize: 17,
+                  }}>
+                    Verify
+                  </Text>
+                </TouchableOpacity>
+               
+                <Pressable 
+                  onPress={() => {
+                    setRegisterForm("")
+                    setVerifyForm("none")
+                    setEmail("")
+                  }}
+                  style = {{
+                    marginVertical: 10,
+                    borderStyle: 'solid',
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderColor: '#593196',
+                    paddingHorizontal: 3
+                }}>
+                  <Text style = {{
+                    //color: '#a991d4'
+                    color: '#593196',
+                    fontSize: 14,
+                  }}>
+                    Incorrect email.
+                  </Text>
+                </Pressable>
+  
+                <Pressable 
+                  onPress={() => navigate.navigate('Login')}
+                  style = {{
+                    marginVertical: 6,
+                    borderStyle: 'solid',
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderColor: 'green',
+                    paddingHorizontal: 3
+                }}>
+                  <Text style = {{
+                    //color: '#a991d4'
+                    color: 'green',
+                    fontSize: 14,
+                  }}>
+                    Login to another account.
                   </Text>
                 </Pressable>
           </View>

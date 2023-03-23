@@ -6,6 +6,7 @@ import ChatScreen from "../screens/ChatScreen"
 import LoginScreen from "../screens/AuthScreens/LoginScreen"
 // import LoginWithGoogle from "../screens/AuthScreens/LoginWithGoogle"
 import RegisterScreen from "../screens/AuthScreens/RegisterScreen"
+import VerifyScreen from "../screens/AuthScreens/RegisterScreen"
 import AccountScreen from '../screens/ProfileScreens/AccountScreen'
 import SettingsScreen from '../screens/ProfileScreens/SettingsScreen'
 import SecurityScreen from '../screens/ProfileScreens/SecurityScreen'
@@ -133,6 +134,7 @@ const Navigator = () => {
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
       {/* <Stack.Screen name="LoginWithGoogle" component={LoginWithGoogle} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
     <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
+    <Stack.Screen name="Verifyyy" component={VerifyScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
     </Stack.Navigator>
 
    )} 
