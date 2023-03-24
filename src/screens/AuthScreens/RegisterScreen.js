@@ -29,7 +29,7 @@ const RegisterScreen = () => {
   const [registerForm, setRegisterForm] = useState("")
   const [verifyForm, setVerifyForm] = useState("none")
   const [confirm, setConfirm] = useState("")
-  const [mailed, setMailed] = useState("")
+  const [mailedTo, setMailedTo] = useState("")
 
   const navigate = useNavigation()
   const Icon = <Pressable onPress={() => {
@@ -78,20 +78,17 @@ const RegisterScreen = () => {
         profilePic,
         city,
         country
-
       }
       console.log(userData)
-      await axios.post(`${API_BASE_URL}users/`, userData);
-   
-    let data = {
-      email: email
-    }
-    axios .post(`${API_BASE_URL}users/email/test`, data)
+    
+    axios.post(`${API_BASE_URL}users/`, userData)
         .then((data) => {
+          setMailedTo(data.data._id)
           setRegisterForm("none")
           setVerifyForm("")
          })
         .catch((err) => {
+          console.log("error is", err)
           alert("Something went wrong try again!")
         });
 
@@ -103,9 +100,14 @@ const RegisterScreen = () => {
 
 };
 
-const handleVerify = (mailed, entered) => {
-  if(confirm.length==4){
-    
+const handleVerify = async () => {
+  let data = {
+    userId: mailedTo,
+    otp: confirm
+  }
+
+  axios.post(`${API_BASE_URL}users/verify-email`, data)
+        .then((data) => {
     let userData = {
       firstName,
       lastName,
@@ -119,12 +121,19 @@ const handleVerify = (mailed, entered) => {
 
     }
 
-    alert("Verified")
-    dispatch(register(userData)) 
-    dispatch(reset()) 
-  }else{
-    alert("Invalid code!")
-  }
+     alert("Verified. You can login now!")
+     navigate.navigate('Login')
+    
+    // dispatch(register(userData)) 
+    // dispatch(reset()) 
+
+         })
+        .catch((err) => {
+          console.log("error is", err)
+          alert("Invalid otp!")
+        });
+
+ 
 }
 
   return (
@@ -407,6 +416,8 @@ const handleVerify = (mailed, entered) => {
             </Text>
                
                 <TextInput placeholder='Confirmation Code'
+                autoFocus
+                keyboardType='numeric'
                   style = {{
                     width: '85%',
                     paddingHorizontal: 8,
@@ -470,6 +481,7 @@ const handleVerify = (mailed, entered) => {
                     setRegisterForm("")
                     setVerifyForm("none")
                     setEmail("")
+                    setConfirm("")
                   }}
                   style = {{
                     marginVertical: 10,
@@ -488,7 +500,13 @@ const handleVerify = (mailed, entered) => {
                 </Pressable>
   
                 <Pressable 
-                  onPress={() => navigate.navigate('Login')}
+                  onPress={() => {
+                    navigate.navigate('Login')
+                    setVerifyForm("none")
+                    setRegisterForm("")
+                    setConfirm("")
+                  }
+                  }
                   style = {{
                     marginVertical: 6,
                     borderStyle: 'solid',

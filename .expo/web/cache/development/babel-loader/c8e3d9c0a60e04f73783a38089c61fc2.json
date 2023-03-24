@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var API_BASE_URL = \"http://143.198.168.244/api/\";","map":{"version":3,"names":["API_BASE_URL"],"sources":["/home/dagmawi/personal/borsa/myborsa/borsa-ui/src/utils/config.js"],"sourcesContent":["\nexport const API_BASE_URL = \"http://143.198.168.244/api/\"\n"],"mappings":"AACA,OAAO,IAAMA,YAAY,GAAG,6BAA6B"},"metadata":{},"sourceType":"module"}
