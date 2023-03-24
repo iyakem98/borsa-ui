@@ -15,15 +15,19 @@ const HomeScreen = () => {
      }, [])
 
   return (
+    // <View>
+    //     <Text>home Page test</Text>
+    //     </View>
     <View style = {{
         backgroundColor: '#593196',
         height: "100%",
         alignItems: 'center',
-        justifyContent: '',
+        // justifyContent: '',
         paddingTop: 40
     }}>
        
-    <View style={{ display:`${isLoading ? "none" : ""}`}}>
+    <View >
+    {/* style={{ display:`${isLoading ? "none" : ""}`}} */}
        <View style = {{
             alignItems: 'center',
             marginTop:20
@@ -40,18 +44,23 @@ const HomeScreen = () => {
           
             <Text 
                 style={{
-                    display:"flex", 
+                    // flex: 1,
+                     
                     justifyContent:"center",
                     fontSize:29,
                     color:"#fff",
                     letterSpacing:1,
-                    fontWeight:700,
+                    fontWeight:'700',
                     }}>borsa</Text>
+                     
        </View>
+      
 
        <View 
-       style={{marginTop:"60%"}}>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}
+       style={{marginTop:"60%"}}
+       >
+        {/* <Text style={{color: "black", marginLeft: 20}}>jfjeooeffogrgref</Text> */}
+             <TouchableOpacity onPress={() => navigation.navigate('Login')}
             style={{
                 backgroundColor: 'white',
                 width: 200,
@@ -59,10 +68,11 @@ const HomeScreen = () => {
                 borderRadius: 10,
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: 6,
+                marginBottom: 20,
                 letterSpacing:2
 
-            }}>
+            }}
+            >
                <Text>Log In</Text>
             </TouchableOpacity>
 
@@ -77,9 +87,10 @@ const HomeScreen = () => {
                 justifyContent: 'center',
                 marginBottom: 6,
                 letterSpacing:2
-            }}>
+            }}
+            >
                 <Text style={{color:"white"}}>Sign Up</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> 
        </View>
 
        {/* <View style={{

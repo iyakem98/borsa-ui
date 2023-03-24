@@ -157,7 +157,7 @@ const LoginScreen = () => {
                   fontSize:12,
                   marginTop:5,
                   margin:0,
-                  display:`${invalidArgs ? '' : 'none'}`
+                  // display:`${invalidArgs ? '' : 'none'}`
               }}
                 >
                   <MaterialIcons name="error-outline" size={14} color="red" />
@@ -192,7 +192,7 @@ const LoginScreen = () => {
                   color:"red",
                   fontSize:12,
                   marginTop:-5,
-                  display:`${email.length && !validateEmail(email) ? '' : 'none'}`
+                  // display:`${email.length && !validateEmail(email) ? '' : 'none'}`
               }}
                 >Invalid email.
                 </Text>
@@ -236,7 +236,7 @@ const LoginScreen = () => {
                   color:"red",
                   fontSize:12,
                   marginTop:-1,
-                  display:`${validatePassword(password) ? 'none' : ''}`
+                  // display:`${validatePassword(password) ? 'none' : ''}`
               }}
                 >Password must be atleast 8 characters.
                 </Text>

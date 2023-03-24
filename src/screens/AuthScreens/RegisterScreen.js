@@ -290,12 +290,12 @@ const RegisterScreen = () => {
                   </TouchableHighlight>
                   <View>
                   </View>
-                  {/* <View>
+                   <View>
                     <Text>
                     {passwordError}
                     </Text>
                    
-                  </View> */}
+                  </View> 
                 <TouchableOpacity style = {{
                   backgroundColor: '#13b955',
                   width: "70%",
