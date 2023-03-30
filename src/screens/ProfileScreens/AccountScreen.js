@@ -16,8 +16,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const AccountScreen = () => {
 
-  const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
+  const [def, setDef] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211")
   const [image, setImage] = useState(def);
+
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -38,7 +39,9 @@ const AccountScreen = () => {
   const navigate = useNavigation()
 
   const dispatch = useDispatch()
-
+  // const user = {
+  //   firstName : "walid"
+  // }
   const { user } = useSelector((state) => state.auth)
 
 
@@ -60,7 +63,8 @@ const AccountScreen = () => {
   const [placeResult, setPlaceResult] = useState([])
 
   const ENDPOINT = "http://192.168.100.2:5000"
-  var socket = io(ENDPOINT)
+  // var socket = io(ENDPOINT)
+  var socket = io(API_BASE_URL)
 
   const [userPreview, setUserPriview] = useState("")
 
@@ -93,7 +97,7 @@ const AccountScreen = () => {
   "hideBuyerCard": false
     }
 
-    axios .put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
+    axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
     { headers: {
       'Content-Type': 'application/json',
   }})
@@ -108,7 +112,7 @@ const AccountScreen = () => {
   }
 
   const findPlaces = (newText) => {
-    axios .get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${newText}&apiKey=8cb194b9c3384d909b48ba0c3adf1ab0`)
+    axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${newText}&apiKey=8cb194b9c3384d909b48ba0c3adf1ab0`)
         .then((data) => {
           setAddress(newText)
           let newSet = []
@@ -188,7 +192,8 @@ const AccountScreen = () => {
 
       {
           isEditing &&
-        <View style={{display:"flex", flexDirection:"row"}}>
+        <View style={{//display:"flex",
+         flexDirection:"row"}}>
           <TouchableOpacity style={{
             position:"relative",
             top:5,
@@ -252,7 +257,8 @@ const AccountScreen = () => {
   width: 200,
   height: 200,
   marginTop:60,
-  borderRadius: "100%",
+  // borderRadius: "100%",
+  borderRadius: 100,
   alignItems: 'flex-end',
   justifyContent: 'flex-end',
  }} />
@@ -274,7 +280,8 @@ style={{
 
 
         <Text style={styles.fullname}>
-          {firstName+' '+lastName}
+          {/* {firstName+' '+lastName} */}
+          {firstName}
         </Text>
 
         <Text style={styles.username}>
@@ -300,7 +307,8 @@ style={{
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
-           opacity:`${isEditing? 1 : .5}`
+          //  opacity:`${isEditing? 1 : 0.5}`
+          opacity: 1
         }}
                underlineColorAndroid = "transparent"
                placeholder = "Username"
@@ -326,7 +334,8 @@ style={{
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
-           opacity:`${isEditing? 1 : .5}`
+          //  opacity:`${isEditing? 1 : 0.5}`
+          opacity: 1
         }}
                underlineColorAndroid = "transparent"
                placeholder = "First Name"
@@ -352,7 +361,8 @@ style={{
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
-           opacity:`${isEditing? 1 : .5}`
+          //  opacity:`${isEditing? 1 : 0.5}`,
+          opacity: 1
         }}
                underlineColorAndroid = "transparent"
                placeholder = "Last Name"
@@ -379,7 +389,8 @@ style={{
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
-           opacity:`${isEditing? 1 : .5}`
+          //  opacity:`${isEditing? 1 : 0.5}`
+          opacity: 1
         }}
                underlineColorAndroid = "transparent"
                placeholder = "Email"
@@ -406,7 +417,8 @@ style={{
            padding:5,
            borderColor: 'black',
            borderWidth: 1,
-           opacity:`${isEditing? 1 : .5}`
+          //  opacity:`${isEditing? 1 : 0.5}`
+          opacity: 1
         }}
                underlineColorAndroid = "transparent"
                placeholder = "Address"
@@ -432,7 +444,7 @@ style={{
           suggestions &&
           <View
           style={{
-            display:"flex",
+            // display:"flex",
             margin: 15,
             marginTop:-20,
            height: 50,
@@ -442,7 +454,8 @@ style={{
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
            padding:5,
-           opacity:`${isEditing? 1 : .5}`,
+          //  opacity:`${isEditing? 1 : 0.5}`,
+          opacity: 1,
            height:"auto",
             shadowOffset: { width: 10, height: 10 },
             shadowColor: 'white',
@@ -722,7 +735,7 @@ const styles = StyleSheet.create({
     // fontWeight:700,
     marginTop:20,
     marginBottom: 30,
-    opacity:.7
+    opacity:0.7
   },
 
   username: {
@@ -731,19 +744,19 @@ const styles = StyleSheet.create({
     // fontWeight:500,
     marginTop:-20,
     marginBottom: 10,
-    opacity:.7
+    opacity:0.7
   },
 
   divider: {
     width:"100%",
-    height:.2,
+    height:0.2,
     backgroundColor:"#593196",
-    opacity: .5
+    opacity: 0.5
   },
 
   label: {
     fontSize: 15,
-    opacity: .8,
+    opacity: 0.8,
     textAlign:"left"
   }
 

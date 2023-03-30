@@ -11,6 +11,8 @@ import { Entypo, MaterialIcons, Octicons, Ionicons, Foundation, MaterialCommunit
 
 
 const TravelerCard = ({traveler}) => {
+    
+    // console.log(traveler.user.email)
     const { user } = useSelector((state) => state.auth)
     // const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
     const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
@@ -251,7 +253,8 @@ const TravelerCard = ({traveler}) => {
                       <Image source={{ uri: image }} style={{ 
                         width: 200,
                         height: 200,
-                        borderRadius: "100%",
+                        // borderRadius: "100%",
+                        borderRadius: 100,
                         alignItems: 'flex-end',
                         justifyContent: 'flex-end',
                         }} />
@@ -266,41 +269,45 @@ const TravelerCard = ({traveler}) => {
                     <View style={{
                         marginTop:10,
                         fontSize:18,
-                        display:"flex",
+                        // display:"flex",
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
-                       <Text> &nbsp; &nbsp; {traveler.user.address}</Text>
+                       {/* <Text> &nbsp; &nbsp; {traveler.user.address}</Text> */}
+                       <Text>{traveler.user.address}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
-                        display:"flex",
+                        // display:"flex",
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
-                         <Text> &nbsp; &nbsp; Unknown</Text>
+                         {/* <Text> &nbsp; &nbsp; Unknown</Text> */}
+                         <Text>Unknown</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
-                        display:"flex",
+                        // display:"flex",
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-                         <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text>
+                         {/* <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text> */}
+                         <Text>{traveler.luggageSpace}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
-                        display:"flex",
+                        // display:"flex",
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
-                        <Text> &nbsp; &nbsp; {traveler.status}</Text>
+                        {/* <Text> &nbsp; &nbsp; {traveler.status}</Text> */}
+                        <Text>{traveler.status}</Text>
                     </View>
 
             <Pressable
@@ -313,6 +320,9 @@ const TravelerCard = ({traveler}) => {
       </Modal>
 
     </View>
+    // <View>
+    //     {/* <Text>{traveler}</Text> */}
+    // </View>
   )
 }
 

@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import io from 'socket.io-client'
 import { API_BASE_URL } from '../../utils/config';
 
+
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,9 +22,11 @@ const LoginScreen = () => {
 
   const {onlineStatus, setonlineStatus} = ChatState()
   const dispatch = useDispatch();
-  const ENDPOINT = "http://192.168.100.2:5000"
+  // const ENDPOINT = "http://192.168.100.2:5000"
+ 
   // var socket = useRef(null)
-  var socket = io(ENDPOINT)
+  // var socket = io(ENDPOINT)
+  var socket = io(API_BASE_URL)
   const [socketConnected, setsocketConnected] = useState(false)
   // const navigation = useNavigation()
 
@@ -80,7 +83,7 @@ const LoginScreen = () => {
       }
 
       setIsLogging(true)
-      axios .post(`${API_BASE_URL}users/login`, userData)
+      axios.post(`${API_BASE_URL}users/login`, userData)
         .then((data) => {
           setIsLogging(false)
          console.log(data.data)
@@ -157,11 +160,15 @@ const LoginScreen = () => {
                   fontSize:12,
                   marginTop:5,
                   margin:0,
-                  display:`${invalidArgs ? '' : 'none'}`
+                  // display:`${invalidArgs ? '' : 'none'}`
               }}
                 >
-                  <MaterialIcons name="error-outline" size={14} color="red" />
-                  <Text>&nbsp;&nbsp;Invalid email or password. Please retry!</Text>
+                 {invalidArgs &&
+                 <View>
+                   <MaterialIcons name="error-outline" size={14} color="red" />
+                  <Text>Invalid email or password. Please retry!</Text> 
+                 </View> 
+                  }
                 </Text>
 
         <KeyboardAvoidingView style = {{
@@ -187,15 +194,15 @@ const LoginScreen = () => {
                 }}
                 value={email} onChangeText={text => setEmail(text)} autoCompleteType="email" keyboardType="email-address"
                 />
-                <Text 
+               {email.length && !validateEmail(email) ? <Text 
                 style={{
                   color:"red",
                   fontSize:12,
                   marginTop:-5,
-                  display:`${email.length && !validateEmail(email) ? '' : 'none'}`
+                  // display:`${email.length && !validateEmail(email) ? '' : 'none'}`
               }}
                 >Invalid email.
-                </Text>
+                </Text>: null} 
 
               <View style = {{
                 width: "85%",
@@ -231,7 +238,7 @@ const LoginScreen = () => {
               </View>
 
 
-              <Text 
+             {validatePassword(password) ? <Text 
                 style={{
                   color:"red",
                   fontSize:12,
@@ -239,7 +246,7 @@ const LoginScreen = () => {
                   display:`${validatePassword(password) ? 'none' : ''}`
               }}
                 >Password must be atleast 8 characters.
-                </Text>
+                </Text> : null }
 
               <TouchableOpacity style = {{
                 backgroundColor: '#13b955',

@@ -239,7 +239,7 @@ const MessagingScreen = () => {
  }, [])
  useEffect(() => {
 //  UpdateUserRoute()
- console.log(route.params.userSelected._id)
+ console.log(route.params.userSelected)
  console.log("messagessssssssssssssssss are:", messages)
 
 console.log("messssssssage infooooooo:",
@@ -247,7 +247,8 @@ console.log("messssssssage infooooooo:",
 content : newmessage,
 chatId: chatId,
 image: "",
-receiver: route.params.userSelected._id
+// receiver: route.params.userSelected._id
+receiver: route.params.userSelected
 }
 )
   // setImage(null)
@@ -470,7 +471,9 @@ const CameraFeature = () => {
       content : newmessage,
       chatId: chatId,
       image: "",
+      // receiver: route.params.userSelected._id
       receiver: route.params.userSelected._id
+
     },
     config)
     testNotif(data)

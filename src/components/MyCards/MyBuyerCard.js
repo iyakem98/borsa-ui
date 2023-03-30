@@ -68,7 +68,7 @@ const MyBuyerCard = ({buyer}) => {
         }}>
             <Image 
                source={{
-                uri: "https://www.usmagazine.com/wp-content/uploads/2021/01/The-Weeknd-Save-Your-Tears-Plastic-Surgery-Look-Is-Prosthetics-Feature.jpg?w=700&quality=86&strip=all",
+                uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211",
                 }}
                 style = {styles.image}
                 resizeMode = 'cover'
@@ -275,7 +275,8 @@ const styles = StyleSheet.create({
     image: {
         height: 100,
         width: 100,
-        borderRadius: "50%",
+        // borderRadius: "50%",
+        borderRadius: 50,
         borderStyle: 'solid',
         //borderWidth: 2,
         //borderColor: '#13b955'

@@ -60,6 +60,7 @@ const ConnectScreen = () => {
 
     await axios.get(`http://143.198.168.244/api/travels/`, config)
         .then((data) => {
+          
           console.log("tttttttttttttttt:", t)
          setT(data.data.data)
          })
@@ -162,12 +163,12 @@ const ConnectScreen = () => {
               paddingTop: 50,
               backgroundColor: 'white'
           }}>
-           <FlatList
+             <FlatList
           data = {t}
           renderItem = {({item}) => <TravelerCard traveler= {item} 
-      />}
-
       />
+    }
+      /> 
      
           </View>
           )
@@ -186,6 +187,24 @@ const ConnectScreen = () => {
           </View>
            
             } */}
+             {/* <FlatList
+          data = {t}
+          renderItem = {({item}) => <TravelerCard traveler= {item} 
+      />
+    }
+      /> */}
+        {/* <FlatList
+          data = {b}
+          renderItem = {({item}) => <TravelerCard traveler= {item} 
+      />
+    }
+      /> */}
+         {/* <FlatList
+          data = {b}
+          renderItem = {({item}) => <BuyerCard buyer= {item} 
+      />
+    }
+      /> */}
             </View>
 
            

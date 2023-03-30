@@ -6,6 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { ChatState } from '../context/ChatProvider';
 import io from 'socket.io-client'
+import axios from 'axios';
+import { API_BASE_URL } from '../utils/config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const ProfileScreen = ({navigation}) => {
     const { user } = useSelector((state) => state.auth)
     const navigate = useNavigation()
@@ -23,13 +27,29 @@ const ProfileScreen = ({navigation}) => {
         // alert(" Logout  Successful");
   
       }
+
+      const deleteAcc = async () => {
+        let res = confirm('Are you sure to delete account? This can not be reversed.')
+        if(res){
+         axios.delete(`${API_BASE_URL}users/${user._id}`)
+         await AsyncStorage.removeItem("user")
+        .then((data) => {
+            alert("Deleted.")
+            handleLogout()
+         })
+        .catch((err) => {
+          console.log("error is", err)
+          alert("No")
+        });
+        }
+    }
   return (
     
     <View>
          <View>
         <ImageBackground
                 source={{
-                uri: "https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296",
+                uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211",
                 }}
                 style= {styles.imagebk}
         >
@@ -200,35 +220,49 @@ const ProfileScreen = ({navigation}) => {
                     </Pressable>
                     </View>
 
-                    <View style = {{
-                        width: "100%",
-                        //paddingTop: 20,
-                        flexDirection: 'row',
-                        //justifyContent: 'space-around',
-                        textAlign: 'center',
-                        textAlignVertical: 'center',
-                    }}>
-                        <Pressable onPress={() => navigation.navigate('My Cards')}
-                            style = {styles.press}>
-                        <View style = {{
-                            backgroundColor: '#a991d4',
-                            backgroundColor: "#593196",
-                            padding: 8,
-                            borderRadius: 50,
-                            marginRight: 20,
-                        }}>
-                             <MaterialCommunityIcons name="cards" size={24} color="white" />
-                        </View>
-                            <Text style = {{
-                                fontSize: 17,
-                            }}>
-                                My Cards
-                            </Text>
-                            
-                        </Pressable>
+                    <View style = {styles.grid}>
 
-                        
-                    </View>
+                    <Pressable onPress={() => navigation.navigate('My Cards')}
+    style = {styles.press}>
+    <View style = {{
+         backgroundColor: '#a991d4',
+         backgroundColor: "#593196",
+        padding: 8,
+        borderRadius: 50,
+        marginRight: 20,
+    }}>
+       <MaterialCommunityIcons name="cards" size={24} color="white" />
+    </View>
+   
+    <Text style = {{
+        fontSize: 17,
+    }}>
+        My Cards
+        </Text>
+</Pressable>
+<Pressable onPress={() => {
+    deleteAcc()
+}}
+    style = {styles.press}>
+    <View style = {{
+        backgroundColor: '#a991d4',
+        backgroundColor: 'lightblue',
+        padding: 8,
+        borderRadius: 50,
+        marginRight: 20,
+    }}>
+        <MaterialIcons name="security" size={24} color="white" /> 
+    </View>
+   
+    <Text style = {{
+        fontSize: 17,
+    }}>
+        Delete Account
+        </Text>
+</Pressable>
+</View>
+
+
                     <View style = {{
                         width: "100%",
                         //paddingTop: 20,
@@ -242,7 +276,12 @@ const ProfileScreen = ({navigation}) => {
                         <Text>Logout</Text>
                         
                         </Pressable>
+
+                        
+                        
                     </View>
+
+                   
 
 
                    {/* 

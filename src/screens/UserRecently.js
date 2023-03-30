@@ -7,13 +7,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { singleChat } from '../features/chat/chatSlice'
 
 function UserRecently({data, userData}) {
-  console.log(userData.userName)
+  
+  // console.log(userData.userName)
   const [selectedUserData, setselectedUserData] = useState([])
   const { user } = useSelector((state) => state.auth)
-  const formatted_date = data.lastSeen
-  const [userName, setUsername] = useState(userData.userName)
-  const [lastSeen, setlastSeen] = useState(moment(formatted_date).format("MMMM Do LT"))
-  const [status, setStatus] = useState(data.status)
+  // const formatted_date = data.lastSeen
+  // const [userName, setUsername] = useState(userData.firstName)
+  // const [firstName, setFirstName] = useState(userData.firstName)
+  // const [lastSeen, setlastSeen] = useState(moment(formatted_date).format("MMMM Do LT"))
+  // const [status, setStatus] = useState(data.status)
 
 
     const singleChat = async (data) => {
@@ -79,7 +81,7 @@ function UserRecently({data, userData}) {
         </Pressable> */}
         {/* {singleChat()} */}
            {/* {displaySelectedUserDetails()} */}
-        <Text>{userName}</Text>
+        {/* <Text>{firstName}</Text> */}
         {/* <Text>{lastSeen}</Text> */}
        {/* { status === "online" ?  <Text>Online</Text> : null}
        { status === "away" ?  <Text>last seen at {lastSeen} </Text>  : null} */}

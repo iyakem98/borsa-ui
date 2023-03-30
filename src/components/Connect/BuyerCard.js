@@ -12,6 +12,7 @@ import { useState } from 'react'
 
 
 const BuyerCard = ({buyer}) => {
+    console.log(buyer.user.firstName)
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
     const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
@@ -27,6 +28,7 @@ const BuyerCard = ({buyer}) => {
   const [image, setImage] = useState(def);
 
     const BuyerChat = async(buyerID)=> {
+        console.log(buyerID)
         const userId = buyerID
         try{
             const config = {
@@ -226,7 +228,8 @@ const BuyerCard = ({buyer}) => {
                       <Image source={{ uri: image }} style={{ 
                         width: 200,
                         height: 200,
-                        borderRadius: "100%",
+                        // borderRadius: "100%",
+                        borderRadius: 100,
                         alignItems: 'flex-end',
                         justifyContent: 'flex-end',
                         }} />
@@ -241,41 +244,49 @@ const BuyerCard = ({buyer}) => {
                     <View style={{
                         marginTop:10,
                         fontSize:18,
-                        display:"flex",
+                        // display:"flex",
+                        // flex: 1,
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
-                        <Text> &nbsp; &nbsp; {buyer.user.address}</Text>
+                        {/* <Text> &nbsp; &nbsp; {buyer.user.address}</Text> */}
+                        <Text>{buyer.user.address}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
-                        display:"flex",
+                        // display:"flex",
+                        // flex: 1,
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
-                         <Text> &nbsp; &nbsp; {buyer.item}</Text>
+                         {/* <Text> &nbsp; &nbsp; {buyer.item}</Text> */}
+                         <Text>{buyer.item}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
-                        display:"flex",
+                        // display:"flex",
+                        // flex: 1,
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-                         <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text>
+                         {/* <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text> */}
+                         <Text>{buyer.TotalWeight}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
-                        display:"flex",
+                        // display:"flex",
+                        // flex: 1,
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
-                        <Text> &nbsp; &nbsp; {buyer.status}</Text>
+                        {/* <Text> &nbsp; &nbsp; {buyer.status}</Text> */}
+                        <Text>{buyer.status}</Text>
                     </View>
 
             <Pressable
@@ -288,6 +299,9 @@ const BuyerCard = ({buyer}) => {
       </Modal>
     
     </>
+    // <View>
+    //     {/* <Text>{buyer}</Text> */}
+    // </View>
   )
 }
 

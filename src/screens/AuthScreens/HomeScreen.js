@@ -19,11 +19,11 @@ const HomeScreen = () => {
         backgroundColor: '#593196',
         height: "100%",
         alignItems: 'center',
-        justifyContent: '',
+        // justifyContent: '',
         paddingTop: 40
     }}>
        
-    <View style={{ display:""}}>
+    <View>
        <View style = {{
             alignItems: 'center',
             marginTop:20
@@ -40,12 +40,12 @@ const HomeScreen = () => {
           
             <Text 
                 style={{
-                    display:"flex", 
+                    // display:"flex", 
                     justifyContent:"center",
                     fontSize:29,
                     color:"#fff",
                     letterSpacing:6,
-                    // fontWeight:700,
+                    fontWeight:"700",
                     }}>borsa</Text>
        </View>
 
@@ -82,25 +82,12 @@ const HomeScreen = () => {
             </TouchableOpacity>
        </View>
 
-       {/* <View style={{
-        marginTop:20,
-        textAlign:"center",
-        letterSpacing:4
-    }}>
-        <Text style={{color:"white", marginBottom:20}}>OR CONTINUE WITH</Text>
-            <View style={{
-                display:"flex",
-                flexDirection:"row"
-            }}
-            >
-           
-            
-           
-            </View>
-        
-    </View> */}
+      
 
     </View>
+    {/* <View>
+        <Text>kjhrkh</Text>
+    </View> */}
 
    
 
@@ -109,7 +96,7 @@ const HomeScreen = () => {
         top:"50%",
         left:"50%",
         transform:"translate(-50%, -50%)",
-        display:`${isLoading ? "" : "none"}`
+        // display:`${isLoading ? "" : "none"}`
        }}>
 
         <Image 
@@ -130,10 +117,27 @@ const HomeScreen = () => {
                     color:"#fff",
                     marginTop:10,
                     letterSpacing:6,
-                    fontWeight:700,
+                    fontWeight:"700",
                     }}>borsa</Text>
         
         </View>  */}
+         {/* <View style={{
+        marginTop:20,
+        textAlign:"center",
+        letterSpacing:4
+    }}>
+        <Text style={{color:"white", marginBottom:20}}>OR CONTINUE WITH</Text>
+            <View style={{
+                display:"flex",
+                flexDirection:"row"
+            }}
+            >
+           
+            
+           
+            </View>
+        
+    </View> */}
     </View>
   )
 }

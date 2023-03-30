@@ -81,13 +81,12 @@ const Navigator = () => {
   // }, [])
   return (
    <NavigationContainer>
-   {user ? (
+   {user != null ? (
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
-    {/* <Stack.Screen name="Chats" component={RecentlyTest} /> */}
+    
     <Stack.Screen name="Chats" component={ChatScreen} />
-    {/* <Stack.Screen name="Chats" component={PushScreen} /> */}
-    {/* <Stack.Screen name="Chats" component={Test2} /> */}
+   
    
     <Stack.Screen name="User Details" component={OtherProfile} />
     { messageHeader ? (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
@@ -131,19 +130,52 @@ const Navigator = () => {
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
      <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} />
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
-      {/* <Stack.Screen name="LoginWithGoogle" component={LoginWithGoogle} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
+     
     <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
     </Stack.Navigator>
 
-   )} 
-    
-    {/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
-    
-    {/* <Stack.Screen name="Chat" component={MessagingScreen} /> */}
-    {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
-    
+   )}     
    </NavigationContainer>
+ 
+
   )
 }
-
+{/* <Stack.Screen name="LoginWithGoogle" component={LoginWithGoogle} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
 export default Navigator
+
+ // <NavigationContainer>
+  // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
+  {/* <Stack.Screen name="Chats" component={RecentlyTest} /> */}
+   {/* <Stack.Screen name="Chats" component={PushScreen} /> */}
+    {/* <Stack.Screen name="Chats" component={Test2} /> */}
+    {/* <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} /> */}
+    {/* <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/> */} 
+ {/* <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
+ {/* <Stack.Screen name="Chats" component={ChatScreen} /> */}
+ {/* <Stack.Screen name="User Details" component={OtherProfile} /> */}
+ {/* <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/> */}
+ {/* <Stack.Screen name="Settings" component={SettingsScreen}/> */}
+ {/* <Stack.Screen name="Contact Us" component={ContactScreen} 
+        options = {{
+          headerStyle: {
+            backgroundColor: '#593196',
+           // backgroundColor: '#a991d4',
+          },
+          
+          headerTintColor: "#fff"
+        }}/> */}
+   {/* <Stack.Screen name = "My Cards" component={MyCards} /> */}
+   {/* <Stack.Screen name = "Edit UserName" component={EditUserName} /> */}
+   {/* <Stack.Screen name = "Edit Name" component={EditName} /> */}
+   {/* <Stack.Screen name = "Edit Email" component={EditEmail} /> */}
+   {/* <Stack.Screen name = "Edit Location" component={EditLocation} /> */}
+    {/* <Stack.Screen name = "Edit MyTraveler" component={EditMyTravelerScreen} /> */}
+  {/* <Stack.Screen name = "Edit MyBuyer" component={EditMyBuyerScreen} /> */}
+     {/* <Stack.Screen name = "Edit Buyer Details" component={EditBuyerDetails} /> */}
+     {/* <Stack.Screen name = "Edit Traveler Details" component={EditTravelerDetails} /> */}
+     {/* <Stack.Screen name = "Connect" component={ConnectScreen} /> */}
+ 
+ 
+
+//   </Stack.Navigator>
+// </NavigationContainer>

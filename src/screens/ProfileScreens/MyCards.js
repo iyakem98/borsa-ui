@@ -35,7 +35,7 @@ const MyCards = () => {
         <Text style = {{
             fontSize: 20,
             marginBottom: 15,
-            position: 'relative'
+            // position: 'relative'
         }}>
             My Buyer Card
         </Text>

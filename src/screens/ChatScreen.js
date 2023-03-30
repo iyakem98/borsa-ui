@@ -341,8 +341,7 @@ useEffect(() => {
          
           if(chat._id === users.chatID && triggerChange)  {
             if(chat.latestMessage != null){
-            return 
-            <Pressable key={chat._id} 
+            return   <Pressable key={chat._id} 
             
             onPress=
             {() => 
