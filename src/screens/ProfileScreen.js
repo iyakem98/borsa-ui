@@ -1,4 +1,4 @@
-import {View, Text, Image, StyleSheet, ImageBackground, Pressable, ScrollView} from 'react-native'
+import {View, Text, Image, StyleSheet, ImageBackground, Pressable, ScrollView, Alert, Modal, TouchableOpacity} from 'react-native'
 import { FontAwesome, FontAwesome5, MaterialIcons, AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { logout } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { ChatState } from '../context/ChatProvider';
 import io from 'socket.io-client'
 import axios from 'axios';
+import { useState } from 'react';
 import { API_BASE_URL } from '../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -28,9 +29,10 @@ const ProfileScreen = ({navigation}) => {
   
       }
 
+      const [modalVisible, setModalVisible] = useState(false)
+
       const deleteAcc = async () => {
-        let res = confirm('Are you sure to delete account? This can not be reversed.')
-        if(res){
+       
          axios.delete(`${API_BASE_URL}users/${user._id}`)
          await AsyncStorage.removeItem("user")
         .then((data) => {
@@ -41,8 +43,30 @@ const ProfileScreen = ({navigation}) => {
           console.log("error is", err)
           alert("No")
         });
-        }
     }
+
+    const showConfirmDialog = () => {
+        // return Alert.alert(
+        //   "Are your sure?",
+        //   "Are you sure you want to remove this beautiful box?",
+        //   [
+        //     // The "Yes" button
+        //     {
+        //       text: "Yes",
+        //     //   onPress: () => {
+        //     //     setShowBox(false);
+        //     //   },
+        //     },
+        //     // The "No" button
+        //     // Does nothing but dismiss the dialog when tapped
+        //     {
+        //       text: "No",
+        //     },
+        //   ]
+        // );
+        alert('ok')
+      };
+
   return (
     
     <View>
@@ -240,8 +264,8 @@ const ProfileScreen = ({navigation}) => {
         My Cards
         </Text>
 </Pressable>
-<Pressable onPress={() => {
-    deleteAcc()
+<TouchableOpacity onPress={() => {
+    setModalVisible(true)
 }}
     style = {styles.press}>
     <View style = {{
@@ -259,7 +283,7 @@ const ProfileScreen = ({navigation}) => {
     }}>
         Delete Account
         </Text>
-</Pressable>
+</TouchableOpacity>
 </View>
 
 
@@ -451,6 +475,36 @@ const ProfileScreen = ({navigation}) => {
         </View>
             
     </View>
+
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Are you sure to delete? This action can not be reversed.</Text>
+            
+            <Pressable
+              style={[styles.button, styles.buttonCloseYes]}
+              onPress={() => deleteAcc()}>
+              <Text style={styles.textStyle}>Yes</Text>
+            </Pressable>
+
+            <Pressable
+              style={[styles.button, styles.buttonCloseNo]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>No</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+     
+    </View>
             
     </View>
   )
@@ -546,6 +600,56 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
         
     },
+
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+      },
+      button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+      },
+      buttonOpen: {
+        backgroundColor: '#F194FF',
+      },
+      buttonCloseYes: {
+        backgroundColor: 'red',
+        marginTop:10,
+        width:"50%"
+      },
+      buttonCloseNo: {
+        backgroundColor: 'green',
+        marginTop:10,
+        width:"50%",
+        color:"black"
+      },
+      textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+      },
     
 
 })

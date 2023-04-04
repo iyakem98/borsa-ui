@@ -1,5 +1,5 @@
 
-import {View, Text, ImageBackground, Image, SafeAreaView, TextInput, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity} from 'react-native'
+import {View, Text, ImageBackground, Image, SafeAreaView, TextInput, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal} from 'react-native'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
@@ -11,6 +11,9 @@ import { API_BASE_URL } from '../../utils/config';
 
 
 const RegisterScreen = () => {
+
+  const [signUp, setSignUp] = useState(true)
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setuserName] = useState("");
@@ -50,6 +53,8 @@ const RegisterScreen = () => {
       setPasswordError("")
      }
   }
+
+  const [modalVisible, setModalVisible] = useState(false)
   const handleSubmit = async () => {
     if (  firstName === '' || lastName === '' || userName === ''  || email === '' || password === '' || country === '' ||  city === '') {
         alert("All fields are required");
@@ -66,35 +71,39 @@ const RegisterScreen = () => {
       return;
     }
     
-    
-   
+   if(firstName && lastName && userName && email && password &&country && city && password==passwordAgain && password.length>7){
+    setSignUp(false)
     let userData = {
-        firstName,
-        lastName,
-        email,
-        password,
-        userName,
-        isTraveler,
-        profilePic,
-        city,
-        country
-      }
-      console.log(userData)
-    
-    axios.post(`${API_BASE_URL}users/`, userData)
-        .then((data) => {
-          setMailedTo(data.data._id)
-          setRegisterForm("none")
-          setVerifyForm("")
-         })
-        .catch((err) => {
-          console.log("error is", err)
-          alert("Something went wrong try again!")
-        });
+      firstName,
+      lastName,
+      email,
+      password,
+      userName,
+      isTraveler,
+      profilePic,
+      city,
+      country
+    }
+    console.log(userData)
+  
+  axios.post(`${API_BASE_URL}users/`, userData)
+      .then((data) => {
+        setMailedTo(data.data._id)
+       setModalVisible(true)
+       })
+      .catch((err) => {
+        console.log("error is", err)
+        alert("Something went wrong try again!")
+      });
+
+      setSignUp(false)
+   } 
+   
+   
 
 
-    setRegisterForm("none")
-    setVerifyForm("")
+    // setRegisterForm("none")
+    // setVerifyForm("")
     // alert("Sign In Successful");
     // navigate.navigate("Verifyyy")
 
@@ -578,7 +587,8 @@ const handleVerify = async () => {
                   </TouchableHighlight>
                   <View>
                   </View>
-                 
+               
+               
                 <TouchableOpacity style = {{
                   backgroundColor: '#13b955',
                   width: "70%",
@@ -605,9 +615,11 @@ const handleVerify = async () => {
                     color: 'white',
                     fontSize: 17,
                   }}>
-                    Sign Up
+                    {signUp ? "Sign Up" : "Please wait..."}
                   </Text>
                 </TouchableOpacity>
+
+
                 <Text style = {{
                   color: 'gray'
                 }}>
@@ -634,250 +646,123 @@ const handleVerify = async () => {
           </View>
           </ScrollView> 
 
-         {/* {verifyForm ?  <ScrollView style = {{backgroundColor: 'white', 
-          // display:`${verifyForm}`
-          }}>
-          <View style = {{
-            alignItems: 'center',
-            paddingVertical: 40,
-            width: '100%',
-            backgroundColor: 'white'
-          }}>
+          <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
 
-            <Text style={{fontSize:19, marginBottom:10, 
-              // display:"flex",
-               textAlign:"center"}}>
-              Enter the code sent to {email} to continue.
-            </Text>
-               
-                <TextInput placeholder='Confirmation Code'
-                autoFocus
-                keyboardType='numeric'
+
+            <Text style={styles.modalText}>Enter the OTP sent to your email to verify..</Text>
+            
+            <TextInput placeholder='OTP'
                   style = {{
-                    width: '85%',
+                    width: '76%',
                     paddingHorizontal: 8,
                     paddingVertical: 8,
                     borderStyle: 'solid',
                     borderBottomWidth: StyleSheet.hairlineWidth,
                     borderColor: "lightgray",
                     fontSize: 18,
-                    marginVertical: 8,
-                    textAlign:"center"
+                    marginBottom: 16,
+                    textAlign:"center",
+                    keyboardType:"numeric"
                   }}
-                  value={confirm} 
-                  onChangeText={text => {
-                    if(text.length<5){
-                      setConfirm(text)
-                    }
-                  }}
+                  value={confirm}
+                   onChangeText={text => setConfirm(text)}
                   />
 
-                
-                  <View>
-                  </View>
-                 
-                <TouchableOpacity style = {{
-                  backgroundColor: '#13b955',
-                  width: "70%",
-                  height: 50,
-                  marginTop: 40,
-                  marginBottom: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 5,
-  
-                  shadowColor: "000",
-                  shadowOffset: {
-                      width: 0,
-                      height: 3,
-                  },
-                  shadowOpacity: 0.28,
-                  shadowRadius: 3.00,
-  
-                  elevation: 1,
-  
-                }} 
-                onPress={() => handleVerify()}>
-                  <Text style = {{
-                    color: 'white',
-                    fontSize: 17,
-                  }}>
-                    Verify
-                  </Text>
-                </TouchableOpacity>
-               
-                <Pressable 
-                  onPress={() => {
-                    setRegisterForm("")
-                    setVerifyForm("none")
-                    setEmail("")
-                    setConfirm("")
-                  }}
-                  style = {{
-                    marginVertical: 10,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: '#593196',
-                    paddingHorizontal: 3
-                }}>
-                  <Text style = {{
-                    //color: '#a991d4'
-                    color: '#593196',
-                    fontSize: 14,
-                  }}>
-                    Incorrect email.
-                  </Text>
-                </Pressable>
-  
-                <Pressable 
-                  onPress={() => {
-                    navigate.navigate('Login')
-                    setVerifyForm("none")
-                    setRegisterForm("")
-                    setConfirm("")
-                  }
-                  }
-                  style = {{
-                    marginVertical: 6,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: 'green',
-                    paddingHorizontal: 3
-                }}>
-                  <Text style = {{
-                    //color: '#a991d4'
-                    color: 'green',
-                    fontSize: 14,
-                  }}>
-                    Login to another account.
-                  </Text>
-                </Pressable>
-          </View>
-          </ScrollView> : null} */}
-          <ScrollView style = {{backgroundColor: 'white', 
-          // display:`${verifyForm}`
-          }}>
-          <View style = {{
-            alignItems: 'center',
-            paddingVertical: 40,
-            width: '100%',
-            backgroundColor: 'white'
-          }}>
+            <Pressable
+              style={[styles.button, styles.buttonCloseNo]}
+              onPress={() => handleVerify()}>
+              <Text style={styles.textStyle}>Go</Text>
+            </Pressable>
 
-            <Text style={{fontSize:19, marginBottom:10, 
-              // display:"flex",
-               textAlign:"center"}}>
-              Enter the code sent to {email} to continue.
-            </Text>
-               
-                <TextInput placeholder='Confirmation Code'
-                autoFocus
-                keyboardType='numeric'
-                  style = {{
-                    width: '85%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginVertical: 8,
-                    textAlign:"center"
-                  }}
-                  value={confirm} 
-                  onChangeText={text => {
-                    if(text.length<5){
-                      setConfirm(text)
-                    }
-                  }}
-                  />
-
-                
-                  <View>
-                  </View>
-                 
-                <TouchableOpacity style = {{
-                  backgroundColor: '#13b955',
-                  width: "70%",
-                  height: 50,
-                  marginTop: 40,
-                  marginBottom: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 5,
-  
-                  shadowColor: "000",
-                  shadowOffset: {
-                      width: 0,
-                      height: 3,
-                  },
-                  shadowOpacity: 0.28,
-                  shadowRadius: 3.00,
-  
-                  elevation: 1,
-  
-                }} 
-                onPress={() => handleVerify()}>
-                  <Text style = {{
-                    color: 'white',
-                    fontSize: 17,
-                  }}>
-                    Verify
-                  </Text>
-                </TouchableOpacity>
-               
-                <Pressable 
-                  onPress={() => {
-                    setRegisterForm("")
-                    setVerifyForm("none")
-                    setEmail("")
-                    setConfirm("")
-                  }}
-                  style = {{
-                    marginVertical: 10,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: '#593196',
-                    paddingHorizontal: 3
-                }}>
-                  <Text style = {{
-                    //color: '#a991d4'
-                    color: '#593196',
-                    fontSize: 14,
-                  }}>
-                    Incorrect email.
-                  </Text>
-                </Pressable>
-  
-                <Pressable 
-                  onPress={() => {
-                    navigate.navigate('Login')
-                    setVerifyForm("none")
-                    setRegisterForm("")
-                    setConfirm("")
-                  }
-                  }
-                  style = {{
-                    marginVertical: 6,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: 'green',
-                    paddingHorizontal: 3
-                }}>
-                  <Text style = {{
-                    //color: '#a991d4'
-                    color: 'green',
-                    fontSize: 14,
-                  }}>
-                    Login to another account.
-                  </Text>
-                </Pressable>
+            <Pressable
+              style={[styles.button, styles.buttonCloseCancel]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyleCancel}>Cancel</Text>
+            </Pressable>
           </View>
-          </ScrollView>
-  
+        </View>
+      </Modal>
+     
+    </View>
+
+        
           
       </View>
   )
 }
+
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonCloseYes: {
+    backgroundColor: 'red',
+    marginTop:10,
+    width:"50%"
+  },
+  buttonCloseNo: {
+    backgroundColor: 'green',
+    marginTop:10,
+    width:"70%",
+    color:"black"
+  },
+
+  buttonCloseCancel: {
+    backgroundColor: '#f6f6fb',
+    marginTop:10,
+    width:"70%",
+    color:"black"
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  textStyleCancel: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+});
 
 export default RegisterScreen
