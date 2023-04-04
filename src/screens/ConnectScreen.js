@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import BuyerCard from '../components/Connect/BuyerCard'
 import TravelerCard from '../components/Connect/TravelerCard2'
 import { getConsumers, getTravelers } from '../features/auth/authSlice'
+import { useNavigation } from '@react-navigation/native'
 
 
 const ConnectScreen = () => {
@@ -22,6 +23,7 @@ const ConnectScreen = () => {
     const dispatch = useDispatch()
     const [isBuyer, setIsBuyer] = useState(false)
     const [isTraveler, setIsTraveler] = useState(false)
+    const navigation = useNavigation();
     function tweakBuyer() {
         setIsBuyer(false)
         console.log(isBuyer)
@@ -30,7 +32,13 @@ const ConnectScreen = () => {
         setIsBuyer(true)
         console.log(isBuyer)
     }
-    
+    useEffect(() => {
+      navigation.addListener('focus', getUsers)
+      // UpdateUserRoute()
+     //  console.log(route.name)
+       // setImage(null)
+      },[travelers, consumers])
+       
     // const getConsumers = async () => {
     //   try{
     //     const {data} = await axios.get('http://192.168.100.2:5000/api/users/consumers')
@@ -77,18 +85,18 @@ const ConnectScreen = () => {
          
         });
     }
-        useEffect(() => {
-          //  dispatch(getTravelers())
-          //  console.log(travelers)
-          //  dispatch(getConsumers())
-           getUsers()
-          //  console.log(consumers)
-          //  console.log(isBuyer)
-          console.log("my travelerrrrrrrs are:", travelers)
-          console.log("my buyerrrrrrrrs are:", consumers)
-          let u = AsyncStorage.getItem('user')
-          console.log("userrrrrr:", user)
-        }, [travelers, consumers])
+        // useEffect(() => {
+        //   //  dispatch(getTravelers())
+        //   //  console.log(travelers)
+        //   //  dispatch(getConsumers())
+        //   //  getUsers()
+        //   //  console.log(consumers)
+        //   //  console.log(isBuyer)
+        //   // console.log("my travelerrrrrrrs are:", travelers)
+        //   // console.log("my buyerrrrrrrrs are:", consumers)
+        //   let u = AsyncStorage.getItem('user')
+        //   console.log("userrrrrr:", user)
+        // }, [travelers, consumers])
         
   return (
   //  <ScrollView>

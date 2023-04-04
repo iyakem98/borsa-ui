@@ -12,10 +12,10 @@ import { Entypo, MaterialIcons, Octicons, Ionicons, Foundation, MaterialCommunit
 
 const TravelerCard = ({traveler}) => {
     
-    // console.log(traveler.user.email)
+    // console.log(traveler.user._id)
     const { user } = useSelector((state) => state.auth)
     // const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId } = ChatState(); 
     const dispatch = useDispatch()
     const navigation = useNavigation();
     var travelerId = useRef(null)
@@ -30,10 +30,12 @@ const TravelerCard = ({traveler}) => {
   const [image, setImage] = useState(def);
 
     
-    const TravelerChat = async(travId) => {
-        const userId = travId
-        console.log(userId)
-        // console.log(travelerId.current)
+    const TravelerChat = async(travData) => {
+        // console.log(travData)
+        const userId = travData._id
+        // console.log(userId)
+        // // console.log(userId)
+        // // // console.log(travelerId.current)
         try{
             const config = {
               headers: {
@@ -41,13 +43,19 @@ const TravelerCard = ({traveler}) => {
         
               }
           }
+          navigation.navigate('Messaging', {userSelected:
+            
+            travData})
             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
             // console.log(data._id)
             setchatSelected(true)
+            setchattId(data._id)
+            // console.log(data._id)
+            // setchatSelected(true)
         
-            navigation.navigate('Messaging', {chatId: data._id, userSelected:
+            // navigation.navigate('Messaging', {chatId: data._id, userSelected:
             
-                user != null ? getSenderFull(user, data.users) : null })
+            //     user != null ? getSenderFull(user, data.users) : null })
                 
             }
             // return data
@@ -194,7 +202,7 @@ const TravelerCard = ({traveler}) => {
                 paddingVertical: 5,
                 borderRadius: 30
 
-            }} onPress={() => TravelerChat(traveler._id)}>
+            }} onPress={() => TravelerChat(traveler.user)}>
                 <Text style = {{
                     fontSize: 18,
                     color: 'white'

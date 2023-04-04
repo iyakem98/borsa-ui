@@ -12,10 +12,10 @@ import { useState } from 'react'
 
 
 const BuyerCard = ({buyer}) => {
-    console.log(buyer.user.firstName)
+    // console.log(buyer.user)
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId } = ChatState(); 
     const navigation = useNavigation();
 
     const [modal, setModal] = useState(false)
@@ -27,9 +27,10 @@ const BuyerCard = ({buyer}) => {
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
 
-    const BuyerChat = async(buyerID)=> {
-        console.log(buyerID)
-        const userId = buyerID
+    const BuyerChat = async(buyerData)=> {
+        // console.log(buyerData)
+        // console.log(buyerID)
+        const userId = buyerData._id
         try{
             const config = {
                 headers: {
@@ -37,22 +38,26 @@ const BuyerCard = ({buyer}) => {
         
                 }
             }
+            navigation.navigate('Messaging', {userSelected:
+            
+                buyerData})
             const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
             // console.log(data._id)
             setchatSelected(true)
+            setchattId(data._id)
         
-            navigation.navigate('Messaging', {chatId: data._id, userSelected:
+            // navigation.navigate('Messaging', {chatId: data._id, userSelected:
             
-                user != null ? getSenderFull(user, data.users) : null })
+            //     user != null ? getSenderFull(user, data.users) : null })
                 
             
             // return data
         }
         catch(err){
             console.log(err)
-        }
+        // }
     }
-
+    }
     const goToUserProfile = async () => {
         
         
@@ -177,7 +182,7 @@ const BuyerCard = ({buyer}) => {
                 paddingVertical: 5,
                 borderRadius: 30
 
-            }} onPress= {() => BuyerChat(buyer._id)}>
+            }} onPress= {() => BuyerChat(buyer.user)}>
                 <Text style = {{
                     fontSize: 18,
                     color: 'white'

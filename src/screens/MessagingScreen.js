@@ -37,7 +37,7 @@ const MessagingScreen = () => {
   const {chatId} = route.params;
   const {userSelected} = route.params;
   const [messages, setMessages] = useState([])
-  const ENDPOINT = "http://192.168.100.2:5000"
+  // const ENDPOINT = "http://192.168.100.2:5000"
   var socket = useRef(null)
   var selectedChatCompare = null;
   var chatRouteCompare = null
@@ -62,7 +62,10 @@ const MessagingScreen = () => {
      receivedMessage, 
     setreceivedMessage,
     messageSentOrReceived, setmessageSentOrReceived,
-    chatRoute, setchatRoute
+    chatRoute, setchatRoute,
+    NewwMessage,setNewwMessage,
+    chatSelected, setchatSelected,
+    chattId,setchatId
     } = ChatState(); 
   // const [mesages, setMesages] = useState()
   // const defaultOptions = {
@@ -95,12 +98,13 @@ const MessagingScreen = () => {
   //   }),
   // });
   // console.log(messageHeader)
-  console.log(image)
+  // console.log(route.params.userSelected._id)
   const cameraRef = useRef()
   useLayoutEffect(() => {
   
-    // fetchMessage()
-    socket.current = io(ENDPOINT)
+    fetchMessage()
+    // socket.current = io(ENDPOINT)
+    socket.current = io(API_BASE_URL)
     socket.current.emit("setup", user);
     // socket.emit("findChat", chatId)
     socket.current.on("connected", () => setsocketConnected(true) )
@@ -206,6 +210,79 @@ const MessagingScreen = () => {
 
          
     //  })
+    socket.current.on("message recieved", (newMessageReceived) => {
+      setMessages([...messages, newMessageReceived])
+       setreceivedMessage(true)
+      // console.log(route.name)
+      // console.log('mess received')
+      
+      // console.log(newMessageReceived)
+    //   if(newMessageReceived.receiver.route != "Messaging")
+      // testNotif(newMessageReceived)
+    //  console.log(newMessageReceived.chat._id)
+    //  console.log(newMessageReceived.chat)
+    //  if((!selectedChatCompare)  ||  selectedChatCompare._id !== newMessageReceived.chat._id ){
+    //   // console.log(notisfication)
+    //   // console.log('message received')
+    // // //  if((newMessageReceived.receiver.route == "Chats")){
+    // // //   console.log('notif received')
+    // if (!notification.includes({newMessageReceived})) {
+    //     // console.log(newMessageReceived.chat)
+    //             setNotification([...notification,  newMessageReceived]);
+    //             // console.log(notification)
+    //             setNotification((state) => {
+    //               // console.log(state)
+    //               return state
+    //             })
+    //             // console.log(notification)
+    //             storeNotifcation(notification, {chatUsers: newMessageReceived.chat.users, chatId: newMessageReceived.chat._id })
+    //             // storeNotifcation(notification)
+               
+                
+    //             setfetchAgain(!fetchAgain)
+    //             setfetchAgain((state) => {
+    //               // console.log(state)
+    //               return state
+    //             })
+    //             // console.log(fetchAgain)
+    //  }
+
+    // // console.log('message received')
+    // //  testNotif(newMessageReceived)
+     
+    // }
+    // if (!notification.includes({newMessageReceived})) {
+    //     // console.log(newMessageReceived.chat)
+    //             setNotification([...notification,  newMessageReceived]);
+    //             // console.log(notification)
+    //             setNotification((state) => {
+    //               // console.log(state)
+    //               return state
+    //             })
+    //             // console.log(notification)
+    //             storeNotifcation(notification, {chatUsers: newMessageReceived.chat.users, chatId: newMessageReceived.chat._id })
+    //             // storeNotifcation(notification)
+               
+                
+    //             setfetchAgain(!fetchAgain)
+    //             setfetchAgain((state) => {
+    //               // console.log(state)
+    //               return state
+    //             })
+    //             // console.log(fetchAgain)
+     
+
+    // }
+    // else{
+    //   console.log('notif not received')
+    //  
+    //   // setreceivedMessage(true)
+    // }   
+
+         
+     
+    })
+
 
   })
   useEffect(() => {
@@ -245,7 +322,7 @@ const MessagingScreen = () => {
 console.log("messssssssage infooooooo:",
 {
 content : newmessage,
-chatId: chatId,
+chatId: chattId,
 image: "",
 // receiver: route.params.userSelected._id
 receiver: route.params.userSelected
@@ -253,6 +330,7 @@ receiver: route.params.userSelected
 )
   // setImage(null)
  }, [])
+
  async function sendPushNotification(expoPushToken) {
   const message = {
     to: expoPushToken,
@@ -423,7 +501,8 @@ const CameraFeature = () => {
   //     </View>
 }
   const sendMessage = async() => {
-    console.log("sendinggggggggggggggg")
+    console.log(newmessage)
+    
     let tym = moment(new Date()).format("LT")
     let nw = {
       content: newmessage,
@@ -432,13 +511,14 @@ const CameraFeature = () => {
     let m = newerMessages
     m = newerMessages.push(nw)
     setNewMessage(m)
+    
     try{
-    //   const config = {
-    //     headers: {
-    //         Authorization: `Bearer ${user.token}`
+      const config = {
+        headers: {
+            Authorization: `Bearer ${user.token}`
 
-    //     }
-    // }
+        }
+    }
     // let options = {
     //   quality: 1,
     //   base64: false,
@@ -453,34 +533,34 @@ const CameraFeature = () => {
     // setImage(newPhoto)
     //setNewMessage("")
     
-      const config = {
+  //     const config = {
           
-        headers: {
+  //       headers: {
          
-          Authorization: `Bearer ${user.token}`
-        },
-        // body: JSON.stringify({
-        //   imgsource: newPhoto.base64,
-        // }),
-        // body: formData
-       };
+  //         Authorization: `Bearer ${user.token}`
+  //       },
+  //       // body: JSON.stringify({
+  //       //   imgsource: newPhoto.base64,
+  //       // }),
+  //       // body: formData
+  //      };
      
    
- 
-    const {data} = await axios.post(`${API_BASE_URL}message`, {
+  console.log("sendinggggggggggggggg")
+    const {data} = await axios.post(`${API_BASE_URL}message/`, {
       content : newmessage,
-      chatId: chatId,
+      chatId: chattId,
       image: "",
       // receiver: route.params.userSelected._id
       receiver: route.params.userSelected._id
 
     },
     config)
-    testNotif(data)
-    setImage(null)
-    // console.log("message sent successfully")
-    setNewMessage("")
-    setNewerMessages([])
+  //   // testNotif(data)
+  //   setImage(null)
+    console.log("message sent successfully")
+  //   setNewMessage("")
+  //   setNewerMessages([])
    
     
   socket.current.emit("new message", data)
@@ -489,7 +569,7 @@ const CameraFeature = () => {
   setfetchAgain(true)
   setfetchAgain(false)
 
-  myRef.scrollTo(0, myRef.scrollHeight)
+  // myRef.scrollTo(0, myRef.scrollHeight)
   
   return data
     
@@ -499,6 +579,7 @@ const CameraFeature = () => {
    
     }
     catch(error){
+      console.log(error)
       // console.log('sending message is not possible')
     }
   }
@@ -513,7 +594,7 @@ const CameraFeature = () => {
     }
 
    
-    const {data} = await axios.get(`${API_BASE_URL}message/${chatId}`,
+    const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
     
     // console.log(data)
@@ -525,11 +606,12 @@ const CameraFeature = () => {
       // console.log(state)
       return state
     })
-    socket.current.emit("join chat", chatId)
+    socket.current.emit("join chat", chattId)
     return data;
    
     }
     catch(error){
+      console.log(error)
       // console.log('fetching message is not possible')
     }
 
@@ -664,27 +746,14 @@ const CameraFeature = () => {
  }
 
  if (hasPermissions === undefined) {
-  return 
-  (
-    <>
-  <Text>Requesting permissions...</Text>
-  </>
-  )
+  return <Text>Requesting permissions...</Text>
 } else if (!hasPermissions) {
-  return 
-  (
-    <>
-  <Text style={{position:"fixed", top:"50%", left:"50%", transform:"translate(-50%, -50%)"}}>
-    Permission for camera not granted. Please change this in settings.</Text>
-    </>
-  )
+  return <Text>Permission for camera not granted. Please change this in settings.</Text>
 }
 
 if(cameratest){
   // return <Text style={styles.text}>cemera test</Text>
-  return 
-  (
-  <View style={styles.container2}>
+  return <View style={styles.container2}>
   
    
     <Camera
@@ -731,7 +800,6 @@ if(cameratest){
  
  
 </View>
-  )
 }
 
 // if(image){
@@ -755,14 +823,12 @@ if(cameratest){
 
  
 
-  return (
-   
-<>
+  return ( <>
 
-<ScrollView style={{}}>
 
-  <KeyboardAwareScrollView>
-    <View ref={myRef} style={{marginBottom:50, backgroundColor:"white"}}>
+
+ 
+    {/* <View ref={myRef} style={{marginBottom:50, backgroundColor:"white"}}>
     <ScrollableFeed messages={messages} />
     <View style={{backgroundColor:"#fff", marginTop:5}}>
           {
@@ -784,42 +850,115 @@ if(cameratest){
                 ))
           }
 </View>
+    </View> */}
+
+
+ 
+
+
+
+
+ {/* <View>
+    <ScrollableFeed messages={messages} latestMessage={latestMess}/>
+    </View> */}
+    <View>
+    
+    <ScrollableFeed messages={messages}/>
     </View>
+    {/* <View style={{backgroundColor:"#fff", marginTop:5}}>
+          {
+              newerMessages && newerMessages.map((msg, index) => (
+                   <View key={index} style={{
+                    alignSelf:"flex-end",
+                    marginRight:10,
+                    backgroundColor:"#593196",
+                    padding:6,
+                    marginBottom:5,
+                    borderRadius:8
+                   }}>
+                    <Text style={{color:"white",}}>{msg.content}</Text>
+                    <Text style={{color:"white"}}>{msg.time}
+                      &nbsp;&nbsp;
+                    <Ionicons name="checkmark-outline" size={14} color="white" style={{opacity:.5}}/>
+                </Text>
+                   </View>
+                ))
+          }
+</View> */}
+  
+  
+    {/* </KeyboardAvoidingView> */}
+   <KeyboardAvoidingView>
+ <View 
+ style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
+  backgroundColor: "#fff",
+  // backgroundColor: "red",
+  // height: "10%",
+  // paddingTop: ,
+  
+  marginTop: 40,
+  
+  
+  paddingHorizontal: 2,
+ 
+ }}
+ behavior="position"
+ >
+ {isTyping ? <View>
+    <Text> isTyping... </Text>
+    </View> : null}
+   <TextInput 
 
+      value={newmessage}
+      onChangeText={setNewMessage}
+      style = {styles.input} 
+      placeholder='type your message...'/>
+    <Pressable onPress={() => {
+      CameraFeature()
+      setmessageHeader(true)
+      }}>
+    <AntDesign name="camera" size={24} color="black" style={{paddingTop: 5, paddingRight: 7}}/>
+    </Pressable>
+    <Pressable onPress={() => sendMessage()}>
+    <MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}}/>
+    </Pressable>
 
-   <SafeAreaView style={{position: 'absolute', left: 0, right: 0, bottom: 5, flexDirection: "row",
-   backgroundColor: "#f9f8fc",
-   padding: 0,
+ </View>
+ </KeyboardAvoidingView>
+
+{/* <SafeAreaView   style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
+  //  backgroundColor: "#fff",
+   backgroundColor: "red",
+  //  paddingTop: -60,
+   
+  //  marginTop: ,
+   
+   
    paddingHorizontal: 10,
   }}
    behavior="position"> 
-   {/* <AntDesign name='plus' size = {24} color = "#593196"/> */}
+   
     {isTyping ? <View>
-    <Text> isloading... </Text>
+    <Text> isTyping... </Text>
     </View> : null}
    <TextInput 
       value={newmessage}
-      onChangeText={(newText)=>setNewMessage(newText)}
-      onChange={typingHandler}
-      style = {styles.input}
-      placeholder='Type your message...'
-      onKeyPress={(keyPress) => {
-        if(keyPress.key=="Enter"){
-          sendMessage()
-        }
-      }}
-      />
-   
-    <TouchableOpacity onPress={() => {
-     sendMessage()
-      }
-    }>
-    <MaterialIcons name='send' size={24} color = "#17141f"/>
-    </TouchableOpacity>
+      onChangeText={setNewMessage}
+      style = {styles.input} 
+      placeholder='type your message...'/>
+    <Pressable onPress={() => {
+      CameraFeature()
+      setmessageHeader(true)
+      }}>
+    <AntDesign name="camera" size={24} color="black" />
+    </Pressable>
+    <Pressable onPress={() => sendMessage()}>
+    <MaterialIcons  name='send' size={24} color = "#17141f"/>
+    </Pressable>
   
-</SafeAreaView> 
-</KeyboardAwareScrollView>
-</ScrollView>
+</SafeAreaView>  */}
+ 
+
 
 </>  
     
@@ -828,7 +967,7 @@ if(cameratest){
    
   )
 }
-
+{/* <AntDesign name='plus' size = {24} color = "#593196"/> */}
 
 
 export default MessagingScreen
@@ -877,6 +1016,7 @@ input: {
     marginHorizontal: 10,
     marginRight:20,
     borderRadius: 50,
+    // marginTop: -30,
     borderColor: "lightgray",
     borderWidth: StyleSheet.hairlineWidth,
 },

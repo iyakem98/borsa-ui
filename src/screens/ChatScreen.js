@@ -34,16 +34,17 @@ const ChatScreen = () => {
     const {triggerChange, settriggerChange} = ChatState();
     const {messages} = useSelector((state) => state.mess)
     const {
-            selectedChat, setSelectedChat, 
-            chats, setChats, 
-            chatSelected, setchatSelected, 
-            fetchAgain, setfetchAgain, 
-            notification, setNotification,
-            receivedMessage, setreceivedMessage,
-            sentMessage, setsentMessage,
-            messageSentOrReceived, setmessageSentOrReceived,
-            // onlineStatus, setonlineStatus
-            } = ChatState();
+      selectedChat, setSelectedChat, 
+      chats, setChats, 
+      chatSelected, setchatSelected, 
+      fetchAgain, setfetchAgain, 
+      notification, setNotification,
+      receivedMessage, setreceivedMessage,
+      sentMessage, setsentMessage,
+      messageSentOrReceived, setmessageSentOrReceived,
+      chattId, setchattId
+      // onlineStatus, setonlineStatus
+      } = ChatState();
     const navigation = useNavigation();
     const [visible, setVisible] = useState(false);
     const ENDPOINT = "http://192.168.100.2:5000"
@@ -82,33 +83,33 @@ const ChatScreen = () => {
     //   // console.log(notificationstored)
     // }, [])
 
-    const goToMsg = async(chat) => {
-      const userId = chat.users[0]._id
-      console.log(userId)
-      // console.log(travelerId.current)
-      try{
-          const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`
+  //   const goToMsg = async(chat) => {
+  //     const userId = chat.users[0]._id
+  //     console.log(userId)
+  //     // console.log(travelerId.current)
+  //     try{
+  //         const config = {
+  //           headers: {
+  //               Authorization: `Bearer ${user.token}`
       
-            }
-        }
-          const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-          // console.log(data._id)
-          setchatSelected(true)
+  //           }
+  //       }
+  //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+  //         // console.log(data._id)
+  //         setchatSelected(true)
       
-          navigation.navigate('Messaging', {chatId: data._id, userSelected:
+  //         navigation.navigate('Messaging', {chatId: data._id, userSelected:
           
-              user != null ? getSenderFull(user, data.users) : null })
+  //             user != null ? getSenderFull(user, data.users) : null })
               
-          }
-          // return data
+  //         }
+  //         // return data
           
           
-      catch(err){
-          console.log(err)
-      }
-  }
+  //     catch(err){
+  //         console.log(err)
+  //     }
+  // }
 
 
     useEffect(() => {
@@ -161,6 +162,7 @@ useEffect(() =>{
 useEffect(() =>{
 
     dispatch(fetchChat())
+    console.log(chattts)
     
   
 }, [user])
@@ -311,166 +313,443 @@ useEffect(() => {
         // console.log(storedNotifications)S
         // return JSON.parse(notif);
       } 
-
-
-    return(
- 
-    <>
-        
-        <ScrollView style = {{
-          backgroundColor: '#fff'
-        }}>
-         
-         <ChatListHeader chatArr={chatArr2}/>
-        <View>
-        
-          <Text>
-          {storedNotifications && storedNotifications.length  ? `` : ""}
-          </Text>
-       
-
-        
-        </View>
-        { chattts && chattts.length > 0 ? (chattts.map((chat) => {
-          if(chat != null){
-            if(chat.lastestMessage !== null){
-            }
-          chatArr.push(chat)
-          chatArr2.push(chat)
-          setSelectedChat(chat)
-         
-          if(chat._id === users.chatID && triggerChange)  {
-            if(chat.latestMessage != null){
-            return   <Pressable key={chat._id} 
-            
-            onPress=
-            {() => 
-                  {
-                    
-                    {chat.latestMessage && chat.latestMessage.sender
-                      if(chat.latestMessage.sender._id === user._id){
-                        console.log("sender")
-                        // setreceivedMessage(true)
-                        setsentMessage(true)
-                       }
-                       
-                       else if(chat.latestMessage.sender._id !== user._id){
-                        console.log("reciever")
-                          setsentMessage(false)
-                        
-                       }
-                       else{
-                        null              }
-                      }
-                 
-                  navigation.navigate('Messaging', {chatId: chat._id, userSelected:
-                    
-                  user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
-                      <View>
-                      <Image 
-                          source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
-                          style = {styles.image}
-                       />
-                       
-                          { onlineStatus &&  <Badge
-                          status="success"
-                          containerStyle={{ position: 'absolute', top: 50, left: 45 }}
-                              /> 
-                          }
-                      </View>
-                        
-                      <View style = {styles.content}>
-                          <View style = {styles.row}>
-                              <Text style = {styles.name}>
-                                  {user != null ? getSenderFull(user, chat.users).firstName : null}
-                              </Text> 
-                                <Text style = {styles.subTitle}>
-                                  {/* {dayjs(chat.latestMessage).fromNow(true)} */}
-                                  {formatted_date}
-                              </Text>   
-                          </View>
-                         
-                        
-                          {chat.latestMessage && chat.latestMessage.content?
-                          
-                          <Text> {chat.latestMessage.content}</Text>
-                          
-                             : "" }
-                       
-                      </View>
-                      </Pressable>
-            }
-          }
-          else{
-            if(chat.latestMessage != null && triggerChange){
-                return <Pressable key={chat._id}
-                  style={styles.container}
-
-                    onPress={()=>
-                      goToMsg(chat)
-                    }
-                    >
-
-                    <View>
-                    <Image 
-                        source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
-                        style = {styles.image}
-                     />
-                    </View>
-                      
-                    <View style = {styles.content}>
-                        <View style = {styles.row}>
-                            <Text style = {styles.name}>
-                                {user != null ? getSenderFull(user, chat.users).firstName : null}
-                            </Text> 
-                              <Text style = {styles.subTitle}>
-                                {/* {dayjs(chat.latestMessage).fromNow(true)} */}
-                              {formatted_date}
-                            </Text>   
-                        </View>
-                      
-                        {chat.latestMessage && chat.latestMessage.content != "" ?
-                        <View style = {{
-                          flexDirection: 'row'
-                        }}>
-      
-                           <Text  numberOfLines={2} style = {styles.subTitle}>
-                            {chat.latestMessage.content}
-                          </Text>
-                        </View>
-                        
-                           : <Text>File Uploaded</Text> }
-                     
-                    </View>
-                    </Pressable>
-            }
-            
-            
-          }
-        
-     
-          
-        }
-       
-
-              })): (
-          <View>
-              <Text style={styles.text}>No chats available click here to access them </Text>
-            </View>
-        )
-        
+      const UpdateUserRoute = async () => {
+    
+        try{
+          console.log(route.name)
+          const userId = user._id
+          console.log(userId)
+          const   config = {
               
-        } 
+            headers: {
+             
+              Authorization: `Bearer ${user.token}`
+            },
+            // body: JSON.stringify({
+            //   imgsource: newPhoto.base64,
+            // }),
+            // body: formData
+           };
       
-          
-       
-         
+          const {data} = await axios.put(`http://192.168.100.2:5000/api/users/route`,{
+            userId: user._id,
+            route: route.name
+            
+          }, config)
+          console.log('user route updated')
+          // console.log(data.lastSeen)
+          // setlastseendateandtime(moment(data.lastSeen).format("dddd, MMMM Do YYYY") + " " + moment(data.lastSeen).format("LT"))
+      
+        }
+        catch(err){
+          console.log(err)
+        }
         
+       }
 
-          </ScrollView> 
-          </>
-        
-    )
+       return(
+        //   <View>
+        //     <Pressable >
+        //    <TouchableOpacity onPress={() => {
+        //     renderChats()}} style={styles.buttonStyle}>
+        //                 <Text style={styles.buttonText}>Submit</Text>
+        //             </TouchableOpacity>
+        // </Pressable>
+        //   </View>
+        <>
+            
+            <ScrollView style = {{
+              backgroundColor: '#fff'
+            }}>
+             
+             <ChatListHeader chatArr={chatArr2}/>
+            <View>
+            {/* <Feather name="bell" size={24} color="black" /> */}
+            
+              <Text>
+              {/* {storedNotifications && storedNotifications.length  ? `new messages of length ${storedNotifications.length}` : "no new messages"} */}
+                {/* {storedNotifications.length && `new messages of length ${storedNotifications.length}`} */}
+              </Text>
+              {/* <Text>
+                {!storedNotifications.length  && "no new messages"}
+                {storedNotifications.length && `new messages of length ${storedNotifications.length}`}
+              </Text> */}
+            {/* <Text>{ !getnotif.length && "no new messages"} </Text> 
+            <Text>{getnotif.length && ` new messages of length ${notification.length}` } </Text> 
+            {notification && notification.map((notif) => (
+              <Text onPress={() => {
+                setNotification(notification.filter((n) => n !== notif));
+              }}  key={notif._id}>
+                   {
+                        
+                         `New Message from ${getSender(user, notif.chat.users)}`}
+                         
+              </Text>
+            ))} */}
+    
+            
+            </View>
+            {/* { chattts && chattts.length > 0 ?  (
+            <View style={{backgroundColor: "white"}}>
+            <FlatList
+                    data = {chattts} 
+                    
+                    renderItem = {({item}) => <ChatListItem chat = {item}  
+                    keyExtractor={(item) => item.id}
+                />
+                      
+                    }
+                />
+                </View>
+                ) : (<View>
+                  <Text style={styles.text}>No chats available click here to access them </Text>
+                </View>)} */}
+            { chattts && chattts.length > 0 ? (chattts.map((chat) => {
+              // if(messageOnce == false){
+              //   dispatch(allMessages(chat._id))
+              //   setmessageOnce(true)
+              // }
+              // 
+              // setfetchAgain(true)
+              if(chat != null){
+                // var formatted_date = null
+                // console.log(chat.latestMessage.content)
+               
+                if(chat.lastestMessage !== undefined ){
+                  console.log(chat.latestMessage)
+                  formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+                  // console.log(formatted_date)
+                  // console.log('4444s')
+                }
+              
+                
+              //   if(chat.lastestMessage){
+              //     console.log('455')
+              //   // formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+              //   // console.log(formatted_date)
+              // }
+             
+              // console.log(formatted_date)
+              chatArr.push(chat)
+              chatArr2.push(chat)
+              setSelectedChat(chat)
+              // console.log(chat._id)
+             
+              // socket.on('updateStatus', () => {
+              //   console.log("phase 1")
+              // })
+              if(chat._id === users.chatID && triggerChange)  {
+                if(chat.latestMessage != null){
+                return <Pressable key={chat._id} onPress={() => 
+                      {
+                        
+                        {chat.latestMessage && chat.latestMessage.sender
+                          if(chat.latestMessage.sender._id === user._id){
+                            console.log("sender")
+                            // setreceivedMessage(true)
+                            setsentMessage(true)
+                           }
+                           
+                           else if(chat.latestMessage.sender._id !== user._id){
+                            console.log("reciever")
+                              // setreceivedMessage(true)
+                              setsentMessage(false)
+                              // setsentMessage((state) => {
+                              //   // console.log(state)
+                              //   return state
+                              // })
+                           }
+                           else{
+                            null              }
+                          }
+                        {
+            
+                        }
+                       
+                      //     setmessageSentOrReceived(true)
+                      //     // recieiver logic 
+                      // {chat.latestMessage && chat.latestMessage.sender  && chat.latestMessage.sender._id != user._id ?
+                        
+                      //     setreceivedMessage(true)
+                      //     console.log("ffoefoef")
+                        
+                       
+                        
+                      //   :  //if i am the sender then do nothing and set message sent to true
+                        
+                      //     // setreceivedMessage(false)  
+                      //     // setsentMessage(true)
+                      //     null
+                        
+                      //    // else set the message recieved to true 
+                      // }
+                      // {chat.latestMessage && chat.latestMessage.sender && chat.latestMessage.sender._id != user._id ?
+                      //   :
+                      //   setmessageSentOrReceived(true)
+                      // }
+                      
+                        
+                      
+                        // setreceivedMessage(true)
+                     setchattId(chat._id)
+                      navigation.navigate('Messaging', {userSelected:
+                        
+                      user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
+                          <View>
+                          <Image 
+                              source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+                              style = {styles.image}
+                           />
+                           
+                              { onlineStatus &&  <Badge
+                              status="success"
+                              containerStyle={{ position: 'absolute', top: 50, left: 45 }}
+                                  /> }
+                           {/* <Text>badge here</Text> */}
+                          </View>
+                            
+                          <View style = {styles.content}>
+                              <View style = {styles.row}>
+                                  <Text style = {styles.name}>
+                                      {user != null ? getSenderFull(user, chat.users).firstName : null}
+                                  </Text> 
+                                    <Text style = {styles.subTitle}>
+                                      {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                                      {formatted_date}
+                                  </Text>   
+                              </View>
+                              
+                             {/* { messages && messages.map((mess) => {
+                              mess._id == mess.chat.latestMessage ? 
+                                (<Text key={mess._id}  numberOfLines={2} style = {styles.subTitle}>
+                                {mess.chat.latestMessage}
+                                 </Text>
+                              }}
+                              // <Text numberOfLines={2} style = {styles.subTitle}>
+                              
+              
+                             ))}  */}
+                             {/* { messages && messages.map((mess) => {
+            
+                              if(mess._id == mess.chat.latestMessage){
+                                return <Text   numberOfLines={2} style = {styles.subTitle}>
+                                latest message : {mess.content}
+                                 </Text>
+                              
+                              }
+                              else{
+                                return 
+                              }
+                               
+                                
+                              
+                              // <Text numberOfLines={2} style = {styles.subTitle}>
+                              
+              
+                             })}  */}
+                            
+                              {chat.latestMessage && chat.latestMessage.content?
+                              // <View style = {{
+                              //   flexDirection: 'row'
+                              // }}>
+            
+                              
+                              //   {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
+                                
+                              //    <Text  numberOfLines={2} style = {styles.subTitle}>
+                              //     {chat.latestMessage.content}
+                              //   </Text>
+                              // </View>
+                              <View>
+                                  <Text> {chat.latestMessage.content}</Text>
+                                  <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text>
+                                </View>
+                            
+                              
+                                 : <Text>File Uploaded</Text> }
+                               
+                            {/* <Text style = {styles.subTitle} >
+                              {chat.latestMessage}
+                            </Text> */}
+                          </View>
+                          </Pressable>
+                }
+              }
+              else{
+                // var formatted_date2 = null
+                // if(chat.lastestMessage){
+                //   formatted_date2 = moment(chat.latestMessage.createdAt).format("LT")
+                // }
+                // console.log(formatted_date2)
+                //   if(chat.lastestMessage !== null){
+                //     // console.log('455')
+                //   formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+                //   // console.log(formatted_date)
+                // }
+                // {chat.lastestMessage && chat.lastestMessage.content && console.log('4444')}
+                if(chat.latestMessage != undefined && triggerChange){
+                  formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+                    return <Pressable key={chat._id} onPress={() => 
+                    {
+                      
+                      {chat.latestMessage && chat.latestMessage.sender
+                        if(chat.latestMessage.sender._id === user._id){
+                          console.log("sender")
+                          // setreceivedMessage(true)
+                          setsentMessage(true)
+                         }
+                         
+                         else if(chat.latestMessage.sender._id !== user._id){
+                          console.log("reciever")
+                            // setreceivedMessage(true)
+                            setsentMessage(false)
+                            // setsentMessage((state) => {
+                            //   // console.log(state)
+                            //   return state
+                            // })
+                         }
+                         else{
+                          null              
+                        }
+                        }
+                      {
+          
+                      }
+                     
+                    //     setmessageSentOrReceived(true)
+                    //     // recieiver logic 
+                    // {chat.latestMessage && chat.latestMessage.sender  && chat.latestMessage.sender._id != user._id ?
+                      
+                    //     setreceivedMessage(true)
+                    //     console.log("ffoefoef")
+                      
+                     
+                      
+                    //   :  //if i am the sender then do nothing and set message sent to true
+                      
+                    //     // setreceivedMessage(false)  
+                    //     // setsentMessage(true)
+                    //     null
+                      
+                    //    // else set the message recieved to true 
+                    // }
+                    // {chat.latestMessage && chat.latestMessage.sender && chat.latestMessage.sender._id != user._id ?
+                    //   :
+                    //   setmessageSentOrReceived(true)
+                    // }
+                    
+                      
+                    
+                      // setreceivedMessage(true)
+                      setchattId(chat._id)
+                    navigation.navigate('Messaging', {userSelected:
+                      
+                    user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
+                        <View>
+                        <Image 
+                            source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+                            style = {styles.image}
+                         />
+                         
+                             {/* { onlineStatus  && <Badge
+                            status="success"
+                            containerStyle={{ position: 'absolute', top: 50, left: 45 }}
+                                />} */}
+                         {/* <Text>badge here</Text> */}
+                        </View>
+                          
+                        <View style = {styles.content}>
+                            <View style = {styles.row}>
+                                <Text style = {styles.name}>
+                                    {user != null ? getSenderFull(user, chat.users).firstName : null}
+                                </Text> 
+                                  <Text style = {styles.subTitle}>
+                                    {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                                    
+                                  {formatted_date}
+                                </Text>   
+                            </View>
+                            
+                           {/* { messages && messages.map((mess) => {
+                            mess._id == mess.chat.latestMessage ? 
+                              (<Text key={mess._id}  numberOfLines={2} style = {styles.subTitle}>
+                              {mess.chat.latestMessage}
+                               </Text>
+                            }}
+                            // <Text numberOfLines={2} style = {styles.subTitle}>
+                            
+            
+                           ))}  */}
+                           {/* { messages && messages.map((mess) => {
+          
+                            if(mess._id == mess.chat.latestMessage){
+                              return <Text   numberOfLines={2} style = {styles.subTitle}>
+                              latest message : {mess.content}
+                               </Text>
+                            
+                            }
+                            else{
+                              return 
+                            }
+                             
+                              
+                            
+                            // <Text numberOfLines={2} style = {styles.subTitle}>
+                            
+            
+                           })}  */}
+                          
+                            {chat.latestMessage && chat.latestMessage.content != "" ?
+                            <View style = {{
+                              flexDirection: 'row'
+                            }}>
+          
+                            
+                              {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
+                              <View>
+                              <Text  numberOfLines={2} style = {styles.subTitle}>
+                                {chat.latestMessage.content}
+                              </Text>
+                                  <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text>
+                                </View>
+                               
+                            </View>
+                            
+                               : <Text>File Uploaded</Text> }
+                             
+                          {/* <Text style = {styles.subTitle} >
+                            {chat.latestMessage}
+                          </Text> */}
+                        </View>
+                        </Pressable>
+                }
+                
+                
+              }
+            
+         
+              
+            }
+           
+    
+                  })): (
+              <View>
+                  <Text style={styles.text}>No chats available click here to access them </Text>
+                </View>
+            )
+            
+                  
+            } 
+          
+              
+           
+             
+            
+    
+              </ScrollView> 
+              </>
+            
+        )
 }
 
 export default ChatScreen

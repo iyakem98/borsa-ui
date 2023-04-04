@@ -92,12 +92,13 @@ const Navigator = () => {
     { messageHeader ? (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
   
     // title: route.params.userSelected,
-     
-    title: <UserRecently data={route.params.chatId} user={route.params.userSelected}/>,
+    title: <UserRecently  userData={route.params.userSelected}/>,
+    // title: <UserRecently data={route.params.chatId} user={route.params.userSelected}/>,
     headerShown: false
   })}/>) :  (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
     // title: route.params.userSelected,
-     title: <UserRecently data={route.params.chatId} userData={route.params.userSelected}/>,
+    title: <UserRecently  userData={route.params.userSelected}/>,
+    //  title: <UserRecently data={route.params.chatId} userData={route.params.userSelected}/>,
     headerShown: true
   })}/>) }
    
