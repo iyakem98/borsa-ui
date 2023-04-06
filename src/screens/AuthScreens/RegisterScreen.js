@@ -3,11 +3,12 @@ import {View, Text, ImageBackground, Image, SafeAreaView, TextInput, StyleSheet,
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
 import { reset } from '../../features/chat/chatSlice';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const RegisterScreen = () => {
@@ -28,12 +29,12 @@ const RegisterScreen = () => {
   const [visibility, setVisibility] = useState(true)
   const [secureText, setSecureText] = useState(true)
   const [passwordError, setPasswordError] = useState("")
-
+  const { user } = useSelector((state) => state.auth)
   const [registerForm, setRegisterForm] = useState("")
   const [verifyForm, setVerifyForm] = useState("none")
   const [confirm, setConfirm] = useState("")
   const [mailedTo, setMailedTo] = useState("")
-
+  let registerUserData = null
   const navigate = useNavigation()
   const Icon = <Pressable onPress={() => {
     setVisibility(!visibility)
@@ -85,18 +86,44 @@ const RegisterScreen = () => {
       country
     }
     console.log(userData)
-  
-  axios.post(`${API_BASE_URL}users/`, userData)
-      .then((data) => {
-        setMailedTo(data.data._id)
-       setModalVisible(true)
-       })
-      .catch((err) => {
-        console.log("error is", err)
-        alert("Something went wrong try again!")
-      });
+  try{
+    const {data} =   await axios.post(`${API_BASE_URL}users/`, userData)
+    await AsyncStorage.setItem('cre', JSON.stringify(data))
+    
+    
+    // console.log(registerUserData)
+    // alert('123')
+    // dispatch(register(data))
 
-      setSignUp(false)
+  //   setTimeout(() => {
+  //     // Code to run after the pause
+      
+  // }, 5000);
+    // await AsyncStorage.setItem('user', JSON.stringify(data))
+    // console.log(user)
+    setMailedTo(data._id)
+    setModalVisible(true)
+    setSignUp(false)
+  }
+  catch(err){
+    console.log("error is", err)
+    alert("Something went wrong try again!")
+  }
+  // axios.post(`${API_BASE_URL}users/`, userData)
+  //     .then((data) => {
+  //     // await AsyncStorage.setItem('user', JSON.stringify(data.data))
+  //       // const user1 = await AsyncStorage.getItem('user')
+  //       dispatch(register(data.data))
+  //       console.log(user)
+  //     setMailedTo(data.data._id)
+  //      setModalVisible(true)
+  //      })
+  //     .catch((err) => {
+  //       console.log("error is", err)
+  //       alert("Something went wrong try again!")
+  //     });
+
+  //     setSignUp(false)
    } 
    
    
@@ -116,7 +143,8 @@ const handleVerify = async () => {
   }
 
   axios.post(`${API_BASE_URL}users/verify-email`, data)
-        .then((data) => {
+        .then(async(data) => {
+          
     let userData = {
       firstName,
       lastName,
@@ -129,9 +157,20 @@ const handleVerify = async () => {
       country
 
     }
+   
+   
+      alert("Verified. Press OK to continue!")
+      const registerUser1 = await AsyncStorage.getItem('cre')
+      const registerUser =  JSON.parse(registerUser1)
+      console.log(registerUser)
+      dispatch(register(registerUser)) 
+      
+    //  navigate.navigate('Login')
+    //  navigate.navigate('Chats')
 
-     alert("Verified. You can login now!")
-     navigate.navigate('Login')
+    
+   
+     
     
     // dispatch(register(userData)) 
     // dispatch(reset()) 

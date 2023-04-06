@@ -9,29 +9,37 @@ const API_URL = 'http://143.198.168.244/api/'
 const ENDPOINT = "http://192.168.100.2:5000"
 // Register user
 const register = async (userData) => {
-  const {data} = await axios.post(`${API_URL}users`, userData)
-  try{
-    if (data) {
-      const user = await AsyncStorage.setItem('user', JSON.stringify(data))
-      const user1 = await AsyncStorage.getItem('user')
-      console.log(JSON.stringify(user1))
-      return data;
-    }
-  }
-  catch(error){
-    console.log('cannot register user')
-  }
+  // console.log(userData)
+  // const {data} = await axios.post(`${API_URL}users`, userData)
+  // const {data} = await axios.post(`${API_BASE_URL}users/`, userData)
+   const data1 = await AsyncStorage.setItem('user', JSON.stringify(userData))
+   const data = await AsyncStorage.getItem('user')
+   return userData
+  // try{
+  //   if (data) {
+  //     const user = await AsyncStorage.setItem('user', JSON.stringify(data))
+  //     const user1 = await AsyncStorage.getItem('user')
+  //     console.log(JSON.stringify(user1))
+  //     return data;
+  //   }
+  // }
+  // catch(error){
+  //   console.log('cannot register user')
+  // }
   
 
-  return response.data
+  // return response.data
 }
 
 // Login user
 const login = async (userData) => {
   // console.log(userData)
-  var socket = io(ENDPOINT)
+  // var socket = io(ENDPOINT)
+  var socket = io(API_BASE_URL)
   try{
-    const {data} = await axios.post(API_URL + 'users/login', userData)
+    
+    // const {data} = await axios.post(API_URL + 'users/login', userData)
+    const {data} = await  axios.post(`${API_BASE_URL}users/login`, userData)
     // console.log(data)
   
     if (data) {

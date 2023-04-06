@@ -31,7 +31,7 @@ const ChatScreen = () => {
     // const { onlineStatus } = useSelector((state) => state.auth)
     const [onlineStatus, setonlineStatus] = useState(false)
     const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
-    const {triggerChange, settriggerChange} = ChatState();
+    const {triggerChange, settriggerChange, loading,  setloading} = ChatState();
     const {messages} = useSelector((state) => state.mess)
     const {
       selectedChat, setSelectedChat, 
@@ -416,7 +416,7 @@ useEffect(() => {
                 // console.log(chat.latestMessage.content)
                
                 if(chat.lastestMessage !== undefined ){
-                  console.log(chat.latestMessage)
+                  // console.log(chat.latestMessage)
                   formatted_date = moment(chat.latestMessage.createdAt).format("LT")
                   // console.log(formatted_date)
                   // console.log('4444s')
@@ -492,6 +492,7 @@ useEffect(() => {
                       
                         // setreceivedMessage(true)
                      setchattId(chat._id)
+                     setloading(true)
                       navigation.navigate('Messaging', {userSelected:
                         
                       user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
@@ -734,7 +735,10 @@ useEffect(() => {
     
                   })): (
               <View>
-                  <Text style={styles.text}>No chats available click here to access them </Text>
+                <Pressable style={styles.connectBtn} onPress={() => navigation.navigate("Connect")}>
+                <Text style={styles.connectTxt} >No chats available click here to access them </Text>
+                </Pressable>
+                  
                 </View>
             )
             
@@ -764,6 +768,19 @@ const styles = StyleSheet.create({
      
     
 },
+connectBtn: {
+  marginTop: 200,
+  marginLeft: 50,
+  backgroundColor: "lightgreen",
+  width: "80%",
+  height: 90,
+  borderRadius: 20,
+  padding: 20
+},
+connectTxt: {
+  fontSize: 20,
+},
+
 text: {
  
   marginTop: 200,

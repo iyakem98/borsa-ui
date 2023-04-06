@@ -25,7 +25,7 @@ const TravelerCard = ({traveler}) => {
     }
 
     const [modal, setModal] = useState(false)
-
+    const [showModal, setshowModal] = useState(false)
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
 
@@ -66,6 +66,13 @@ const TravelerCard = ({traveler}) => {
         }
     }
   return (
+    <>
+   <Pressable onPress={() =>{
+         setshowModal(true)
+          setModal(true)
+    }}>
+
+     
     <View style = {styles.container}>
         <View style = {{
             width: '35%'
@@ -124,7 +131,7 @@ const TravelerCard = ({traveler}) => {
                 }}>
                     {traveler.user.firstName + " " + traveler.user.lastName}
                 </Text>
-                <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} />
+                {/* <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} /> */}
                 
             </View>
             <View style = {styles.destination}>
@@ -211,7 +218,7 @@ const TravelerCard = ({traveler}) => {
                 </Text>
             </Pressable>
 
-            <Pressable style = {{
+            {/* <Pressable style = {{
                 border: '1px solid green',
                 //backgroundColor: '#a991d4',
                 width: "70%",
@@ -232,7 +239,7 @@ const TravelerCard = ({traveler}) => {
                 }}>
                     View Profile
                 </Text>
-            </Pressable>
+            </Pressable> */}
 
         </View>
         
@@ -255,6 +262,7 @@ const TravelerCard = ({traveler}) => {
         onRequestClose={() => {
           console.log('Modal has been closed.');
           setModal(false);
+          setshowModal(false)
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -328,6 +336,8 @@ const TravelerCard = ({traveler}) => {
       </Modal>
 
     </View>
+    </Pressable>
+    </>
     // <View>
     //     {/* <Text>{traveler}</Text> */}
     // </View>

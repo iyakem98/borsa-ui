@@ -79,13 +79,20 @@ const Navigator = () => {
       
     
   // }, [])
+ const  checkUser = async()=>{
+  if( await AsyncStorage.getItem('user')){
+    return true
+  }
+   
+  }
   return (
    <NavigationContainer>
-   {user != null ? (
+   {user   ? (
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
     
     <Stack.Screen name="Chats" component={ChatScreen} />
+    <Stack.Screen name="Connect" component={ConnectScreen} />
    
    
     <Stack.Screen name="User Details" component={OtherProfile} />

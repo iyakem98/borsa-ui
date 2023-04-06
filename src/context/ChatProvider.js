@@ -21,6 +21,7 @@ const ChatProvider = ({ children }) => {
   const [date, setDate] = useState(null)
   const [NewwMessage, setNewwMessage] = useState(false)
   const [chattId, setchattId] = useState()
+  const [loading, setloading] = useState(false)
 
 
   
@@ -59,7 +60,9 @@ const ChatProvider = ({ children }) => {
         NewwMessage,
         setNewwMessage,
         chattId,
-        setchattId
+        setchattId,
+        loading,
+        setloading
 
       }}
     >

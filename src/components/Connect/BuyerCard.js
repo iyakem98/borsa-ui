@@ -17,7 +17,7 @@ const BuyerCard = ({buyer}) => {
     const { user } = useSelector((state) => state.auth)
     const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId } = ChatState(); 
     const navigation = useNavigation();
-
+    const [showModal, setshowModal] = useState(false)
     const [modal, setModal] = useState(false)
 
     const viewDetail = (user) => {
@@ -66,6 +66,12 @@ const BuyerCard = ({buyer}) => {
     };
   return (
     <>
+    <Pressable onPress={() =>{
+         setshowModal(true)
+          setModal(true)
+    }}>
+
+    
         <View style = {styles.container}>
         <View style = {{
             width: '35%'
@@ -118,7 +124,7 @@ const BuyerCard = ({buyer}) => {
                 {buyer.user.firstName + ' ' + buyer.user.lastName} 
             </Text>
 
-            <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} />
+            {/* <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} /> */}
 
             </View>
 
@@ -191,7 +197,7 @@ const BuyerCard = ({buyer}) => {
                 </Text>
             </Pressable>
             <View>
-            <Pressable style = {{
+            {/* <Pressable style = {{
                 border: '1px solid #593196',
                 //backgroundColor: '#a991d4',
                 width: "70%",
@@ -212,7 +218,7 @@ const BuyerCard = ({buyer}) => {
                 }}>
                     View Profile
                 </Text>
-            </Pressable>
+            </Pressable> */}
         </View>
         </View>
 
@@ -220,13 +226,14 @@ const BuyerCard = ({buyer}) => {
         
     </View>
 
-    <Modal
+    {showModal && <Modal
         animationType="slide"
         transparent={true}
         visible={modal}
         onRequestClose={() => {
           console.log('Modal has been closed.');
           setModal(false);
+          setshowModal(false)
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -301,7 +308,8 @@ const BuyerCard = ({buyer}) => {
             </Pressable>
           </View>
         </View>
-      </Modal>
+      </Modal>}
+      </Pressable>
     
     </>
     // <View>

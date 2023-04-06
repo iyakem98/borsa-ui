@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "borsa-app",
-    "slug": "borsa-app",
+    "name": "Borsa",
+    "slug": "Borsa",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -33,6 +33,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "bc0d7907-9558-451f-b713-74bd15c443d0"
+      }
     }
   }
 }

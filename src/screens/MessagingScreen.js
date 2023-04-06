@@ -65,7 +65,8 @@ const MessagingScreen = () => {
     chatRoute, setchatRoute,
     NewwMessage,setNewwMessage,
     chatSelected, setchatSelected,
-    chattId,setchatId
+    chattId,setchatId,
+    loading,  setloading
     } = ChatState(); 
   // const [mesages, setMesages] = useState()
   // const defaultOptions = {
@@ -86,6 +87,7 @@ const MessagingScreen = () => {
   const [refresh, setRefresh] = useState(false)
   const [expoPushToken, setExpoPushToken] = useState('');
   const [pushnotification, setpushNotification] = useState(false);
+ 
   const notificationListener = useRef();
   const responseListener = useRef();
   const {messageHeader, setmessageHeader} = ChatState()
@@ -101,8 +103,7 @@ const MessagingScreen = () => {
   // console.log(route.params.userSelected._id)
   const cameraRef = useRef()
   useLayoutEffect(() => {
-  
-    fetchMessage()
+        fetchMessage()
     // socket.current = io(ENDPOINT)
     socket.current = io(API_BASE_URL)
     socket.current.emit("setup", user);
@@ -116,6 +117,8 @@ const MessagingScreen = () => {
   }, [])
   useEffect(() =>{
 // console.log("Platfffffffffform", Platform.OS)
+
+console.log(`loading is ` + loading)
     fetchMessage()
     selectedChatCompare = selectedChat
     // console.log(notification)
@@ -303,7 +306,7 @@ const MessagingScreen = () => {
   }, []);
   // search how to run an async func in react 
  useEffect(() => {
-  testCamera();
+  // testCamera();
  }, [])
  useEffect(() => {
  null
@@ -317,17 +320,17 @@ const MessagingScreen = () => {
  useEffect(() => {
 //  UpdateUserRoute()
  console.log(route.params.userSelected)
- console.log("messagessssssssssssssssss are:", messages)
+//  console.log("messagessssssssssssssssss are:", messages)
 
-console.log("messssssssage infooooooo:",
-{
-content : newmessage,
-chatId: chattId,
-image: "",
-// receiver: route.params.userSelected._id
-receiver: route.params.userSelected
-}
-)
+// console.log("messssssssage infooooooo:",
+// {
+// content : newmessage,
+// chatId: chattId,
+// image: "",
+// // receiver: route.params.userSelected._id
+// receiver: route.params.userSelected
+// }
+// )
   // setImage(null)
  }, [])
 
@@ -601,11 +604,12 @@ const CameraFeature = () => {
     // console.log(mesages) 
     setMessages(data)
 
-    console.log("messssssssssssssssssssssss:", data)
+    // console.log("messssssssssssssssssssssss:", data)
     setMessages((state) => {
       // console.log(state)
       return state
     })
+    // setloading(false)
     socket.current.emit("join chat", chattId)
     return data;
    
@@ -745,62 +749,67 @@ const CameraFeature = () => {
     }, timerLength);
  }
 
- if (hasPermissions === undefined) {
-  return <Text>Requesting permissions...</Text>
-} else if (!hasPermissions) {
-  return <Text>Permission for camera not granted. Please change this in settings.</Text>
+//  if (hasPermissions === undefined) {
+//   return <Text>Requesting permissions...</Text>
+// } else if (!hasPermissions) {
+//   return <Text>Permission for camera not granted. Please change this in settings.</Text>
+// }
+if(loading){
+ return  <View>
+    <Text style={{}}>fetching messages ....</Text>
+  </View>
 }
 
-if(cameratest){
-  // return <Text style={styles.text}>cemera test</Text>
-  return <View style={styles.container2}>
+// if(cameratest){
+//   // return <Text style={styles.text}>cemera test</Text>
+//   return <View style={styles.container2}>
   
    
-    <Camera
-      style={styles.camera}
-      ref={cameraRef}
-      // autoFocus={null}
-      >
-           {/* <Pressable  style={styles.text2} onPress={takePic}>
-           <Ionicons name="md-camera-reverse-outline" size={24} color="black" />
-           </Pressable> */}
-           <Pressable onPress={() => {
-            setcameratest(false)
-            setmessageHeader(false)
-            setRefresh(false)
-           }}>
-           <MaterialCommunityIcons name="close-outline" size={50} color="white"  style={styles.close}/>
-           </Pressable>
-           <Pressable  style={styles.text2} 
-           onPress={()=> {
-        setRefresh(true)
-         saveImg()
+//     <Camera
+//       style={styles.camera}
+//       ref={cameraRef}
+//       // autoFocus={null}
+//       >
+//            {/* <Pressable  style={styles.text2} onPress={takePic}>
+//            <Ionicons name="md-camera-reverse-outline" size={24} color="black" />
+//            </Pressable> */}
+//            <Pressable onPress={() => {
+//             setcameratest(false)
+//             setmessageHeader(false)
+//             setRefresh(false)
+//            }}>
+//            <MaterialCommunityIcons name="close-outline" size={50} color="white"  style={styles.close}/>
+//            </Pressable>
+//            <Pressable  style={styles.text2} 
+//            onPress={()=> {
+//         setRefresh(true)
+//          saveImg()
          
-         // sendMessage()
+//          // sendMessage()
           
-          // getImgs()
-          // setcameraOnOff(false)
+//           // getImgs()
+//           // setcameraOnOff(false)
           
-            } }
-           >
-          <MaterialCommunityIcons name="camera-iris" size={60} color="white" style={styles.minicamera} />
-       </Pressable>
+//             } }
+//            >
+//           <MaterialCommunityIcons name="camera-iris" size={60} color="white" style={styles.minicamera} />
+//        </Pressable>
       
-      </Camera>
-      {/* <View>
-      {getPics && getPics.map(img => {
+//       </Camera>
+//       {/* <View>
+//       {getPics && getPics.map(img => {
         
-        console.log(publicFolder + img.image)
-        // return <Text key={img._id}>{img.image}</Text>
-        return <Image key={img._id} style={styles.img} source={{uri: `http://192.168.100.2:5000/images/${img.image}` }} />
+//         console.log(publicFolder + img.image)
+//         // return <Text key={img._id}>{img.image}</Text>
+//         return <Image key={img._id} style={styles.img} source={{uri: `http://192.168.100.2:5000/images/${img.image}` }} />
         
-      })}
-      </View> */}
+//       })}
+//       </View> */}
      
  
  
-</View>
-}
+// </View>
+// }
 
 // if(image){
 //   const savePhoto = () => {
@@ -861,11 +870,12 @@ if(cameratest){
  {/* <View>
     <ScrollableFeed messages={messages} latestMessage={latestMess}/>
     </View> */}
+     {/* <>
     <View>
     
     <ScrollableFeed messages={messages}/>
     </View>
-    {/* <View style={{backgroundColor:"#fff", marginTop:5}}>
+    <View style={{backgroundColor:"#fff", marginTop:5}}>
           {
               newerMessages && newerMessages.map((msg, index) => (
                    <View key={index} style={{
@@ -884,10 +894,10 @@ if(cameratest){
                    </View>
                 ))
           }
-</View> */}
+</View>
   
   
-    {/* </KeyboardAvoidingView> */}
+   
    <KeyboardAvoidingView>
  <View 
  style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
@@ -913,18 +923,14 @@ if(cameratest){
       onChangeText={setNewMessage}
       style = {styles.input} 
       placeholder='type your message...'/>
-    <Pressable onPress={() => {
-      CameraFeature()
-      setmessageHeader(true)
-      }}>
-    <AntDesign name="camera" size={24} color="black" style={{paddingTop: 5, paddingRight: 7}}/>
-    </Pressable>
+    
     <Pressable onPress={() => sendMessage()}>
     <MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}}/>
     </Pressable>
 
  </View>
  </KeyboardAvoidingView>
+ </> */}
 
 {/* <SafeAreaView   style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
   //  backgroundColor: "#fff",
@@ -957,7 +963,15 @@ if(cameratest){
     </Pressable>
   
 </SafeAreaView>  */}
- 
+ {/* <Pressable onPress={() => {
+      CameraFeature()
+      setmessageHeader(true)
+      }}>
+    <AntDesign name="camera" size={24} color="black" style={{paddingTop: 5, paddingRight: 7}}/>
+    </Pressable> */}
+    <View>
+      {!loading && <Text>loaded chat</Text> }
+    </View>
 
 
 </>  
@@ -1016,6 +1030,7 @@ input: {
     marginHorizontal: 10,
     marginRight:20,
     borderRadius: 50,
+    width: 40,
     // marginTop: -30,
     borderColor: "lightgray",
     borderWidth: StyleSheet.hairlineWidth,

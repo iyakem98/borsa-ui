@@ -15,7 +15,7 @@ import io from 'socket.io-client'
 import { API_BASE_URL } from '../../utils/config';
 
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true)
@@ -82,30 +82,60 @@ const LoginScreen = () => {
         await AsyncStorage.removeItem('saved_password')
       }
 
-      setIsLogging(true)
-      axios.post(`${API_BASE_URL}users/login`, userData)
-        .then((data) => {
-          setIsLogging(false)
-         console.log(data.data)
-        AsyncStorage.removeItem('user')
-         dispatch(login(userData))
-         navigate.navigate('Chats')
-         })
-        .catch((err) => {
-          console.log("error")
-          setIsLogging(false)
-        });
+      
+      try{
+        setIsLogging(true)
+        // const {data} = await  axios.post(`${API_BASE_URL}users/login`, userData)
+        dispatch(login(userData))
+        navigate.navigate('Chats')
+        // if (data) {
+        //   setIsLogging(true)
+        //   // console.log(data)
+        //   // localStorage.setItem('user', JSON.stringify(response.data))
+        //   // setIsLogging(false)
+        //   const user = await AsyncStorage.setItem('user', JSON.stringify(data))
+        //   const user1 = await AsyncStorage.getItem('user')
+        //   // console.log(user1)
+        //   navigate.navigate("Chats")
+        //   // setIsLogging(false)
+        //   // console.log(JSON.stringify(user1))
+        //   // socket.emit('user_online', { data, socketID : socket.id})
+        //   // return data;
+          
+        // }
+      }
+      catch(err){
+        setIsLogging(false)
+        console.log(err)
+      }
+      //  axios.post(`${API_BASE_URL}users/login`, userData)
+      //   .then((data) => {
+      //     setIsLogging(false)
+      //    console.log(data.data)
+      //   // AsyncStorage.removeItem('user')
+      //   //  dispatch(login(userData))
+      //   const user = await AsyncStorage.setItem('user', JSON.stringify(data))
+      //   const user1 = await AsyncStorage.getItem('user')
+      //    navigate.navigate('Chats')
+      //    })
+      //   .catch((err) => {
+      //     console.log("error")
+      //     setIsLogging(false)
+      //   });
  
     
     }else{
       setInvalidArgs(true)
     }
-
+    
       // setonlineStatus(true)
       // socket.on('connect', () => {
       //   socket.emit('user_online', user)
       // })
   }
+  // const callnavigateFunc =  () => {
+  //   navigate.navigate("Chats")
+  // }
 
   const checkSavedLogin = async () => {
 
