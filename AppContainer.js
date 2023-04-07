@@ -45,7 +45,8 @@ function AppContainer() {
     
     if(nextAppState === 'background'){
       if(user != null){
-        sendData(away, user._id)
+        // sendData(away, user._id)
+        console.log('12')
       }
       
       
@@ -60,7 +61,9 @@ function AppContainer() {
     if(nextAppState === 'active'){
       // UpdateLastSeenAndStatus(online)
       if(user != null){
-        sendData(online, user._id)
+        // sendData(online, user._id)
+        console.log(user)
+        console.log('12')
       }
       
       // const userData = {
