@@ -15,7 +15,7 @@ const BuyerCard = ({buyer}) => {
     // console.log(buyer.user)
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading } = ChatState(); 
     const navigation = useNavigation();
     const [showModal, setshowModal] = useState(false)
     const [modal, setModal] = useState(false)
@@ -38,6 +38,7 @@ const BuyerCard = ({buyer}) => {
         
                 }
             }
+            // setloading(true)
             navigation.navigate('Messaging', {userSelected:
             
                 buyerData})

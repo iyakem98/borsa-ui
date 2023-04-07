@@ -15,7 +15,7 @@ const TravelerCard = ({traveler}) => {
     // console.log(traveler.user._id)
     const { user } = useSelector((state) => state.auth)
     // const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading } = ChatState(); 
     const dispatch = useDispatch()
     const navigation = useNavigation();
     var travelerId = useRef(null)
@@ -43,6 +43,7 @@ const TravelerCard = ({traveler}) => {
         
               }
           }
+        //   setloading(true)
           navigation.navigate('Messaging', {userSelected:
             
             travData})

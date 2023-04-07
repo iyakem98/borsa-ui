@@ -642,6 +642,7 @@ useEffect(() => {
                       
                     
                       // setreceivedMessage(true)
+                      setloading(true)
                       setchattId(chat._id)
                     navigation.navigate('Messaging', {userSelected:
                       

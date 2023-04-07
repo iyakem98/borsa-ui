@@ -19,7 +19,7 @@ import * as Notifications from 'expo-notifications';
 import { API_BASE_URL } from '../utils/config';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import { MMKV } from 'react-native-mmkv'
-
+import { Feather } from '@expo/vector-icons';
 import moment from 'moment'
 
 
@@ -599,7 +599,7 @@ const CameraFeature = () => {
    
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
-    
+    setloading(false)
     // console.log(data)
     // console.log(mesages) 
     setMessages(data)
@@ -756,7 +756,8 @@ const CameraFeature = () => {
 // }
 if(loading){
  return  <View>
-    <Text style={{}}>fetching messages ....</Text>
+  <Feather name="loader" size={40} style={styles.loader1} color="black" />
+    <Text style={styles.loader}>fetching messages ....</Text>
   </View>
 }
 
@@ -867,15 +868,15 @@ if(loading){
 
 
 
- {/* <View>
-    <ScrollableFeed messages={messages} latestMessage={latestMess}/>
-    </View> */}
-     {/* <>
+ <View>
+    {/* <ScrollableFeed messages={messages} latestMessage={latestMess}/> */}
+    </View>
+    {!loading &&  
     <View>
     
     <ScrollableFeed messages={messages}/>
-    </View>
-    <View style={{backgroundColor:"#fff", marginTop:5}}>
+    </View>}
+   {/* {!loading &&  <View style={{backgroundColor:"#fff", marginTop:5}}>
           {
               newerMessages && newerMessages.map((msg, index) => (
                    <View key={index} style={{
@@ -894,11 +895,11 @@ if(loading){
                    </View>
                 ))
           }
-</View>
+</View> } */}
   
   
    
-   <KeyboardAvoidingView>
+   {!loading && <KeyboardAvoidingView>
  <View 
  style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
   backgroundColor: "#fff",
@@ -929,8 +930,7 @@ if(loading){
     </Pressable>
 
  </View>
- </KeyboardAvoidingView>
- </> */}
+ </KeyboardAvoidingView>}
 
 {/* <SafeAreaView   style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
   //  backgroundColor: "#fff",
@@ -963,15 +963,10 @@ if(loading){
     </Pressable>
   
 </SafeAreaView>  */}
- {/* <Pressable onPress={() => {
-      CameraFeature()
-      setmessageHeader(true)
-      }}>
-    <AntDesign name="camera" size={24} color="black" style={{paddingTop: 5, paddingRight: 7}}/>
-    </Pressable> */}
-    <View>
+ 
+    {/* <View>
       {!loading && <Text>loaded chat</Text> }
-    </View>
+    </View> */}
 
 
 </>  
@@ -982,6 +977,12 @@ if(loading){
   )
 }
 {/* <AntDesign name='plus' size = {24} color = "#593196"/> */}
+{/* <Pressable onPress={() => {
+      CameraFeature()
+      setmessageHeader(true)
+      }}>
+    <AntDesign name="camera" size={24} color="black" style={{paddingTop: 5, paddingRight: 7}}/>
+    </Pressable> */}
 
 
 export default MessagingScreen
@@ -990,6 +991,14 @@ const styles = StyleSheet.create({
   sendingContainer: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  loader: {
+   marginTop: 80,
+   marginLeft: 130
+  },
+  loader1: {
+   marginTop: 200,
+   marginLeft: 190
   },
   text2: {
     color: "green",
