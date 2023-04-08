@@ -125,8 +125,24 @@ const ScrollableFeed = ({messages}) => {
       //   updateMessStatus(m._id)
       // }
     // console.log(m.receiver.route)
-    const formatted_date = moment(m.createdAt).format("LT")
-    // return <Text>{m.content}</Text>
+    // const formatted_date = moment(m.createdAt).format("dddd LT")
+   
+    let msgdate = moment(m.createdAt, "YYYY-MM-DD")
+    let today = moment()
+
+    let d = today.diff(msgdate, 'days')
+    // if(d==0){
+    //   let formatted_date = moment(m.createdAt).format("LT")
+    // }
+    // if(d>0 && d<7){
+    //   let formatted_date = moment(m.createdAt).format("dddd LT")
+    // }
+    // if(d>7){
+    //   let formatted_date = (m.createdAt)
+    // }
+
+    const formatted_date = d==0 ? moment(m.createdAt).format("LT") : (d<7 ? (d==1 ? moment(m.createdAt).format("dddd LT") : `Yesterday ${moment(m.createdAt).format("LT")}` ): moment(m.createdAt).format("YYYY-MM-DD LT"))
+   // return <Text>{m.content}</Text>
       return <>
         {m.content == "" ? 
         <View style = {[styles.container2, {
@@ -250,13 +266,16 @@ const ScrollableFeed = ({messages}) => {
        
         // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
       } */}
-        {
+    
+     <View style={{flexDirection:"row"}}>
+       <Text style={{color:"white"}}>{formatted_date}</Text>
+       {
           m.sender._id === user._id  && m.receiver != null &&
           // m.sender._id === user._id && 
        
       //  <Ionicons name="checkmark-outline" size={20} color="white" />
       // <Text>Sent</Text>
-      <Ionicons name="checkmark-outline" size={20} color="white" style={{marginLeft:30}}/>
+      <Ionicons name="checkmark-outline" size={20} color="white" style={{marginLeft:10}}/>
       
       
       
@@ -271,17 +290,18 @@ const ScrollableFeed = ({messages}) => {
        
       //  <Ionicons name="checkmark-outline" size={20} color="white" />
       // <Text>Sent</Text>
-      <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft: 10}} />
+      <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
       
       
       
-       
        
        
         // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
       }
+      </View>
+     
     
-      <Text>{formatted_date}</Text>
+     
       {/* {
         receivedMessage && m.sender._id === user._id &&
         <Text>recieve</Text>

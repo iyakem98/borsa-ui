@@ -899,9 +899,10 @@ if(loading){
   
   
    
-   {!loading && <KeyboardAvoidingView>
+   {!loading && 
+<KeyboardAvoidingView behavior="height">
  <View 
- style={{position: 'absolute', left: 0, right: 0, bottom: 5,flexDirection: "row",
+ style={{position: 'absolute', left: 0, right: 0, bottom: 5, flexDirection: "row",
   backgroundColor: "#fff",
   // backgroundColor: "red",
   // height: "10%",
