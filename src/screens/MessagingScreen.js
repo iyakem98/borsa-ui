@@ -901,7 +901,7 @@ if(loading){
    
    {!loading && <KeyboardAvoidingView>
  <View 
- style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
+ style={{position: 'absolute', left: 0, right: 0, bottom: 5,flexDirection: "row",
   backgroundColor: "#fff",
   // backgroundColor: "red",
   // height: "10%",
@@ -926,7 +926,7 @@ if(loading){
       placeholder='type your message...'/>
     
     <Pressable onPress={() => sendMessage()}>
-    <MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}}/>
+    <MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} />
     </Pressable>
 
  </View>
