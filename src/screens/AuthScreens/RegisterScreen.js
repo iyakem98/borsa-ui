@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../features/auth/authSlice';
+import { login } from '../../features/auth/authSlice';
 import { reset } from '../../features/chat/chatSlice';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/config';
@@ -164,16 +165,9 @@ const handleVerify = async () => {
       const registerUser =  JSON.parse(registerUser1)
       console.log(registerUser)
       dispatch(register(registerUser)) 
-      
-    //  navigate.navigate('Login')
-    //  navigate.navigate('Chats')
-
-    
+      dispatch(login(userData))
+      navigate.navigate('Chats')
    
-     
-    
-    // dispatch(register(userData)) 
-    // dispatch(reset()) 
 
          })
         .catch((err) => {
@@ -725,7 +719,11 @@ const handleVerify = async () => {
 
             <Pressable
               style={[styles.button, styles.buttonCloseCancel]}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={()=>{
+                setModalVisible(!modalVisible)
+                setSignUp(true)
+              }}
+              >
               <Text style={styles.textStyleCancel}>Cancel</Text>
             </Pressable>
           </View>
@@ -778,14 +776,14 @@ const styles = StyleSheet.create({
   buttonCloseNo: {
     backgroundColor: 'green',
     marginTop:10,
-    width:"70%",
+    width:200,
     color:"black"
   },
 
   buttonCloseCancel: {
     backgroundColor: '#f6f6fb',
     marginTop:10,
-    width:"70%",
+    width:200,
     color:"black"
   },
   textStyle: {

@@ -280,8 +280,9 @@ const ProfileScreen = ({navigation}) => {
    
     <Text style = {{
         fontSize: 17,
+        whiteSpace:"nowrap"
     }}>
-        Delete Account
+        Delete Acc
         </Text>
 </TouchableOpacity>
 </View>
@@ -487,7 +488,7 @@ const ProfileScreen = ({navigation}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure to delete? This action can not be reversed.</Text>
+            <Text style={styles.modalText}>Are you sure to delete your account? This action can not be reversed.</Text>
             
             <Pressable
               style={[styles.button, styles.buttonCloseYes]}
@@ -633,12 +634,12 @@ const styles = StyleSheet.create({
       buttonCloseYes: {
         backgroundColor: 'red',
         marginTop:10,
-        width:"50%"
+        width:200
       },
       buttonCloseNo: {
         backgroundColor: 'green',
         marginTop:10,
-        width:"50%",
+        width:200,
         color:"black"
       },
       textStyle: {
@@ -647,7 +648,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
       },
       modalText: {
-        marginBottom: 15,
+        marginBottom: 18,
         textAlign: 'center',
       },
     
