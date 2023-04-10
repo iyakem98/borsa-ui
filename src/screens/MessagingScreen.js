@@ -607,20 +607,18 @@ const CameraFeature = () => {
         }
     }
 
-   
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
     if(data.latestMessage == null){
       setloading(false)
     }
     setloading(false)
-    // console.log(data)
-    // console.log(mesages) 
     setMessages(data)
-
-    // console.log("messssssssssssssssssssssss:", data)
+    if(data && data.length>0){
+      await  AsyncStorage.setItem(`chat-${chattId}`, JSON.stringify(data))
+      console.log('msgs stored')
+    }
     setMessages((state) => {
-      // console.log(state)
       return state
     })
     // setloading(false)
@@ -630,10 +628,16 @@ const CameraFeature = () => {
     }
     catch(error){
       console.log(error)
-      // console.log('fetching message is not possible')
+       let msgs =  await AsyncStorage.getItem(`chat-${chattId}`)
+       if(msgs){
+          setMessages(JSON.parse(msgs))
+          setloading(false)
+       }else{
+          setMessages([])
+          setloading(false)
+       }
+      }
     }
-
-  }
   const saveImg = async () => {
     let options = {
       quality: 1,
