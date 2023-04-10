@@ -8,7 +8,7 @@ import { ChatState } from '../../../context/ChatProvider'
 import { FontAwesome5 } from '@expo/vector-icons';
 
 
-const ScrollableFeed = ({messages}) => {
+const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
 
   const scrollViewRef = useRef();
   const { user } = useSelector((state) => state.auth)
@@ -59,8 +59,8 @@ const ScrollableFeed = ({messages}) => {
   useEffect(() =>{
     // console.log(messages)
     // console.log(messageSentOrReceived)
-    console.log(sentMessage)
-    console.log("platformmm", Platform.OS)
+    // console.log(sentMessage)
+    // console.log("platformmm", Platform.OS)
     // console.log(receivedMessage)
   }, [])
   // const publicFolder = "http://192.168.100.2:5000/images/"
@@ -68,8 +68,8 @@ const ScrollableFeed = ({messages}) => {
   const now = moment()
   return (
     <ScrollView
-    ref={scrollViewRef}
-    onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: false })}
+    ref={scrollref}
+    // onContentSizeChange={() => scrollViewRef.current.scrollToEnd()}
     style = {{
       backgroundColor: "#fff", 
       // backgroundColor: "red", 
@@ -275,7 +275,8 @@ const ScrollableFeed = ({messages}) => {
        
       //  <Ionicons name="checkmark-outline" size={20} color="white" />
       // <Text>Sent</Text>
-      <Ionicons name="checkmark-outline" size={20} color="white" style={{marginLeft:10}}/>
+      // <Ionicons name="checkmark-outline" size={20} color="white" style={{marginLeft:10}}/>
+      <Ionicons name="checkmark-outline" size={20} color="white" />
       
       
       
@@ -338,7 +339,96 @@ const ScrollableFeed = ({messages}) => {
       
        
 })}
- 
+  {NewwMessage && <View style = {[styles.container, {
+        backgroundColor:   "#593196",
+        alignSelf:  "flex-end" ,
+      marginTop: 3, 
+    }]}>
+           <Text style={{
+          /*backgroundColor: `${
+              m.sender._id === user._id ? "#593196" : "#E8E8E8"
+          }`,
+          alignSelf: `${
+            m.sender._id === user._id ? "flex-end" : "flex-start"
+        }`, 
+        */
+          color: "white"
+          
+         /* borderRadius : 20,
+          padding: 5,
+          maxWidth: "75%",
+          //marginLeft: isSameSenderMargin(messages, m , i, user._id),
+          marginLeft: 5, */
+          
+      }}>
+      {latestMessage}
+       </Text>
+          
+        
+       {/* {
+        sentMessage &&   <Ionicons name="checkmark-outline" size={20} color="white" />
+      }  */}
+      {/* {
+        m.sender._id == user._id ?  
+       (
+      //  <Ionicons name="checkmark-outline" size={20} color="white" />
+      <Text>Sent</Text>
+       )
+       :
+       (
+        // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
+        <Text>Received</Text>
+       )
+      } */}
+      
+   {/* {user && <Ionicons name="checkmark-outline" size={20} color="white" style={{marginLeft:10}}/>}    */}
+      {/* <Ionicons name="checkmark-done-sharp" size={20} color="white" /> */}
+      {/* <Ionicons name="timer-outline" size={20} color="white" /> */}
+      
+      
+      
+       
+       
+       
+        
+      <View style={{flexDirection:"row"}}>
+      <Text  style={{color:"white"}}>{now.format('LT')}</Text>
+       <Ionicons name="checkmark-outline" size={20} color="white" />
+      </View>
+     
+      {/* {
+        receivedMessage && m.sender._id === user._id &&
+        <Text>recieve</Text>
+      } */}
+      {/* {
+       m.sender._id != user._id && receivedMessage ?
+       setlocalrec(true): null 
+      } */}
+      {/* {
+        localrec && user._id && <Text>rec</Text>
+      } */}
+      {/* {
+          receivedMessage ?
+        
+       
+          <Text>Received</Text>
+          
+        
+        :
+        
+          null
+        
+        
+      } */}
+      {/* {
+        messageSentOrReceived &&  m.sender._id == user._id &&
+        <Text>Received</Text>
+      } */}
+      {/* write conditional rendering for isgetsender opposite  */}
+    
+      </View>
+        }
+
 
    </ScrollView>
     // <KeyboardAvoidingView

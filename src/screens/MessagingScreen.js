@@ -45,7 +45,7 @@ const MessagingScreen = () => {
   const [typing, setTyping] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
 
-
+  const scrollViewRef = useRef();
   const myRef = createRef()
 
   const { 
@@ -92,6 +92,7 @@ const MessagingScreen = () => {
   const responseListener = useRef();
   const {messageHeader, setmessageHeader} = ChatState()
   const publicFolder = "http://192.168.100.2:5000/images/"
+  const [latestMess, setlatestMess] = useState()
   // Notifications.setNotificationHandler({
   //   handleNotification: async () => ({
   //     shouldShowAlert: true,
@@ -504,16 +505,23 @@ const CameraFeature = () => {
   //     </View>
 }
   const sendMessage = async() => {
+    // myRef.scrollTo(0, myRef.scrollHeight)
     console.log(newmessage)
+    var storeNewMessage = newmessage
     
-    let tym = moment(new Date()).format("LT")
-    let nw = {
-      content: newmessage,
-      time: tym
-    }
-    let m = newerMessages
-    m = newerMessages.push(nw)
-    setNewMessage(m)
+      setlatestMess(newmessage)
+       setNewwMessage(true)
+       setNewMessage('')
+      console.log('timeout')
+    
+    // let tym = moment(new Date()).format("LT")
+    // let nw = {
+    //   content: newmessage,
+    //   time: tym
+    // }
+    // let m = newerMessages
+    // m = newerMessages.push(nw)
+    // setNewMessage(m)
     
     try{
       const config = {
@@ -549,7 +557,7 @@ const CameraFeature = () => {
   //      };
      
    
-  console.log("sendinggggggggggggggg")
+  // console.log("sendinggggggggggggggg")
     const {data} = await axios.post(`${API_BASE_URL}message/`, {
       content : newmessage,
       chatId: chattId,
@@ -568,11 +576,12 @@ const CameraFeature = () => {
     
   socket.current.emit("new message", data)
   setMessages([...messages, data])
+  setNewwMessage(false)
   setmessageSentOrReceived(false)
   setfetchAgain(true)
   setfetchAgain(false)
 
-  // myRef.scrollTo(0, myRef.scrollHeight)
+
   
   return data
     
@@ -588,6 +597,7 @@ const CameraFeature = () => {
   }
   
   const fetchMessage = async() => {
+    // setNewwMessage(false)
     try{
       const config = {
         headers: {
@@ -599,6 +609,7 @@ const CameraFeature = () => {
    
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
+    
     setloading(false)
     // console.log(data)
     // console.log(mesages) 
@@ -871,12 +882,13 @@ if(loading){
  <View>
     {/* <ScrollableFeed messages={messages} latestMessage={latestMess}/> */}
     </View>
-    {!loading &&  
+    {/* {!loading &&  
+    <>
     <View>
     
-    <ScrollableFeed messages={messages}/>
-    </View>}
-   {/* {!loading &&  <View style={{backgroundColor:"#fff", marginTop:5}}>
+    <ScrollableFeed messages={messages} />
+    </View>
+    <View style={{backgroundColor:"#fff", marginTop:5}}>
           {
               newerMessages && newerMessages.map((msg, index) => (
                    <View key={index} style={{
@@ -895,14 +907,40 @@ if(loading){
                    </View>
                 ))
           }
-</View> } */}
+</View> 
+</>} */}
+    {!loading &&  
+  //  <KeyboardAvoidingView behavior="height">
+  // <KeyboardAvoidingView
+  //     // behavior={Platform.OS === "ios" ? "padding" : "height"}
+  //     behavior="padding"
+  //     keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 50}
+  //     // keyboardVerticalOffset={60}
+  //     style={styles.bg}
+  //   >
+  <KeyboardAvoidingView 
+  behavior='padding'
+  keyboardVerticalOffset={
+  Platform.select({
+     ios: () => 0,
+     android: () => -400
+  })()
+ 
+}
+style={styles.bg}
+>
+    <View>
+    
+    <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
+    </View>
+    </KeyboardAvoidingView>}
   
   
    
    {!loading && 
-<KeyboardAvoidingView behavior="height">
- <View 
- style={{position: 'absolute', left: 0, right: 0, bottom: 5, flexDirection: "row",
+<SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
+ {/* <View 
+ style={{position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: "row",
   backgroundColor: "#fff",
   // backgroundColor: "red",
   // height: "10%",
@@ -915,7 +953,7 @@ if(loading){
  
  }}
  behavior="position"
- >
+ > */}
  {isTyping ? <View>
     <Text> isTyping... </Text>
     </View> : null}
@@ -926,12 +964,16 @@ if(loading){
       style = {styles.input} 
       placeholder='type your message...'/>
     
-    <Pressable onPress={() => sendMessage()}>
+    <Pressable onPress={() => {
+      sendMessage()
+      scrollViewRef.current.scrollToEnd()
+    }}>
     <MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} />
     </Pressable>
 
- </View>
- </KeyboardAvoidingView>}
+ {/* </View> */}
+ </SafeAreaView>
+ }
 
 {/* <SafeAreaView   style={{position: 'absolute', left: 0, right: 0, bottom: 0,flexDirection: "row",
   //  backgroundColor: "#fff",
@@ -993,9 +1035,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  TextSendingcontainer: {
+    flexDirection: "row",
+    backgroundColor: "whitesmoke",
+    padding: 5,
+    paddingHorizontal: 10,
+    alignItems: "center",
+  },
   loader: {
    marginTop: 80,
    marginLeft: 130
+  },
+  bg: {
+    flex: 1,
   },
   loader1: {
    marginTop: 200,

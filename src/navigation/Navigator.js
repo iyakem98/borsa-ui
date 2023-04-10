@@ -87,7 +87,7 @@ const Navigator = () => {
   }
   return (
    <NavigationContainer>
-   {user != null || user != null || !user  ? (
+   {user  ? (
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     <Stack.Navigator>
     <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />

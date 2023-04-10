@@ -97,12 +97,12 @@ const ProfileScreen = ({navigation}) => {
                     }}>
                         {user && user.address}
                     </Text>
-                    <Text style = {{
+                    {/* <Text style = {{
                         fontSize: 20,
                         marginBottom: 0
                     }}>
                     🇨🇦
-                    </Text>
+                    </Text> */}
                 </View>
                 <View style = {{
                     flexDirection: 'row',
@@ -111,7 +111,7 @@ const ProfileScreen = ({navigation}) => {
                         <Pressable style = {{
                             backgroundColor: "#13b955",
                             width: "20%",
-                            height: "35%",
+                            height: "45%",
                             alignItems:'center',
                             justifyContent: 'center',
                             marginLeft: 10,
@@ -131,7 +131,7 @@ const ProfileScreen = ({navigation}) => {
                     <Pressable style = {{
                         backgroundColor: "#593196",
                         width: "20%",
-                        height: "35%",
+                        height: "45%",
                         alignItems:'center',
                         justifyContent: 'center',
                         borderRadius: 20,

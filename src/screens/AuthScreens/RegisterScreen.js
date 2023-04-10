@@ -165,7 +165,7 @@ const handleVerify = async () => {
       const registerUser =  JSON.parse(registerUser1)
       console.log(registerUser)
       dispatch(register(registerUser)) 
-      dispatch(login(userData))
+      // dispatch(login(userData))
       navigate.navigate('Chats')
    
 
