@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
     },
 
     overlay: {
-        flex: 10,
+        flex: 1,
         height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.3)',
         justifyContent: 'flex-end',
@@ -558,7 +558,7 @@ const styles = StyleSheet.create({
     v2b: {
         backgroundColor: 'white',
         width: '100%',
-        height: 400,
+        height: 700,
         position: 'absolute',
        // marginTop: 70,
        // borderTopRightRadius: 15,
