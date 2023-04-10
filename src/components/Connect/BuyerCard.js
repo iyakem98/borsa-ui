@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/config';
 import { useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const BuyerCard = ({buyer}) => {
@@ -31,6 +32,8 @@ const BuyerCard = ({buyer}) => {
         // console.log(buyerData)
         // console.log(buyerID)
         const userId = buyerData._id
+        const checkbuyer = await AsyncStorage.getItem('initialChat') 
+        const checkbuyerarr = []
         try{
             const config = {
                 headers: {
@@ -38,14 +41,80 @@ const BuyerCard = ({buyer}) => {
         
                 }
             }
+            // --------
+            // if((checkbuyer != null || checkbuyer != undefined) ){
+            //     checkbuyerarr.push()
+            //     for(var i = 0; i <checkbuyerarr.length ; i++){
+            //         if(checkbuyerarr[i] ==  buyerData._id){
+            //             setloading(true)
+            //             navigation.navigate('Messaging', {userSelected:
+                    
+            //                     buyerData})
+            //              const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+            //             setchatSelected(true)
+            //              setchattId(data._id)
+            //              await AsyncStorage.setItem('initialChat') 
+            //         }
+            //     }
+            //     // if(checkbuyer == buyerData._id){
+            //     //     console.log('true')
+            //     // }
+            //     // setloading(true)
+            //     // // navigation.navigate('Messaging', {userSelected:
+            
+            //     // //         buyerData})
+            //     //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+            //     // setchatSelected(true)
+            //     //  setchattId(data._id)
+            //     // else{
+            //     //     console.log('false')
+            //     // }
+            // }
+            // else{
+            //     await AsyncStorage.removeItem('initialChat') 
+            //     setloading(false)
+
+            //     navigation.navigate('Messaging', {userSelected:
+            
+            //         buyerData})
+            //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+            // setchatSelected(true)
+            //  setchattId(data._id)
+            //  const BuyerID = data.users[1]._id
+            //  await AsyncStorage.setItem('initialChat', BuyerID)
+            // }
+            // ----------
             // setloading(true)
+            // setloading(true)
+            
+            setloading(true)
             navigation.navigate('Messaging', {userSelected:
             
                 buyerData})
-            const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-            // console.log(data._id)
-            setchatSelected(true)
-            setchattId(data._id)
+                const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+               
+                setchatSelected(true)
+                setchattId(data._id)
+            // if(data.latestMessage != null){
+                
+            // }
+            // const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+            
+            //     setchatSelected(true)
+            // setchattId(data._id)
+            // const BuyerID = data.users[1]._id
+            // console.log(data.users[1]._id)
+            // console.log(buyerData._id)
+            // await AsyncStorage.setItem('initialChat', BuyerID)
+            // const checkbuyer = await AsyncStorage.getItem('initialChat') 
+            // console.log(checkbuyer)          
+            // console.log(data.latestMessage)
+            // if(data.latestMessage != null || data.latestMessage != undefined){
+            //     setloading(true)
+            //     setchatSelected(true)
+            // setchattId(data._id)
+            // }
+            
         
             // navigation.navigate('Messaging', {chatId: data._id, userSelected:
             

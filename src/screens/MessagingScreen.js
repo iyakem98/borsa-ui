@@ -104,6 +104,7 @@ const MessagingScreen = () => {
   // console.log(route.params.userSelected._id)
   const cameraRef = useRef()
   useLayoutEffect(() => {
+    // setloading(true)
         fetchMessage()
     // socket.current = io(ENDPOINT)
     socket.current = io(API_BASE_URL)
@@ -609,7 +610,9 @@ const CameraFeature = () => {
    
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
-    
+    if(data.latestMessage == null){
+      setloading(false)
+    }
     setloading(false)
     // console.log(data)
     // console.log(mesages) 
