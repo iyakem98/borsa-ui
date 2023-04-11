@@ -97,12 +97,12 @@ const ProfileScreen = ({navigation}) => {
                     }}>
                         {user && user.address}
                     </Text>
-                    <Text style = {{
+                    {/* <Text style = {{
                         fontSize: 20,
                         marginBottom: 0
                     }}>
                     🇨🇦
-                    </Text>
+                    </Text> */}
                 </View>
                 <View style = {{
                     flexDirection: 'row',
@@ -111,7 +111,7 @@ const ProfileScreen = ({navigation}) => {
                         <Pressable style = {{
                             backgroundColor: "#13b955",
                             width: "20%",
-                            height: "35%",
+                            height: "45%",
                             alignItems:'center',
                             justifyContent: 'center',
                             marginLeft: 10,
@@ -131,7 +131,7 @@ const ProfileScreen = ({navigation}) => {
                     <Pressable style = {{
                         backgroundColor: "#593196",
                         width: "20%",
-                        height: "35%",
+                        height: "45%",
                         alignItems:'center',
                         justifyContent: 'center',
                         borderRadius: 20,
@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
     },
 
     overlay: {
-        flex: 10,
+        flex: 1,
         height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.3)',
         justifyContent: 'flex-end',
@@ -558,7 +558,7 @@ const styles = StyleSheet.create({
     v2b: {
         backgroundColor: 'white',
         width: '100%',
-        height: 400,
+        height: 700,
         position: 'absolute',
        // marginTop: 70,
        // borderTopRightRadius: 15,

@@ -101,7 +101,11 @@ const Navigator = () => {
 
   return (
    <NavigationContainer>
+<<<<<<< HEAD
    {user !== null  ? (
+=======
+   {user!=undefined || user!=null ? (
+>>>>>>> 499e1facfb42faa26e731bb2a17b7a5f4e080505
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     <Stack.Navigator>
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />

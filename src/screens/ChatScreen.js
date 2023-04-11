@@ -429,8 +429,9 @@ useEffect(() => {
               //   // console.log(formatted_date)
               // }
              
-              // console.log(formatted_date)
-              chatArr.push(chat)
+              // console.log(chat)
+              
+              // chatArr.push(chat)
               chatArr2.push(chat)
               setSelectedChat(chat)
               // console.log(chat._id)
