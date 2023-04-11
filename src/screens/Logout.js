@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { logout } from '../features/auth/authSlice'
 
 const Logout = ({navigation}) => {
-    dispatch = useDispatch()
+    const dispatch = useDispatch()
     // useEffect(()=> 
     // {
     // const remove = async() => {

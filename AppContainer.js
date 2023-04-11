@@ -15,9 +15,10 @@ import moment from 'moment';
 import axios from 'axios';
 import { UpdateLastSeenAndStatus } from './src/features/auth/authSlice';
 import { fetchChat } from './src/features/chat/chatSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-function AppContainer() {
+function AppContainer({showOnBoarding}) {
   
     const { user } = useSelector((state) => state.auth)
     const dispatch = useDispatch()
@@ -29,6 +30,18 @@ function AppContainer() {
   // console.log(user)
   const {date, setDate} = ChatState()
   const datte  = moment()
+
+  const getUser = async() => {
+    try {
+      const user = await  AsyncStorage.getItem('user')
+      // console.log(user)
+      // const user = JSON.parse(user1)
+    } catch (e) {
+      console.log("GET ASYNC USER DATA ERROR: ", e)
+    }
+  }
+
+
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
       console.log(nextAppState)
@@ -136,7 +149,7 @@ function AppContainer() {
  
   //  <PersistGate loading={null} persistor={persistor}>
    <View style={styles.container}>
-     <Navigator/>
+     <Navigator showOnBoarding={showOnBoarding} />
      {/* <StatusBar style="auto" /> */}
    </View>
     // </PersistGate>

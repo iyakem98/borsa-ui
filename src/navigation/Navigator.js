@@ -4,6 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack"
 import MessagingScreen from "../screens/MessagingScreen"
 import ChatScreen from "../screens/ChatScreen"
 import LoginScreen from "../screens/AuthScreens/LoginScreen"
+import ForgotPassword from "../screens/AuthScreens/ForgotPassword"
+import OnBoarding from "../screens/AuthScreens/OnBoarding"
 // import LoginWithGoogle from "../screens/AuthScreens/LoginWithGoogle"
 import RegisterScreen from "../screens/AuthScreens/RegisterScreen"
 import AccountScreen from '../screens/ProfileScreens/AccountScreen'
@@ -24,7 +26,7 @@ import MainTabNavigator from "./MainTabNavigator"
 import HomeScreen from "../screens/AuthScreens/HomeScreen"
 import OtherProfile from "../components/Connect/OtherProfile"
 import ConnectScreen from "../screens/ConnectScreen"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Test from "../screens/Test"
 import Test2 from "../screens/Test2"
 import TestImg from "../screens/TestImg"
@@ -35,10 +37,12 @@ import { useRef } from "react"
 import { useEffect } from "react"
 import UserTest from "../screens/UserTest"
 import PushScreen from "../screens/PushScreen"
+import { login } from "../features/auth/authSlice"
 
 
 const Stack = createStackNavigator();
 const Navigator = () => {
+  const dispatch = useDispatch();
   // const appState = useRef(AppState.currentState);
   const { user } = useSelector((state) => state.auth)
   const {messageHeader, setmessageHeader} = ChatState()
@@ -79,42 +83,49 @@ const Navigator = () => {
       
     
   // }, [])
- const  checkUser = async()=>{
-  if( await AsyncStorage.getItem('user')){
-    return true
+  const checkUserData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@storage_Key');
+      const userData = jsonValue != null ? JSON.parse(jsonValue) : null;
+      if(userData) {
+        dispatch(login(value));
+      }
+    } catch(e) {
+      // error reading value
+    }
   }
-   
-  }
+
+  useEffect(()=>{
+    checkUserData()
+  }, [user])
+
   return (
    <NavigationContainer>
-   {user != null || user != null || !user  ? (
+   {user !== null  ? (
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     <Stack.Navigator>
-    <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
-    
-    <Stack.Screen name="Chats" component={ChatScreen} />
-    <Stack.Screen name="Connect" component={ConnectScreen} />
-   
-   
-    <Stack.Screen name="User Details" component={OtherProfile} />
-    { messageHeader ? (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
-  
-    // title: route.params.userSelected,
-    title: <UserRecently  userData={route.params.userSelected}/>,
-    // title: <UserRecently data={route.params.chatId} user={route.params.userSelected}/>,
-    headerShown: false
-  })}/>) :  (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
-    // title: route.params.userSelected,
-    title: <UserRecently  userData={route.params.userSelected}/>,
-    //  title: <UserRecently data={route.params.chatId} userData={route.params.userSelected}/>,
-    headerShown: true
-  })}/>) }
-   
-   
-    <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>
-    <Stack.Screen name="Settings" component={SettingsScreen}/>
-    <Stack.Screen name="Security" component={SecurityScreen}/>
-    <Stack.Screen name="Contact Us" component={ContactScreen} 
+      <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
+      <Stack.Screen name="Chats" component={ChatScreen} />
+      <Stack.Screen name="Connect" component={ConnectScreen} />
+      <Stack.Screen name="User Details" component={OtherProfile} />
+      { messageHeader ? (
+        <Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
+          // title: route.params.userSelected,
+          title: <UserRecently  userData={route.params.userSelected}/>,
+          // title: <UserRecently data={route.params.chatId} user={route.params.userSelected}/>,
+          headerShown: false
+        })}/>
+      ) : (<Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
+          // title: route.params.userSelected,
+          title: <UserRecently  userData={route.params.userSelected}/>,
+          //  title: <UserRecently data={route.params.chatId} userData={route.params.userSelected}/>,
+          headerShown: true
+        })}/>
+      )}
+      <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>
+      <Stack.Screen name="Settings" component={SettingsScreen}/>
+      <Stack.Screen name="Security" component={SecurityScreen}/>
+      <Stack.Screen name="Contact Us" component={ContactScreen} 
         options = {{
           headerStyle: {
             backgroundColor: '#593196',
@@ -123,30 +134,30 @@ const Navigator = () => {
           
           headerTintColor: "#fff"
         }}/>
-         <Stack.Screen name = "My Cards" component={MyCards} />
-    <Stack.Screen name = "Edit UserName" component={EditUserName} />
-    <Stack.Screen name = "Edit Name" component={EditName} />
-    <Stack.Screen name = "Edit Email" component={EditEmail} />
-    <Stack.Screen name = "Edit Location" component={EditLocation} />
-    <Stack.Screen name = "Edit MyTraveler" component={EditMyTravelerScreen} />
-    <Stack.Screen name = "Edit MyBuyer" component={EditMyBuyerScreen} />
-    <Stack.Screen name = "Edit Buyer Details" component={EditBuyerDetails} />
-    <Stack.Screen name = "Edit Traveler Details" component={EditTravelerDetails} />
-    <Stack.Screen name = "Edit Space Available" component={EditSpace} />
+      <Stack.Screen name = "My Cards" component={MyCards} />
+      <Stack.Screen name = "Edit UserName" component={EditUserName} />
+      <Stack.Screen name = "Edit Name" component={EditName} />
+      <Stack.Screen name = "Edit Email" component={EditEmail} />
+      <Stack.Screen name = "Edit Location" component={EditLocation} />
+      <Stack.Screen name = "Edit MyTraveler" component={EditMyTravelerScreen} />
+      <Stack.Screen name = "Edit MyBuyer" component={EditMyBuyerScreen} />
+      <Stack.Screen name = "Edit Buyer Details" component={EditBuyerDetails} />
+      <Stack.Screen name = "Edit Traveler Details" component={EditTravelerDetails} />
+      <Stack.Screen name = "Edit Space Available" component={EditSpace} />
+      {/* <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false}}/>
+      <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerShown: false}}/> */}
     </Stack.Navigator>
-
    ): (
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
-     <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} />
+      <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerShown: false}}/>
+      <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} />
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
-     
-    <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown: false}}/>
+      <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
     </Stack.Navigator>
-
    )}     
    </NavigationContainer>
- 
-
   )
 }
 {/* <Stack.Screen name="LoginWithGoogle" component={LoginWithGoogle} options={{headerShown: false, headerTintColor: '#593196'}}/> */}

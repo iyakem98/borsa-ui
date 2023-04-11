@@ -1,5 +1,5 @@
 
-import {View, Text, ImageBackground, Image, SafeAreaView, TextInput, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal} from 'react-native'
+import {View, Text, ImageBackground, Image, SafeAreaView, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal} from 'react-native'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
@@ -10,11 +10,20 @@ import { reset } from '../../features/chat/chatSlice';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Header from '../../components/Shared/Header';
+import { Checkbox, TextInput } from 'react-native-paper';
 
 
-const RegisterScreen = () => {
+const RegisterScreen = ({navigation}) => {
 
   const [signUp, setSignUp] = useState(true)
+  const [isLoading, setIsLoading] = useState(false);
+  const [userFullName, setUserFullName] = useState("")
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [checked, setChecked] = useState(false)
+  const [userEmailError, setUserEmailError] = useState("");
+  const [userPasswordError, setUserPasswordError] = useState("");
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -36,7 +45,40 @@ const RegisterScreen = () => {
   const [confirm, setConfirm] = useState("")
   const [mailedTo, setMailedTo] = useState("")
   let registerUserData = null
-  const navigate = useNavigation()
+
+  const handleUserData = async (value) => {
+    try {
+      dispatch({
+        type: "LOGIN",
+        payload: { user: value },
+      });
+      const jsonValue = JSON.stringify(value)
+      await AsyncStorage.setItem('@user_data', jsonValue)
+    } catch (e) {
+      // saving error
+    }
+  }
+
+  const handleLogin = async() => {
+    setIsLoading(true)
+    try {
+      const res = await axios.post('http://143.198.168.244/api/users/login', {
+        email: userEmail,
+        password: userPassword
+      });
+      console.log(res.data);
+      await handleUserData();
+    } catch(e) {
+      console.log("------------", e)
+      if(e === "password error") {
+
+      } else if(e === "username error") {
+
+      } else if(e === "password error") {}
+    }
+    setIsLoading(false)
+  }
+
   const Icon = <Pressable onPress={() => {
     setVisibility(!visibility)
     setSecureText(!secureText)
@@ -179,562 +221,702 @@ const handleVerify = async () => {
 }
 
   return (
-    <View style = {{
-        height: "100%",
+    <SafeAreaView style={{
+      flex: 1,
+      backgroundColor: "#fff"
+    }}>
+      <Header />
+      <ScrollView contentContainerStyle={{
+        paddingHorizontal: 15,
+        flexGrow: 1
       }}>
-          <View style = {{
-            height: '38%',
-            backgroundColor: '#593196',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-  
-              <Image 
-                  source = {require ('../../data/logos/lwhiteclearbg.png')} 
-                  style = {{
-                      width: 80,
-                      height: 130,
-                      resizeMode: 'cover',
-                      marginBottom: 10
-                  }}
-                  />  
-                <Text style = {{
-                  color: 'white',
-                  fontSize: 17,
-                }}>
-                  Borsa
-                </Text>
-  
-          </View>
-
-          {/* {registerForm ? <ScrollView style = {{backgroundColor: 'white', 
-          // display:`${registerForm}`
-          }}>
-          <View style = {{
-            alignItems: 'center',
-            paddingVertical: 40,
-            width: '100%',
-            backgroundColor: 'white'
-          }}>
-                <View style = {{
-                    width: "100%",
-                    justifyContent: 'space-around',
-                    flexDirection: 'row',
-                }}>
-                <TextInput placeholder='First Name'
-                  style = {{
-                    width: '36%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 16,
-  
-                  }}
-                  value={firstName}
-                   onChangeText={text => setFirstName(text)}
-                  />
-
-                <TextInput placeholder='Last Name'
-                  style = {{
-                    width: '36%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 16,
-
-  
-                  }}
-                  value={lastName}
-                   onChangeText={text => setLastName(text)}
-                  />
-  
-                </View>
-                <TextInput placeholder='Enter your username'
-                  style = {{
-                    width: '85%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 8,
-  
-                  }}
-                  value={userName} 
-                  onChangeText={text => setuserName(text)}
-                  />
-                <TextInput placeholder='Enter your email'
-                  style = {{
-                    width: '85%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 8,
-  
-                  }}
-                  value={email} 
-                  onChangeText={text => setEmail(text)}
-                   autoCompleteType="email" keyboardType="email-address"
-                  />
-  
-                <View style = {{
-                  width: "85%",
-                  flexDirection: 'row',
-                  justifyContent:'center',
-                  borderStyle: 'solid',
-                  borderBottomWidth: StyleSheet.hairlineWidth,
-                  borderColor: "lightgray",
-                  marginVertical: 8,
-                  
-                }}>
-                <TextInput placeholder='Enter password'
-                  style = {{
-                    width: '90%',
-                    paddingHorizontal: 6,
-                    paddingVertical: 8,
-                    
-                    fontSize: 18
-  
-                  }}
-                  value={password} 
-                  onChangeText={text => setPassword(text)} 
-                  secureTextEntry={secureText} 
-                  />
-                  {Icon}
-                </View>
-                <View 
-                    style = {{
-                    width: "85%",
-                    flexDirection: 'row',
-                    // justifyContent:'center',
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    marginVertical: 8,
-                  
-                }}>
-                <TextInput placeholder='Confirm password'
-                  style = {{
-                    width: '90%',
-                    paddingHorizontal: 6,
-                    paddingVertical: 8,
-                    
-                    fontSize: 18
-  
-                  }}
-                  value={passwordAgain} 
-                 
-                  onChangeText={(text) => {
-                   
-                    setPasswordAgain(text)
-                  }} 
-                  secureTextEntry={secureText}
-
-                  />
-                    {Icon}
-                
-                </View>
-                <TextInput placeholder='Enter your Country'
-                  style = {{
-                    width: '85%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginVertical: 8,
-                  }}
-                  value={country} 
-                  onChangeText={text => setCountry(text)}
-                  />
-                <TextInput placeholder='Enter your City'
-                  style = {{
-                    width: '85%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginVertical: 8,
-                  }}
-                  value={city} 
-                  onChangeText={text => setCity(text)}
-                  />
-
-                  <TouchableHighlight style = {{
-                    backgroundColor: "#f9f8fc",
-                    width: "80%",
-                    paddingHorizontal: 10,
-                    paddingVertical: 10,
-                    
-                  }}>
-                    <Text style = {{}}>
-                        Upload profile pic
-                    </Text>
-                  </TouchableHighlight>
-                  <View>
-                  </View>
-                 
-                <TouchableOpacity style = {{
-                  backgroundColor: '#13b955',
-                  width: "70%",
-                  height: "9%",
-                  marginTop: 40,
-                  marginBottom: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 5,
-  
-                  shadowColor: "000",
-                  shadowOffset: {
-                      width: 0,
-                      height: 3,
-                  },
-                  shadowOpacity: 0.28,
-                  shadowRadius: 3.00,
-  
-                  elevation: 1,
-  
-                }} 
-                onPress={() => handleSubmit()}>
-                  <Text style = {{
-                    color: 'white',
-                    fontSize: 17,
-                  }}>
-                    Sign Up
-                  </Text>
-                </TouchableOpacity>
-                <Text style = {{
-                  color: 'gray'
-                }}>
-                  Forgot password?
-                </Text>
-  
-                <Pressable 
-                  onPress={() => navigate.navigate('Login')}
-                  style = {{
-                    marginVertical: 30,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: '#593196',
-                    paddingHorizontal: 3
-                }}>
-                  <Text style = {{
-                    //color: '#a991d4'
-                    color: '#593196',
-                    fontSize: 16,
-                  }}>
-                    Already have an account!
-                  </Text>
-                </Pressable>
-          </View>
-          </ScrollView> : null} */}
-            <ScrollView style = {{backgroundColor: 'white', 
-          // display:`${registerForm}`
-          }}>
-          <View style = {{
-            alignItems: 'center',
-            paddingVertical: 40,
-            width: '100%',
-            backgroundColor: 'white'
-          }}>
-                <View style = {{
-                    width: "100%",
-                    justifyContent: 'space-around',
-                    flexDirection: 'row',
-                }}>
-                <TextInput placeholder='First Name'
-                  style = {{
-                    width: '36%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 16,
-  
-                  }}
-                  value={firstName}
-                   onChangeText={text => setFirstName(text)}
-                  />
-
-                <TextInput placeholder='Last Name'
-                  style = {{
-                    width: '36%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 16,
-
-  
-                  }}
-                  value={lastName}
-                   onChangeText={text => setLastName(text)}
-                  />
-  
-                </View>
-                <TextInput placeholder='Enter your username'
-                  style = {{
-                    width: '85%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 8,
-  
-                  }}
-                  value={userName} 
-                  onChangeText={text => setuserName(text)}
-                  />
-                <TextInput placeholder='Enter your email'
-                  style = {{
-                    width: '85%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 8,
-  
-                  }}
-                  value={email} 
-                  onChangeText={text => setEmail(text)}
-                   autoCompleteType="email" keyboardType="email-address"
-                  />
-  
-                <View style = {{
-                  width: "85%",
-                  flexDirection: 'row',
-                  justifyContent:'center',
-                  borderStyle: 'solid',
-                  borderBottomWidth: StyleSheet.hairlineWidth,
-                  borderColor: "lightgray",
-                  marginVertical: 8,
-                  
-                }}>
-                <TextInput placeholder='Enter password'
-                  style = {{
-                    width: '90%',
-                    paddingHorizontal: 6,
-                    paddingVertical: 8,
-                    
-                    fontSize: 18
-  
-                  }}
-                  value={password} 
-                  onChangeText={text => setPassword(text)} 
-                  secureTextEntry={secureText} 
-                  />
-                  {Icon}
-                </View>
-                <View 
-                    style = {{
-                    width: "85%",
-                    flexDirection: 'row',
-                    // justifyContent:'center',
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    marginVertical: 8,
-                  
-                }}>
-                <TextInput placeholder='Confirm password'
-                  style = {{
-                    width: '90%',
-                    paddingHorizontal: 6,
-                    paddingVertical: 8,
-                    
-                    fontSize: 18
-  
-                  }}
-                  value={passwordAgain} 
-                 
-                  onChangeText={(text) => {
-                   
-                    setPasswordAgain(text)
-                  }} 
-                  secureTextEntry={secureText}
-
-                  />
-                    {Icon}
-                
-                </View>
-                <TextInput placeholder='Enter your Country'
-                  style = {{
-                    width: '85%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginVertical: 8,
-                  }}
-                  value={country} 
-                  onChangeText={text => setCountry(text)}
-                  />
-                <TextInput placeholder='Enter your City'
-                  style = {{
-                    width: '85%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginVertical: 8,
-                  }}
-                  value={city} 
-                  onChangeText={text => setCity(text)}
-                  />
-
-                  <TouchableHighlight style = {{
-                    backgroundColor: "#f9f8fc",
-                    width: "80%",
-                    paddingHorizontal: 10,
-                    paddingVertical: 10,
-                    
-                  }}>
-                    <Text style = {{}}>
-                        Upload profile pic
-                    </Text>
-                  </TouchableHighlight>
-                  <View>
-                  </View>
-               
-               
-                <TouchableOpacity style = {{
-                  backgroundColor: '#13b955',
-                  width: "70%",
-                  height: "9%",
-                  marginTop: 40,
-                  marginBottom: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: 5,
-  
-                  shadowColor: "000",
-                  shadowOffset: {
-                      width: 0,
-                      height: 3,
-                  },
-                  shadowOpacity: 0.28,
-                  shadowRadius: 3.00,
-  
-                  elevation: 1,
-  
-                }} 
-                onPress={() => handleSubmit()}>
-                  <Text style = {{
-                    color: 'white',
-                    fontSize: 17,
-                  }}>
-                    {signUp ? "Sign Up" : "Please wait..."}
-                  </Text>
-                </TouchableOpacity>
-
-
-                <Text style = {{
-                  color: 'gray'
-                }}>
-                  Forgot password?
-                </Text>
-  
-                <Pressable 
-                  onPress={() => navigate.navigate('Login')}
-                  style = {{
-                    marginVertical: 30,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: '#593196',
-                    paddingHorizontal: 3
-                }}>
-                  <Text style = {{
-                    //color: '#a991d4'
-                    color: '#593196',
-                    fontSize: 16,
-                  }}>
-                    Already have an account!
-                  </Text>
-                </Pressable>
-          </View>
-          </ScrollView> 
-
-          <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
+        <Text style={{
+          fontFamily: "Poppins_600SemiBold",
+          fontSize: 30
         }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-
-
-            <Text style={styles.modalText}>Enter the OTP sent to your email to verify..</Text>
-            
-            <TextInput placeholder='OTP'
-                  style = {{
-                    width: '76%',
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: 'solid',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 16,
-                    textAlign:"center",
-                    keyboardType:"numeric"
-                  }}
-                  value={confirm}
-                   onChangeText={text => setConfirm(text)}
-                  />
-
-            <Pressable
-              style={[styles.button, styles.buttonCloseNo]}
-              onPress={() => handleVerify()}>
-              <Text style={styles.textStyle}>Go</Text>
-            </Pressable>
-
-            <Pressable
-              style={[styles.button, styles.buttonCloseCancel]}
-              onPress={()=>{
-                setModalVisible(!modalVisible)
-                setSignUp(true)
-              }}
-              >
-              <Text style={styles.textStyleCancel}>Cancel</Text>
+          Create an Account
+        </Text>
+        <TextInput
+          label="Full name"
+          value={userFullName}
+          onChangeText={text => setUserFullName(text)}
+          mode="outlined"
+          style={{
+            marginTop: 15,
+            marginBottom: 13,
+            // paddingVertical: 5
+          }}
+          outlineStyle={{
+            backgroundColor: "#fff",
+            borderColor: "#ccc",
+          }}
+          placeholderTextColor= "#eee"
+        />
+        <TextInput
+          label="Email"
+          value={userEmail}
+          onChangeText={text => setUserEmail(text)}
+          mode="outlined"
+          style={{
+            marginBottom: 13,
+            // paddingVertical: 5
+          }}
+          outlineStyle={{
+            backgroundColor: "#fff",
+            borderColor: "#ccc",
+          }}
+          placeholderTextColor= "#eee"
+        />
+        <TextInput
+          label="Password"
+          value={userPassword}
+          onChangeText={text => setUserPassword(text)}
+          mode="outlined"
+          style={{
+            // paddingVertical: 5
+          }}
+          outlineStyle={{
+            backgroundColor: "#fff",
+            borderColor: "#ccc",
+          }}
+        />
+        <View style={{
+          flexDirection: "row",
+          marginTop: 20,
+          width: "100%",
+          // backgroundColor: "#eee"
+        }}>
+          <Checkbox
+            status={checked ? 'checked' : 'unchecked'}
+            onPress={() => {
+              setChecked(!checked);
+            }}
+            style={{
+              width: 80
+            }}
+          />
+          <View style={{
+            flex: 1
+          }}>
+            <Text style={{
+              position: "relative",
+              fontFamily: "Poppins_400Regular",
+              fontSize: 13
+            }}>
+              By submitting this form, you accept Borsa's {" "}
+              <Text style={{
+                color: "#514590",
+                fontFamily: "Poppins_500Medium",
+                textDecorationLine: "underline"
+              }} onPress={()=>{
+                console.log("========")
+              }}>Terms and Conditions</Text>
+              {" "}and{" "}
+              <Text style={{
+                color: "#514590",
+                fontFamily: "Poppins_500Medium",
+                textDecorationLine: "underline"
+              }} onPress={()=>{
+                console.log("========")
+              }}>Privacy Policy.</Text>
+            </Text>
+          </View>
+        </View>
+        <View style={{
+            position: "absolute",
+            width: "100%",
+            bottom: 20,
+            left: 15,
+        }}>
+          <Pressable style={{
+            backgroundColor: "#514590",
+            paddingVertical: 15,
+            borderRadius: 5,
+            marginBottom: 25,
+            width: "100%"
+          }} onPress={handleLogin}>
+            <Text style={{
+                color: "#fff",
+                fontFamily: "Poppins_400Regular",
+                fontSize: 14,
+                textAlign: "center"
+            }}>{isLoading ? "Loading ..." : "Login"}</Text>
+          </Pressable>
+          <View style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center"
+          }}>
+            <Text style={{
+              fontFamily: "Poppins_400Regular"
+            }}>I already have an account. </Text>
+            <Pressable onPress={()=> navigation.navigate('Login')}>
+              <Text style={{
+                fontFamily: "Poppins_600SemiBold",
+                color: "#514590",
+                textDecorationLine: "underline"
+              }}>Login</Text>
             </Pressable>
           </View>
         </View>
-      </Modal>
+      </ScrollView>
+    </SafeAreaView>
+    // <View style = {{
+    //     height: "100%",
+    //   }}>
+    //       <View style = {{
+    //         height: '38%',
+    //         backgroundColor: '#593196',
+    //         alignItems: 'center',
+    //         justifyContent: 'center'
+    //       }}>
+  
+    //           <Image 
+    //               source = {require ('../../data/logos/lwhiteclearbg.png')} 
+    //               style = {{
+    //                   width: 80,
+    //                   height: 130,
+    //                   resizeMode: 'cover',
+    //                   marginBottom: 10
+    //               }}
+    //               />  
+    //             <Text style = {{
+    //               color: 'white',
+    //               fontSize: 17,
+    //             }}>
+    //               Borsa
+    //             </Text>
+  
+    //       </View>
+
+    //       {/* {registerForm ? <ScrollView style = {{backgroundColor: 'white', 
+    //       // display:`${registerForm}`
+    //       }}>
+    //       <View style = {{
+    //         alignItems: 'center',
+    //         paddingVertical: 40,
+    //         width: '100%',
+    //         backgroundColor: 'white'
+    //       }}>
+    //             <View style = {{
+    //                 width: "100%",
+    //                 justifyContent: 'space-around',
+    //                 flexDirection: 'row',
+    //             }}>
+    //             <TextInput placeholder='First Name'
+    //               style = {{
+    //                 width: '36%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginBottom: 16,
+  
+    //               }}
+    //               value={firstName}
+    //                onChangeText={text => setFirstName(text)}
+    //               />
+
+    //             <TextInput placeholder='Last Name'
+    //               style = {{
+    //                 width: '36%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginBottom: 16,
+
+  
+    //               }}
+    //               value={lastName}
+    //                onChangeText={text => setLastName(text)}
+    //               />
+  
+    //             </View>
+    //             <TextInput placeholder='Enter your username'
+    //               style = {{
+    //                 width: '85%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginBottom: 8,
+  
+    //               }}
+    //               value={userName} 
+    //               onChangeText={text => setuserName(text)}
+    //               />
+    //             <TextInput placeholder='Enter your email'
+    //               style = {{
+    //                 width: '85%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginBottom: 8,
+  
+    //               }}
+    //               value={email} 
+    //               onChangeText={text => setEmail(text)}
+    //                autoCompleteType="email" keyboardType="email-address"
+    //               />
+  
+    //             <View style = {{
+    //               width: "85%",
+    //               flexDirection: 'row',
+    //               justifyContent:'center',
+    //               borderStyle: 'solid',
+    //               borderBottomWidth: StyleSheet.hairlineWidth,
+    //               borderColor: "lightgray",
+    //               marginVertical: 8,
+                  
+    //             }}>
+    //             <TextInput placeholder='Enter password'
+    //               style = {{
+    //                 width: '90%',
+    //                 paddingHorizontal: 6,
+    //                 paddingVertical: 8,
+                    
+    //                 fontSize: 18
+  
+    //               }}
+    //               value={password} 
+    //               onChangeText={text => setPassword(text)} 
+    //               secureTextEntry={secureText} 
+    //               />
+    //               {Icon}
+    //             </View>
+    //             <View 
+    //                 style = {{
+    //                 width: "85%",
+    //                 flexDirection: 'row',
+    //                 // justifyContent:'center',
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 marginVertical: 8,
+                  
+    //             }}>
+    //             <TextInput placeholder='Confirm password'
+    //               style = {{
+    //                 width: '90%',
+    //                 paddingHorizontal: 6,
+    //                 paddingVertical: 8,
+                    
+    //                 fontSize: 18
+  
+    //               }}
+    //               value={passwordAgain} 
+                 
+    //               onChangeText={(text) => {
+                   
+    //                 setPasswordAgain(text)
+    //               }} 
+    //               secureTextEntry={secureText}
+
+    //               />
+    //                 {Icon}
+                
+    //             </View>
+    //             <TextInput placeholder='Enter your Country'
+    //               style = {{
+    //                 width: '85%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginVertical: 8,
+    //               }}
+    //               value={country} 
+    //               onChangeText={text => setCountry(text)}
+    //               />
+    //             <TextInput placeholder='Enter your City'
+    //               style = {{
+    //                 width: '85%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginVertical: 8,
+    //               }}
+    //               value={city} 
+    //               onChangeText={text => setCity(text)}
+    //               />
+
+    //               <TouchableHighlight style = {{
+    //                 backgroundColor: "#f9f8fc",
+    //                 width: "80%",
+    //                 paddingHorizontal: 10,
+    //                 paddingVertical: 10,
+                    
+    //               }}>
+    //                 <Text style = {{}}>
+    //                     Upload profile pic
+    //                 </Text>
+    //               </TouchableHighlight>
+    //               <View>
+    //               </View>
+                 
+    //             <TouchableOpacity style = {{
+    //               backgroundColor: '#13b955',
+    //               width: "70%",
+    //               height: "9%",
+    //               marginTop: 40,
+    //               marginBottom: 20,
+    //               alignItems: 'center',
+    //               justifyContent: 'center',
+    //               borderRadius: 5,
+  
+    //               shadowColor: "000",
+    //               shadowOffset: {
+    //                   width: 0,
+    //                   height: 3,
+    //               },
+    //               shadowOpacity: 0.28,
+    //               shadowRadius: 3.00,
+  
+    //               elevation: 1,
+  
+    //             }} 
+    //             onPress={() => handleSubmit()}>
+    //               <Text style = {{
+    //                 color: 'white',
+    //                 fontSize: 17,
+    //               }}>
+    //                 Sign Up
+    //               </Text>
+    //             </TouchableOpacity>
+    //             <Text style = {{
+    //               color: 'gray'
+    //             }}>
+    //               Forgot password?
+    //             </Text>
+  
+    //             <Pressable 
+    //               onPress={() => navigate.navigate('Login')}
+    //               style = {{
+    //                 marginVertical: 30,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: '#593196',
+    //                 paddingHorizontal: 3
+    //             }}>
+    //               <Text style = {{
+    //                 //color: '#a991d4'
+    //                 color: '#593196',
+    //                 fontSize: 16,
+    //               }}>
+    //                 Already have an account!
+    //               </Text>
+    //             </Pressable>
+    //       </View>
+    //       </ScrollView> : null} */}
+    //         <ScrollView style = {{backgroundColor: 'white', 
+    //       // display:`${registerForm}`
+    //       }}>
+    //       <View style = {{
+    //         alignItems: 'center',
+    //         paddingVertical: 40,
+    //         width: '100%',
+    //         backgroundColor: 'white'
+    //       }}>
+    //             <View style = {{
+    //                 width: "100%",
+    //                 justifyContent: 'space-around',
+    //                 flexDirection: 'row',
+    //             }}>
+    //             <TextInput placeholder='First Name'
+    //               style = {{
+    //                 width: '36%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginBottom: 16,
+  
+    //               }}
+    //               value={firstName}
+    //                onChangeText={text => setFirstName(text)}
+    //               />
+
+    //             <TextInput placeholder='Last Name'
+    //               style = {{
+    //                 width: '36%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginBottom: 16,
+
+  
+    //               }}
+    //               value={lastName}
+    //                onChangeText={text => setLastName(text)}
+    //               />
+  
+    //             </View>
+    //             <TextInput placeholder='Enter your username'
+    //               style = {{
+    //                 width: '85%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginBottom: 8,
+  
+    //               }}
+    //               value={userName} 
+    //               onChangeText={text => setuserName(text)}
+    //               />
+    //             <TextInput placeholder='Enter your email'
+    //               style = {{
+    //                 width: '85%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginBottom: 8,
+  
+    //               }}
+    //               value={email} 
+    //               onChangeText={text => setEmail(text)}
+    //                autoCompleteType="email" keyboardType="email-address"
+    //               />
+  
+    //             <View style = {{
+    //               width: "85%",
+    //               flexDirection: 'row',
+    //               justifyContent:'center',
+    //               borderStyle: 'solid',
+    //               borderBottomWidth: StyleSheet.hairlineWidth,
+    //               borderColor: "lightgray",
+    //               marginVertical: 8,
+                  
+    //             }}>
+    //             <TextInput placeholder='Enter password'
+    //               style = {{
+    //                 width: '90%',
+    //                 paddingHorizontal: 6,
+    //                 paddingVertical: 8,
+                    
+    //                 fontSize: 18
+  
+    //               }}
+    //               value={password} 
+    //               onChangeText={text => setPassword(text)} 
+    //               secureTextEntry={secureText} 
+    //               />
+    //               {Icon}
+    //             </View>
+    //             <View 
+    //                 style = {{
+    //                 width: "85%",
+    //                 flexDirection: 'row',
+    //                 // justifyContent:'center',
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 marginVertical: 8,
+                  
+    //             }}>
+    //             <TextInput placeholder='Confirm password'
+    //               style = {{
+    //                 width: '90%',
+    //                 paddingHorizontal: 6,
+    //                 paddingVertical: 8,
+                    
+    //                 fontSize: 18
+  
+    //               }}
+    //               value={passwordAgain} 
+                 
+    //               onChangeText={(text) => {
+                   
+    //                 setPasswordAgain(text)
+    //               }} 
+    //               secureTextEntry={secureText}
+
+    //               />
+    //                 {Icon}
+                
+    //             </View>
+    //             <TextInput placeholder='Enter your Country'
+    //               style = {{
+    //                 width: '85%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginVertical: 8,
+    //               }}
+    //               value={country} 
+    //               onChangeText={text => setCountry(text)}
+    //               />
+    //             <TextInput placeholder='Enter your City'
+    //               style = {{
+    //                 width: '85%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginVertical: 8,
+    //               }}
+    //               value={city} 
+    //               onChangeText={text => setCity(text)}
+    //               />
+
+    //               <TouchableHighlight style = {{
+    //                 backgroundColor: "#f9f8fc",
+    //                 width: "80%",
+    //                 paddingHorizontal: 10,
+    //                 paddingVertical: 10,
+                    
+    //               }}>
+    //                 <Text style = {{}}>
+    //                     Upload profile pic
+    //                 </Text>
+    //               </TouchableHighlight>
+    //               <View>
+    //               </View>
+               
+               
+    //             <TouchableOpacity style = {{
+    //               backgroundColor: '#13b955',
+    //               width: "70%",
+    //               height: "9%",
+    //               marginTop: 40,
+    //               marginBottom: 20,
+    //               alignItems: 'center',
+    //               justifyContent: 'center',
+    //               borderRadius: 5,
+  
+    //               shadowColor: "000",
+    //               shadowOffset: {
+    //                   width: 0,
+    //                   height: 3,
+    //               },
+    //               shadowOpacity: 0.28,
+    //               shadowRadius: 3.00,
+  
+    //               elevation: 1,
+  
+    //             }} 
+    //             onPress={() => handleSubmit()}>
+    //               <Text style = {{
+    //                 color: 'white',
+    //                 fontSize: 17,
+    //               }}>
+    //                 {signUp ? "Sign Up" : "Please wait..."}
+    //               </Text>
+    //             </TouchableOpacity>
+
+
+    //             <Text style = {{
+    //               color: 'gray'
+    //             }}>
+    //               Forgot password?
+    //             </Text>
+  
+    //             <Pressable 
+    //               onPress={() => navigate.navigate('Login')}
+    //               style = {{
+    //                 marginVertical: 30,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: '#593196',
+    //                 paddingHorizontal: 3
+    //             }}>
+    //               <Text style = {{
+    //                 //color: '#a991d4'
+    //                 color: '#593196',
+    //                 fontSize: 16,
+    //               }}>
+    //                 Already have an account!
+    //               </Text>
+    //             </Pressable>
+    //       </View>
+    //       </ScrollView> 
+
+    //       <View style={styles.centeredView}>
+    //   <Modal
+    //     animationType="slide"
+    //     transparent={true}
+    //     visible={modalVisible}
+    //     onRequestClose={() => {
+    //       Alert.alert('Modal has been closed.');
+    //       setModalVisible(!modalVisible);
+    //     }}>
+    //     <View style={styles.centeredView}>
+    //       <View style={styles.modalView}>
+
+
+    //         <Text style={styles.modalText}>Enter the OTP sent to your email to verify..</Text>
+            
+    //         <TextInput placeholder='OTP'
+    //               style = {{
+    //                 width: '76%',
+    //                 paddingHorizontal: 8,
+    //                 paddingVertical: 8,
+    //                 borderStyle: 'solid',
+    //                 borderBottomWidth: StyleSheet.hairlineWidth,
+    //                 borderColor: "lightgray",
+    //                 fontSize: 18,
+    //                 marginBottom: 16,
+    //                 textAlign:"center",
+    //                 keyboardType:"numeric"
+    //               }}
+    //               value={confirm}
+    //                onChangeText={text => setConfirm(text)}
+    //               />
+
+    //         <Pressable
+    //           style={[styles.button, styles.buttonCloseNo]}
+    //           onPress={() => handleVerify()}>
+    //           <Text style={styles.textStyle}>Go</Text>
+    //         </Pressable>
+
+    //         <Pressable
+    //           style={[styles.button, styles.buttonCloseCancel]}
+    //           onPress={()=>{
+    //             setModalVisible(!modalVisible)
+    //             setSignUp(true)
+    //           }}
+    //           >
+    //           <Text style={styles.textStyleCancel}>Cancel</Text>
+    //         </Pressable>
+    //       </View>
+    //     </View>
+    //   </Modal>
      
-    </View>
+    // </View>
 
         
           
-      </View>
+    //   </View>
   )
 }
 

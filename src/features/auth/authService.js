@@ -36,21 +36,21 @@ const login = async (userData) => {
   // console.log(userData)
   // var socket = io(ENDPOINT)
   var socket = io(API_BASE_URL)
+  return userData
   try{
     
     // const {data} = await axios.post(API_URL + 'users/login', userData)
-    const {data} = await  axios.post(`${API_BASE_URL}users/login`, userData)
-    // console.log(data)
+    // const {data} = await  axios.post(`${API_BASE_URL}users/login`, userData)
   
-    if (data) {
-      // localStorage.setItem('user', JSON.stringify(response.data))
-      const user = await AsyncStorage.setItem('user', JSON.stringify(data))
-      const user1 = await AsyncStorage.getItem('user')
-      console.log(JSON.stringify(user1))
-      socket.emit('user_online', { data, socketID : socket.id})
-      return data;
+    // if (data) {
+    //   // localStorage.setItem('user', JSON.stringify(response.data))
+    //   const user = await AsyncStorage.setItem('user', JSON.stringify(data))
+    //   const user1 = await AsyncStorage.getItem('user')
+    //   console.log(JSON.stringify(user1))
+    //   socket.emit('user_online', { data, socketID : socket.id})
+    //   return data;
       
-    }
+    // }
   }
   
   catch(error){
@@ -136,7 +136,11 @@ const logout = async() => {
   // localStorage.removeItem('user')
   // var socket = io(ENDPOINT)
   // socket.on('disconnect', (test))
-  await AsyncStorage.removeItem('user')
+  try {
+    await AsyncStorage.removeItem('@user_data')
+  } catch(e) {
+    console.log("first", e)
+  }
 
   // await AsyncStorage.clear()
   

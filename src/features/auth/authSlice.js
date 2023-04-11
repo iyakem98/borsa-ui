@@ -16,7 +16,8 @@ const getUser = async() => {
 
 
 const initialState = { 
-  user: getUser() ? getUser() : null,  
+  user: null,  
+  isAuth: false,
   // user:  null,
   travelers: [],
   consumers: [],
@@ -79,6 +80,7 @@ export const getUserDetails = createAsyncThunk(`users/userId`, async (userId, th
     return thunkAPI.rejectWithValue(message)
   }
 })
+
 export const  UpdateLastSeenAndStatus  = createAsyncThunk('auth/UpdateLastSeenAndStatus', async ( userData, thunkAPI) => {
   try {
     console.log(userData)
@@ -107,7 +109,7 @@ export const getTravelers = createAsyncThunk('travels', async (thunkAPI) => {
         error.toString()
       return thunkAPI.rejectWithValue(message)
     }
-  })
+})
 
 export const getConsumers = createAsyncThunk('buyers', async (thunkAPI) => {
     try {
@@ -119,7 +121,7 @@ export const getConsumers = createAsyncThunk('buyers', async (thunkAPI) => {
         error.toString()
       return thunkAPI.rejectWithValue(message)
     }
-  })
+})
  
 export const authSlice = createSlice({
   name: 'auth',

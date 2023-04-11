@@ -19,9 +19,9 @@ const ProfileScreen = ({navigation}) => {
     var socket = io(ENDPOINT)
     const {onlineStatus, setonlineStatus} = ChatState()
     const handleLogout = () => {
-        {user && socket.emit("userLogout", {userID: user._id}) }
+        {user ? socket.emit("userLogout", {userID: user._id}) : (null)}
         dispatch(logout())
-        navigate.navigate("Home")
+        navigate.navigate("Login")
        
     //   socket.disconnect()
         
