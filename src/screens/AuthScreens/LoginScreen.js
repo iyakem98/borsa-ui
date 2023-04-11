@@ -46,6 +46,7 @@ const LoginScreen = ({navigation}) => {
   }
 
   const handleLogin = async() => {
+    setUserPasswordError("")
     setIsLoading(true)
     try {
       const res = await axios.post('http://143.198.168.244/api/users/login', {
@@ -55,12 +56,12 @@ const LoginScreen = ({navigation}) => {
       // console.log(res.data);
       await handleUserData(res.data);
     } catch(e) {
-      console.log("------------{{", e.response.data)
-      if(e === "password error") {
-
-      } else if(e === "username error") {
-
-      } else if(e === "password error") {}
+      console.log("------------{{", e?.response?.data?.message)
+      if(e?.response?.data?.message === "Invalid email or password") {
+        setUserPasswordError("Invalid email or password")
+      } else {
+        setUserPasswordError("Something Went Wrong")
+      }
     }
     setIsLoading(false)
   }
@@ -208,7 +209,7 @@ const LoginScreen = ({navigation}) => {
       }}>
         <Text style={{
           fontFamily: "Poppins_600SemiBold",
-          fontSize: 30
+          fontSize: 30,
         }}>
           Login
         </Text>
@@ -222,9 +223,9 @@ const LoginScreen = ({navigation}) => {
             marginBottom: 13,
             // paddingVertical: 5
           }}
+          error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",
-            borderColor: "#ccc",
           }}
           placeholderTextColor= "#eee"
         />
@@ -236,11 +237,22 @@ const LoginScreen = ({navigation}) => {
           style={{
             // paddingVertical: 5
           }}
+          error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",
-            borderColor: "#ccc",
           }}
         />
+        {userPasswordError ? (
+          <Text style={{
+            marginTop: 10,
+            textAlign: "center",
+            color: "red",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 13
+          }}>
+            {userPasswordError}
+          </Text>
+        ) : (null)}
         <View style={{
           flexDirection: "row",
           justifyContent: "flex-end",

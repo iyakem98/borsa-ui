@@ -54,7 +54,7 @@ const LoginScreen = ({navigation}) => {
       flex: 1,
       backgroundColor: "#fff"
     }}>
-      <Header />
+      <Header backBtn />
       <ScrollView contentContainerStyle={{
         paddingHorizontal: 15,
         flexGrow: 1

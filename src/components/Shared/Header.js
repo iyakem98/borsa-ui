@@ -3,7 +3,9 @@ import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
 
-const Header = () => {
+const Header = ({
+  backBtn
+}) => {
   const navigation = useNavigation();
 
   return (
@@ -13,9 +15,11 @@ const Header = () => {
       flexDirection: "row",
       alignItems: "center"
     }}>
-      <Pressable onPress={()=>navigation.goBack()}>
-        <MaterialIcons name="keyboard-backspace" size={25} color="#514590" />
-      </Pressable>
+      {backBtn ? (
+        <Pressable onPress={()=>navigation.goBack()}>
+          <MaterialIcons name="keyboard-backspace" size={25} color="#514590" />
+        </Pressable>
+      ) : (null)}
     </View>
   )
 }

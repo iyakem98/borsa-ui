@@ -1,11 +1,20 @@
 import { StyleSheet, Text, View, Image, Dimensions, Pressable } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const windowHeight = Dimensions.get("window").height
 const windowWidth = Dimensions.get("window").width
 
 const OnBoarding = ({navigation}) => {
+    const storeData = async () => {
+        try {
+            await AsyncStorage.setItem('@doNotShowOnBoarding', "true")
+        } catch (e) {
+        // saving error
+        }
+    }
+
     return (
         <View>
             <Image 
@@ -54,7 +63,10 @@ const OnBoarding = ({navigation}) => {
                     marginBottom: 25,
                     marginTop: 50,
                     width: "100%"
-                }} onPress={()=>navigation.navigate('Register')}>
+                }} onPress={()=>{
+                    storeData();
+                    navigation.navigate('Register')
+                }}>
                     <Text style={{
                         color: "#fff",
                         fontFamily: "Poppins_400Regular",

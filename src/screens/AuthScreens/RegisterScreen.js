@@ -60,21 +60,33 @@ const RegisterScreen = ({navigation}) => {
   }
 
   const handleLogin = async() => {
+    setUserPasswordError("")
     setIsLoading(true)
-    try {
-      const res = await axios.post('http://143.198.168.244/api/users/login', {
-        email: userEmail,
-        password: userPassword
-      });
-      console.log(res.data);
-      await handleUserData();
-    } catch(e) {
-      console.log("------------", e)
-      if(e === "password error") {
-
-      } else if(e === "username error") {
-
-      } else if(e === "password error") {}
+    if(checked) {
+      try {
+        const userName = userFullName.slice(" ")
+        const res = await axios.post('http://143.198.168.244/api/users', {
+          firstName: userName[0],
+          lastName: userName[1],
+          email: userEmail,
+          password: userPassword
+        });
+        console.log(res.data);
+        await handleUserData();
+      } catch(e) {
+        console.log("------------", e?.response?.data?.message)
+        if(e?.response?.data?.message === "Invalid email or password") {
+          setUserPasswordError("Invalid email or password")
+        } else if(e?.response?.data?.message === "User already exists") {
+          setUserPasswordError("Email already exists")
+        } else if(e?.response?.data?.message === "Username Taken! put in another one") {
+          setUserPasswordError("Username already taken")
+        } else {
+          setUserPasswordError("Something Went Wrong")
+        }
+      }
+    } else {
+      setUserPasswordError("You have to Check the Checkbox")
     }
     setIsLoading(false)
   }
@@ -246,9 +258,9 @@ const handleVerify = async () => {
             marginBottom: 13,
             // paddingVertical: 5
           }}
+          error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",
-            borderColor: "#ccc",
           }}
           placeholderTextColor= "#eee"
         />
@@ -261,9 +273,9 @@ const handleVerify = async () => {
             marginBottom: 13,
             // paddingVertical: 5
           }}
+          error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",
-            borderColor: "#ccc",
           }}
           placeholderTextColor= "#eee"
         />
@@ -275,11 +287,22 @@ const handleVerify = async () => {
           style={{
             // paddingVertical: 5
           }}
+          error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",
-            borderColor: "#ccc",
           }}
         />
+        {userPasswordError ? (
+          <Text style={{
+            marginTop: 10,
+            textAlign: "center",
+            color: "red",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 13
+          }}>
+            {userPasswordError}
+          </Text>
+        ) : (null)}
         <View style={{
           flexDirection: "row",
           marginTop: 20,
@@ -340,7 +363,7 @@ const handleVerify = async () => {
                 fontFamily: "Poppins_400Regular",
                 fontSize: 14,
                 textAlign: "center"
-            }}>{isLoading ? "Loading ..." : "Login"}</Text>
+            }}>{isLoading ? "Loading ..." : "Continue"}</Text>
           </Pressable>
           <View style={{
             flexDirection: "row",

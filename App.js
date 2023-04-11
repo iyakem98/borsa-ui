@@ -27,6 +27,10 @@ import {
   Poppins_800ExtraBold
 } from '@expo-google-fonts/poppins';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  requestTrackingPermissionsAsync,
+  getTrackingPermissionsAsync,
+} from 'expo-tracking-transparency';
 
 export default function App() {
   let [fontsLoaded, error] = useFonts({
@@ -53,8 +57,23 @@ export default function App() {
     }
   }
 
+  const checktracking = async()=>{
+    try {
+      const granted = await getTrackingPermissionsAsync()
+      if (granted) {
+        // Your app is authorized to track the user or their device
+        console.log("GRANTED")
+      } else {
+        console.log("NOT GRANTED")
+      }
+    } catch(e) {
+      console.log("ERROR ON TRACKING")
+    }
+  }
+
   useEffect(()=>{
     checkOnBoardingData();
+    checktracking();
   }, [])
   
   if(fontsLoaded) {
