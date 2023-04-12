@@ -62,9 +62,10 @@ const RegisterScreen = ({navigation}) => {
     setUserPasswordError("")
     setIsLoading(true)
     const userName = userFullName.split(" ")
-    if(userName.length > 1) {
+    console.log(userName)
+    if(userName.length < 2) {
       setUserPasswordError("You have to provide fullname")
-    } else if(checked) {
+    } else if(checked && userName.length > 1) {
       try {
         const res = await axios.post('http://143.198.168.244/api/users', {
           firstName: userName[0],
