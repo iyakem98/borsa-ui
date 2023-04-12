@@ -50,10 +50,7 @@ const RegisterScreen = ({navigation}) => {
 
   const handleUserData = async (value) => {
     try {
-      dispatch({
-        type: "LOGIN",
-        payload: { user: value },
-      });
+      dispatch(login(value));
       const jsonValue = JSON.stringify(value)
       await AsyncStorage.setItem('@user_data', jsonValue)
     } catch (e) {
@@ -64,9 +61,11 @@ const RegisterScreen = ({navigation}) => {
   const handleLogin = async() => {
     setUserPasswordError("")
     setIsLoading(true)
-    if(checked) {
+    const userName = userFullName.split(" ")
+    if(userName.length > 1) {
+      setUserPasswordError("You have to provide fullname")
+    } else if(checked) {
       try {
-        const userName = userFullName.slice(" ")
         const res = await axios.post('http://143.198.168.244/api/users', {
           firstName: userName[0],
           lastName: userName[1],
@@ -74,7 +73,7 @@ const RegisterScreen = ({navigation}) => {
           password: userPassword
         });
         console.log(res.data);
-        await handleUserData();
+        await handleUserData(res.data);
       } catch(e) {
         console.log("------------", e?.response?.data?.message)
         if(e?.response?.data?.message === "Invalid email or password") {
