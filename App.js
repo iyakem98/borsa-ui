@@ -1,5 +1,5 @@
 // import { StatusBar } from 'expo-status-bar';
-import {AppState, StyleSheet, Text, View } from 'react-native';
+import {AppState, StatusBar, StyleSheet, Text, View } from 'react-native';
 import ChatListItem from './src/components/Chats/ChatListItem';
 import ChatScreen from './src/screens/ChatScreen';
 import MessagingScreen from './src/screens/MessagingScreen';
@@ -12,32 +12,105 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import AppContainer from './AppContainer';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider as PaperProvider } from 'react-native-paper';
+import {
+  useFonts,
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_400Regular_Italic,
+  Poppins_500Medium,
+  Poppins_500Medium_Italic,
+  Poppins_600SemiBold,
+  Poppins_600SemiBold_Italic,
+  Poppins_700Bold,
+  Poppins_800ExtraBold
+} from '@expo-google-fonts/poppins';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  requestTrackingPermissionsAsync,
+  getTrackingPermissionsAsync,
+} from 'expo-tracking-transparency';
 
 export default function App() {
-  
+  let [fontsLoaded, error] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_400Regular_Italic,
+    Poppins_500Medium,
+    Poppins_500Medium_Italic,
+    Poppins_600SemiBold,
+    Poppins_600SemiBold_Italic,
+    Poppins_700Bold,
+    Poppins_800ExtraBold
+  });
 
-  return (
-    
-    <Provider store={store}>
-      {/* <ChatProvider>
-  <PersistGate loading={nul
-    l} persistor={persistor}>
-    <View style={styles.container}>
-      <Navigator/>
-      <StatusBar style="auto" />
-    </View>
-     </PersistGate>
-     </ChatProvider> */}
-     <ChatProvider>
-     <PersistGate loading={null} persistor={persistor}>
-      
-     <AppContainer/>
-     </PersistGate>
-     </ChatProvider>
-     
-     </Provider>
-    
-  );
+  const [showOnBoarding, setShowOnBoarding] = useState(true)
+
+  const checkOnBoardingData = async () => {
+    try {
+      // const res = await AsyncStorage.removeItem('doNotShowOnBoarding')
+      const res = await AsyncStorage.getItem('@doNotShowOnBoarding')
+      setShowOnBoarding(res ? false : true)
+    } catch (e) {
+    // saving error
+    }
+  }
+
+  const checktracking = async()=>{
+    try {
+      const granted = await getTrackingPermissionsAsync()
+      if (granted) {
+        // Your app is authorized to track the user or their device
+        console.log("GRANTED")
+      } else {
+        console.log("NOT GRANTED")
+      }
+    } catch(e) {
+      console.log("ERROR ON TRACKING")
+    }
+  }
+
+  useEffect(()=>{
+    checkOnBoardingData();
+    checktracking();
+  }, [])
+  
+  if(fontsLoaded) {
+    return (
+      <Provider store={store}>
+        <PaperProvider>
+        {/* <ChatProvider>
+        <PersistGate loading={nul
+          l} persistor={persistor}>
+          <View style={styles.container}>
+            <Navigator/>
+            <StatusBar style="auto" />
+          </View>
+          </PersistGate>
+          </ChatProvider> */}
+          <StatusBar
+            animated={true}
+            backgroundColor="#aaa"
+            barStyle={'default'}
+            showHideTransition={'fade'}
+            hidden={false}
+          />
+          <SafeAreaProvider style={{
+            backgroundColor: "#fff"
+          }}>
+            <ChatProvider>
+              <PersistGate loading={null} persistor={persistor}>
+                <AppContainer showOnBoarding={showOnBoarding} />
+              </PersistGate>
+            </ChatProvider>
+          </SafeAreaProvider>
+        </PaperProvider>
+      </Provider>
+    );
+  } else {
+    <Text>{error}</Text>
+  }
 }
 
 const styles = StyleSheet.create({

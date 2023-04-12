@@ -41,7 +41,7 @@ import { login } from "../features/auth/authSlice"
 
 
 const Stack = createStackNavigator();
-const Navigator = ({showOnBoarding}) => {
+const Navigator = () => {
   const dispatch = useDispatch();
   // const appState = useRef(AppState.currentState);
   const { user } = useSelector((state) => state.auth)
@@ -97,15 +97,15 @@ const Navigator = ({showOnBoarding}) => {
 
   useEffect(()=>{
     checkUserData()
-  }, [])
-
-  useEffect(()=>{
-    console.log("=====================", showOnBoarding)
-  }, [showOnBoarding])
+  }, [user])
 
   return (
    <NavigationContainer>
+<<<<<<< HEAD
    {user !== null  ? (
+=======
+   {user!=undefined || user!=null ? (
+>>>>>>> 499e1facfb42faa26e731bb2a17b7a5f4e080505
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     <Stack.Navigator>
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
@@ -154,10 +154,8 @@ const Navigator = ({showOnBoarding}) => {
     </Stack.Navigator>
    ): (
     <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
-      {showOnBoarding ? (
-        <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerShown: false}}/>
-      ) : (null)}
-      {/* <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} /> */}
+      <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerShown: false}}/>
+      <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} />
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown: false}}/>
       <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
