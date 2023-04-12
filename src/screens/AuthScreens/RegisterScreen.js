@@ -1,5 +1,5 @@
 
-import {View, Text, ImageBackground, Image, SafeAreaView, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal} from 'react-native'
+import {View, Text, ImageBackground, Image, SafeAreaView, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal, Dimensions} from 'react-native'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
@@ -12,6 +12,8 @@ import { API_BASE_URL } from '../../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../components/Shared/Header';
 import { Checkbox, TextInput } from 'react-native-paper';
+
+const windowHeight = Dimensions.get("window").height
 
 
 const RegisterScreen = ({navigation}) => {
@@ -237,10 +239,11 @@ const handleVerify = async () => {
       flex: 1,
       backgroundColor: "#fff"
     }}>
-      <Header />
       <ScrollView contentContainerStyle={{
         paddingHorizontal: 15,
-        flexGrow: 1
+        paddingTop: 60,
+        flexGrow: 1,
+        height: windowHeight
       }}>
         <Text style={{
           fontFamily: "Poppins_600SemiBold",
@@ -314,6 +317,7 @@ const handleVerify = async () => {
             onPress={() => {
               setChecked(!checked);
             }}
+            color="#514590"
             style={{
               width: 80
             }}
