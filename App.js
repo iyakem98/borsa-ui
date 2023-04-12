@@ -65,6 +65,7 @@ export default function App() {
         console.log("GRANTED")
       } else {
         console.log("NOT GRANTED")
+        await requestTrackingPermissionsAsync();
       }
     } catch(e) {
       console.log("ERROR ON TRACKING")
