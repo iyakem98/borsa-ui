@@ -237,6 +237,7 @@ const LoginScreen = ({navigation}) => {
           style={{
             // paddingVertical: 5
           }}
+          secureTextEntry={true}
           error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",
