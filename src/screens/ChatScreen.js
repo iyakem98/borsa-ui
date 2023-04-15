@@ -736,9 +736,31 @@ useEffect(() => {
            
     
                   })): (
-              <View>
+              <View style = {{
+                alignItems:'center',
+                justifyContent: 'center',
+                height: '100%'
+              }}>
+                <Image 
+                source = {require ('../../assets/images/borsa-dog2.jpeg')} 
+                style = {{
+                    width: 360,
+                    height: 300,
+                    resizeMode: 'cover',
+                    marginBottom: 20,
+                    background: 'white'
+                }}
+                />
+                <Text style = {{
+                  fontSize: 18,
+                  marginBottom: 20,
+                  marginHorizontal: 10,
+                }}>Security Doggo wants you to start a new chat</Text>
                 <Pressable style={styles.connectBtn} onPress={() => navigation.navigate("Connect")}>
-                <Text style={styles.connectTxt} >No chats available click here to access them </Text>
+                <Text style={{
+                  fontSize: 18,
+                  color: 'white',
+                }} >Click here to start chatting </Text>
                 </Pressable>
                   
                 </View>
@@ -771,17 +793,16 @@ const styles = StyleSheet.create({
     
 },
 connectBtn: {
-  marginTop: 200,
-  marginLeft: 50,
   backgroundColor: "lightgreen",
-  width: "80%",
-  height: 90,
-  borderRadius: 20,
-  padding: 20
+  backgroundColor: '#593196',
+  width: "65%",
+  height: 43,
+  borderRadius: 10,
+  alignItems:'center',
+  justifyContent: 'center'
+  
 },
-connectTxt: {
-  fontSize: 20,
-},
+
 
 text: {
  

@@ -7,7 +7,7 @@ import { ChatState } from '../../context/ChatProvider';
 import { getSenderFull } from '../../ChatConfig/ChatLogics';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/config';
-import { Entypo, MaterialIcons, Octicons, Ionicons, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, Octicons, Ionicons, Foundation, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 
 
 const TravelerCard = ({traveler}) => {
@@ -76,7 +76,79 @@ const TravelerCard = ({traveler}) => {
      
     <View style = {styles.container}>
         <View style = {{
-            width: '35%'
+            backgroundColor: "white",
+            paddingTop: 6
+        }}>
+            <View style = {{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingHorizontal: 10
+            }}>
+                   <Text style = {{
+                    fontSize: 20
+                   }}>
+                        {traveler.user.address ? traveler.user.address : "New York"}
+                    </Text>
+           
+                    <Ionicons name="md-airplane-sharp" size={28} color="#593196" style = {{
+                   
+            }} />
+
+            <Text style = {{
+                    fontSize: 20
+                   }}>
+                        {traveler.destination ? traveler.destination : "Citeh"}
+                    </Text>
+
+         
+
+            </View>
+            <View style = {{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingHorizontal: 10,
+                marginTop: 8
+            }}>
+
+               <View style = {{
+                flexDirection: 'row'
+               }}>
+                <Text>
+                    Departure: 
+                </Text>
+                <Text style = {{
+                    marginLeft: 3,
+                }}>
+                    {/*{traveler.departureDate} */}
+                    April 12, 2023
+                </Text>
+               </View>
+
+                 <View style = {{
+                flexDirection: 'row',
+               }}>
+                <MaterialIcons name="luggage" size={24} color="#593196" />
+                <Text style = {{
+                    fontWeight: 'bold',
+                    fontSize: 18,
+                }}>
+                   {traveler.luggageSpace}
+                </Text>
+                <Text style = {{
+                    marginLeft: 3,
+                    fontWeight: 'bold',
+                    fontSize: 18
+                }}>
+                    {/*{traveler.departureDate} */}
+                    kg
+                </Text>
+               </View>
+                
+            </View>
+        </View>
+        <View style = {styles.container_bottom}>
+        <View style = {{
+            width: '16%'
         }}>
             <Image 
                 source={{uri: traveler.user.profilePic}}
@@ -84,22 +156,7 @@ const TravelerCard = ({traveler}) => {
                 style = {styles.image}
                 resizeMode = 'cover'
              />
-              <View style = {{
-                flexDirection: 'row',
-                paddingVertical: 5
-              }}>
-                <Entypo name="location-pin" size={20} color="red" />
-                <View>
-                    <Text style = {styles.text_loc}>
-                        {traveler.user.address ? traveler.user.address : "Unknown city"}
-                    </Text>
-
-                    {/* <Text style = {styles.text_loc2}>
-                    {traveler.user.country ? traveler.user.country : "Unknown country"}
-                    </Text> */}
-
-             </View>
-             </View>
+             
             {/* <Pressable style = {{
                 borderStyle: 'solid',
                 borderBottomWidth: 0.8,
@@ -120,14 +177,14 @@ const TravelerCard = ({traveler}) => {
         
 
         <View style = {{
-            width: '70%',
+            width: '40%',
             paddingHorizontal: 10
         }}>
             <View style = {{
                 flexDirection: 'row',
             }}>
                 <Text style = {{
-                    fontSize: 20,
+                    fontSize: 17,
                     marginTop: 2
                 }}>
                     {traveler.user.firstName + " " + traveler.user.lastName}
@@ -135,89 +192,6 @@ const TravelerCard = ({traveler}) => {
                 {/* <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} /> */}
                 
             </View>
-            <View style = {styles.destination}>
-                <View style = {{
-                    backgroundColor: 'green',
-                    marginRight: 7,
-                    borderRadius: 50,
-                    padding: 2                
-                    }}>
-                    <MaterialIcons name="flight-takeoff" size={24} color="#fff" style = {{
-                    marginRight: 2,
-            }} />
-                
-                </View>
-           
-            
-                <Text style = {{
-                    fontWeight: 'bold',
-                    fontSize: 15,
-                    marginRight: 2,
-                    marginTop: 5,
-                    //color: '#593196'
-                }}>
-                    {traveler.destination_city}, 
-                </Text>
-                <Text style = {{
-                    fontSize: 15,
-                    marginTop: 5,
-                    //color: '#593196'
-                }}>
-                    {traveler.destination}
-                </Text>
-           </View>
-           <View style = {{
-                paddingLeft: "17%",
-                marginTop: -6,
-                //position: 'absolute'
-           }}>
-            <Text style = {{
-                color: '#343a40'
-            }}>
-                {traveler.departureDate}
-            </Text>
-           
-            </View>
-            <View style = {{
-                flexDirection: 'row',
-                paddingVertical: 4,
-                //width: '42%',
-                paddingHorizontal: 2,
-                //backgroundColor: '#a991d4'
-            }}>
-            <Text style = {{
-                fontWeight: 'bold',
-                 fontSize: 18,  
-            }}>
-                {traveler.luggageSpace}
-            </Text>
-
-
-            <Text style = {{
-                fontSize: 15,
-                marginTop: 2,
-                marginHorizontal: 3
-            }}>
-                available
-            </Text>
-            
-           </View>
-            <Pressable style = {{
-                backgroundColor: '#13b955',
-                width: "70%",
-                alignItems: 'center',
-                marginVertical: 4,
-                paddingVertical: 5,
-                borderRadius: 30
-
-            }} onPress={() => TravelerChat(traveler.user)}>
-                <Text style = {{
-                    fontSize: 18,
-                    color: 'white'
-                }}>
-                    Start chatting
-                </Text>
-            </Pressable>
 
             {/* <Pressable style = {{
                 border: '1px solid green',
@@ -243,17 +217,48 @@ const TravelerCard = ({traveler}) => {
             </Pressable> */}
 
         </View>
+        <View style = {{
+            width: "50%"
+        }}>
+        <Pressable style = {{
+                backgroundColor: '#13b955',
+                width: "90%",
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginVertical: 4,
+                paddingVertical: 5,
+                borderRadius: 30,
+                borderWidth: StyleSheet.hairlineWidth,
+                borderColor: '#13b955',
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 1,
+                },
+                shadowOpacity: 0.18,
+                shadowRadius: 1.00,
         
+                elevation: 1,
 
-        <View>
-            <Pressable>
+            }} onPress={() => TravelerChat(traveler.user)}>
+                <AntDesign name="message1" size={24} color="white" style = {{
+                    marginRight: 5
+                }} />
                 <Text style = {{
-                    color: "black",
                     fontSize: 18,
+                    color: 'white'
                 }}>
-                    View profile
+                    Message
                 </Text>
             </Pressable>
+        </View>
+        
+
+        </View>
+        
+        <View>
+           
         </View>
 
         <Modal
@@ -347,16 +352,9 @@ const TravelerCard = ({traveler}) => {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        flex : 1,
-        marginBottom: 8,
-        height: "8%",
-       // backgroundColor: "#E8E8E8",
-        paddingVertical: 10,
-        paddingHorizontal: 5,
-        //borderStyle: 'solid',
-        borderBottomWidth: StyleSheet.hairlineWidth,
+        marginTop: 15,
+        width: "100%",
+        borderWidth: StyleSheet.hairlineWidth,
         borderColor: '#E8E8E8',
         shadowColor: "#000",
         shadowOffset: {
@@ -367,12 +365,25 @@ const styles = StyleSheet.create({
         shadowRadius: 1.00,
 
         elevation: 1,
+
+    },
+    container_bottom: {
+        flexDirection: 'row',
+        backgroundColor: '#f5f5f5',
+        flex : 1,
+        marginBottom: 8,
+        height: "8%",
+       // backgroundColor: "#E8E8E8",
+        paddingVertical: 10,
+        paddingHorizontal: 5,
+        //borderStyle: 'solid',
+       
         
     },
 
     image: {
-        height: 100,
-        width: 100,
+        height: 50,
+        width: 50,
         borderRadius: 50,
         borderStyle: 'solid',
         //borderWidth: 2,

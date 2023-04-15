@@ -1,5 +1,5 @@
 import {View, Modal, Image, Text, StyleSheet, ImageBackground, Pressable} from 'react-native'
-import { Entypo, MaterialIcons, Octicons, Ionicons, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, Octicons, Ionicons, Foundation, MaterialCommunityIcons, AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 import { ChatState } from '../../context/ChatProvider';
 import { useNavigation } from '@react-navigation/native';
@@ -142,27 +142,132 @@ const BuyerCard = ({buyer}) => {
     }}>
 
     
-        <View style = {styles.container}>
+<View style = {styles.container}>
         <View style = {{
-            width: '35%'
+            //backgroundColor: "white",
+            //paddingVertical: 8,
+            height: 83,
+            flexDirection: 'row'
         }}>
-            <Image 
-                source={{uri: buyer.user.profilePic}}  
-                style = {styles.image}
-                resizeMode = 'cover'
-             />
-              <View style = {styles.location_container}>
-                <Entypo name="location-pin" size={20} color="red" />
-                <View>
-                    <Text style = {styles.text_loc}>
-                        
-                        {buyer.user.address},
+            <View style = {{
+                width: "30%"
+            }}>
+                <Image 
+                    source = {require ('../../..//assets/images/macbook.jpeg')} 
+                    style = {styles.productImage}
+                    />
+            </View>
+
+            <View>
+
+            <View style = {{
+                flexDirection: 'row',
+                height: 30,
+               // width: '72%',
+                
+            }}>
+               
+            <View style = {{
+                paddingTop: 8,
+                paddingRight: 5
+            }}>
+                <Text style = {{
+                    fontSize: 20
+                   }}>
+                       Macbook Air
+                    </Text>
+
+            </View>
+            <View style = {{
+                paddingTop: 8,
+            }}>
+                <Text style = {{
+                    fontSize: 14,
+                    fontWeight: 'bold'
+                   }}>
+                      1kg
+                    </Text>
+
+            </View>
+            </View>
+            
+            <View style = {{
+                flexDirection: 'row',
+                marginTop: 1
+            }}>
+            <Text style = {{
+                color: 'gray'
+            }}>
+                {'By '}
+            </Text>
+            <Text style = {{
+                color:'gray'
+            }}>
+               April 12th, 2023
+            </Text>
+
+            </View>
+
+            <View style = {{
+                flexDirection: 'row',
+                width: "74%",
+                //justifyContent: 'space-around',
+                marginTop: 10
+            }}>
+                 <Text style = {{
+                    fontSize: 16,
+                    fontWeight: 'bold'
+                   }}>
+                        {buyer.user.address ? buyer.user.address : "New York"}
+                    </Text>
+           {/* <FontAwesome5 name="shipping-fast" size={25} color="#593196" /> */}
+            <AntDesign name="arrowright" size={22} color="#593196" style ={{marginHorizontal: 5}} />
+
+            <Text style = {{
+                    fontSize: 16,
+                    fontWeight: 'bold'
+                   }}>
+                        {buyer.destination ? buyer.destination : "Addis Ababa"}
                     </Text>
 
 
-             </View>
-             </View>
-           {/*  <Pressable style = {{
+            </View>
+
+           
+
+
+            </View>
+            
+            
+            
+            
+            <View></View>
+            <View style = {{
+                //flexDirection: 'row',
+                justifyContent: 'left',
+                paddingHorizontal: 10,
+                marginTop: 8
+            }}>
+
+    
+
+              
+              
+                
+            </View>
+        </View>
+        <View style = {styles.container_bottom}>
+        <View style = {{
+            width: '16%'
+        }}>
+            <Image 
+                source={{uri: buyer.user.profilePic}}
+                alt="user"  
+                style = {styles.image}
+                resizeMode = 'cover'
+             />
+             
+            {/* <Pressable style = {{
                 borderStyle: 'solid',
                 borderBottomWidth: 0.8,
                 marginLeft: 6,
@@ -171,7 +276,7 @@ const BuyerCard = ({buyer}) => {
                 borderColor: "#593196",
              }}>
                 <Text style = {{
-                    //color: '#593196',
+                    color: '#593196',
                     //color: 'gray',
                     fontWeight: 'bold'
                 }}>
@@ -179,96 +284,27 @@ const BuyerCard = ({buyer}) => {
                 </Text>
             </Pressable> */}
         </View>
+        
 
         <View style = {{
-            width: '70%',
+            width: '40%',
             paddingHorizontal: 10
         }}>
             <View style = {{
                 flexDirection: 'row',
             }}>
                 <Text style = {{
-                    fontSize: 20,
+                    fontSize: 17,
                     marginTop: 2
                 }}>
-                {buyer.user.firstName + ' ' + buyer.user.lastName} 
-            </Text>
-
-            {/* <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} /> */}
-
-            </View>
-
-           
-            <View style = {styles.destination}>
-            <View style = {{
-                //backgroundColor: '#593196',
-                //backgroundColor: '#a991d4',
-                //borderRadius: "50%",
-                //padding: 5,date
-                //marginRight: 5
+                    {buyer.user.firstName + " " + buyer.user.lastName}
+                </Text>
+                {/* <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} /> */}
                 
-            }}>
-                 <Octicons name="list-unordered" size={18} color="#593196" style = {{
-                    marginRight: 7,
-                    
-       }} />
-            
             </View>
-           
-            
-                <Text style = {{
-                    fontWeight: 'bold',
-                    fontSize: 15,
-                    marginRight: 2,
-                    marginTop: 1,
-                    //color: '#593196'
-                }}>
-                    {buyer.orders}, 
-                </Text>
-           </View>
-           <View style = {{
-                 paddingLeft: "12%",
-                 marginTop: -6,
-           }}>
-            <Text style = {{
-                fontWeight: "",
-                color: '#343a40'
-            }}>
-                {buyer.orderDate}
-            </Text>
-           </View>
-           <View style = {styles.space}>
-            <View style = {{
-                paddingVertical: 5
-            }}>
-            <Text style = {{
-                fontWeight: 'bold',
-                 fontSize: 18,  
-            }}>
-                {buyer.orderWeight}
-            </Text>
-            </View>
-            </View>
-            <Pressable style = {{
-                backgroundColor: '#593196',
-                //backgroundColor: '#a991d4',
-                width: "70%",
-                alignItems: 'center',
-                marginVertical: 4,
-                paddingVertical: 5,
-                borderRadius: 30
 
-            }} onPress= {() => BuyerChat(buyer.user)}>
-                <Text style = {{
-                    fontSize: 18,
-                    color: 'white'
-                }}>
-                    Start chatting
-                </Text>
-            </Pressable>
-            <View>
             {/* <Pressable style = {{
-                border: '1px solid #593196',
+                border: '1px solid green',
                 //backgroundColor: '#a991d4',
                 width: "70%",
                 alignItems: 'center',
@@ -279,24 +315,65 @@ const BuyerCard = ({buyer}) => {
             }} 
              onPress= {() => {
                 setModal(true)
-                console.log("buyyyyyyyyyer:", buyer)
+                console.log("traveler:", traveler)
              }}
             >
                 <Text style = {{
                     fontSize: 18,
-                    color: '#593196'
+                    color: 'green'
                 }}>
                     View Profile
                 </Text>
             </Pressable> */}
-        </View>
-        </View>
 
-       
+        </View>
+        <View style = {{
+            width: "50%"
+        }}>
+        <Pressable style = {{
+                backgroundColor: '#13b955',
+                backgroundColor: '#593196',
+               // backgroundColor: '#e8e8e8',
+                width: "90%",
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginVertical: 4,
+                paddingVertical: 5,
+                borderRadius: 30,
+                borderWidth: StyleSheet.hairlineWidth,
+                borderColor: '#E8E8E8',
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 1,
+                },
+                shadowOpacity: 0.18,
+                shadowRadius: 1.00,
         
-    </View>
+                elevation: 1,
 
-    {showModal && <Modal
+            }} onPress={() => BuyerChat(buyer.user)}>
+                <AntDesign name="message1" size={24} color="white" style = {{
+                    marginRight: 5
+                }} />
+                <Text style = {{
+                    fontSize: 18,
+                    color: 'white'
+                }}>
+                    Message
+                </Text>
+            </Pressable>
+        </View>
+        
+
+        </View>
+        
+        <View>
+           
+        </View>
+
+        <Modal
         animationType="slide"
         transparent={true}
         visible={modal}
@@ -327,47 +404,43 @@ const BuyerCard = ({buyer}) => {
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
-                        // flex: 1,
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
-                        {/* <Text> &nbsp; &nbsp; {buyer.user.address}</Text> */}
-                        <Text>{buyer.user.address}</Text>
+                       {/* <Text> &nbsp; &nbsp; {buyer.user.address}</Text> */}
+                       <Text>{buyer.user.address}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
-                        // flex: 1,
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
-                         {/* <Text> &nbsp; &nbsp; {buyer.item}</Text> */}
-                         <Text>{buyer.item}</Text>
+                         {/* <Text> &nbsp; &nbsp; Unknown</Text> */}
+                         <Text>Unknown</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
-                        // flex: 1,
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-                         {/* <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text> */}
-                         <Text>{buyer.TotalWeight}</Text>
+                         {/* <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text> */}
+                         <Text>{buyer.luggageSpace}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
-                        // flex: 1,
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
-                        {/* <Text> &nbsp; &nbsp; {buyer.status}</Text> */}
+                        {/* <Text> &nbsp; &nbsp; {traveler.status}</Text> */}
                         <Text>{buyer.status}</Text>
                     </View>
 
@@ -378,28 +451,23 @@ const BuyerCard = ({buyer}) => {
             </Pressable>
           </View>
         </View>
-      </Modal>}
-      </Pressable>
-    
+      </Modal>
+
+    </View>
+    </Pressable>
     </>
     // <View>
-    //     {/* <Text>{buyer}</Text> */}
+    //     {/* <Text>{traveler}</Text> */}
     // </View>
   )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
+        marginTop: 15,
         backgroundColor: 'white',
-        flex : 1,
-        marginBottom: 8,
-        height: "8%",
-       // backgroundColor: "#E8E8E8",
-        paddingVertical: 10,
-        paddingHorizontal: 5,
-        //borderStyle: 'solid',
-        borderBottomWidth: StyleSheet.hairlineWidth,
+        width: "100%",
+        borderWidth: StyleSheet.hairlineWidth,
         borderColor: '#E8E8E8',
         shadowColor: "#000",
         shadowOffset: {
@@ -410,12 +478,29 @@ const styles = StyleSheet.create({
         shadowRadius: 1.00,
 
         elevation: 1,
+
+    },
+    container_bottom: {
+        flexDirection: 'row',
+        //backgroundColor: '#f5f5f5',
+        flex : 1,
+        marginBottom: 8,
+        height: 57,
+       // backgroundColor: "#E8E8E8",
+        paddingTop: 10,
+        paddingBottom: 5,
+        paddingHorizontal: 5,
+        borderStyle: 'solid',
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderColor:'gray',
+        zIndex: -100,
+       
         
     },
 
     image: {
-        height: 100,
-        width: 100,
+        height: 50,
+        width: 50,
         borderRadius: 50,
         borderStyle: 'solid',
         //borderWidth: 2,
@@ -423,10 +508,7 @@ const styles = StyleSheet.create({
         
     },
 
-    location_container: {
-        flexDirection: 'row',
-        paddingVertical: 5
-    },
+  
 
     destination: {
         flexDirection: 'row',
@@ -437,10 +519,15 @@ const styles = StyleSheet.create({
         width: 220
     },
 
-    space: {
-        width: 70,
-    
+    productImage: {
+        width: 100,
+        height: 90,
+        resizeMode: 'cover',
+        marginBottom: 20,
+        background: 'white',
+        marginRight: 18,
     },
+
     centeredView: {
         flex: 1,
         justifyContent: 'center',
@@ -471,7 +558,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#593196',
       },
       buttonClose: {
-        backgroundColor: '#593196',
+        backgroundColor: 'green',
       },
       textStyle: {
         color: 'white',
@@ -483,6 +570,15 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         textAlign: 'center',
       },
-})
+      itemViews: {
+        marginHorizontal: 3,
+        backgroundColor: "#a991d4",
+        backgroundColor: '#593196',
+        padding: 2,
+        borderRadius: 5,
+        marginBottom: 3
+      }
 
+    
+})
 export default BuyerCard

@@ -108,7 +108,7 @@ const ConnectScreen = () => {
   //  ))}
   //  </ScrollView>
   // <ScrollView>
-    <View style = {{backgroundColor: "white", paddingVertical: 0}}>
+    <View style = {{backgroundColor: "white", paddingVertical: 0, height: "100%", alignItems: 'center'}}>
             <View style = {{
                 backgroundColor:'white',
                 flexDirection: 'row',
@@ -155,7 +155,9 @@ const ConnectScreen = () => {
             {isBuyer ? (
             <View style = {{
               paddingTop: 50,
-              backgroundColor: 'white'
+              backgroundColor: 'white',
+              height: "100%",
+              paddingHorizontal: 10
           }}>
            <FlatList
           data = {b}
@@ -169,7 +171,9 @@ const ConnectScreen = () => {
           : (
             <View style = {{
               paddingTop: 50,
-              backgroundColor: 'white'
+              backgroundColor: 'white',
+              height: "100%",
+              paddingHorizontal: 10
           }}>
              <FlatList
           data = {t}
