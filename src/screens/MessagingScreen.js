@@ -105,7 +105,7 @@ const MessagingScreen = () => {
   const cameraRef = useRef()
   useLayoutEffect(() => {
     // setloading(true)
-        fetchMessage()
+        // fetchMessage()
     // socket.current = io(ENDPOINT)
     socket.current = io(API_BASE_URL)
     socket.current.emit("setup", user);
@@ -614,10 +614,10 @@ const CameraFeature = () => {
     }
     setloading(false)
     setMessages(data)
-    if(data && data.length>0){
-      await  AsyncStorage.setItem(`chat-${chattId}`, JSON.stringify(data))
-      console.log('msgs stored')
-    }
+    // if(data && data.length>0){
+    //   await  AsyncStorage.setItem(`chat-${chattId}`, JSON.stringify(data))
+    //   console.log('msgs stored')
+    // }
     setMessages((state) => {
       return state
     })

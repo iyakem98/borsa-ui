@@ -6,7 +6,8 @@ import { useEffect } from 'react';
 // Get user from localStorage/AsyncStorage
 // const user = JSON.parse(localStorage.getItem('user'))
 const getUser = async() => {
-  const user = await  AsyncStorage.getItem('user')
+  // const user = await  AsyncStorage.getItem('user')
+  const user = await  AsyncStorage.getItem('@user_data')
   // console.log(user)
   // const user = JSON.parse(user1)
 
@@ -16,9 +17,9 @@ const getUser = async() => {
 
 
 const initialState = { 
-  user: null,  
+  // user: getUser ? getUser : null,  
   isAuth: false,
-  // user:  null,
+  user:  null,
   travelers: [],
   consumers: [],
   isError: false,

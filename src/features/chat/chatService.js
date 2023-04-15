@@ -48,7 +48,8 @@ const tryChat = async(chatData, token) => {
 }
 
 const fetchChat = async () => {
-  const user1 = await  AsyncStorage.getItem("user")
+  // const user1 = await  AsyncStorage.getItem("user")
+  const user1 = await  AsyncStorage.getItem("@user_data")
   const user = JSON.parse(user1)
   
 
