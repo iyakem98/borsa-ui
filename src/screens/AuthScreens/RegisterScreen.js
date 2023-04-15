@@ -1,5 +1,5 @@
 
-import {View, Text, ImageBackground, Image, SafeAreaView, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal} from 'react-native'
+import {View, Text, ImageBackground, Image, SafeAreaView, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal, Dimensions} from 'react-native'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
@@ -12,6 +12,8 @@ import { API_BASE_URL } from '../../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../components/Shared/Header';
 import { Checkbox, TextInput } from 'react-native-paper';
+
+const windowHeight = Dimensions.get("window").height
 
 
 const RegisterScreen = ({navigation}) => {
@@ -48,10 +50,7 @@ const RegisterScreen = ({navigation}) => {
 
   const handleUserData = async (value) => {
     try {
-      dispatch({
-        type: "LOGIN",
-        payload: { user: value },
-      });
+      dispatch(login(value));
       const jsonValue = JSON.stringify(value)
       await AsyncStorage.setItem('@user_data', jsonValue)
     } catch (e) {
@@ -62,9 +61,12 @@ const RegisterScreen = ({navigation}) => {
   const handleLogin = async() => {
     setUserPasswordError("")
     setIsLoading(true)
-    if(checked) {
+    const userName = userFullName.split(" ")
+    console.log(userName)
+    if(userName.length < 2) {
+      setUserPasswordError("You have to provide fullname")
+    } else if(checked && userName.length > 1) {
       try {
-        const userName = userFullName.slice(" ")
         const res = await axios.post('http://143.198.168.244/api/users', {
           firstName: userName[0],
           lastName: userName[1],
@@ -72,7 +74,7 @@ const RegisterScreen = ({navigation}) => {
           password: userPassword
         });
         console.log(res.data);
-        await handleUserData();
+        await handleUserData(res.data);
       } catch(e) {
         console.log("------------", e?.response?.data?.message)
         if(e?.response?.data?.message === "Invalid email or password") {
@@ -237,10 +239,11 @@ const handleVerify = async () => {
       flex: 1,
       backgroundColor: "#fff"
     }}>
-      <Header />
       <ScrollView contentContainerStyle={{
         paddingHorizontal: 15,
-        flexGrow: 1
+        paddingTop: 60,
+        flexGrow: 1,
+        height: windowHeight
       }}>
         <Text style={{
           fontFamily: "Poppins_600SemiBold",
@@ -314,6 +317,7 @@ const handleVerify = async () => {
             onPress={() => {
               setChecked(!checked);
             }}
+            color="#514590"
             style={{
               width: 80
             }}
