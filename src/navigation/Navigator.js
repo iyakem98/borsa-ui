@@ -38,6 +38,7 @@ import { useEffect } from "react"
 import UserTest from "../screens/UserTest"
 import PushScreen from "../screens/PushScreen"
 import { login } from "../features/auth/authSlice"
+import FromTo from "../screens/AddPost/FromTo"
 
 
 const Stack = createStackNavigator();
@@ -112,6 +113,7 @@ const Navigator = ({showOnBoarding}) => {
       <Stack.Screen name="Chats" component={ChatScreen} />
       <Stack.Screen name="Connect" component={ConnectScreen} />
       <Stack.Screen name="User Details" component={OtherProfile} />
+      <Stack.Screen name="FromTo" component={FromTo} options={{headerShown: false}} />
       { messageHeader ? (
         <Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
           // title: route.params.userSelected,

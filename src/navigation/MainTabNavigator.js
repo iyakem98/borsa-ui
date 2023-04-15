@@ -5,7 +5,7 @@ import ConnectScreen from "../screens/ConnectScreen"
 import TravelerScreen from '../screens/TravelerScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import NotImplementedScreen from '../screens/NotImplementedScreen';
-import { Entypo, AntDesign, MaterialIcons, FontAwesome, Feather, Ionicons } from '@expo/vector-icons'; 
+import { Entypo, AntDesign, MaterialIcons, FontAwesome, Feather, Ionicons, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons'; 
 import LoginScreen from '../../src/screens/AuthScreens/LoginScreen';
 import { Badge, Icon, withBadge } from '@rneui/themed';
 import RegisterScreen from '../../src/screens/AuthScreens/RegisterScreen';
@@ -16,6 +16,7 @@ import { getSenderFull } from '../ChatConfig/ChatLogics';
 import { useSelector } from 'react-redux';
 import Test from '../screens/Test';
 import ChatScreen from '../screens/ChatScreen';
+import AddPost from '../screens/AddPost';
 import { useNavigation } from '@react-navigation/native';
 import Test2 from '../screens/Test2';
 import TestImg from '../screens/TestImg';
@@ -58,8 +59,8 @@ const MainTabNavigator = () => {
       } 
     //   const BadgedIcon = withBadge(storedNotifications.length)(Icon);
   return (
-    <Tab.Navigator initialRouteName='Chats' screenOptions={{tabBarActiveTintColor: '#593196', tabBarStyle: {
-        backgroundColor: '#f9f8fc'
+    <Tab.Navigator initialRouteName='Chats' screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
+        backgroundColor: '#fff'
     }, headerStyle: {
         backgroundColor: '#f9f8fc',
     },
@@ -67,7 +68,7 @@ const MainTabNavigator = () => {
     }}>
         <Tab.Screen name="Connect" component={ConnectScreen} options={{
             tabBarIcon: ({color, size}) => (
-                <FontAwesome name="users" size={size} color={color} />
+                <SimpleLineIcons name="people" size={size} color={color} />
             )
         }} />
 
@@ -80,7 +81,7 @@ const MainTabNavigator = () => {
         
         <Tab.Screen name="Chats" component={ChatScreen} options={{
            tabBarIcon: ({color, size}) => (
-            <Entypo name="chat" size={size} color={color} />
+            <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
             
         ),
         // headerRight: () => (
@@ -116,9 +117,21 @@ const MainTabNavigator = () => {
         // )
         }} />
 
-        <Tab.Screen name="Profile" component={ProfileScreen} options={{
+        <Tab.Screen name="AddPost" component={AddPost} options={{
             tabBarIcon: ({color, size}) => (
-                <AntDesign name="user" size={size} color={color} />
+                <AntDesign name="plussquareo" size={size} color={color} />
+            ),
+            headerShown: false
+        }} />
+        <Tab.Screen name="Saved" component={ConnectScreen} options={{
+            tabBarIcon: ({color, size}) => (
+                <Ionicons name="heart-outline" size={size} color={color} />
+            )
+        }} />
+
+        <Tab.Screen name="More" component={ProfileScreen} options={{
+            tabBarIcon: ({color, size}) => (
+                <MaterialCommunityIcons name="dots-horizontal" size={size} color={color} />
             ),
             headerShown: false
         }} />
