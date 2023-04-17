@@ -53,7 +53,7 @@ const ChatScreen = () => {
     var socket = io(ENDPOINT)
     const chatArr = []
     const chatArr2 = []
-    
+    const API_URL = `${API_BASE_URL}chat/`
     const route = useRoute()
     
     const [users, setUsers] = useState({})
@@ -162,10 +162,16 @@ useEffect(() =>{
 useEffect(() =>{
 
     dispatch(fetchChat())
-    console.log(chattts)
+    // console.log(chattts)
     
   
 }, [user])
+useEffect(() => {
+  navigation.addListener('focus', () => dispatch(fetchChat()))
+  // UpdateUserRoute()
+ //  console.log(route.name)
+   // setImage(null)
+  }, [])
 // useEffect(() =>{
 
 //   const subscription = AppState.addEventListener('change', nextAppState => {
@@ -259,6 +265,7 @@ useEffect(()=> {
   // console.log(chatArr)
 }, [])
 useEffect(() => {
+  console.log(user)
   //navigation.addListener('focus', UpdateUserRoute)
   // UpdateUserRoute()
  //  console.log(route.name)
@@ -346,6 +353,26 @@ useEffect(() => {
         }
         
        }
+      const delChat = async (chatID) => {
+        console.log('delete')
+        console.log(chatID)
+    
+        try{
+         console.log('deleting chat')
+         const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+       await axios.delete(`${API_URL}/${chatID}`, config)
+       console.log('chat deleted')
+      
+        }
+        catch(err){
+          console.log(err)
+        }
+        
+       }
 
        return(
         //   <View>
@@ -411,9 +438,12 @@ useEffect(() => {
               // }
               // 
               // setfetchAgain(true)
-              if(chat != null){
+              if(chat !== null || chat !== undefined){
+                if(chat.latestMessage == undefined || chat.latestMessage == null){
+                  delChat(chat._id)
+                }
                 // var formatted_date = null
-                // console.log(chat.latestMessage.content)
+                // console.log(chat.lastestMessage)
                
                 if(chat.lastestMessage !== undefined ){
                   // console.log(chat.latestMessage)
@@ -733,7 +763,12 @@ useEffect(() => {
          
               
             }
-           
+          //  else if(chat.latestMessage == undefined || chat.latestMessage == null ){
+          //   console.log('undefffffffined')
+          //   // delChat(chat._id)
+
+          //   // return <Text>undefined chat</Text>
+          //  }
     
                   })): (
               <View>

@@ -12,6 +12,7 @@ import io from 'socket.io-client'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 
 const AccountScreen = () => {
@@ -144,6 +145,32 @@ const AccountScreen = () => {
         });
   }
 
+  const handleUserAddress = (data) => {
+        
+    let Country = ""
+    let City = ""
+
+ if(place.address_components){
+    for(let i=0; i<place.address_components.length; i++){
+     let types = place.address_components[i].types
+     if(types.indexOf("country") != -1 && Country==""){
+       Country = place.address_components[i].long_name
+     }
+
+      if(types.indexOf("locality") != -1 && City==""){
+        City = place.address_components[i].long_name
+     }
+
+   }
+ }
+  
+       console.log("Country:", Country)
+       console.log("State:", State)
+
+       setAddress(`${City}, ${Country}`)
+
+}
+
   useEffect(() => { 
     if(user==null){
       navigate.navigate("Home")
@@ -155,7 +182,7 @@ const AccountScreen = () => {
   return (
     <SafeAreaView style={{flex: 1,
     }}>
-        <ScrollView style={{
+        <View style={{
 
         }}>
     <View style = {{
@@ -166,7 +193,7 @@ const AccountScreen = () => {
         alignItems: 'center'
     }}>
 
-      <KeyboardAwareScrollView>
+      {/* <KeyboardAwareScrollView> */}
 
         {
           !isEditing &&
@@ -403,6 +430,37 @@ style={{
                editable={isEditing}
               //onChangeText = {this.handlePassword}
               />
+        </View>
+
+        <View style={{width:300, marginTop:10}}>
+        <GooglePlacesAutocomplete
+                        placeholder='Enter your address'
+                        onPress={(data) => {
+                            handleUserAddress(data)
+                            console.log(data);
+                        }}
+                        query={{
+                            key: 'AIzaSyBEQjAi9JOrXgaekQKY6oeSYb8C_5rAudU',
+                            language: 'en',
+                            types: '(cities)'
+                        }}
+                        styles={{
+                          textInputContainer: {
+                            // backgroundColor: 'grey',
+                          },
+                          textInput: {
+                            height: 50,
+                            border:"1px solid black",
+                            width:300,
+                            color: '#5d5d5d',
+                            fontSize: 16,
+                            borderRadius:10,
+                          },
+                          predefinedPlacesDescription: {
+                            color: '#1faadb',
+                          },
+                        }}
+                        />
         </View>
 
 
@@ -700,9 +758,9 @@ style={{
       </View> */}
 
     
-</KeyboardAwareScrollView>    
+{/* </KeyboardAwareScrollView>     */}
     </View>
-    </ScrollView>
+    </View>
     </SafeAreaView>
   )
 }

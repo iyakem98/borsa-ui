@@ -7,6 +7,8 @@ import BuyerCard from '../components/Connect/BuyerCard'
 import TravelerCard from '../components/Connect/TravelerCard2'
 import { getConsumers, getTravelers } from '../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
+import { fetchChat } from '../features/chat/chatSlice'
+import { ChatState } from '../context/ChatProvider'
 
 
 const ConnectScreen = () => {
@@ -19,6 +21,8 @@ const ConnectScreen = () => {
   const { user} = useSelector(
     (state) => state.auth
   )
+  const { fetchAgain, setfetchAgain,
+    chatSelected, setchatSelected, } = ChatState()
   
     const dispatch = useDispatch()
     const [isBuyer, setIsBuyer] = useState(false)
@@ -26,11 +30,11 @@ const ConnectScreen = () => {
     const navigation = useNavigation();
     function tweakBuyer() {
         setIsBuyer(false)
-        console.log(isBuyer)
+        // console.log(isBuyer)
     }
     function tweakBuyer2() {
         setIsBuyer(true)
-        console.log(isBuyer)
+        // console.log(isBuyer)
     }
     useEffect(() => {
       navigation.addListener('focus', getUsers)
@@ -38,7 +42,7 @@ const ConnectScreen = () => {
      //  console.log(route.name)
        // setImage(null)
       },[travelers, consumers])
-       
+  
     // const getConsumers = async () => {
     //   try{
     //     const {data} = await axios.get('http://192.168.100.2:5000/api/users/consumers')
@@ -69,7 +73,7 @@ const ConnectScreen = () => {
     await axios.get(`http://143.198.168.244/api/travels/`, config)
         .then((data) => {
           
-          console.log("tttttttttttttttt:", t)
+          // console.log("tttttttttttttttt:", t)
          setT(data.data.data)
          })
         .catch((err) => {
@@ -78,7 +82,7 @@ const ConnectScreen = () => {
      
         await axios.get(`http://143.198.168.244/api/buyers/`, config)
         .then((data) => {
-          console.log("bbbbbbbbbbbbb:", b)
+          // console.log("bbbbbbbbbbbbb:", b)
          setB(data.data.data)
          })
         .catch((err) => {

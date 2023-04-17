@@ -6,16 +6,23 @@ import { ChatState } from '../../../context/ChatProvider';
 import { getSenderFull } from '../../../ChatConfig/ChatLogics';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
+import moment from 'moment';
 
 
 const ChatListHeader = ({chatArr}) => {
     // console.log("here is the chat arrray " +chatArr[0]._id)
     const { user } = useSelector((state) => state.auth)
-    const {triggerChange, settriggerChange} = ChatState();
+    const {triggerChange, settriggerChange,
+        selectedChat, setSelectedChat, 
+        chattId, setchattId,
+        loading,  setloading
+    } = ChatState();
+
     const [triggerChange2, settriggerChange2] = useState(false);
     const navigation = useNavigation()
     
     const [query, setQuery] = useState("")
+    var formatted_date = null
     useEffect(()=> {
         // console.log(chatArr[0])
         // console.log(chatArr.splice(0, 2))
@@ -64,8 +71,9 @@ const ChatListHeader = ({chatArr}) => {
         <View>
             {chatArr &&    chatArr.map(chat => {
                 if( chat != null &&  chat.latestMessage != null){
+                    formatted_date = moment(chat.latestMessage.createdAt).format("LT")
                     // if(chat.users && (chat.users[1].firstName.toLowerCase().includes(query) || chat.users[1].lastName.toLowerCase().includes(query) || chat.users[1].userName.toLowerCase().includes(query) || chat.users[0].firstName.toLowerCase().includes(query) ) && chat.latestMessage != null )
-                    if(chat.users && chat.users[1].firstName.toLowerCase().includes(query) && chat.latestMessage != null )
+                    if(chat.users && ("chat.users[1].firstName".toLowerCase().includes(query) || chat.users[0].firstName.toLowerCase().includes(query)) && chat.latestMessage != null )
                     {
                         return  <View key={chat._id}> 
                 
@@ -80,9 +88,12 @@ const ChatListHeader = ({chatArr}) => {
                         
                         
                        {triggerChange2 && <Pressable key={chat._id} onPress={()=> {
+                        setSelectedChat(chat)
+                        setchattId(chat._id)
+                     setloading(true)
                             navigation.navigate('Messaging', {chatId: chat._id, userSelected:
                         
-                                user != null ? getSenderFull(user, chat.users).userName : null })}}
+                                user != null ? getSenderFull(user, chat.users) : null })}}
                                 style={styles.box}
                         >
                             <View>
@@ -97,7 +108,8 @@ const ChatListHeader = ({chatArr}) => {
                                             {user != null ? getSenderFull(user, chat.users).firstName : null}
                                         </Text> 
                                         <Text style = {styles.subTitle}>
-                                            {dayjs(chat.latestMessage).fromNow(true)}
+                                            {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                                            {formatted_date}
                                         </Text>   
                                     </View>
                                     {chat.latestMessage && chat.latestMessage.content ?
