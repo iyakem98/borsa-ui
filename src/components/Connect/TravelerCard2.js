@@ -136,7 +136,7 @@ const TravelerCard = ({traveler}) => {
             width: '35%'
         }}>
             <Image 
-                source={{uri: traveler.user.profilePic}}
+                source={{uri: ""}}
                 alt="user"  
                 style = {styles.image}
                 resizeMode = 'cover'
@@ -148,7 +148,7 @@ const TravelerCard = ({traveler}) => {
                 <Entypo name="location-pin" size={20} color="red" />
                 <View>
                     <Text style = {styles.text_loc}>
-                        {traveler.user.address ? traveler.user.address : "Unknown city"}
+                        {"Unknown city"}
                     </Text>
 
                     {/* <Text style = {styles.text_loc2}>
@@ -187,7 +187,7 @@ const TravelerCard = ({traveler}) => {
                     fontSize: 20,
                     marginTop: 2
                 }}>
-                    {traveler.user.firstName + " " + traveler.user.lastName}
+                    {"Abe Kebe"}
                 </Text>
                 {/* <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} /> */}
                 
@@ -267,7 +267,7 @@ const TravelerCard = ({traveler}) => {
                 paddingVertical: 5,
                 borderRadius: 30
 
-            }} onPress={() => TravelerChat(traveler.user)}>
+            }} onPress={() => TravelerChat("Abe")}>
                 <Text style = {{
                     fontSize: 18,
                     color: 'white'
@@ -337,7 +337,7 @@ const TravelerCard = ({traveler}) => {
                         fontSize:20,
                         fontWeight:700
                     }}>
-                        <Text>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
+                        <Text>{"Abe Kebe"}</Text>
                     </View>
 
                     <View style={{
@@ -348,7 +348,7 @@ const TravelerCard = ({traveler}) => {
                     }}>
                         <Ionicons name="location" size={20} color="black" />
                        {/* <Text> &nbsp; &nbsp; {traveler.user.address}</Text> */}
-                       <Text>{traveler.user.address}</Text>
+                       <Text>{"AA"}</Text>
                     </View>
 
                     <View style={{

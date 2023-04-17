@@ -73,7 +73,7 @@ const ChatListHeader = ({chatArr}) => {
                 if( chat != null &&  chat.latestMessage != null){
                     formatted_date = moment(chat.latestMessage.createdAt).format("LT")
                     // if(chat.users && (chat.users[1].firstName.toLowerCase().includes(query) || chat.users[1].lastName.toLowerCase().includes(query) || chat.users[1].userName.toLowerCase().includes(query) || chat.users[0].firstName.toLowerCase().includes(query) ) && chat.latestMessage != null )
-                    if(chat.users && (chat.users[1].firstName.toLowerCase().includes(query) || chat.users[0].firstName.toLowerCase().includes(query)) && chat.latestMessage != null )
+                    if(chat.users && ("chat.users[1].firstName".toLowerCase().includes(query) || chat.users[0].firstName.toLowerCase().includes(query)) && chat.latestMessage != null )
                     {
                         return  <View key={chat._id}> 
                 

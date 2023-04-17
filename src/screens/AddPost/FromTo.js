@@ -6,6 +6,7 @@ import CountryPicker from 'react-native-country-picker-modal'
 import { AntDesign } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 const FromTo = ({navigation}) => {
     const [countryFromCode, setCountryFromCode] = useState('FR')
@@ -20,6 +21,58 @@ const FromTo = ({navigation}) => {
     const [from, setFrom] = useState("")
     const [to, setTo] = useState("")
     const [mode, setMode] = useState('date');
+
+    const handlePlaceFrom = (data) => {
+        
+         let Country = ""
+         let City = ""
+
+      if(place.address_components){
+         for(let i=0; i<place.address_components.length; i++){
+          let types = place.address_components[i].types
+          if(types.indexOf("country") != -1 && Country==""){
+            Country = place.address_components[i].long_name
+          }
+
+           if(types.indexOf("locality") != -1 && City==""){
+             City = place.address_components[i].long_name
+          }
+
+        }
+      }
+       
+            console.log("Country:", Country)
+            console.log("State:", State)
+
+            setCountryFrom(`${City}, ${Country}`)
+
+    }
+
+     const handlePlaceTo = (data) => {
+        
+         let Country = ""
+         let City = ""
+
+      if(place.address_components){
+         for(let i=0; i<place.address_components.length; i++){
+          let types = place.address_components[i].types
+          if(types.indexOf("country") != -1 && Country==""){
+            Country = place.address_components[i].long_name
+          }
+
+           if(types.indexOf("locality") != -1 && City==""){
+             City = place.address_components[i].long_name
+          }
+
+        }
+      }
+       
+            console.log("Country:", Country)
+            console.log("State:", State)
+
+            setCountryTo(`${City}, ${Country}`)
+
+    }
 
     useEffect(()=>{
         console.log(moment(from).format('L'))
@@ -38,11 +91,11 @@ const FromTo = ({navigation}) => {
                 <View style={{
                     borderWidth: 1,
                     borderColor: "#777",
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
+                    paddingHorizontal: 5,
+                    paddingVertical: 5,
                     borderRadius: 5
                 }}>
-                    <CountryPicker
+                    {/* <CountryPicker
                         {...{
                             countryCode: countryFromCode,
                             withFilter: true,
@@ -57,7 +110,19 @@ const FromTo = ({navigation}) => {
                             },
                         }}
                         visible={false}
-                    />
+                    /> */}
+                    <GooglePlacesAutocomplete
+                        placeholder='Take off location'
+                        onPress={(data) => {
+                           handlePlaceFrom(data)
+                            console.log(data);
+                        }}
+                        query={{
+                            key: 'AIzaSyBEQjAi9JOrXgaekQKY6oeSYb8C_5rAudU',
+                            language: 'en',
+                            types: '(cities)'
+                        }}
+                        />
                 </View>
                 <Text style={{
                     marginTop: 10,
@@ -68,11 +133,11 @@ const FromTo = ({navigation}) => {
                 <View style={{
                     borderWidth: 1,
                     borderColor: "#777",
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
+                    paddingHorizontal: 5,
+                    paddingVertical: 5,
                     borderRadius: 5
                 }}>
-                    <CountryPicker
+                    {/* <CountryPicker
                         {...{
                             countryCode: countryToCode,
                             withFilter: true,
@@ -87,7 +152,20 @@ const FromTo = ({navigation}) => {
                             },
                         }}
                         visible={false}
-                    />
+                    /> */}
+
+                    <GooglePlacesAutocomplete
+                        placeholder='Destination location'
+                        onPress={(data) => {
+                            handlePlaceFrom(data)
+                            console.log(data);
+                        }}
+                        query={{
+                            key: 'AIzaSyBEQjAi9JOrXgaekQKY6oeSYb8C_5rAudU',
+                            language: 'en',
+                            types: '(cities)'
+                        }}
+                        />
                 </View>
                 <Text style={{
                     marginTop: 10,
