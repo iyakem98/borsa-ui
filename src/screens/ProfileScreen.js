@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { API_BASE_URL } from '../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 
 const ProfileScreen = ({navigation}) => {
     const { user } = useSelector((state) => state.auth)
@@ -270,7 +271,7 @@ const ProfileScreen = ({navigation}) => {
         borderRadius: 50,
         marginRight: 20,
     }}>
-        <MaterialIcons name="security" size={24} color="white" /> 
+    <AntDesign name="deleteuser" size={24} color="red" />
     </View>
    
     <Text style = {{
@@ -285,15 +286,17 @@ const ProfileScreen = ({navigation}) => {
 
                     <View style = {{
                         width: "100%",
-                        //paddingTop: 20,
+                        marginTop: 30,
                         flexDirection: 'row',
-                        //justifyContent: 'space-around',
+                        justifyContent: 'center',
                         textAlign: 'center',
                         textAlignVertical: 'center',
+                        
                     }}>
                         <Pressable onPress={() => handleLogout()}
-                            style = {styles.press}>
-                        <Text>Logout</Text>
+                            >
+                        <Text style={{textAlign:"center", fontSize:18}}>Logout</Text>
+       
                         
                         </Pressable>
 

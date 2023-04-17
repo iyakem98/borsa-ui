@@ -56,6 +56,17 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
           }
         }
 
+        const [msgDates, setMsgDates] = useState([])
+
+
+        const checkDateGroup = (dt) => {
+          if(msgDates.indexOf(dt)==-1){
+            let dts = msgDates
+            dts.push(dt)
+            setMsgDates(dts)
+            return (dt)
+          }
+        }
   useEffect(() =>{
     // console.log(messages)
     // console.log(messageSentOrReceived)
@@ -141,9 +152,21 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
     //   let formatted_date = (m.createdAt)
     // }
 
-    const formatted_date = d==0 ? moment(m.createdAt).format("LT") : (d<7 ? (d==1 ? moment(m.createdAt).format("dddd LT") : `Yesterday ${moment(m.createdAt).format("LT")}` ): moment(m.createdAt).format("YYYY-MM-DD LT"))
+    const formatted_date = moment(m.createdAt).format("LT")
+    let date_grouped = moment(m.createdAt).format("MMMM DD")
+    
    // return <Text>{m.content}</Text>
       return <>
+      <View style={{
+        textAlign:"center",
+        justifyContent:"center",
+        alignItems:"center",
+        marginTop:5
+      }}>
+        {
+          checkDateGroup(date_grouped)
+        }
+      </View>
         {m.content == "" ? 
         <View style = {[styles.container2, {
           backgroundColor:  `${
