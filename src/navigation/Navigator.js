@@ -110,6 +110,7 @@ const Navigator = ({showOnBoarding}) => {
    <NavigationContainer>
    {user !== null  ? (
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
+    
     <Stack.Navigator>
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
       <Stack.Screen name="Chats" component={ChatScreen} />
