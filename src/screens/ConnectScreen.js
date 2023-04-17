@@ -9,6 +9,7 @@ import { getConsumers, getTravelers } from '../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
 import { fetchChat } from '../features/chat/chatSlice'
 import { ChatState } from '../context/ChatProvider'
+import { Feather } from '@expo/vector-icons'
 
 
 const ConnectScreen = () => {
@@ -63,6 +64,8 @@ const ConnectScreen = () => {
     const [t, setT] = useState([])
     const [b, setB] = useState([])
 
+    const [loading, setloading] = useState(true)
+
     const getUsers = async () => {
 
       const config = {
@@ -88,6 +91,8 @@ const ConnectScreen = () => {
         .catch((err) => {
          
         });
+
+        setloading(false)
     }
         // useEffect(() => {
         //   //  dispatch(getTravelers())
@@ -112,7 +117,22 @@ const ConnectScreen = () => {
   //  ))}
   //  </ScrollView>
   // <ScrollView>
-    <View style = {{backgroundColor: "white", paddingVertical: 0}}>
+   <>
+   {loading? 
+
+    <View>
+      <View style={{
+        justifyContent:"center",
+        alignContent:"center",
+        alignItems:"center",
+        textAlign:"center",
+        marginTop:"45%"
+      }}>
+        <Feather name="loader" size={40} color="black" />
+      </View>
+    </View>
+      :
+      <View style = {{backgroundColor: "white", paddingVertical: 0}}>
             <View style = {{
                 backgroundColor:'white',
                 flexDirection: 'row',
@@ -169,7 +189,9 @@ const ConnectScreen = () => {
       />
       
      
-          </View> )
+          </View> 
+          
+          )
           : (
             <View style = {{
               paddingTop: 50,
@@ -218,7 +240,11 @@ const ConnectScreen = () => {
     }
       /> */}
             </View>
-
+   
+  
+  }
+   
+            </>
            
         
   // </ScrollView>
