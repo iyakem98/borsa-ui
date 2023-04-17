@@ -108,7 +108,7 @@ const Navigator = ({showOnBoarding}) => {
 
   return (
    <NavigationContainer>
-   {user !== null  ? (
+   {user !== null || user != undefined  ? (
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     
     <Stack.Navigator>
