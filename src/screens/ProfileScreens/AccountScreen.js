@@ -464,7 +464,7 @@ style={{
         </View>
 
 
-        <View style={{marginTop:10}}>
+        {/* <View style={{marginTop:10}}>
         <TextInput style = {{
            margin: 15,
            height: 50,
@@ -545,7 +545,7 @@ style={{
           }
           
         </View>
-        }
+        } */}
      
 
         {/* <View style={{display:"flex", flexDirection:"row", justifyContent:"center", width:"100%"}}>
