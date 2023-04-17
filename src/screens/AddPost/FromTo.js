@@ -1,10 +1,11 @@
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
 import { TextInput } from 'react-native-paper'
 import CountryPicker from 'react-native-country-picker-modal'
-import DatepickerRange from 'react-native-range-datepicker';
 import { AntDesign } from '@expo/vector-icons'
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment'
 
 const FromTo = ({navigation}) => {
     const [countryFromCode, setCountryFromCode] = useState('FR')
@@ -13,7 +14,16 @@ const FromTo = ({navigation}) => {
     const [countryTo, setCountryTo] = useState(null)
     const [withCallingCode, setWithCallingCode] = useState(false)
     const [visible, setVisible] = useState(false)
-    const [date, setDate] = useState()
+    const [date, setDate] = useState(new Date())
+    const [showDatePickerFrom, setShowDatePickerFrom] = useState(false)
+    const [showDatePickerTo, setShowDatePickerTo] = useState(false)
+    const [from, setFrom] = useState("")
+    const [to, setTo] = useState("")
+    const [mode, setMode] = useState('date');
+
+    useEffect(()=>{
+        console.log(moment(from).format('L'))
+    }, [from])
     
     return (
         <SafeAreaView style={styles.container}>
@@ -50,7 +60,7 @@ const FromTo = ({navigation}) => {
                     />
                 </View>
                 <Text style={{
-                    marginTop: 20,
+                    marginTop: 10,
                     fontFamily: "Poppins_400Regular"
                 }}>
                     To
@@ -80,10 +90,10 @@ const FromTo = ({navigation}) => {
                     />
                 </View>
                 <Text style={{
-                    marginTop: 20,
+                    marginTop: 10,
                     fontFamily: "Poppins_400Regular"
                 }}>
-                    Departure Date
+                    Arrival data from
                 </Text>
                 <Pressable style={{
                     borderWidth: 1,
@@ -93,17 +103,19 @@ const FromTo = ({navigation}) => {
                     borderRadius: 5,
                     flexDirection: "row",
                     justifyContent: "space-between"
-                }} onPress={()=>setVisible(true)}>
+                }} onPress={()=>{
+                    setShowDatePickerFrom(true)
+                }}>
                     <Text style={{
                         fontFamily: "Poppins_500Medium"
-                    }}>14/05/22</Text>
+                    }}>{from.toLocaleString()}</Text>
                     <AntDesign name="calendar" size={24} color="#777" />
                 </Pressable>
                 <Text style={{
-                    marginTop: 20,
+                    marginTop: 10,
                     fontFamily: "Poppins_400Regular"
                 }}>
-                    Arrival Date
+                    Arrival data to
                 </Text>
                 <Pressable style={{
                     borderWidth: 1,
@@ -113,10 +125,12 @@ const FromTo = ({navigation}) => {
                     borderRadius: 5,
                     flexDirection: "row",
                     justifyContent: "space-between"
-                }} onPress={()=>setVisible(true)}>
+                }} onPress={()=>{
+                    setShowDatePickerTo(true)
+                }}>
                     <Text style={{
                         fontFamily: "Poppins_500Medium"
-                    }}>14/05/22</Text>
+                    }}>{to.toLocaleString()}</Text>
                     <AntDesign name="calendar" size={24} color="#777" />
                 </Pressable>
                 <Pressable style={{
@@ -128,7 +142,7 @@ const FromTo = ({navigation}) => {
                     position: "absolute",
                     bottom: 0,
                     left: 15
-                }} onPress={()=>navigation.navigate("FromTo")}>
+                }} onPress={()=>navigation.navigate("PostAdditional")}>
                     <Text style={{
                         color: "#fff",
                         fontFamily: "Poppins_400Regular",
@@ -137,18 +151,30 @@ const FromTo = ({navigation}) => {
                     }}>{"Next"}</Text>
                 </Pressable>
             </ScrollView>
-            {visible ? (
-                <View style={{
-                    position: "absolute",
-                    top: 0
-                }}>
-                    <DatepickerRange
-                        startDate="13052017"
-                        untilDate="26062017"
-                        onConfirm={( startDate, untilDate ) => setDate({ startDate, untilDate })}
-                    />
-                </View>
+            {showDatePickerFrom ? (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    // is24Hour={true}
+                    onChange={(date, selectedDate)=>{
+                        setFrom(moment(selectedDate).format('L'))
+                        setShowDatePickerFrom(false)
+                    }}
+                />
             ) : null}
+            {showDatePickerTo && (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    // is24Hour={true}
+                    onChange={(date, selectedDate)=>{
+                        setTo(moment(selectedDate).format('L'))
+                        setShowDatePickerTo(false)
+                    }}
+                />
+            )}
         </SafeAreaView>
     )
 }
