@@ -284,6 +284,7 @@ const handleVerify = async () => {
         />
         <TextInput
           label="Password"
+          secureTextEntry={true}
           value={userPassword}
           onChangeText={text => setUserPassword(text)}
           mode="outlined"

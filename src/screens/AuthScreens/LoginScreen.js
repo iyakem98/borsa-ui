@@ -231,6 +231,7 @@ const LoginScreen = ({navigation}) => {
         />
         <TextInput
           label="Password"
+          secureTextEntry={true}
           value={userPassword}
           onChangeText={text => setUserPassword(text)}
           mode="outlined"
