@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { AppState, Pressable, Text, View } from 'react-native'
+import { AppState, Pressable, Text, View, StyleSheet, Image } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { singleChat } from '../features/chat/chatSlice'
 import { useNavigation } from '@react-navigation/native'
@@ -78,13 +78,21 @@ function UserRecently({userData}) {
     
     // console.log(data)
   return (
-    <View>
+    <View style = {styles.container}>
         {/* <Pressable onPress={() => singleChat(data)}>
     <Text>prss herr to get updated chat info</Text>
         </Pressable> */}
         {/* {singleChat()} */}
            {/* {displaySelectedUserDetails()} */}
-        <Text>{firstName}</Text>
+           <Image 
+                source={{uri: user.profilePic}}
+                alt="user"  
+                style = {styles.image}
+                resizeMode = 'cover'
+                />
+        <Text style = {{
+          fontSize: 18
+        }}>{firstName}</Text>
         {/* <Text>{lastSeen}</Text> */}
        {/* { status === "online" ?  <Text>Online</Text> : null}
        { status === "away" ?  <Text>last seen at {lastSeen} </Text>  : null} */}
@@ -93,5 +101,20 @@ function UserRecently({userData}) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  image: {
+    width: 35,
+    height: 35,
+    marginRight: 10,
+    borderRadius: 15,
+  }
+})
 
 export default UserRecently
