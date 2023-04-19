@@ -106,13 +106,15 @@ const AccountScreen = () => {
   }})
         .then((data) => {
          alert('profile updated')
-          handleLogout()
-          //dispatch(getUserDetails(user._id))
+          // handleLogout()
+          dispatch(getUserDetails(user._id))
+          navigation.navigate('More')
          })
-        .catch((err) => {
-          // alert("try again pls.")
+        .catch((err) => {dea
+         alert("try again pls.")
+         console.log("errorr", err)
         });
-        navigation.navigate('More')
+        
   }
 
   const findPlaces = (newText) => {

@@ -5824,9 +5824,9 @@ expo-camera@~12.5.0:
     "@koale/useworker" "^4.0.2"
     invariant "^2.2.4"
 
-expo-cli@^6.3.2:
+expo-cli@6.3.2:
   version "6.3.2"
-  resolved "https://registry.npmjs.org/expo-cli/-/expo-cli-6.3.2.tgz"
+  resolved "https://registry.yarnpkg.com/expo-cli/-/expo-cli-6.3.2.tgz#42dd7a31f5f4534e04b86dfc4493480755277727"
   integrity sha512-Jq3SmCPpevcPEaQ4fHw10RVJfDuBrBGVA93gJxFWCPMaYh8jqBYtSuvH527mT8FoDu5VxYdYXULTqQz5kfVeHQ==
   dependencies:
     "@babel/runtime" "7.9.0"
