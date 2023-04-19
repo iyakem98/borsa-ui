@@ -94,9 +94,19 @@ const ProfileScreen = ({navigation}) => {
                         }}>
                             {user.firstName + ' ' + user.lastName}
                         </Text>
-                        <Text>
-                            Welcome to Borsa Lite
-                        </Text>
+                        <View style = {{
+                            //backgroundColor: '#593196',
+                            paddingHorizontal: 5,
+                            paddingVertical: 2,
+                            borderRadius: 20
+                        }}>
+                            <Text style = {{
+                                //color: '#fff'
+                            }}>
+                               {`borsa user since: 12/12/12`}
+                            </Text>
+                        </View>
+                        
                     </View>
                     
                 </View>
