@@ -23,7 +23,7 @@ const RegisterScreen = ({navigation}) => {
   const [userFullName, setUserFullName] = useState("")
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(true)
   const [userEmailError, setUserEmailError] = useState("");
   const [userPasswordError, setUserPasswordError] = useState("");
 
@@ -243,13 +243,18 @@ const handleVerify = async () => {
         paddingHorizontal: 15,
         paddingTop: 60,
         flexGrow: 1,
-        height: windowHeight
       }}>
         <Text style={{
           fontFamily: "Poppins_600SemiBold",
           fontSize: 30
         }}>
           Create an Account
+        </Text>
+        <Text style={{
+          fontFamily: "Poppins_400Regular",
+          fontSize: 14,
+        }}>
+          Create an account to become a member
         </Text>
         <TextInput
           label="Full name"
@@ -321,7 +326,8 @@ const handleVerify = async () => {
             }}
             color="#514590"
             style={{
-              width: 80
+              width: 80,
+              backgroundColor: "#eee"
             }}
           />
           <View style={{
