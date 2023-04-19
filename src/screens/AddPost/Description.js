@@ -7,7 +7,7 @@ const Description = ({navigation}) => {
     const [messages, setMessages] = useState("")
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={"Buyer"} shadow backBtn />
+            <Header title={"Buyer"} backBtn />
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={{
                     marginTop: 20,

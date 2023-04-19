@@ -98,7 +98,7 @@ export default function App() {
             hidden={false}
           />
           <SafeAreaProvider style={{
-            backgroundColor: "#fff"
+            backgroundColor: "#f7f7f7"
           }}>
             <ChatProvider>
               <PersistGate loading={null} persistor={persistor}>

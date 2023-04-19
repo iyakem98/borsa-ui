@@ -8,7 +8,7 @@ const AddPost = ({navigation}) => {
     const [selected, setSelected] = useState(1)
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={"Add Post"} shadow />
+            <Header title={"Add Post"} />
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={{
                     marginTop: 20,

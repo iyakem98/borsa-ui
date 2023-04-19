@@ -23,6 +23,7 @@ import TestImg from '../screens/TestImg';
 import RecentlyTest from '../screens/RecentlyTest';
 import UserTest from '../screens/UserTest';
 import PushScreen from '../screens/PushScreen';
+import Saved from '../screens/Saved';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -123,10 +124,11 @@ const MainTabNavigator = () => {
             ),
             headerShown: false
         }} />
-        <Tab.Screen name="Saved" component={ConnectScreen} options={{
+        <Tab.Screen name="Saved" component={Saved} options={{
             tabBarIcon: ({color, size}) => (
                 <Ionicons name="heart-outline" size={size} color={color} />
-            )
+            ),
+            headerShown: false
         }} />
 
         <Tab.Screen name="More" component={ProfileScreen} options={{
