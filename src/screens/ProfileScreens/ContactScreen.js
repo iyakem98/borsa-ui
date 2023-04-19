@@ -60,7 +60,7 @@ const ContactScreen = () => {
                   color: 'white',
                   marginLeft: 5,
                 }}>
-                  +251913633037
+                  +1(310) 351-5957
                 </Text>
               </View>
           </View>
@@ -75,7 +75,7 @@ const ContactScreen = () => {
                 marginLeft: 5,
                 color: '#fff'
               }}>
-                Bole MM next to church
+                Seattle WA, USA
               </Text>
              </View>
 
