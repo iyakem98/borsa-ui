@@ -92,7 +92,7 @@ const ProfileScreen = ({navigation}) => {
                             marginTop: 20,
                             marginBottom: 5
                         }}>
-                            {user.firstName + ' ' + user.lastName}
+                            {user?.firstName + ' ' + user?.lastName}
                         </Text>
                         <View style = {{
                             //backgroundColor: '#593196',
