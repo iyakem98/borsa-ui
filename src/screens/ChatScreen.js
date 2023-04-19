@@ -440,7 +440,7 @@ useEffect(() => {
               // setfetchAgain(true)
               if(chat !== null || chat !== undefined){
                 if(chat.latestMessage == undefined || chat.latestMessage == null){
-                  delChat(chat._id)
+                  //delChat(chat._id)
                 }
                 // var formatted_date = null
                 // console.log(chat.lastestMessage)
