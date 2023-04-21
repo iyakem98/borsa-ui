@@ -10822,11 +10822,6 @@ qs@6.7.0:
   resolved "https://registry.npmjs.org/qs/-/qs-6.7.0.tgz"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
-qs@~6.9.1:
-  version "6.9.7"
-  resolved "https://registry.npmjs.org/qs/-/qs-6.9.7.tgz"
-  integrity sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==
-
 query-string@^7.1.3:
   version "7.1.3"
   resolved "https://registry.npmjs.org/query-string/-/query-string-7.1.3.tgz"
@@ -11015,6 +11010,11 @@ react-is@^18.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
+react-native-autocomplete-googleplaces-tnmt@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-autocomplete-googleplaces-tnmt/-/react-native-autocomplete-googleplaces-tnmt-1.0.4.tgz#0cdba3c9d6ba0329120a387a10d36e2608e83c89"
+  integrity sha512-mq/8bZ/JE8kpDdbyam9XnXMqecjvUYXsZzzZbqq7a985IiI1k3dmltkltSesp/m2Bt0gIfV8YxokQ1kyQaTd0Q==
+
 react-native-codegen@^0.69.2:
   version "0.69.2"
   resolved "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.69.2.tgz"
@@ -11047,15 +11047,6 @@ react-native-gesture-handler@~2.5.0:
     invariant "^2.2.4"
     lodash "^4.17.21"
     prop-types "^15.7.2"
-
-react-native-google-places-autocomplete@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-google-places-autocomplete/-/react-native-google-places-autocomplete-2.5.1.tgz#93d5ac3e34e3e8f594aae5349f9e2d3e0b87484e"
-  integrity sha512-2FZZomogB18mLSC/N39UcpiVoJn/fFIpud1M2KZMom/pJhSMgfqV4qLjHuzaDyYIl7KBz/zpGDcbYgmtvvpkHQ==
-  dependencies:
-    lodash.debounce "^4.0.8"
-    prop-types "^15.7.2"
-    qs "~6.9.1"
 
 react-native-google-signin@^2.1.1:
   version "2.1.1"

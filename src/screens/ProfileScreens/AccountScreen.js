@@ -12,7 +12,7 @@ import io from 'socket.io-client'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+
 
 
 const AccountScreen = () => {
@@ -106,13 +106,15 @@ const AccountScreen = () => {
   }})
         .then((data) => {
          alert('profile updated')
-          handleLogout()
-          //dispatch(getUserDetails(user._id))
+          // handleLogout()
+          dispatch(getUserDetails(user._id))
+          navigation.navigate('More')
          })
-        .catch((err) => {
-          // alert("try again pls.")
+        .catch((err) => {dea
+         alert("try again pls.")
+         console.log("errorr", err)
         });
-        navigation.navigate('More')
+        
   }
 
   const findPlaces = (newText) => {
@@ -362,6 +364,9 @@ style={{
             First Name
           </Text>
         <TextInput style = {{
+          color: `${
+            isEditing? "#000" : "gray"
+        }`,
            marginVertical: 15,
            //height: 50,
            borderRadius:0,
@@ -393,6 +398,9 @@ style={{
             Last Name
           </Text>
         <TextInput style = {{
+          color: `${
+            isEditing? "#000" : "gray"
+        }`,
            marginVertical: 15,
            //height: 50,
            //borderRadius:10,
@@ -424,6 +432,9 @@ style={{
             Email
           </Text>
         <TextInput style = {{
+          color: `${
+            isEditing ? "#000" : "gray"
+        }`,
            marginVertical: 15,
            //height: 50,
            borderRadius:0,
