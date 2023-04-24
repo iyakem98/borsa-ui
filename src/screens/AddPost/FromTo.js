@@ -7,8 +7,12 @@ import { AntDesign } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import { useRoute } from '@react-navigation/native'
 
 const FromTo = ({navigation}) => {
+    const route = useRoute()
+    const params = route?.params;
+
     const [countryFromCode, setCountryFromCode] = useState('FR')
     const [countryFrom, setCountryFrom] = useState(null)
     const [countryToCode, setCountryToCode] = useState('ET')
@@ -18,9 +22,13 @@ const FromTo = ({navigation}) => {
     const [date, setDate] = useState(new Date())
     const [showDatePickerFrom, setShowDatePickerFrom] = useState(false)
     const [showDatePickerTo, setShowDatePickerTo] = useState(false)
+    const [showDatePickerTravelerFrom, setShowTravelerDatePickerFrom] = useState(false)
     const [from, setFrom] = useState("")
     const [to, setTo] = useState("")
     const [mode, setMode] = useState('date');
+    const [travelerDate, setTravelerDate] = useState("")
+    const [travelerFrom, setTravelerFrom] = useState("")
+    const [travelerTo, setTravelerTo] = useState("")
 
     const handlePlaceFrom = (data) => {
         
@@ -80,13 +88,13 @@ const FromTo = ({navigation}) => {
     
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={"Buyer"} backBtn />
+            <Header title={params && params?.cardType === 2 ? "Buyer" : "Traveler"} backBtn />
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={{
                     marginTop: 20,
                     fontFamily: "Poppins_400Regular"
                 }}>
-                    From
+                    {params && params?.cardType === 2 ? "Pick Up" : "Departure"}
                 </Text>
                 <View style={{
                     borderWidth: 1,
@@ -128,7 +136,7 @@ const FromTo = ({navigation}) => {
                     marginTop: 10,
                     fontFamily: "Poppins_400Regular"
                 }}>
-                    To
+                    {params && params?.cardType === 2 ? "Destination" : "Destination"}
                 </Text>
                 <View style={{
                     borderWidth: 1,
@@ -167,50 +175,79 @@ const FromTo = ({navigation}) => {
                         }}
                         />
                 </View>
-                <Text style={{
-                    marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
-                }}>
-                    Arrival data from
-                </Text>
-                <Pressable style={{
-                    borderWidth: 1,
-                    borderColor: "#777",
-                    paddingHorizontal: 15,
-                    paddingVertical: 11,
-                    borderRadius: 5,
-                    flexDirection: "row",
-                    justifyContent: "space-between"
-                }} onPress={()=>{
-                    setShowDatePickerFrom(true)
-                }}>
-                    <Text style={{
-                        fontFamily: "Poppins_500Medium"
-                    }}>{from.toLocaleString()}</Text>
-                    <AntDesign name="calendar" size={24} color="#777" />
-                </Pressable>
-                <Text style={{
-                    marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
-                }}>
-                    Arrival data to
-                </Text>
-                <Pressable style={{
-                    borderWidth: 1,
-                    borderColor: "#777",
-                    paddingHorizontal: 15,
-                    paddingVertical: 11,
-                    borderRadius: 5,
-                    flexDirection: "row",
-                    justifyContent: "space-between"
-                }} onPress={()=>{
-                    setShowDatePickerTo(true)
-                }}>
-                    <Text style={{
-                        fontFamily: "Poppins_500Medium"
-                    }}>{to.toLocaleString()}</Text>
-                    <AntDesign name="calendar" size={24} color="#777" />
-                </Pressable>
+                {params && params?.cardType === 2 ? (
+                    <>
+                        <Text style={{
+                            marginTop: 10,
+                            fontFamily: "Poppins_400Regular"
+                        }}>
+                            Date from
+                        </Text>
+                        <Pressable style={{
+                            borderWidth: 1,
+                            borderColor: "#777",
+                            paddingHorizontal: 15,
+                            paddingVertical: 11,
+                            borderRadius: 5,
+                            flexDirection: "row",
+                            justifyContent: "space-between"
+                        }} onPress={()=>{
+                            setShowDatePickerFrom(true)
+                        }}>
+                            <Text style={{
+                                fontFamily: "Poppins_500Medium"
+                            }}>{from.toLocaleString()}</Text>
+                            <AntDesign name="calendar" size={24} color="#777" />
+                        </Pressable>
+                        <Text style={{
+                            marginTop: 10,
+                            fontFamily: "Poppins_400Regular"
+                        }}>
+                            Date to
+                        </Text>
+                        <Pressable style={{
+                            borderWidth: 1,
+                            borderColor: "#777",
+                            paddingHorizontal: 15,
+                            paddingVertical: 11,
+                            borderRadius: 5,
+                            flexDirection: "row",
+                            justifyContent: "space-between"
+                        }} onPress={()=>{
+                            setShowDatePickerTo(true)
+                        }}>
+                            <Text style={{
+                                fontFamily: "Poppins_500Medium"
+                            }}>{to.toLocaleString()}</Text>
+                            <AntDesign name="calendar" size={24} color="#777" />
+                        </Pressable>
+                    </>
+                ) : (
+                    <>
+                        <Text style={{
+                            marginTop: 10,
+                            fontFamily: "Poppins_400Regular"
+                        }}>
+                        Flight Date
+                        </Text>
+                        <Pressable style={{
+                            borderWidth: 1,
+                            borderColor: "#777",
+                            paddingHorizontal: 15,
+                            paddingVertical: 11,
+                            borderRadius: 5,
+                            flexDirection: "row",
+                            justifyContent: "space-between"
+                        }} onPress={()=>{
+                            setShowTravelerDatePickerFrom(true)
+                        }}>
+                            <Text style={{
+                                fontFamily: "Poppins_500Medium"
+                            }}>{travelerDate.toLocaleString()}</Text>
+                            <AntDesign name="calendar" size={24} color="#777" />
+                        </Pressable>
+                    </>
+                )}
                 <Pressable style={{
                     backgroundColor: "#514590",
                     paddingVertical: 15,
@@ -220,7 +257,18 @@ const FromTo = ({navigation}) => {
                     position: "absolute",
                     bottom: 0,
                     left: 15
-                }} onPress={()=>navigation.navigate("PostAdditional")}>
+                }} onPress={()=>{
+                    if(!travelerFrom || !travelerTo || !travelerDate){
+                        alert("Please fill all the fields.")
+                    } else {
+                        navigation.navigate("PostAdditional", {
+                            cardType: params && params?.cardType,
+                            travelerCountryFrom: travelerFrom,
+                            travelerCountryTo: travelerTo,
+                            travelerDate: travelerDate,
+                        })
+                    }
+                }}>
                     <Text style={{
                         color: "#fff",
                         fontFamily: "Poppins_400Regular",
@@ -229,6 +277,18 @@ const FromTo = ({navigation}) => {
                     }}>{"Next"}</Text>
                 </Pressable>
             </ScrollView>
+            {showDatePickerTravelerFrom ? (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    // is24Hour={true}
+                    onChange={(date, selectedDate)=>{
+                        setTravelerDate(moment(selectedDate).format('L'))
+                        setShowTravelerDatePickerFrom(false)
+                    }}
+                />
+            ) : null}
             {showDatePickerFrom ? (
                 <DateTimePicker
                     testID="dateTimePicker"

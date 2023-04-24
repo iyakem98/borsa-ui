@@ -364,6 +364,9 @@ style={{
             First Name
           </Text>
         <TextInput style = {{
+          color: `${
+            isEditing? "#000" : "gray"
+          }`,
            marginVertical: 15,
            //height: 50,
            borderRadius:0,
@@ -395,6 +398,9 @@ style={{
             Last Name
           </Text>
         <TextInput style = {{
+          color: `${
+            isEditing? "#000" : "gray"
+          }`,
            marginVertical: 15,
            //height: 50,
            //borderRadius:10,
@@ -426,6 +432,9 @@ style={{
             Email
           </Text>
         <TextInput style = {{
+          color: `${
+            isEditing ? "#000" : "gray"
+          }`,
            marginVertical: 15,
            //height: 50,
            borderRadius:0,

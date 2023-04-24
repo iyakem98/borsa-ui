@@ -4,6 +4,12 @@ import Header from '../../components/Shared/Header'
 import { TextInput } from 'react-native-paper'
 import { MultipleSelectPicker } from 'react-native-multi-select-picker'
 import { EvilIcons, Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { useRoute } from '@react-navigation/native'
+import { async } from 'q'
+import { API_BASE_URL } from '../../utils/config'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+
 const width = Dimensions.get("screen").width
 
 const items = [
@@ -12,16 +18,81 @@ const items = [
 ]
 
 const Description = ({navigation}) => {
+    const route = useRoute()
+
+    const params = route.params;
     const [showMultiSelectDropDown, setShowMultiSelectDropDown] = useState(false)
     const [selectectedItems, setSelectectedItems] = useState()
     const [showModal, setShowModal] = useState(false)
     const [kilo, setKilo] = useState()
-    // const multiSelect = useRef(null)
+    const [itmName, setItmName] = useState()
+    const [itmDesc, setItmDesc] = useState()
+
+    const [luggageSpace, setLuggageSpace] = useState()
+    const [proofCode, setProofCode] = useState()
+
+    const { user } = useSelector((state) => state.auth)
+
+    const postBuyer = async () => {
+        if(!itmName || !kilo){
+            alert("Please fill the required fields.")
+        }else{
+            //console.log("param", user.token)
+
+            let buyerData = 
+            {
+                "departure": route.params.buyerCountryFrom,
+                "destination": route.params.buyerCountryTo,
+                "item": itmName,
+                "totalWeight": kilo,
+                "startDate": route.params.buyerDateFrom,
+                "endDate": route.params.buyerDateTo,
+                "description": itmDesc
+              }
+              try {
+                axios.post('http://143.198.168.244/api/buyers/', buyerData,
+                {
+                    'headers': { Authorization: `Bearer ${user.token}` }
+            })
+              } catch (e) {
+                console.log("failed", e);
+              }
+    
+            }
+        }
+
+        const postTraveler = async () => {
+            if(!luggageSpace || !proofCode){
+                alert("Please fill the required fields.")
+            }else{
+                console.log("param", route.params)
+    
+                let travelerData = 
+    
+                    {
+                        "departure": route.params.travelerCountryFrom,
+                        "destination": route.params.travelerCountryTo,
+                        "proofCode": proofCode,
+                        "luggageSpace": luggageSpace,
+                        "departureDate": route.params.travelerDate
+                      }
+    
+    
+    
+            try {
+                axios.post('http://143.198.168.244/api/travels/', travelerData, {'headers': { Authorization: `Bearer ${user.token}` }})
+              } catch (e) {
+                console.log("failed", e.response);
+              }
+    
+            }
+        }
+    
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={"Buyer"} backBtn />
-            <ScrollView contentContainerStyle={styles.scrollView}>
+            <Header title={route.params.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
+               <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={{
                     marginTop: 20,
                     fontFamily: "Poppins_400Regular"

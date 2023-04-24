@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import BuyerCard from '../components/Connect/BuyerCard'
 import TravelerCard from '../components/Connect/TravelerCard2'
@@ -119,17 +119,10 @@ const ConnectScreen = () => {
   // <ScrollView>
    <>
    {loading? 
-
-    <View>
-      <View style={{
-        justifyContent:"center",
-        alignContent:"center",
-        alignItems:"center",
-        textAlign:"center",
-        marginTop:"45%"
-      }}>
-        <Feather name="loader" size={40} color="black" />
-      </View>
+    <View style={{
+        paddingTop: 20
+    }}>
+        <ActivityIndicator size="large" color="#777" />
     </View>
       :
       <View style = {{backgroundColor: "white", paddingVertical: 0}}>

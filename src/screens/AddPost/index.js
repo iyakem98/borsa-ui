@@ -14,7 +14,7 @@ const AddPost = ({navigation}) => {
                     marginTop: 20,
                     fontFamily: "Poppins_400Regular"
                 }}>
-                    Do you want to be a buyer or seller?
+                    Are you a traveler or a buyer?
                 </Text>
                 <View style={styles.horizontal}>
                     <Pressable style={[styles.component, selected === 1 ? {
@@ -49,7 +49,7 @@ const AddPost = ({navigation}) => {
                                 } : {}]} />
                             ) : null}
                         </View>
-                        <Text style={styles.compTxt}>Buyers</Text>
+                        <Text style={styles.compTxt}>Buyer</Text>
                     </Pressable>
                 </View>
                 <Pressable style={{
@@ -61,7 +61,11 @@ const AddPost = ({navigation}) => {
                     position: "absolute",
                     bottom: 0,
                     left: 15
-                }} onPress={()=>navigation.navigate("FromTo")}>
+                }} 
+                onPress={()=>navigation.navigate("FromTo", {
+                    cardType: selected,
+                  })}
+                >
                     <Text style={{
                         color: "#fff",
                         fontFamily: "Poppins_400Regular",
