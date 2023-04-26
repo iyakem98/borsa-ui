@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { ChatState } from '../../context/ChatProvider'
 import { Feather } from '@expo/vector-icons'
+import Buyer from './Buyer'
 
 const width = Dimensions.get("screen").width
 
@@ -177,7 +178,7 @@ const ConnectScreen = () => {
       <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
         {isBuyer ? (
           <View style={{
-            // paddingTop: 50,
+            paddingHorizontal: 10,
             backgroundColor: 'white'
           }}>
             <FlatList
@@ -185,7 +186,8 @@ const ConnectScreen = () => {
               renderItem={({item}) => {
                 // console.log("first", item)
                 return (
-                  <BuyerCard buyer={item} />
+                  // <BuyerCard buyer={item} />
+                  <Buyer item={item} />
                 )
               }}
             />

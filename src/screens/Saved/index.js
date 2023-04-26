@@ -12,22 +12,38 @@ const width = Dimensions.get("screen").width
 
 const Saved = () => {
     const isFocused = useIsFocused();
-    const [selectedTab, setSelectedTab] = useState(1);
+    const [selectedTab, setSelectedTab] = useState(2);
     const [isLoading, setIsLoading] = useState(true);
     const [buyerData, setBuyerData] = useState([]);
     const [travelerData, setTravelerData] = useState([]);
 
     const getData = async (index) => {
         setSelectedTab(index)
-        setIsLoading(true)
+        setIsLoading(false)
         try {
-            const jsonValue = await AsyncStorage.getItem(index === 1 ? '@savedTravelers' : '@savedBuyers')
+            console.log("index", index)
+            let jsonValue = null
+            if(index === 1) {
+                jsonValue = await AsyncStorage.getItem('@savedTravelers')
+            } else {
+                jsonValue = await AsyncStorage.getItem('@savedBuyer')
+            }
+            console.log("-=-=-=", jsonValue)
             const data = jsonValue != null ? JSON.parse(jsonValue) : null;
             console.log("====[[[", data)
             if(data) {
-                setTravelerData(data)
+                if(index === 1) {
+                    setTravelerData(data)
+                } else 
+                if(index === 2) {
+                    setBuyerData(data)
+                }
             } else {
-                setTravelerData([])
+                if(index === 1) {
+                    setTravelerData([])
+                } else if(index === 2) {
+                    setBuyerData([])
+                }
             }
         } catch(e) {
             // error reading value
@@ -38,10 +54,17 @@ const Saved = () => {
     const addToWislistTraveler = async(_id) => {
         setIsLoading(true)
         try {
-            const travelerDataArr = travelerData.filter((item)=>(
-                _id !== item._id
-            ))
-            await AsyncStorage.setItem('@savedTravelers', JSON.stringify(travelerDataArr));
+            if(selectedTab === 1) {
+                const travelerDataArr = travelerData.filter((item)=>(
+                    _id !== item._id
+                ))
+                await AsyncStorage.setItem('@savedTravelers', JSON.stringify(travelerDataArr));
+            } else if(selectedTab === 2) {
+                const buyerDataArr = buyerData.filter((item)=>(
+                    _id !== item._id
+                ))
+                await AsyncStorage.setItem('@savedBuyer', JSON.stringify(buyerDataArr));
+            }
         } catch (e) {
           console.log("ERROR WHILE FETCH AND STORING WISHLIST: ", e)
         }
@@ -49,7 +72,7 @@ const Saved = () => {
     }
 
     useEffect(()=>{
-        if(selectedTab){
+        if(isFocused){
             getData(selectedTab)
         }
     }, [isFocused])
@@ -118,7 +141,7 @@ const Saved = () => {
                     }}>
                         <ActivityIndicator size="large" color="#777" />
                     </View>
-                ) : travelerData.length === 0 ? (
+                ) : (selectedTab === 1 && travelerData.length === 0) || (selectedTab === 2 && buyerData.length === 0) ? (
                     <View style={{
                         alignItems: "center",
                         paddingTop: 60
@@ -133,7 +156,11 @@ const Saved = () => {
                     </View>
                 ) : (
                     <>
-                        {travelerData.length ? travelerData.map((item, index)=>{
+                        {selectedTab === 1 && travelerData.length ? travelerData.map((item, index)=>{
+                            return (
+                                <TravelerCard key={index} item={item} addToWislistTraveler={addToWislistTraveler} />
+                            )
+                        }) : selectedTab === 2 && buyerData.length ? buyerData.map((item, index)=>{
                             return (
                                 <TravelerCard key={index} item={item} addToWislistTraveler={addToWislistTraveler} />
                             )

@@ -11,26 +11,24 @@ import { showMessage } from "react-native-flash-message";
 
 const width = Dimensions.get("screen").width
 
-const TravelerCard = ({
+const Buyer = ({
     item
 }) => {
-    let traveler = item
+    const buyer = item
+    const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
     const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading, fetchAgain, setfetchAgain, } = ChatState(); 
-    const dispatch = useDispatch()
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading } = ChatState(); 
     const navigation = useNavigation();
-    var travelerId = useRef(null)
-    const [isBuyer, setIsBuyer] = useState(false)
-    function tweakBuyer() {
-        setIsBuyer(!isBuyer)
+    const [showModal, setshowModal] = useState(false)
+    const [modal, setModal] = useState(false)
+
+    const viewDetail = (user) => {
+        alert("detail")
     }
 
-    const [modal, setModal] = useState(false)
-    const [showModal, setshowModal] = useState(false)
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
-
   useEffect(() =>{
 
     dispatch(fetchChat())
@@ -38,104 +36,176 @@ const TravelerCard = ({
     
   
 }, [user])
-
+const BuyerChat = async(buyerData)=> {
+    // console.log(buyerData)
+    // console.log(buyerID)
+    const userId = buyerData._id
+    // console.log(buyerData)
+    // const checkbuyer = await AsyncStorage.getItem('initialChat') 
+    // const checkbuyerarr = []
+    try{
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
     
-    const TravelerChat = async(travData) => {
-        // console.log(travData)
-        const userId = travData._id
-        // console.log(userId)
-        // // console.log(userId)
-        // // // console.log(travelerId.current)
-        try{
-            const config = {
-              headers: {
-                  Authorization: `Bearer ${user.token}`
+            }
+        }
+        // --------
+        // if((checkbuyer != null || checkbuyer != undefined) ){
+        //     checkbuyerarr.push()
+        //     for(var i = 0; i <checkbuyerarr.length ; i++){
+        //         if(checkbuyerarr[i] ==  buyerData._id){
+        //             setloading(true)
+        //             navigation.navigate('Messaging', {userSelected:
+                
+        //                     buyerData})
+        //              const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+        //             setchatSelected(true)
+        //              setchattId(data._id)
+        //              await AsyncStorage.setItem('initialChat') 
+        //         }
+        //     }
+        //     // if(checkbuyer == buyerData._id){
+        //     //     console.log('true')
+        //     // }
+        //     // setloading(true)
+        //     // // navigation.navigate('Messaging', {userSelected:
         
-              }
-          }
-         console.log(chattts)
-        //   console.log(userId)
-        //   console.log(chattts[1].users[1]._id)
-        // ---
+        //     // //         buyerData})
+        //     //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+        //     // setchatSelected(true)
+        //     //  setchattId(data._id)
+        //     // else{
+        //     //     console.log('false')
+        //     // }
+        // }
+        // else{
+        //     await AsyncStorage.removeItem('initialChat') 
+        //     setloading(false)
+
+        //     navigation.navigate('Messaging', {userSelected:
+        
+        //         buyerData})
+        //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+        // setchatSelected(true)
+        //  setchattId(data._id)
+        //  const BuyerID = data.users[1]._id
+        //  await AsyncStorage.setItem('initialChat', BuyerID)
+        // }
+        // ----------
+        // setloading(true)
+        // setloading(true)
         if(chattts.length > 0){
             chattts.map(async(chat) => {
                 if(chat.users[0]._id == userId || chat.users[1]._id == userId){
                     navigation.navigate('Messaging', {userSelected:
                 
-                        travData})
+                        buyerData})
                     setloading(true)
                     setchatSelected(true)
                     setchattId(chat._id)
                 }
                 else{
-                    
-            navigation.navigate('Messaging', {userSelected:
-        
-                travData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id)
-                }
-            //     else if (chat){
-            //         setloading(false)
-            //         navigation.navigate('Messaging', {userSelected:
+                   
+                    navigation.navigate('Messaging', {userSelected:
                 
-            //             travData})
-            //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            //         setchatSelected(true)
-            //         setchattId(data._id)
+                        buyerData})
+                        setloading(false)
+                    const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                    setchatSelected(true)
+                    setchattId(data._id)
+                    // setloading(false)
+                    // navigation.navigate('Messaging', {userSelected:
+                
+                    //     buyerData})
+                    // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                    // setchatSelected(true)
+                    // setchattId(data._id)
     
     
-            //     }
+                }
     
               })
 
         }
         else{
-           
+            setloading(false)
             navigation.navigate('Messaging', {userSelected:
         
-                travData})
+                buyerData})
                 setloading(false)
             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
             setchatSelected(true)
             setchattId(data._id)
         }
-        //   ---
-        //   for(var i = 0; i < chattts.length ; i++){
-        //     if(chattts[i].users[0]._id == userId || chattts[i].users[1]._id == userId){
+        // -----------------
+        // chattts.map(async(chat) => {
+        //     if(chat.users[0]._id == userId || chat.users[1]._id == userId){
         //         navigation.navigate('Messaging', {userSelected:
-            
-        //                 travData})
+        
+        //             buyerData})
         //         setloading(true)
         //         setchatSelected(true)
-        //         setchattId(chattts[i]._id)
+        //         setchattId(chat._id)
         //     }
-        //   }
-        //   setloading(true)
-        //   navigation.navigate('Messaging', {userSelected:
+        //     else if (chat == null){
+        //         setloading(false)
+        //         navigation.navigate('Messaging', {userSelected:
             
-        //     travData})
-        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-        //     // console.log(data._id)
+        //             buyerData})
+        //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //         setchatSelected(true)
+        //         setchattId(data._id)
+
+
+        //     }
+            
+
+        //   })
+        // ------------------------------------------ 
+        // setloading(true)
+        // navigation.navigate('Messaging', {userSelected:
+        
+        //     buyerData})
+        //     const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
+           
         //     setchatSelected(true)
         //     setchattId(data._id)
-            // console.log(data._id)
-            // setchatSelected(true)
+        // -----------------------------
+        // if(data.latestMessage != null){
+            
+        // }
+        // const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
         
-            // navigation.navigate('Messaging', {chatId: data._id, userSelected:
+        //     setchatSelected(true)
+        // setchattId(data._id)
+        // const BuyerID = data.users[1]._id
+        // console.log(data.users[1]._id)
+        // console.log(buyerData._id)
+        // await AsyncStorage.setItem('initialChat', BuyerID)
+        // const checkbuyer = await AsyncStorage.getItem('initialChat') 
+        // console.log(checkbuyer)          
+        // console.log(data.latestMessage)
+        // if(data.latestMessage != null || data.latestMessage != undefined){
+        //     setloading(true)
+        //     setchatSelected(true)
+        // setchattId(data._id)
+        // }
+        
+    
+        // navigation.navigate('Messaging', {chatId: data._id, userSelected:
+        
+        //     user != null ? getSenderFull(user, data.users) : null })
             
-            //     user != null ? getSenderFull(user, data.users) : null })
-                
-            }
-            // return data
-            
-            
-        catch(err){
-            console.log(err)
-        }
+        
+        // return data
     }
+    catch(err){
+        console.log(err)
+    // }
+}
+}
+
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
     const locationDeparture = item?.departure.split(", ")
@@ -144,7 +214,7 @@ const TravelerCard = ({
     const addToWislistTraveler = async() => {
         try {
             // await AsyncStorage.removeItem('@savedTravelers')
-          const value = await AsyncStorage.getItem('@savedTravelers');
+          const value = await AsyncStorage.getItem('@savedBuyer');
           let isInCart = false
           if(value !== null) {
             let jsonValue = JSON.parse(value)
@@ -155,9 +225,9 @@ const TravelerCard = ({
               }
             }
           }
-          if(!isInCart && value && value.length) {
+          if(!isInCart && value !== null && isArray(value)) {
             console.log("first")
-            await AsyncStorage.setItem('@savedTravelers', JSON.stringify([...value, item]));
+            await AsyncStorage.setItem('@savedBuyer', JSON.stringify([...value, item]));
             showMessage({
                 message: "Success",
                 description: `Item added to wishlist successfully!`,
@@ -165,7 +235,7 @@ const TravelerCard = ({
             });
           } else if(!isInCart) {
             console.log("ses")
-            await AsyncStorage.setItem('@savedTravelers', JSON.stringify([item]));
+            await AsyncStorage.setItem('@savedBuyer', JSON.stringify([item]));
             showMessage({
                 message: "Success",
                 description: `Item added to wishlist successfully!`,
@@ -303,12 +373,12 @@ const TravelerCard = ({
                   </View>
                 </View>
                 <Pressable style={{
-                  backgroundColor: "#13b955",
+                  backgroundColor: "#593196",
                   paddingHorizontal: 20,
                   paddingVertical: 8,
                   borderRadius: 8
                 }} onPress={()=>{
-                    TravelerChat(traveler.user)
+                    BuyerChat(buyer.user)
                 }}>
                   <Text style={{
                     fontSize: 16,
@@ -317,8 +387,7 @@ const TravelerCard = ({
                   }}>Message</Text>
                 </Pressable>
               </View>
-        </Pressable>
-        <Modal
+              {showModal && <Modal
         animationType="slide"
         transparent={true}
         visible={modal}
@@ -342,51 +411,55 @@ const TravelerCard = ({
                         fontSize:20,
                         fontWeight:700
                     }}>
-                        <Text>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
+                        <Text>{buyer.user.firstName+' '+buyer.user.lastName}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
+                        // flex: 1,
                         flexDirection:"row"
                     }}>
                         <Ionicons name="location" size={20} color="black" />
-                       {/* <Text> &nbsp; &nbsp; {traveler.user.address}</Text> */}
-                       <Text>{traveler.user.address}</Text>
+                        {/* <Text> &nbsp; &nbsp; {buyer.user.address}</Text> */}
+                        <Text>{buyer.user.address}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
+                        // flex: 1,
                         flexDirection:"row"
                     }}>
                          <Foundation name="shopping-bag" size={20} color="black" />
-                         {/* <Text> &nbsp; &nbsp; Unknown</Text> */}
-                         <Text>Unknown</Text>
+                         {/* <Text> &nbsp; &nbsp; {buyer.item}</Text> */}
+                         <Text>{buyer.item}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
+                        // flex: 1,
                         flexDirection:"row"
                     }}>
                          <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-                         {/* <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text> */}
-                         <Text>{traveler.luggageSpace}</Text>
+                         {/* <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text> */}
+                         <Text>{buyer.TotalWeight}</Text>
                     </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
+                        // flex: 1,
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={20} color="black" />
-                        {/* <Text> &nbsp; &nbsp; {traveler.status}</Text> */}
-                        <Text>{traveler.status}</Text>
+                        {/* <Text> &nbsp; &nbsp; {buyer.status}</Text> */}
+                        <Text>{buyer.status}</Text>
                     </View>
 
             <Pressable
@@ -396,12 +469,13 @@ const TravelerCard = ({
             </Pressable>
           </View>
         </View>
-        </Modal>
+      </Modal>}
+        </Pressable>
         </>
     )
 }
 
-export default TravelerCard
+export default Buyer
 
 const styles = StyleSheet.create({
     container: {
@@ -477,9 +551,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
     modalView: {
         margin: 20,
-        marginTop: 200,
         backgroundColor: 'white',
         borderRadius: 20,
         padding: 35,
@@ -492,26 +571,26 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-      },
-      button: {
+    },
+    button: {
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-      },
-      buttonOpen: {
+    },
+    buttonOpen: {
         backgroundColor: '#593196',
-      },
-      buttonClose: {
-        backgroundColor: 'green',
-      },
-      textStyle: {
+    },
+    buttonClose: {
+        backgroundColor: '#593196',
+    },
+    textStyle: {
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize:19
-      },
+    },
       modalText: {
         marginBottom: 16,
         textAlign: 'center',
-      },
+    },
 })
