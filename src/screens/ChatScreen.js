@@ -49,8 +49,10 @@ const ChatScreen = () => {
     const navigation = useNavigation();
     const [visible, setVisible] = useState(false);
     const [Today, setToday] = useState(false);
+    const [Yesterday, setYesterday] = useState(false);
     const [otherDs, setotherDs] = useState(false);
     var otherDates = null
+    var yesterdaytest = null
     var todaytest = null
     const ENDPOINT = "http://192.168.100.2:5000"
     // var socket = useRef(null)
@@ -71,8 +73,8 @@ const ChatScreen = () => {
 
     const [messageOnce, setmessageOnce] = useState(false)
    
-
-
+    var formatted_other_date = null
+    // var doubleJeopardy = null
     useEffect(() => {
      
    
@@ -137,24 +139,55 @@ useEffect(()=> {
 //   console.log(user)
   
 //   }, [])
+// useEffect(() => {
+//   if(todaytest == true){
+//     setToday(true)
+//     setotherDs(false)
+//     setYesterday(false)
+//   }
+//   else{
+//     setToday(false)
+//   }
+  
+//   if(yesterdaytest == true){
+//     setYesterday(true)
+//     setotherDs(false)
+//     setToday(false)
+//   }
+//   else{
+//     setYesterday(false)
+//   }
+//   if(otherDates == true){
+//     setotherDs(true)
+//     setToday(false)
+//     setYesterday(false)
+//   }
+//   else{
+//     setotherDs(false)
+//   }
+  
+//   },[Today, Yesterday, otherDs])
 useEffect(() => {
   if(todaytest == true){
     setToday(true)
     setotherDs(false)
+    setYesterday(false)
   }
   else{
     setToday(false)
   }
-  
-  if(otherDates == true){
-    setotherDs(true)
-    setToday(false)
-  }
-  else{
+  },[Today])
+
+useEffect(() => {
+  if(yesterdaytest == true){
+    setYesterday(true)
     setotherDs(false)
+    setToday(false)
   }
-  
-  })
+  else{
+    setYesterday(false)
+  }
+  },[Yesterday])
 
   const getNotif = async() =>{
     // console.log('get notif function')
@@ -217,7 +250,12 @@ useEffect(() => {
         }
         
        }
-
+// console.log("today use state==" +Today)
+// console.log("today test state==" +todaytest)
+// console.log("yesterday use state==" +Yesterday)
+// console.log("yesterday test state==" +yesterdaytest)
+// console.log("other use state==" +otherDs)
+// console.log("other test state==" +otherDates)
        return(
         
         <>
@@ -231,12 +269,13 @@ useEffect(() => {
             { chattts && chattts.length > 0 ? (chattts.map((chat) => {
            
               if(chat !== null || chat !== undefined){
-              
+              // console.log(chat)
                 if(chat.lastestMessage !== undefined ){
                  
                   formatted_date = moment(chat.latestMessage.createdAt).format("LT")
                  
                 }
+                
              
               
              
@@ -383,25 +422,66 @@ useEffect(() => {
                 }
               }
               else{
-                console.log(chat.latestMessage.createdAt)
-                let formatted_other_date = moment(chat.latestMessage.createdAt).format( "YYYY/MM/DD")
-                console.log(formatted_other_date)
-                let msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD")
-                let today = moment()
-                let d = today.diff(msgdate, 'days')
-                console.log(d)
-                if(d==0){
-                  console.log('pushing today messags')
-                  todaytest = true
-                  otherDates = false
-                  // console.log(todaytest)
+                if(chat.latestMessage == null || chat.latestMessage == undefined){
+                  // const  doubleJeopardy = true
+                  // var  doubleJeopardy1 = true
+                  // if(doubleJeopardy == true && doubleJeopardy1 == true ){
+                  //   doubleJeopardy1 == false
+                  //   return <View>
+                  // <Pressable style={styles.connectBtn} onPress={() => navigation.navigate("Connect")}>
+                  // <Text style={styles.connectTxt} >No chats available click here to access them </Text>
+                  // </Pressable>
+                    
+                  // </View>
+
+                  // }
+                  // return <View>
+                  //  <Pressable style={styles.connectBtn} onPress={() => navigation.navigate("Connect")}>
+                  //  <Text style={styles.connectTxt} >No chats available click here to access them </Text>
+                  //  </Pressable>
+                    
+                  //  </View>
+                  
                   
                 }
-               
-                else{
-                 todaytest = false
-                  otherDates = true
+                
+                // console.log(chat.latestMessage.createdAt)
+                if(chat.latestMessage != null || chat.latestMessage != undefined){
+                  // console.log(chat.latestMessage.content)
+                   formatted_other_date = moment(chat.latestMessage.createdAt).format( "YYYY/MM/DD")
+                  // console.log(formatted_other_date)
+                  let msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD")
+                  let today = moment()
+                  let d = today.diff(msgdate, 'days')
+                 
+                  if(d==0){
+                    console.log(d)
+                    console.log('pushing today messags')
+                    todaytest = true
+                    // otherDates = false
+                    // yesterdaytest = false
+                    // console.log('toadytest' +todaytest)
+                    
+                  }
+                  else if(d==1){
+                    console.log(d)
+                    console.log('pushing yesterday messags')
+                    yesterdaytest = true
+                    todaytest = true
+                    otherDates = false
+                    console.log('yesterdayteeeest' +yesterdaytest)
+                    
+                  }
+                 
+                  else{
+                    otherDates = true
+                   todaytest = false
+                   yesterdaytest = false
+                   console.log('othertest' +otherDates)
+                    
+                  }
                 }
+               
                 // var formatted_date2 = null
                 // if(chat.lastestMessage){
                 //   formatted_date2 = moment(chat.latestMessage.createdAt).format("LT")
@@ -448,6 +528,38 @@ useEffect(() => {
                 //   // }
                 // }
                 if(chat.latestMessage != undefined && triggerChange){
+                  formatted_other_date = moment(chat.latestMessage.createdAt).format( "YYYY/MM/DD")
+                  // console.log(formatted_other_date)
+                  let msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD")
+                  let today = moment()
+                  let d = today.diff(msgdate, 'days')
+                 
+                  if(d==0){
+                    console.log(d)
+                    console.log('pushing today messags')
+                    todaytest = true
+                    otherDates = false
+                    yesterdaytest = false
+                    console.log('toadytest' +todaytest)
+                    
+                  }
+                  else if(d==1){
+                    console.log(d)
+                    console.log('pushing yesterday messags')
+                    yesterdaytest = true
+                    todaytest = true
+                    otherDates = false
+                    console.log('yesterdayteeeest' +yesterdaytest)
+                    
+                  }
+                 
+                  else{
+                    otherDates = true
+                   todaytest = false
+                   yesterdaytest = false
+                   console.log('othertest' +otherDates)
+                    
+                  }
                   formatted_date = moment(chat.latestMessage.createdAt).format("LT")
                     return <Pressable key={chat._id} onPress={() => 
                     {
@@ -525,15 +637,21 @@ useEffect(() => {
                                     {user != null ? getSenderFull(user, chat.users).firstName : null}
                                 </Text> 
                                 {Today &&   <Text style = {styles.subTitle}>
-                                    {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                                   
                                     
                                   {formatted_date}
                                 </Text>  } 
+                                {/* {Yesterday &&   <Text style = {styles.subTitle}>
+                                   
+                                    
+                                  Yesterday
+                                </Text>  } 
                                 {otherDs &&   <Text style = {styles.subTitle}>
-                                    {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                                   
                                     
                                   {formatted_other_date}
-                                </Text>  } 
+                                </Text>  }  */}
+                                {/* <Text>ghgh</Text> */}
                             </View>
                             
                            {/* { messages && messages.map((mess) => {

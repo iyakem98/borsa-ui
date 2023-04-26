@@ -52,9 +52,10 @@ const TravelerCard = ({traveler}) => {
         
               }
           }
-         
+         console.log(chattts)
         //   console.log(userId)
         //   console.log(chattts[1].users[1]._id)
+        // ---
         if(chattts.length > 0){
             chattts.map(async(chat) => {
                 if(chat.users[0]._id == userId || chat.users[1]._id == userId){
@@ -65,31 +66,42 @@ const TravelerCard = ({traveler}) => {
                     setchatSelected(true)
                     setchattId(chat._id)
                 }
-                else if (chat == null){
-                    setloading(false)
-                    navigation.navigate('Messaging', {userSelected:
-                
-                        travData})
-                    const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-                    setchatSelected(true)
-                    setchattId(data._id)
-    
-    
+                else{
+                    
+            navigation.navigate('Messaging', {userSelected:
+        
+                travData})
+                setloading(false)
+            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+            setchatSelected(true)
+            setchattId(data._id)
                 }
+            //     else if (chat){
+            //         setloading(false)
+            //         navigation.navigate('Messaging', {userSelected:
+                
+            //             travData})
+            //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+            //         setchatSelected(true)
+            //         setchattId(data._id)
+    
+    
+            //     }
     
               })
 
         }
         else{
-            setloading(false)
+           
             navigation.navigate('Messaging', {userSelected:
         
                 travData})
+                setloading(false)
             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
             setchatSelected(true)
             setchattId(data._id)
         }
-          
+        //   ---
         //   for(var i = 0; i < chattts.length ; i++){
         //     if(chattts[i].users[0]._id == userId || chattts[i].users[1]._id == userId){
         //         navigation.navigate('Messaging', {userSelected:
