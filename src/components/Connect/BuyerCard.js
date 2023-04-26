@@ -41,6 +41,7 @@ const BuyerCard = ({buyer}) => {
         // console.log(buyerData)
         // console.log(buyerID)
         const userId = buyerData._id
+        console.log(buyerData)
         // const checkbuyer = await AsyncStorage.getItem('initialChat') 
         // const checkbuyerarr = []
         try{

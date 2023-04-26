@@ -225,7 +225,7 @@ const OtherFunc = (messages)=>{
      
     
 })}
-{Ymessages && Yesterday &&  <View>
+{Ymessages && Yesterday &&  <View style={{"alignItems": "center", "marginBottom" : 10}}>
         <Text>Yesterday</Text>
       </View>}
     {Ymessages && Ymessages.map((m, i) => {
