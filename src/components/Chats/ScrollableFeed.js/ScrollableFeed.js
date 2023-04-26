@@ -193,10 +193,10 @@ const OtherFunc = (messages)=>{
        
     
      <View style={{flexDirection:"row"}}>
-       <Text style={{color:"white"}}>{formatted_date}</Text>
+       <Text style={{color:`${m.sender._id === user._id ? "white" : "black"}`}}>{formatted_date}</Text>
        {
          
-      <Ionicons name="checkmark-outline" size={20} color="white" />
+      <Ionicons name="checkmark-outline" size={20} color={m.sender._id === user._id ? "white" : "black"} />
       
       
       
