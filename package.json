@@ -24,6 +24,7 @@
     "@reduxjs/toolkit": "^1.9.3",
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.7",
+    "FormData": "^0.10.1",
     "axios": "^1.2.6",
     "dayjs": "^1.11.6",
     "expo": "~46.0.16",
@@ -40,6 +41,7 @@
     "expo-status-bar": "~1.4.0",
     "expo-tracking-transparency": "~2.3.1",
     "expo-yarn-workspaces": "^2.1.0",
+    "form-data": "^4.0.0",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
     "react": "18.0.0",
@@ -57,7 +59,6 @@
     "react-native-screens": "~3.15.0",
     "react-native-svg": "~12.3.0",
     "react-native-vector-icons": "^9.2.0",
-   
     "react-navigation-stack": "^2.10.4",
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",

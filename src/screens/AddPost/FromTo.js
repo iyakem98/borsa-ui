@@ -32,6 +32,8 @@ const FromTo = ({navigation}) => {
     const [destinationTraveler, setDestinationTraveler] = useState("")
     const [departureTraveler, setDepartureTraveler] = useState("")
     const [flightData, setFlightData] = useState("")
+    const [pickUpLocation, setPickUpLocation] = useState("")
+    const [retriveItemLocation, setRetriveItemLocation] = useState("")
 
     const handlePlaceFrom = async(item) => {
         const data = item?.description.split(", ")
@@ -65,7 +67,7 @@ const FromTo = ({navigation}) => {
       }
        
             console.log("Country:", Country)
-            console.log("State:", State)
+            // console.log("State:", State)
 
             setCountryTo(`${City}, ${Country}`)
 
@@ -114,7 +116,9 @@ const FromTo = ({navigation}) => {
                         onPress={(data) => {
                             if(params && params?.cardType === 1) {
                                 setDepartureTraveler(data?.description)
-                            } else {}
+                            } else {
+                                setPickUpLocation(data?.description)
+                            }
                         }}
                         query={{
                             key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
@@ -159,7 +163,9 @@ const FromTo = ({navigation}) => {
                         onPress={(data) => {
                             if(params && params?.cardType === 1) {
                                 setDestinationTraveler(data?.description)
-                            } else {}
+                            } else {
+                                setRetriveItemLocation(data?.description)
+                            }
                         }}
                         query={{
                             key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
@@ -290,24 +296,26 @@ const FromTo = ({navigation}) => {
                     bottom: 0,
                     left: 15
                 }} onPress={()=>{
-                    if(!travelerFrom || !travelerTo || !travelerDate){
-                        alert("Please fill all the fields.")
-                    } else {
-                        if(params && params.cardType === 1) {
+                    if(params && params.cardType === 1) {
+                        if(!departureTraveler || !destinationTraveler || !flightData){
+                            alert("Please fill all the fields.")
+                        } else {
                             navigation.navigate("PostAdditional", {
                                 cardType: params && params?.cardType,
-                                departureLocation: departureTraveler,
-                                destinationLocation: destinationTraveler,
-                                flightDate: flightData,
-                            })
-                        } else if(params && params.cardType === 2) {
-                            navigation.navigate("PostAdditional", {
-                                cardType: params && params?.cardType,
-                                travelerCountryFrom: travelerFrom,
-                                travelerCountryTo: travelerTo,
-                                travelerDate: travelerDate,
+                                departure: departureTraveler,
+                                destination: destinationTraveler,
+                                departureDate: flightData,
                             })
                         }
+                    } else if(params && params.cardType === 2) {
+                        console.log("first")
+                        navigation.navigate("PostAdditional", {
+                            cardType: params && params?.cardType,
+                            departure: pickUpLocation,
+                            destination: retriveItemLocation,
+                            startDate: from,
+                            endDate: to,
+                        })
                     }
                 }}>
                     <Text style={{

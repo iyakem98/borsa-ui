@@ -18,18 +18,31 @@ const Description = ({navigation}) => {
     const route = useRoute()
 
     const params = route.params;
-    const [selectectedItems, setSelectectedItems] = useState()
+    const [selectectedItems, setSelectectedItems] = useState([])
+    const [selectedLabels, setSelectedLabels] = useState([])
     const [showModal, setShowModal] = useState(false)
-    const [kilo, setKilo] = useState()
+    const [kilo, setKilo] = useState();
 
     useEffect(()=>{
-        console.log("---====", params)
+        console.log(params)
     }, [])
+
+    const handleNext = () => {
+        const data = {...params}
+        if(kilo) {
+            data.luggageSpace = kilo
+        }
+        if(selectedLabels) {
+            data.item = selectedLabels
+        }
+        // console.log("first", data)
+        navigation.navigate("PostDescription", data)
+    }
     
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={route.params.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
+            <Header title={params.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
                <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={{
                     marginTop: 20,
@@ -108,7 +121,7 @@ const Description = ({navigation}) => {
                     position: "absolute",
                     bottom: 0,
                     left: 15
-                }} onPress={()=>navigation.navigate("PostDescription")}>
+                }} onPress={()=>handleNext()}>
                     <Text style={{
                         color: "#fff",
                         fontFamily: "Poppins_400Regular",
@@ -120,10 +133,10 @@ const Description = ({navigation}) => {
             {showModal ? (
                 <View style={{
                     position: "absolute",
-                    bottom: 0,
+                    top: 0,
                     width: width,
                     height: height,
-                    paddingTop: 50,
+                    paddingTop: 70,
                     backgroundColor: "#fff",
                 }}>
                     {/* <Pressable 
@@ -142,7 +155,14 @@ const Description = ({navigation}) => {
                     </Pressable> */}
                     <MultipleSelectPicker
                         items={items}
-                        onSelectionsChange={(ele) => { setSelectectedItems( ele ) }}
+                        onSelectionsChange={(ele) => {
+                            let arr = []
+                            ele.map((item)=>{
+                                arr.push(item.label)
+                            })
+                            setSelectectedItems( ele ) 
+                            setSelectedLabels(arr)
+                        }}
                         selectedItems={selectectedItems}
                         buttonStyle={{ height: 100, justifyContent: 'center', alignItems: 'center', borderRadius: 8 }}
                         buttonText='hello'
@@ -155,7 +175,7 @@ const Description = ({navigation}) => {
                         marginBottom: 25,
                         width: width - 30,
                         position: "absolute",
-                        bottom: 0,
+                        bottom: 35,
                         left: 15
                     }} onPress={()=>setShowModal(!showModal)}>
                         <Text style={{

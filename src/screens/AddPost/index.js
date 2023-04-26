@@ -32,7 +32,7 @@ const AddPost = ({navigation}) => {
                                 } : {}]} />
                             ) : null}
                         </View>
-                        <Text style={styles.compTxt}>Seller</Text>
+                        <Text style={styles.compTxt}>Traveler</Text>
                     </Pressable>
                     <Pressable style={[styles.component, selected === 2 ? {
                         borderColor: "#514590",
