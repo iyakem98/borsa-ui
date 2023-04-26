@@ -66,7 +66,8 @@ const MessagingScreen = () => {
     NewwMessage,setNewwMessage,
     chatSelected, setchatSelected,
     chattId,setchatId,
-    loading,  setloading
+    loading,  setloading,
+    checkContent, setcheckContent
     } = ChatState(); 
   // const [mesages, setMesages] = useState()
   // const defaultOptions = {
@@ -716,7 +717,7 @@ const CameraFeature = () => {
     socket.current.emit("new message", data)
   setMessages([...messages, data])
   setmessageSentOrReceived(false)
-  setfetchAgain(true)
+   setfetchAgain(true)
   setfetchAgain(false)
     console.log('message + image saved successfully')
     // const data = await axios.get("http://192.168.100.2:5000/api/images/getImg")
@@ -973,6 +974,7 @@ style={styles.bg}
     
     <Pressable onPress={() => {
       sendMessage()
+      setcheckContent(true)
       scrollViewRef.current.scrollToEnd()
     }}>
     <MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} />

@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import moment from 'moment'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Text, View, ScrollView, StyleSheet, Image, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import { isSameSender, isLastMessage, isSameSenderMargin, isSameUser, getSender } from '../../../ChatConfig/ChatLogics'
@@ -18,6 +18,16 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
     messageSentOrReceived, setmessageSentOrReceived,
     NewwMessage, setNewwMessage
         } = ChatState()
+        const [Today, setToday] = useState(false)
+        const [Yesterday, setYesterday] = useState(false)
+        const [Other, setOther] = useState(false)
+        var todaytest = false
+        var yesterdaytest = false
+        var othertest = false
+        const Tmessages = []
+        const Ymessages = []
+        const Omessages = []
+
         const [localrec, setlocalrec] = useState(false)
         const updateMessStatus = async(messId) => {
           // console.log(messId)
@@ -47,8 +57,7 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
               
             }, config)
             // console.log(data)
-            // console.log(data.lastSeen)
-            // setlastseendateandtime(moment(data.lastSeen).format("dddd, MMMM Do YYYY") + " " + moment(data.lastSeen).format("LT"))
+          
         
           }
           catch(err){
@@ -56,178 +65,110 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
           }
         }
 
-        const [msgDates, setMsgDates] = useState([])
+useEffect(() => {
+  console.log(todaytest)
+  if(todaytest == true){
+    setToday(true)
+  }
+  else{
+    setToday(false)
+  }
+  if(yesterdaytest == true){
+    setYesterday(true)
+  }
+  else{
+    setYesterday(false)
+  }
+  if(othertest == true){
+    setOther(true)
+  }
+  else{
+    setOther(false)
+  }
+})
+  
+const OtherFunc = (messages)=>{
 
-
-        const checkDateGroup = (dt) => {
-          if(msgDates.indexOf(dt)==-1){
-            let dts = msgDates
-            dts.push(dt)
-            setMsgDates(dts)
-            return (dt)
-          }
-        }
-  useEffect(() =>{
-    // console.log(messages)
-    // console.log(messageSentOrReceived)
-    // console.log(sentMessage)
-    // console.log("platformmm", Platform.OS)
-    // console.log(receivedMessage)
-  }, [])
+  // console.log(messages)
+  for(var i = 0; i < messages.length; i++){
+    if(messages[i].createdAt == messages[i++].createdAt){
+      const formatted_date = moment(messages[i].createdAt).format("dddd, YYYY/MM/DD")
+      return <View style={{"alignItems": "center", "marginBottom" : 10}}>
+        <Text>{formatted_date}</Text>
+      </View>
+    }
+    else{
+      // const formatted_date = moment(messages[i].createdAt).format("dddd,YYYY-MM-DD")
+      const formatted_date2 = moment(messages[i++].createdAt).format("dddd, YYYY/MM/DD")
+      return <View style={{"alignItems": "center", "marginBottom" : 10}}>
+        <Text>{formatted_date2}</Text>
+        {/* <Text>{formatted_date}</Text> */}
+      </View>
+    }
+   
+  }
+  // return <Text>Other</Text>
+  }
   // const publicFolder = "http://192.168.100.2:5000/images/"
   const publicFolder = "http://192.168.100.2:5000/images/"
   const now = moment()
+  // console.log(todaytest)
   return (
     <ScrollView
     ref={scrollref}
-    // onContentSizeChange={() => scrollViewRef.current.scrollToEnd()}
+    
     style = {{
       backgroundColor: "#fff", 
       // backgroundColor: "red", 
       height: "100%",
-      // paddingBottom:1,
-      // marginBottom:   
       }}>
-        {/* {console.log('message displayed')} */}
-       
-         {/* <View style = {[styles.container2, {
-          backgroundColor:  `${
-            "#593196" 
-        }`,
-          alignSelf:  `${
-           "flex-end"
-        }`,
-        marginTop:  3, 
-      }]}>                                                                                                                                                                                                                              
-        <Text>{latestMessage}</Text>
-        </View> */}
         
-        
+     {/* {Today == true ?<View>
+        <Text>today</Text>
+      </View> : null}
+     {Yesterday == true ?<View>
+        <Text>yesterday</Text>
+      </View> : null}
+     {Other == true ?<View>
+        <Text>other</Text>
+      </View> : null} */}
     {messages && messages.map((m, i) => {
-
-      // console.log(m.receiver.route)
-      // if(m.receiver.route == "Messaging"){
-      //   updateMessStatus(m._id)
-      // }
       
-      console.log(m.marked)
-      // console.log(m.content)
-      // console.log(latestMessage)
-      // if(m.content == latestMessage){
-      //   setNewwMessage(false)
-      // }
-      // else{
-      //   return <View style = {[styles.container2, {
-      //     backgroundColor:  `${
-      //       "#593196" 
-      //   }`,
-      //     alignSelf:  `${
-      //      "flex-end"
-      //   }`,
-      //   marginTop:  3, 
-      // }]}>                                                                                                                                                                                                                              
-      //   <Text>{latestMessage}</Text>
-      //   </View>
-      // }
-      // console.log('message displayed')
-      // console.log(m.image)
-      // <Text>{m.sender._id}</Text>
-      // if(m.receiver.route == "Messaging"){
-      //   updateMessStatus(m._id)
-      // }
-    // console.log(m.receiver.route)
-    // const formatted_date = moment(m.createdAt).format("dddd LT")
-   
     let msgdate = moment(m.createdAt, "YYYY-MM-DD")
     let today = moment()
-
     let d = today.diff(msgdate, 'days')
-    // if(d==0){
-    //   let formatted_date = moment(m.createdAt).format("LT")
-    // }
-    // if(d>0 && d<7){
-    //   let formatted_date = moment(m.createdAt).format("dddd LT")
-    // }
-    // if(d>7){
-    //   let formatted_date = (m.createdAt)
-    // }
-
-    const formatted_date = moment(m.createdAt).format("LT")
-    let date_grouped = moment(m.createdAt).format("MMMM DD")
+    console.log(d)
+    if(d==0){
+      console.log('pushing today messags')
+      todaytest = true
+      // console.log(todaytest)
+      Tmessages.push(m)
+    }
+    else if(d == 1){
+      Ymessages.push(m)
+      yesterdaytest = true
+    }
+    else{
+      Omessages.push(m)
+      othertest = true
+    }
+   
+     
     
-   // return <Text>{m.content}</Text>
+})}
+{/* {Omessages && Other &&   <View  style={{"alignItems": "center", "marginBottom" : 10}}>
+        <Text>Other</Text>
+      </View>} */}
+{Omessages && Other && OtherFunc(Omessages)}
+    {Omessages && Omessages.map((m, i) => {
+       const formatted_date =  moment(m.createdAt).format("LT")
+       const formatted_date2 =  moment(m.createdAt).format("YYYY-MM-DD")
+       console.log(formatted_date2)
       return <>
-      <View style={{
-        textAlign:"center",
-        justifyContent:"center",
-        alignItems:"center",
-        marginTop:5
-      }}>
-        {
-          checkDateGroup(date_grouped)
-        }
-      </View>
-        {m.content == "" ? 
-        <View style = {[styles.container2, {
-          backgroundColor:  `${
-            m.sender._id === user._id ? "#593196" : "#E8E8E8"
-        }`,
-          alignSelf:  `${
-            m.sender._id === user._id ? "flex-end" : "flex-start"
-        }`,
-        marginTop: isSameUser(messages, m , i , user._id)? 3: 10, 
-      }]}>
-          
-        <ImageBackground  source={{uri: `http://192.168.100.2:5000/images/${m.image}` }} resizeMode= 'cover' style={{color: `${
-                m.sender._id === user._id ? "white" : "black"
-            }`, flex: 1, height: 200,}}>
-                {
-            m.sender._id === user._id &&
-         
-        //  <Ionicons name="checkmark-outline" size={20} color="white" />
-        // <Text style={{color: "red", marginTop:170}}>Sent</Text>
-        
-        <Ionicons name="checkmark-done-sharp" size={40} style={{color: "purple", marginTop:160}} />
-        
-         
-         
-         
-          // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
-        }
-          
-         
-        
-        
-        {/* <Ionicons name="checkmark-done-sharp" size={40} style={{color: "purple", marginTop:160}} /> */}
-        
-         
-         
-         
-         
-        
-               </ImageBackground>
-         {/* <Image key={m._id} style={{color: `${
-                m.sender._id === user._id ? "white" : "black"
-            }`, flex: 1, height: 200, width: 200, resizeMode:'cover'}} source={{uri: `http://192.168.100.2:5000/images/${m.image}` }} /> */}
-        
-        {/* {
-           sentMessage &&  m.sender._id === user._id &&
-         
-        //  <Ionicons name="checkmark-outline" size={20} color="white" />
-        <Text>Sent</Text>
-        
-        
-        
-         
-         
-         
-          // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
-        } */}
-    
-        {/* write conditional rendering for isgetsender opposite  */}
-      
-        </View>
-        :<View style = {[styles.container, {
+      {/* <View>
+        <Text>Other</Text>
+      </View> */}
+      <View key={m._id} style = {[styles.container, {
         backgroundColor:  `${
           m.sender._id === user._id ? "#593196" : "#E8E8E8"
       }`,
@@ -236,69 +177,25 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
       }`,
       marginTop: isSameUser(messages, m , i , user._id)? 3: 10, 
     }]}>
-           <Text key={m._id} style={{
-          /*backgroundColor: `${
-              m.sender._id === user._id ? "#593196" : "#E8E8E8"
-          }`,
-          alignSelf: `${
-            m.sender._id === user._id ? "flex-end" : "flex-start"
-        }`, 
-        */
+
+       <Text key={m._id} style={{
+          
           color: `${
               m.sender._id === user._id ? "white" : "black"
           }`,
           
-         /* borderRadius : 20,
-          padding: 5,
-          maxWidth: "75%",
-          //marginLeft: isSameSenderMargin(messages, m , i, user._id),
-          marginLeft: 5, */
           
       }}>
       {m.content}
        </Text>
           
         
-       {/* {
-        sentMessage &&   <Ionicons name="checkmark-outline" size={20} color="white" />
-      }  */}
-      {/* {
-        m.sender._id == user._id ?  
-       (
-      //  <Ionicons name="checkmark-outline" size={20} color="white" />
-      <Text>Sent</Text>
-       )
-       :
-       (
-        // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
-        <Text>Received</Text>
-       )
-      } */}
-      {/* {
-          m.sender._id === user._id && m.receiver.route === "Messaging" && m.receiver != null && 
-          // m.sender._id === user._id && 
        
-      //  <Ionicons name="checkmark-outline" size={20} color="white" />
-      // <Text>Sent</Text>
-      <Ionicons name="checkmark-done-sharp" size={20} color="white" />
-      
-      
-      
-       
-       
-       
-        // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
-      } */}
     
      <View style={{flexDirection:"row"}}>
        <Text style={{color:"white"}}>{formatted_date}</Text>
        {
-          m.sender._id === user._id  && m.receiver != null &&
-          // m.sender._id === user._id && 
-       
-      //  <Ionicons name="checkmark-outline" size={20} color="white" />
-      // <Text>Sent</Text>
-      // <Ionicons name="checkmark-outline" size={20} color="white" style={{marginLeft:10}}/>
+         
       <Ionicons name="checkmark-outline" size={20} color="white" />
       
       
@@ -306,246 +203,178 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
        
        
        
-        // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
+        
       }
       {
           m.sender._id === user._id  && m.receiver != null && m.marked == "true" &&  
-          // m.sender._id === user._id && 
        
-      //  <Ionicons name="checkmark-outline" size={20} color="white" />
-      // <Text>Sent</Text>
       <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
       
       
       
        
        
-        // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
+       
       }
       </View>
+               </View>
+      </>
+      
+   
+   
      
     
-     
-      {/* {
-        receivedMessage && m.sender._id === user._id &&
-        <Text>recieve</Text>
-      } */}
-      {/* {
-       m.sender._id != user._id && receivedMessage ?
-       setlocalrec(true): null 
-      } */}
-      {/* {
-        localrec && user._id && <Text>rec</Text>
-      } */}
-      {/* {
-          receivedMessage ?
-        
-       
-          <Text>Received</Text>
+})}
+{Ymessages && Yesterday &&  <View style={{"alignItems": "center", "marginBottom" : 10}}>
+        <Text>Yesterday</Text>
+      </View>}
+    {Ymessages && Ymessages.map((m, i) => {
+       const formatted_date =  moment(m.createdAt).format("LT")
+      return <>
+      {/* <View>
+        <Text>Yesterday</Text>
+      </View> */}
+      <View key={m._id} style = {[styles.container, {
+        backgroundColor:  `${
+          m.sender._id === user._id ? "#593196" : "#E8E8E8"
+      }`,
+        alignSelf:  `${
+          m.sender._id === user._id ? "flex-end" : "flex-start"
+      }`,
+      marginTop: isSameUser(messages, m , i , user._id)? 3: 10, 
+    }]}>
+
+       <Text key={m._id} style={{
+          
+          color: `${
+              m.sender._id === user._id ? "white" : "black"
+          }`,
+          
+          
+      }}>
+      {m.content}
+       </Text>
           
         
-        :
-        
-          null
-        
-        
-      } */}
-      {/* {
-        messageSentOrReceived &&  m.sender._id == user._id &&
-        <Text>Received</Text>
-      } */}
-      {/* write conditional rendering for isgetsender opposite  */}
+       
     
-      </View>} 
-      </>
-     
+     <View style={{flexDirection:"row"}}>
+       <Text style={{color:"white"}}>{formatted_date}</Text>
+       {
+         
+      <Ionicons name="checkmark-outline" size={20} color="white" />
+      
+      
       
        
+       
+       
+        
+      }
+      {
+          m.sender._id === user._id  && m.receiver != null && m.marked == "true" &&  
+       
+      <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
+      
+      
+      
+       
+       
+       
+      }
+      </View>
+               </View>
+      </>
+      
+   
+   
+     
+    
 })}
-  {NewwMessage && <View style = {[styles.container, {
+{Tmessages && Today &&   <View style={{"alignItems": "center", "marginBottom" : 10}}>
+        <Text >Today</Text>
+      </View>}
+    {Tmessages && Tmessages.map((m, i) => {
+       const formatted_date =  moment(m.createdAt).format("LT")
+      return <>
+      {/* <View>
+        <Text>Today</Text>
+      </View> */}
+      <View key={m._id} style = {[styles.container, {
+        backgroundColor:  `${
+          m.sender._id === user._id ? "#593196" : "#E8E8E8"
+      }`,
+        alignSelf:  `${
+          m.sender._id === user._id ? "flex-end" : "flex-start"
+      }`,
+      marginTop: isSameUser(messages, m , i , user._id)? 3: 10, 
+    }]}>
+
+       <Text key={m._id} style={{
+          
+          color: `${
+              m.sender._id === user._id ? "white" : "black"
+          }`,
+          
+          
+      }}>
+      {m.content}
+       </Text>
+          
+        
+       
+    
+     <View style={{flexDirection:"row"}}>
+       <Text style={{color:"white"}}>{formatted_date}</Text>
+       {
+         
+      <Ionicons name="checkmark-outline" size={20} color="white" />
+      
+      
+      
+       
+       
+       
+        
+      }
+      {
+          m.sender._id === user._id  && m.receiver != null && m.marked == "true" &&  
+       
+      <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
+      
+      
+      
+       
+       
+       
+      }
+      </View>
+               </View>
+      </>
+      
+   
+   
+     
+    
+})}
+{NewwMessage && <View style = {[styles.container, {
         backgroundColor:   "#593196",
         alignSelf:  "flex-end" ,
       marginTop: 3, 
     }]}>
            <Text style={{
-          /*backgroundColor: `${
-              m.sender._id === user._id ? "#593196" : "#E8E8E8"
-          }`,
-          alignSelf: `${
-            m.sender._id === user._id ? "flex-end" : "flex-start"
-        }`, 
-        */
-          color: "white"
           
-         /* borderRadius : 20,
-          padding: 5,
-          maxWidth: "75%",
-          //marginLeft: isSameSenderMargin(messages, m , i, user._id),
-          marginLeft: 5, */
-          
+          color: "white"   
       }}>
       {latestMessage}
        </Text>
-          
-        
-       {/* {
-        sentMessage &&   <Ionicons name="checkmark-outline" size={20} color="white" />
-      }  */}
-      {/* {
-        m.sender._id == user._id ?  
-       (
-      //  <Ionicons name="checkmark-outline" size={20} color="white" />
-      <Text>Sent</Text>
-       )
-       :
-       (
-        // <Ionicons name="checkmark-done-sharp" size={20} color="white" />
-        <Text>Received</Text>
-       )
-      } */}
-      
-   {/* {user && <Ionicons name="checkmark-outline" size={20} color="white" style={{marginLeft:10}}/>}    */}
-      {/* <Ionicons name="checkmark-done-sharp" size={20} color="white" /> */}
-      {/* <Ionicons name="timer-outline" size={20} color="white" /> */}
-      
-      
-      
-       
-       
-       
-        
       <View style={{flexDirection:"row"}}>
       <Text  style={{color:"white"}}>{now.format('LT')}</Text>
        <Ionicons name="checkmark-outline" size={20} color="white" />
       </View>
-     
-      {/* {
-        receivedMessage && m.sender._id === user._id &&
-        <Text>recieve</Text>
-      } */}
-      {/* {
-       m.sender._id != user._id && receivedMessage ?
-       setlocalrec(true): null 
-      } */}
-      {/* {
-        localrec && user._id && <Text>rec</Text>
-      } */}
-      {/* {
-          receivedMessage ?
-        
-       
-          <Text>Received</Text>
-          
-        
-        :
-        
-          null
-        
-        
-      } */}
-      {/* {
-        messageSentOrReceived &&  m.sender._id == user._id &&
-        <Text>Received</Text>
-      } */}
-      {/* write conditional rendering for isgetsender opposite  */}
-    
       </View>
         }
-
-
    </ScrollView>
-    // <KeyboardAvoidingView
-    // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    // style={styles.keyboardAvoiding}>
-//    <ScrollView
-//     ref={scrollViewRef}
-//     onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: false })}
-//     style = {{
-//       backgroundColor: "#fff", 
-//       paddingBottom: 0,
-//       }}>
-//     {messages && messages.map((m, i) => {
-//       // console.log(m.image)
-//       // <Text>{m.sender._id}</Text>
-//     // console.log(m.createdAt)
-//     console.log(m)
-//     const formatted_date = moment(m.createdAt).format("LT")
-//       return <>
-//         {m.content == "" ? 
-//         <View 
-//         key={i}
-//         style = {[styles.container2, {
-//           backgroundColor:  `${
-//             m.sender._id === user._id ? "#593196" : "#E8E8E8"
-//         }`,
-//           alignSelf:  `${
-//             m.sender._id === user._id ? "flex-end" : "flex-start"
-//         }`,
-//         marginTop: isSameUser(messages, m , i , user._id)? 3: 10, 
-//       }]}>
-          
-//         {/* <ImageBackground  source={{uri: `http://192.168.100.2:5000/images/${m.image}` }} resizeMode= 'cover' style={{color: `${
-//                 m.sender._id === user._id ? "white" : "black"
-//             }`, flex: 1, height: 200,}}>
-//                 {
-//             m.sender._id === user._id &&
-         
-//         //  <Ionicons name="checkmark-outline" size={20} color="white" />
-//         // <Text style={{color: "red", marginTop:170}}>Sent</Text>
-        
-//         <Ionicons name="checkmark-done-sharp" size={40} style={{color: "purple", marginTop:160}} />
-       
-//         }
-          
-        
-//                </ImageBackground> */}
-       
-//         </View>
-        
-//         :
-
-        
-//         <View 
-//         key={i}
-//         style = {[styles.container, {
-//         backgroundColor:  `${
-//           m.sender._id === user._id ? "#E8E8E8" : "#593196" 
-//       }`,
-//       color:  `${
-//         m.sender._id === user._id ? "white" : "black" 
-//     }`,
-//         alignSelf:  `${
-//           m.sender._id === user._id ? "flex-start" : "flex-end"
-//       }`,
-//       marginTop: isSameUser(messages, m , i , user._id)? 3: 10, 
-//     }]}>
-//            <Text key={m._id} style={{
-        
-//           color: `${
-//               m.sender._id == user._id ? "black" : "white"
-//           }`,
-      
-//       }}>
-//       {m.content}
-//        </Text>
-          
-       
-//       <Text style={{color:`${ m.sender._id == user._id ? "black" : "white"}`}}>{formatted_date}
-//       &nbsp;&nbsp;
-//       {/* <Ionicons name="checkmark-done" size={14} color="white" /> */}
-//       <Ionicons name="checkmark-outline" size={14} color="white" />
-//       {/* <Ionicons name="checkmark-outline" size={14} color="white" style={{opacity:.5}}/> */}
-//       </Text>
-//    </View>
-//    } 
-//       </>
-     
-      
-       
-// })}
-//    </ScrollView>
-  //  </KeyboardAvoidingView>
-
   )
 }
 const styles = StyleSheet.create({
