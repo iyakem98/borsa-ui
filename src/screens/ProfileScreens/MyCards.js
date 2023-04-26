@@ -1,4 +1,5 @@
 import {View, Text, Image, StyleSheet, ImageBackground, Pressable, ScrollView} from 'react-native'
+import { Button } from 'react-native-paper';
 import { FontAwesome, FontAwesome5, MaterialIcons, AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import MyTravelerCard from '../../components/MyCards/MyTravelerCard';
 import MyBuyerCard from '../../components/MyCards/MyBuyerCard';
@@ -18,28 +19,24 @@ const MyCards = () => {
             alignItems: 'center',
             marginBottom: 50,
         }}>
-        <Text style = {{
-            fontSize: 20,
-            marginBottom: 15,
-        }}>
-            My Traveler Card
-        </Text>
-        <MyTravelerCard/>
-        </View>
-        
-        <View style = {{
-            width: '100%',
-            height: '30%',
-            alignItems: 'center',
-        }}>
-        <Text style = {{
-            fontSize: 20,
-            marginBottom: 15,
-            // position: 'relative'
-        }}>
-            My Buyer Card
-        </Text>
-        <MyBuyerCard/>
+       <Text
+       style={{
+        marginTop: "40%"
+       }}
+       >No card found. Cards you post will appear here.</Text>
+       <Pressable style={{
+                    backgroundColor: "#514590",
+                    paddingVertical: 15,
+                    borderRadius: 5,
+                    width: "100%",
+                }} >
+                    <Text style={{
+                        color: "#fff",
+                        fontFamily: "Poppins_400Regular",
+                        fontSize: 14,
+                        textAlign: "center"
+                    }}>Post a Card</Text>
+                </Pressable>
         </View>
         
     </View>
