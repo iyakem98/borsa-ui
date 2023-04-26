@@ -12,9 +12,12 @@ import io from 'socket.io-client'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 
 const AccountScreen = () => {
+
+  const navigation = useNavigation()
 
   const [def, setDef] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211")
   const [image, setImage] = useState(def);
@@ -102,13 +105,16 @@ const AccountScreen = () => {
       'Content-Type': 'application/json',
   }})
         .then((data) => {
-         alert('yes')
-          handleLogout()
-          //dispatch(getUserDetails(user._id))
+         alert('profile updated')
+          // handleLogout()
+          dispatch(getUserDetails(user._id))
+          navigation.navigate('More')
          })
-        .catch((err) => {
-          // alert("try again pls.")
+        .catch((err) => {dea
+         alert("try again pls.")
+         console.log("errorr", err)
         });
+        
   }
 
   const findPlaces = (newText) => {
@@ -144,6 +150,32 @@ const AccountScreen = () => {
         });
   }
 
+  const handleUserAddress = (data) => {
+        
+    let Country = ""
+    let City = ""
+
+ if(place.address_components){
+    for(let i=0; i<place.address_components.length; i++){
+     let types = place.address_components[i].types
+     if(types.indexOf("country") != -1 && Country==""){
+       Country = place.address_components[i].long_name
+     }
+
+      if(types.indexOf("locality") != -1 && City==""){
+        City = place.address_components[i].long_name
+     }
+
+   }
+ }
+  
+       console.log("Country:", Country)
+       console.log("State:", State)
+
+       setAddress(`${City}, ${Country}`)
+
+}
+
   useEffect(() => { 
     if(user==null){
       navigate.navigate("Home")
@@ -159,15 +191,69 @@ const AccountScreen = () => {
 
         }}>
     <View style = {{
-        paddingTop: 30,
+        paddingTop: 20,
         backgroundColor: '#fff',
         height: 900,
         width: "100%",
         alignItems: 'center'
     }}>
 
-      <KeyboardAwareScrollView>
+      {/* <KeyboardAwareScrollView> */}
 
+       
+        <View style={{
+          display:"flex",
+          alignItems:"center",
+          justifyContent:"center",
+          marginTop:0,
+        }}>
+          
+
+<Image source={{ uri: image }} style={{ 
+  width: 150,
+  height: 150,
+  marginTop:0,
+  // borderRadius: "100%",
+  borderRadius: 100,
+  alignItems: 'flex-end',
+  justifyContent: 'flex-end',
+ }} />
+
+<Entypo name="edit" size={24} color="red" onPress={()=>{
+  if(isEditing){
+    pickImage()
+  }
+}} 
+style={{
+  padding:2,
+  backgroundColor:"#593196",
+  color:"#fff",
+  marginLeft:90,
+  marginTop:-30,
+  zIndex:100
+}}
+/>
+
+
+
+        <Text style={styles.fullname}>
+          {/* {firstName+' '+lastName} */}
+          {firstName + ' ' + lastName} 
+        </Text>
+
+       {/* <Text style={styles.username}>
+          @{userName}
+</Text> */}
+
+        <View style={styles.divider}>
+              
+        </View>
+
+       
+
+        </View>
+
+        <View style={{marginTop:10, alignItems: 'center'}}>
         {
           !isEditing &&
 
@@ -177,16 +263,18 @@ const AccountScreen = () => {
             left:10,
             backgroundColor: '#593196',
             color:"white",
-            width: 100,
-            height: 40,
-            borderRadius: 10,
+            //width: 100,
+            //height: 40,
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            borderRadius: 0,
             alignItems: 'center',
             justifyContent: 'center',
             letterSpacing:2
           }}
           onPress={()=> setIsEditing(!isEditing)}
           >
-           <Text style={{color:'#fff'}}>Edit</Text>
+           <Text style={{color:'#fff'}}> Click here to start Editing</Text>
           </TouchableOpacity>
         }
 
@@ -202,7 +290,7 @@ const AccountScreen = () => {
             color:"black",
             width: 150,
             height: 40,
-            borderRadius: 10,
+            borderRadius: 0,
             alignItems: 'center',
             justifyContent: 'center',
             letterSpacing:2
@@ -231,7 +319,7 @@ const AccountScreen = () => {
             color:"white",
             width: 150,
             height: 40,
-            borderRadius: 10,
+            //borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center',
             letterSpacing:2
@@ -245,62 +333,10 @@ const AccountScreen = () => {
           </View>
         }
 
-        <View style={{
-          display:"flex",
-          alignItems:"center",
-          justifyContent:"center",
-          marginTop:20
-        }}>
-          
-
-<Image source={{ uri: image }} style={{ 
-  width: 200,
-  height: 200,
-  marginTop:60,
-  // borderRadius: "100%",
-  borderRadius: 100,
-  alignItems: 'flex-end',
-  justifyContent: 'flex-end',
- }} />
-
-<Entypo name="edit" size={24} color="red" onPress={()=>{
-  if(isEditing){
-    pickImage()
-  }
-}} 
-style={{
-  padding:2,
-  backgroundColor:"#593196",
-  color:"#fff",
-  marginLeft:90,
-  marginTop:-30,
-  zIndex:100
-}}
-/>
-
-
-        <Text style={styles.fullname}>
-          {/* {firstName+' '+lastName} */}
-          {firstName}
-        </Text>
-
-        <Text style={styles.username}>
-          @{userName}
-        </Text>
-
-        <View style={styles.divider}>
-              
-        </View>
-
-       
-
-        </View>
-
-        <View style={{marginTop:10}}>
-        <TextInput style = {{
+       {/* <TextInput style = {{
            margin: 15,
            height: 50,
-           borderRadius:10,
+           borderRadius:0,
            width:300,
           //  marginLeft:"10%",
           //  marginRight:"10%",
@@ -320,20 +356,27 @@ style={{
                }}
                editable={isEditing}
               //onChangeText = {this.handlePassword}
-              />
+              /> */}
         </View>
 
-        <View style={{marginTop:5}}>
+        <View style={{marginTop:15}}>
+          <Text>
+            First Name
+          </Text>
         <TextInput style = {{
-           margin: 15,
-           height: 50,
-           borderRadius:10,
+          color: `${
+            isEditing? "#000" : "gray"
+          }`,
+           marginVertical: 15,
+           //height: 50,
+           borderRadius:0,
            width:300,
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
-           padding:5,
+           paddingHorizontal: 5,
+           paddingVertical:10,
            borderColor: 'black',
-           borderWidth: 1,
+           borderWidth: StyleSheet.hairlineWidth,
           //  opacity:`${isEditing? 1 : 0.5}`
           opacity: 1
         }}
@@ -351,16 +394,23 @@ style={{
         </View>
 
         <View style={{marginTop:5}}>
+        <Text>
+            Last Name
+          </Text>
         <TextInput style = {{
-           margin: 15,
-           height: 50,
-           borderRadius:10,
+          color: `${
+            isEditing? "#000" : "gray"
+          }`,
+           marginVertical: 15,
+           //height: 50,
+           //borderRadius:10,
            width:300,
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
-           padding:5,
+          paddingHorizontal: 5,
+          paddingVertical:10,
            borderColor: 'black',
-           borderWidth: 1,
+           borderWidth: StyleSheet.hairlineWidth,
           //  opacity:`${isEditing? 1 : 0.5}`,
           opacity: 1
         }}
@@ -377,18 +427,24 @@ style={{
               />
         </View>
 
-        <View style={{marginTop:10}}>
+        <View style={{marginTop:5}}>
+          <Text>
+            Email
+          </Text>
         <TextInput style = {{
-           margin: 5,
-           height: 50,
-           borderRadius:10,
+          color: `${
+            isEditing ? "#000" : "gray"
+          }`,
+           marginVertical: 15,
+           //height: 50,
+           borderRadius:0,
            width:300,
-           marginLeft:15,
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
-           padding:5,
+           paddingHorizontal: 5,
+           paddingVertical:10,
            borderColor: 'black',
-           borderWidth: 1,
+           borderWidth: StyleSheet.hairlineWidth,
           //  opacity:`${isEditing? 1 : 0.5}`
           opacity: 1
         }}
@@ -405,8 +461,39 @@ style={{
               />
         </View>
 
+       {/* <View style={{width:300, marginTop:10}}>
+        <GooglePlacesAutocomplete
+                        placeholder='Enter your address'
+                        onPress={(data) => {
+                            handleUserAddress(data)
+                            console.log(data);
+                        }}
+                        query={{
+                            key: 'AIzaSyBEQjAi9JOrXgaekQKY6oeSYb8C_5rAudU',
+                            language: 'en',
+                            types: '(cities)'
+                        }}
+                        styles={{
+                          textInputContainer: {
+                            // backgroundColor: 'grey',
+                          },
+                          textInput: {
+                            height: 50,
+                            border:"1px solid black",
+                            width:300,
+                            color: '#5d5d5d',
+                            fontSize: 16,
+                            borderRadius:10,
+                          },
+                          predefinedPlacesDescription: {
+                            color: '#1faadb',
+                          },
+                        }}
+                        />
+        </View>
+                      */}
 
-        <View style={{marginTop:10}}>
+        {/* <View style={{marginTop:10}}>
         <TextInput style = {{
            margin: 15,
            height: 50,
@@ -487,7 +574,7 @@ style={{
           }
           
         </View>
-        }
+        } */}
      
 
         {/* <View style={{display:"flex", flexDirection:"row", justifyContent:"center", width:"100%"}}>
@@ -700,7 +787,7 @@ style={{
       </View> */}
 
     
-</KeyboardAwareScrollView>    
+{/* </KeyboardAwareScrollView>     */}
     </View>
     </ScrollView>
     </SafeAreaView>
@@ -731,7 +818,7 @@ const styles = StyleSheet.create({
   },
   fullname: {
     fontSize:30,
-    letterSpacing: 3,
+    //letterSpacing: 3,
     // fontWeight:700,
     marginTop:20,
     marginBottom: 30,

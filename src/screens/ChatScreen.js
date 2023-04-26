@@ -148,7 +148,7 @@ useEffect(() => {
   
   if(otherDates == true){
     setotherDs(true)
-    setToday(true)
+    setToday(false)
   }
   else{
     setotherDs(false)
@@ -384,7 +384,7 @@ useEffect(() => {
               }
               else{
                 console.log(chat.latestMessage.createdAt)
-                let formatted_other_date = moment(chat.latestMessage.createdAt).format( "YY/MM/DD")
+                let formatted_other_date = moment(chat.latestMessage.createdAt).format( "YYYY/MM/DD")
                 console.log(formatted_other_date)
                 let msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD")
                 let today = moment()

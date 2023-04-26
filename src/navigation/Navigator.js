@@ -38,6 +38,9 @@ import { useEffect } from "react"
 import UserTest from "../screens/UserTest"
 import PushScreen from "../screens/PushScreen"
 import { login } from "../features/auth/authSlice"
+import FromTo from "../screens/AddPost/FromTo"
+import Description from "../screens/AddPost/Description"
+import PostAdditional from "../screens/AddPost/PostAdditional"
 
 
 const Stack = createStackNavigator();
@@ -107,11 +110,15 @@ const Navigator = ({showOnBoarding}) => {
    <NavigationContainer>
    {user !== null || user != undefined  ? (
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
+    
     <Stack.Navigator>
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
       <Stack.Screen name="Chats" component={ChatScreen} />
       <Stack.Screen name="Connect" component={ConnectScreen} />
       <Stack.Screen name="User Details" component={OtherProfile} />
+      <Stack.Screen name="FromTo" component={FromTo} options={{headerShown: false}} />
+      <Stack.Screen name="PostDescription" component={Description} options={{headerShown: false}} />
+      <Stack.Screen name="PostAdditional" component={PostAdditional} options={{headerShown: false}} />
       { messageHeader ? (
         <Stack.Screen name="Messaging" component={MessagingScreen}  options={({ route }) => ({
           // title: route.params.userSelected,

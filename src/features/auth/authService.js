@@ -115,9 +115,7 @@ const getUserDetails = async (userId) => {
     console.log("new user dataaaaaaaaaaa:", data)
   
     if (data) {
-
       return data;
-       
     }
     else {
       console.log('error in authservice')
@@ -127,8 +125,6 @@ const getUserDetails = async (userId) => {
   catch(error){
     console.log("error in logging in")
   }
-
- 
 }
 
 // Logout user
