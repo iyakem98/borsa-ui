@@ -41,7 +41,7 @@ const BuyerCard = ({buyer}) => {
         // console.log(buyerData)
         // console.log(buyerID)
         const userId = buyerData._id
-        console.log(buyerData)
+        // console.log(buyerData)
         // const checkbuyer = await AsyncStorage.getItem('initialChat') 
         // const checkbuyerarr = []
         try{
@@ -106,14 +106,22 @@ const BuyerCard = ({buyer}) => {
                         setchatSelected(true)
                         setchattId(chat._id)
                     }
-                    else if (chat == null){
-                        setloading(false)
+                    else{
+                       
                         navigation.navigate('Messaging', {userSelected:
                     
                             buyerData})
+                            setloading(false)
                         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
                         setchatSelected(true)
                         setchattId(data._id)
+                        // setloading(false)
+                        // navigation.navigate('Messaging', {userSelected:
+                    
+                        //     buyerData})
+                        // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                        // setchatSelected(true)
+                        // setchattId(data._id)
         
         
                     }
@@ -126,6 +134,7 @@ const BuyerCard = ({buyer}) => {
                 navigation.navigate('Messaging', {userSelected:
             
                     buyerData})
+                    setloading(false)
                 const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
                 setchatSelected(true)
                 setchattId(data._id)

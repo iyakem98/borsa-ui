@@ -100,10 +100,10 @@ const OtherFunc = (messages)=>{
     else{
       // const formatted_date = moment(messages[i].createdAt).format("dddd,YYYY-MM-DD")
       const formatted_date2 = moment(messages[i++].createdAt).format("dddd, YYYY/MM/DD")
-      return <View style={{"alignItems": "center", "marginBottom" : 10}}>
-        <Text>{formatted_date2}</Text>
-        {/* <Text>{formatted_date}</Text> */}
-      </View>
+      // return <View style={{"alignItems": "center", "marginBottom" : 10}}>
+      //   <Text>{formatted_date2}</Text>
+      //   {/* <Text>{formatted_date}</Text> */}
+      // </View>
     }
    
   }
