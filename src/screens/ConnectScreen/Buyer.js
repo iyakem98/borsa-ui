@@ -225,7 +225,7 @@ const BuyerChat = async(buyerData)=> {
               }
             }
           }
-          if(!isInCart && value !== null && isArray(value)) {
+          if(!isInCart && value && value.length) {
             console.log("first")
             await AsyncStorage.setItem('@savedBuyer', JSON.stringify([...value, item]));
             showMessage({
