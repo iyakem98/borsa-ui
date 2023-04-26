@@ -28,7 +28,9 @@ const initialState = {
   details: null,
   message: '',
   userDetails: {},
-  onlineStatus: false
+  onlineStatus: false,
+  myTravelerCards: [],
+  myBuyerCards: [],
 }
 // const getUser = async() => {
 //   const user = await  AsyncStorage.getItem('user')
@@ -123,6 +125,30 @@ export const getConsumers = createAsyncThunk('buyers', async (thunkAPI) => {
       return thunkAPI.rejectWithValue(message)
     }
 })
+
+export const getMyTravelerCards = createAsyncThunk('myTravelerCards', async (userId, thunkAPI) => {
+  try {
+    return await authService.getMyTravelerCards(userId)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const getMyBuyerCards = createAsyncThunk('myBuyerCards', async (userId, thunkAPI) => {
+  try {
+    return await authService.getMyBuyerCards(userId)
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString()
+    return thunkAPI.rejectWithValue(message)
+  }
+})
  
 export const authSlice = createSlice({
   name: 'auth',
@@ -193,6 +219,32 @@ export const authSlice = createSlice({
       
       })
       .addCase(getConsumers.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getMyTravelerCards.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getMyTravelerCards.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.myTravelerCards = action.payload
+      })
+      .addCase(getMyTravelerCards.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getMyBuyerCards.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getMyBuyerCards.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.myBuyerCards = action.payload
+      })
+      .addCase(getMyBuyerCards.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

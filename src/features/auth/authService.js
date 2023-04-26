@@ -159,6 +159,22 @@ const getConsumers = async () => {
   return response.data.data
 }
 
+// //get list of all of a users traveler cards
+const getMyTravelerCards = async (userId) => {
+  console.log('mytravelercard slice activated')
+  const response = await axios.get(`http://143.198.168.244/api/travels/my`, userId, config)
+  console.log("my travelerssssssss are:", response.data.data)
+  return response.data.data
+}
+
+// //get list of all of a users buyer cards
+const getMyBuyerCards = async (userId) => {
+  console.log('mytravelercard slice activated')
+  const response = await axios.get(`http://143.198.168.244/api/buyers/my`, userId, config)
+  console.log("my travelerssssssss are:", response.data.data)
+  return response.data.data
+}
+
 const authService = {
   register,
   logout,
@@ -167,6 +183,8 @@ const authService = {
   getConsumers,
   getUserDetails,
   UpdateLastSeenAndStatus,
+  getMyBuyerCards,
+  getMyTravelerCards
   
 }
 

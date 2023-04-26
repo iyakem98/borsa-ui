@@ -1,9 +1,12 @@
 import {View, Text, Image, StyleSheet, ImageBackground, Pressable, ScrollView} from 'react-native'
 import { FontAwesome, FontAwesome5, MaterialIcons, AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import MyTravelerCard from '../../components/MyCards/MyTravelerCard';
+import MyEachBuyerCard from '../../components/MyCards/MyEachBuyerCard';
+import MyEachTravelerCard from '../../components/MyCards/MyEachTravelerCard';
 import MyBuyerCard from '../../components/MyCards/MyBuyerCard';
+import MyCardLists from '../../components/MyCards/MyCardLists';
 
-const MyCards = () => {
+{/*const MyCards = () => {
   return (
     <View style = {{
         height: "100%",
@@ -46,4 +49,21 @@ const MyCards = () => {
   )
 }
 
-export default MyCards
+export default MyCards */}
+
+const MyCards = () => {
+    return (
+      <View style = {{
+          height: "100%",
+          alignItems: 'center',
+          backgroundColor: 'white',
+          paddingTop: "5%"
+      }}>
+  
+          <MyCardLists/>
+          
+      </View>
+    )
+  }
+  
+  export default MyCards
