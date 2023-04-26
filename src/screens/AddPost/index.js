@@ -1,11 +1,20 @@
 import { Dimensions, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import Header from '../../components/Shared/Header'
+import { useRoute } from '@react-navigation/native'
 
 const width = Dimensions.get("screen").width
 
 const AddPost = ({navigation}) => {
-    const [selected, setSelected] = useState(1)
+    
+   
+
+    const route = useRoute()
+    const params = route?.params?.cardToAdd
+
+    const [selected, setSelected] = useState(params ? 2 : 1)
+
+
     return (
         <SafeAreaView style={styles.container}>
             <Header title={"Add Post"} />
