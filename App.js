@@ -14,6 +14,7 @@ import { useRef } from 'react';
 import AppContainer from './AppContainer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
+import FlashMessage from "react-native-flash-message";
 import {
   useFonts,
   Poppins_300Light,
@@ -108,6 +109,7 @@ export default function App() {
             </ChatProvider>
           </SafeAreaProvider>
         </PaperProvider>
+        <FlashMessage position="top" />
       </Provider>
     );
   } else {

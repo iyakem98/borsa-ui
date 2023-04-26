@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
+import { showMessage } from "react-native-flash-message";
 
 const width = Dimensions.get("screen").width
 
@@ -138,10 +139,9 @@ const TravelerCard = ({
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
     const locationDeparture = item?.departure.split(", ")
-    const locationDepartureLength = locationPickUp.length
+    const locationDepartureLength = locationDeparture.length
 
     const addToWislistTraveler = async() => {
-        console.log("first")
         try {
             // await AsyncStorage.removeItem('@savedTravelers')
           const value = await AsyncStorage.getItem('@savedTravelers');
@@ -156,9 +156,28 @@ const TravelerCard = ({
             }
           }
           if(!isInCart && value !== null) {
-            await AsyncStorage.setItem('@savedTravelers', JSON.stringify([ ...value, item]));
-          } else if(!isInCart) {
+            console.log("first")
             await AsyncStorage.setItem('@savedTravelers', JSON.stringify([item]));
+            showMessage({
+                message: "Success",
+                description: `Item added to wishlist successfully!`,
+                type: "success",
+            });
+          } else if(!isInCart) {
+            console.log("ses")
+            await AsyncStorage.setItem('@savedTravelers', JSON.stringify([item]));
+            showMessage({
+                message: "Success",
+                description: `Item added to wishlist successfully!`,
+                type: "success",
+            });
+          } else if(isInCart) {
+            console.log("asdsad")
+            showMessage({
+                message: "Already Exists",
+                description: `Item already exists in wishlist!`,
+                type: "warning",
+            });
           }
         } catch (e) {
           console.log("ERROR WHILE FETCH AND STORING WISHLIST: ", e)
@@ -223,10 +242,10 @@ const TravelerCard = ({
             <View style={styles.bottomWrapper}>
                 <View>
                     <Text style={styles.txtCountry}>
-                        {locationPickUp[locationPickUpLength - 1]}
+                        {locationDepartureLength === 3 ? locationDeparture[2] : locationDeparture[1]}
                     </Text>
                     <Text style={styles.txtCity}>
-                        {locationDepartureLength === 3 ? <>{`${locationDeparture[0]}, ${locationDeparture[1]}`}</> : locationPickUp[1]}
+                        {locationDepartureLength === 3 ? <>{`${locationDeparture[0]}, ${locationDeparture[1]}`}</> : locationDeparture[0]}
                     </Text>
                 </View>
                 <View style={styles.horizontal}>
