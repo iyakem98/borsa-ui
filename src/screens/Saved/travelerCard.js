@@ -5,11 +5,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 const width = Dimensions.get("screen").width
 
 const TravelerCard = ({
-    index
+    item,
+    addToWislistTraveler
 }) => {
     const [modalOpen, setModalOpen] = useState(true);
+
     return (
-        <View key={index} style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
                     <Image
@@ -46,6 +48,17 @@ const TravelerCard = ({
                     }}>
                         <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
                     </Pressable> */}
+                    <Pressable style={{
+                        backgroundColor: "#eee",
+                        paddingHorizontal: 12,
+                        paddingVertical: 10,
+                        borderRadius: 7,
+                        marginLeft: 12
+                    }} onPress={() => addToWislistTraveler(item._id)}>
+                        <Text style={{
+                            color: "red",
+                        }}>Remove</Text>
+                    </Pressable>
                 </View>
             </View>
             <View style={styles.bottomWrapper}>
@@ -133,6 +146,7 @@ const styles = StyleSheet.create({
     horizontal: {
         flexDirection: "row",
         alignItems: "center",
+        position: "relative"
     },
     date: {
         fontFamily: "Poppins_500Medium",

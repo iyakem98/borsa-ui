@@ -6,9 +6,12 @@ import { Pressable } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import TravelerCard from './travelerCard'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw';
+import { useIsFocused, useRoute } from "@react-navigation/native";
+
 const width = Dimensions.get("screen").width
 
 const Saved = () => {
+    const isFocused = useIsFocused();
     const [selectedTab, setSelectedTab] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const [buyerData, setBuyerData] = useState([]);
@@ -22,7 +25,7 @@ const Saved = () => {
             const data = jsonValue != null ? JSON.parse(jsonValue) : null;
             console.log("====[[[", data)
             if(data) {
-                // setTravelerData(data)
+                setTravelerData(data)
             } else {
                 setTravelerData([])
             }
@@ -32,9 +35,28 @@ const Saved = () => {
         setIsLoading(false)
     }
 
+    const addToWislistTraveler = async(_id) => {
+        setIsLoading(true)
+        try {
+            const travelerDataArr = travelerData.filter((item)=>(
+                _id !== item._id
+            ))
+            await AsyncStorage.setItem('@savedTravelers', JSON.stringify(travelerDataArr));
+        } catch (e) {
+          console.log("ERROR WHILE FETCH AND STORING WISHLIST: ", e)
+        }
+        getData(selectedTab)
+    }
+
     useEffect(()=>{
-        getData(1)
-    }, [])
+        if(selectedTab){
+            getData(selectedTab)
+        }
+    }, [isFocused])
+    
+    useEffect(()=>{
+        console.log("first", travelerData)
+    }, [travelerData])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -111,11 +133,11 @@ const Saved = () => {
                     </View>
                 ) : (
                     <>
-                        {travelerData.map((item, index)=>{
+                        {travelerData.length ? travelerData.map((item, index)=>{
                             return (
-                                <TravelerCard index={index} item={item} key={index} />
+                                <TravelerCard key={index} item={item} addToWislistTraveler={addToWislistTraveler} />
                             )
-                        })}
+                        }) : null}
                     </>
                 )}
             </ScrollView>

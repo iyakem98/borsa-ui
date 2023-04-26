@@ -1,18 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import BuyerCard from '../components/Connect/BuyerCard'
-import TravelerCard from '../components/Connect/TravelerCard2'
-import { getConsumers, getTravelers } from '../features/auth/authSlice'
+import BuyerCard from '../../components/Connect/BuyerCard'
+import TravelerCard from './Traveler'
+import { getConsumers, getTravelers } from '../../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
-import { fetchChat } from '../features/chat/chatSlice'
-import { ChatState } from '../context/ChatProvider'
+import { fetchChat } from '../../features/chat/chatSlice'
+import { ChatState } from '../../context/ChatProvider'
 import { Feather } from '@expo/vector-icons'
 
+const width = Dimensions.get("screen").width
 
 const ConnectScreen = () => {
+  const [selectedTab, setSelectedTab] = useState(1)
   const { consumers } = useSelector(
     (state) => state.auth
   )
@@ -117,136 +119,107 @@ const ConnectScreen = () => {
   //  ))}
   //  </ScrollView>
   // <ScrollView>
-   <>
-   {loading? 
+  <SafeAreaView style={styles.container}>
     <View style={{
-        paddingTop: 20
+      backgroundColor: "#fff",
+      justifyContent: "center",
+      alignItems: "center",
+      paddingBottom: 15
     }}>
-        <ActivityIndicator size="large" color="#777" />
+      <View style={{
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: "space-between",
+        width: width - 30,
+        backgroundColor: "#eee",
+        padding: 10,
+        borderRadius: 10
+      }}>
+        <Pressable style={{
+            backgroundColor: selectedTab === 1 ? "#fff" : "#eee",
+            borderRadius: 5,
+            width: "49%",
+            paddingVertical: 13,
+            alignItems: "center"
+        }} onPress={()=>{
+            isBuyer ? setIsBuyer(false) : null
+            setSelectedTab(1)
+        }}>
+            <Text style={{
+                fontFamily: "Poppins_500Medium",
+                fontSize: 14
+            }}>Traveler</Text>
+        </Pressable>
+        <Pressable style={{
+            backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
+            borderRadius: 5,
+            width: "49%",
+            paddingVertical: 13,
+            alignItems: "center"
+        }} onPress={()=>{
+          !isBuyer ? setIsBuyer(true) : null
+          setSelectedTab(2)
+        }}>
+            <Text style={{
+                fontFamily: "Poppins_500Medium",
+                fontSize: 14
+            }}>Buyer</Text>
+        </Pressable>
+      </View>
     </View>
-      :
-      <View style = {{backgroundColor: "white", paddingVertical: 0}}>
-            <View style = {{
-                backgroundColor:'white',
-                flexDirection: 'row',
-                width: '100%',
-                position: 'absolute',
-                zIndex: 10,
-                height: 50,
-                alignSelf: 'center',
-                justifyContent : 'space-around',
-                alignItems: 'center',
-                borderRadius: 30,
-                marginBottom: 10,
-            }}
-            shadowOffset={{height: 5}}
-            shadowColor='black'
-            shadowOpacity={0.1}
-            >
-                <Pressable style = {isBuyer  ? styles.pressDisabledT : styles.pressActiveT} 
-                 onPress={() => {isBuyer ? setIsBuyer(false) : null}}
-                >
-                    <Text style = {{
-                        fontSize: 18,
-                        color: isBuyer? 'black' : 'green',
-                        fontWeight: isBuyer? '0' : 'bold'
-                    }}>
-                        Travelers
-                    </Text>
-                </Pressable>
-
-                <Pressable style = {isBuyer  ? styles.pressActiveB : styles.pressDisabledB} 
-                  onPress={() => {!isBuyer ? setIsBuyer(true) : null}}
-                >
-                    <Text style = {{
-                        fontSize: 18,
-                        color: isBuyer ? '#593196' : 'black',
-                        fontWeight: isBuyer ? 'bold': '0'
-                    }}>
-                        Buyers
-                    </Text>
-                </Pressable>
-
-            </View>
-           
-            {isBuyer ? (
-            <View style = {{
-              paddingTop: 50,
-              backgroundColor: 'white'
+    {loading ? (
+      <View style={{
+          paddingTop: 20
+      }}>
+        <ActivityIndicator size="large" color="#777" />
+      </View>
+    ) : (
+      <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
+        {isBuyer ? (
+          <View style={{
+            // paddingTop: 50,
+            backgroundColor: 'white'
           }}>
-           <FlatList
-          data = {b}
-          renderItem = {({item}) => <BuyerCard buyer= {item} 
-      />
-    }
-      />
-      
-     
+            <FlatList
+              data={b}
+              renderItem={({item}) => {
+                // console.log("first", item)
+                return (
+                  <BuyerCard buyer={item} />
+                )
+              }}
+            />
           </View> 
-          
-          )
-          : (
-            <View style = {{
-              paddingTop: 50,
-              backgroundColor: 'white'
+        ) : (
+          <View style = {{
+            paddingHorizontal: 10,
+            backgroundColor: 'white'
           }}>
-             <FlatList
-          data = {t}
-          renderItem = {({item}) => <TravelerCard traveler= {item} 
-      />
-    }
-      /> 
-     
+            <FlatList
+              data={t}
+              renderItem={({item}) => {
+                console.log(item)
+                return (
+                  // <TravelerCard traveler= {item} />
+                  <TravelerCard item={item} />
+                )
+              }}
+            />
           </View>
-          )
-           
-            }
-            {/* {isTraveler && 
-            <View style = {{
-              paddingTop: 50,
-              backgroundColor: 'white'
-          }}>
-           < FlatList
-          data = {travelers}
-          renderItem = {({item}) => <TravelerCard traveler= {item} 
-      />}
-      />
-          </View>
-           
-            } */}
-             {/* <FlatList
-          data = {t}
-          renderItem = {({item}) => <TravelerCard traveler= {item} 
-      />
-    }
-      /> */}
-        {/* <FlatList
-          data = {b}
-          renderItem = {({item}) => <TravelerCard traveler= {item} 
-      />
-    }
-      /> */}
-         {/* <FlatList
-          data = {b}
-          renderItem = {({item}) => <BuyerCard buyer= {item} 
-      />
-    }
-      /> */}
-            </View>
-   
-  
-  }
-   
-            </>
-           
-        
-  // </ScrollView>
+        )}
+      </View>
+    )}
+  </SafeAreaView>
   )
 }
 
 export default ConnectScreen
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff"
+  },
   pressActiveB: {
       //backgroundColor: '#593196',
       //borderRadius: 30,
