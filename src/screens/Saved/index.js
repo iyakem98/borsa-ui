@@ -135,7 +135,7 @@ const Saved = () => {
                 paddingHorizontal: 10,
                 paddingTop: 10
             }}>
-                {isLoading ? (
+               {/* {isLoading ? (
                     <View style={{
                         paddingTop: 20
                     }}>
@@ -166,7 +166,19 @@ const Saved = () => {
                             )
                         }) : null}
                     </>
-                )}
+                    )} */}
+                      <View style={{
+                        alignItems: "center",
+                        paddingTop: 60
+                    }}>
+                        <EmptyUnDraw />
+                        <Text style={{
+                            fontFamily: "Poppins_500Medium",
+                            marginTop: 20,
+                            textAlign: "center",
+                            fontSize: 16
+                        }}>Wishlist is empty. Page coming soon!</Text>
+                    </View>
             </ScrollView>
         </SafeAreaView>
     )
