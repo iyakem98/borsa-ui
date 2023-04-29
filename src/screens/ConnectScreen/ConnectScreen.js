@@ -183,6 +183,9 @@ const ConnectScreen = () => {
           }}>
             <FlatList
               data={b}
+              contentContainerStyle={{
+                paddingBottom: 100
+              }}
               renderItem={({item}) => {
                 // console.log("first", item)
                 return (
@@ -199,6 +202,9 @@ const ConnectScreen = () => {
           }}>
             <FlatList
               data={t}
+              contentContainerStyle={{
+                paddingBottom: 100
+              }}
               renderItem={({item}) => {
                 console.log(item)
                 return (

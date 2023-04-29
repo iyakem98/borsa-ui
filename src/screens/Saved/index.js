@@ -1,4 +1,4 @@
-import { ActivityIndicator, Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Dimensions, FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
@@ -18,20 +18,17 @@ const Saved = () => {
     const [travelerData, setTravelerData] = useState([]);
 
     const getData = async (index) => {
+        const checkIndex = index === 1 ? '@savedTravelers' : '@savedBuyer'
         setSelectedTab(index)
-        setIsLoading(false)
+        setIsLoading(true)
         try {
             console.log("index", index)
-            let jsonValue = null
-            if(index === 1) {
-                jsonValue = await AsyncStorage.getItem('@savedTravelers')
-            } else {
-                jsonValue = await AsyncStorage.getItem('@savedBuyer')
-            }
-            console.log("-=-=-=", jsonValue)
-            const data = jsonValue != null ? JSON.parse(jsonValue) : null;
-            console.log("====[[[", data)
-            if(data) {
+            // await AsyncStorage.removeItem(checkIndex)
+            const jsonValue = await AsyncStorage.getItem(checkIndex)
+            // // const jsonValue =  null
+            if(jsonValue) {
+                const data = await JSON.parse(jsonValue)
+                console.log("====[[[", data)
                 if(index === 1) {
                     setTravelerData(data)
                 } else 
@@ -75,11 +72,13 @@ const Saved = () => {
         if(isFocused){
             getData(selectedTab)
         }
-    }, [isFocused])
-    
-    useEffect(()=>{
-        console.log("first", travelerData)
-    }, [travelerData])
+    }, [])
+
+    // useEffect(()=>{
+    //     if(selectedTab === 2) {
+
+    //     }
+    // }, [])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -156,11 +155,20 @@ const Saved = () => {
                     </View>
                 ) : (
                     <>
-                        {selectedTab === 1 && travelerData.length ? travelerData.map((item, index)=>{
-                            return (
-                                <TravelerCard key={index} item={item} addToWislistTraveler={addToWislistTraveler} />
-                            )
-                        }) : selectedTab === 2 && buyerData.length ? buyerData.map((item, index)=>{
+                        {selectedTab === 1 && travelerData.length ? (
+                            // travelerData.map((item, index)=>{
+                            //     return (
+                                    // <TravelerCard key={index} item={item} addToWislistTraveler={addToWislistTraveler} />
+                            <View>
+                                <FlatList
+                                    data={travelerData}
+                                    renderItem={({item}) => <TravelerCard item={item} addToWislistTraveler={addToWislistTraveler} />}
+                                    keyExtractor={(item, index) => index}
+                                />
+                            </View>
+                            //     )
+                            // })
+                        ) : selectedTab === 2 && buyerData.length ? buyerData.map((item, index)=>{
                             return (
                                 <TravelerCard key={index} item={item} addToWislistTraveler={addToWislistTraveler} />
                             )

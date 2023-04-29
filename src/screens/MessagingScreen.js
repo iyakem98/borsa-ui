@@ -11,7 +11,7 @@ import { ChatState } from '../context/ChatProvider';
 import { fetchChat } from '../features/chat/chatSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native'
-import {Camera} from "expo-camera"
+// import {Camera} from "expo-camera"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as MediaLibrary from "expo-media-library"
 import * as Device from 'expo-device';
@@ -450,10 +450,10 @@ async function registerForPushNotificationsAsync() {
 
  
  const testCamera = async () =>{
-  const mediaPermissions = await MediaLibrary.requestPermissionsAsync()
-  const cameraStatus = await Camera.requestCameraPermissionsAsync()
-  sethasPermissions(cameraStatus.status === 'granted')
-  setMediaLibPermissions(mediaPermissions.status === 'granted')
+  // const mediaPermissions = await MediaLibrary.requestPermissionsAsync()
+  // const cameraStatus = await Camera.requestCameraPermissionsAsync()
+  // sethasPermissions(cameraStatus.status === 'granted')
+  // setMediaLibPermissions(mediaPermissions.status === 'granted')
  }
  let takePic = async () => {
 let options = {
@@ -462,9 +462,9 @@ base64: true,
 exif: false
 };
 
-let newPhoto = await cameraRef.current.takePictureAsync(options);
-console.log(newPhoto.uri)
-setImage(newPhoto);
+// let newPhoto = await cameraRef.current.takePictureAsync(options);
+// console.log(newPhoto.uri)
+// setImage(newPhoto);
 };
   const storeNotifcation = async(notification, chat) => {
     try{
@@ -654,7 +654,7 @@ const CameraFeature = () => {
     content: "",
     chatId: chatId
    }
-    let newPhoto = await cameraRef.current.takePictureAsync(options);
+    // let newPhoto = await cameraRef.current.takePictureAsync(options);
     setImage(newPhoto)
     let filename = newPhoto.uri.split('/').pop();
     // console.log(filename)

@@ -1,6 +1,6 @@
 import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
-import { Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { AntDesign, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
@@ -215,9 +215,9 @@ const BuyerChat = async(buyerData)=> {
         try {
             // await AsyncStorage.removeItem('@savedTravelers')
           const value = await AsyncStorage.getItem('@savedBuyer');
+          let jsonValue = await JSON.parse(value)
           let isInCart = false
-          if(value !== null) {
-            let jsonValue = JSON.parse(value)
+          if(value !== null && jsonValue) {
             for (var i = 0; i < jsonValue.length; i++) {
               console.log(jsonValue[i]._id, item?._id)
               if (jsonValue[i]?._id === item?._id) {
@@ -227,7 +227,7 @@ const BuyerChat = async(buyerData)=> {
           }
           if(!isInCart && value && value.length) {
             console.log("first")
-            await AsyncStorage.setItem('@savedBuyer', JSON.stringify([...value, item]));
+            await AsyncStorage.setItem('@savedBuyer', JSON.stringify([...jsonValue, item]));
             showMessage({
                 message: "Success",
                 description: `Item added to wishlist successfully!`,
@@ -262,12 +262,15 @@ const BuyerChat = async(buyerData)=> {
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
-                    <Image
+                    {/* <Image
                         source={{
                             uri: "https://images.unsplash.com/photo-1681844931547-54cb3b439453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
                         }}
                         style={styles.image}
-                    />
+                    /> */}
+                    <View style={styles.image}>
+                        <AntDesign name="gift" size={30} color="#555" />
+                    </View>
                     <View>
                         <Text style={{
                             fontSize: 16,
@@ -495,7 +498,9 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         borderRadius: 5,
-        marginRight: 10
+        marginRight: 10,
+        justifyContent: "center",
+        alignItems: "center",
     },
     topWrapper: {
         flexDirection: "row",

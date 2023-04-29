@@ -1,6 +1,6 @@
 import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
-import { Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { Fontisto, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
@@ -146,8 +146,8 @@ const TravelerCard = ({
             // await AsyncStorage.removeItem('@savedTravelers')
           const value = await AsyncStorage.getItem('@savedTravelers');
           let isInCart = false
-          if(value !== null) {
-            let jsonValue = JSON.parse(value)
+          let jsonValue = await JSON.parse(value)
+          if(value !== null && jsonValue) {
             for (var i = 0; i < jsonValue.length; i++) {
               console.log(jsonValue[i]._id, item?._id)
               if (jsonValue[i]?._id === item?._id) {
@@ -157,7 +157,7 @@ const TravelerCard = ({
           }
           if(!isInCart && value && value.length) {
             console.log("first")
-            await AsyncStorage.setItem('@savedTravelers', JSON.stringify([...value, item]));
+            await AsyncStorage.setItem('@savedTravelers', JSON.stringify([...jsonValue, item]));
             showMessage({
                 message: "Success",
                 description: `Item added to wishlist successfully!`,
@@ -192,12 +192,15 @@ const TravelerCard = ({
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
-                    <Image
+                    {/* <Image
                         source={{
                             uri: "https://images.unsplash.com/photo-1681844931547-54cb3b439453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
                         }}
                         style={styles.image}
-                    />
+                    /> */}
+                    <View style={styles.image}>
+                        <Fontisto name="shopping-bag" size={28} color="#555" />
+                    </View>
                     <View>
                         <Text style={{
                             fontSize: 16,
@@ -421,7 +424,9 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         borderRadius: 5,
-        marginRight: 10
+        marginRight: 10,
+        justifyContent: "center",
+        alignItems: "center"
     },
     topWrapper: {
         flexDirection: "row",
