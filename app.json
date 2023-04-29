@@ -8,7 +8,12 @@
     "userInterfaceStyle": "light",
     "plugins": [
       "expo-build-properties",
-      "expo-tracking-transparency"
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ]
     ],
     "splash": {
       "image": "./assets/splash.png",
