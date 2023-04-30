@@ -333,7 +333,7 @@ const BuyerChat = async(buyerData)=> {
                         {locationPickUp[locationPickUpLength - 1]}
                     </Text>
                     <Text style={styles.txtCity}>
-                        {locationPickUpLength === 3 ? <>{`${locationPickUp[0]}, ${locationPickUp[1]}`}</> : locationPickUp[1]}
+                        {locationPickUpLength === 3 ? <>{`${locationPickUp[0]}, ${locationPickUp[1]}`}</> : locationPickUp[0]}
                     </Text>
                     <Text style={{
                         fontFamily: "Poppins_500Medium",

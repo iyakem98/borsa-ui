@@ -1,13 +1,15 @@
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { Fontisto, MaterialCommunityIcons } from '@expo/vector-icons'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 
 const width = Dimensions.get("screen").width
 
-const TravelerCard = ({
+const BuyerCard = ({
     item,
     addToWislistTraveler
 }) => {
+    console.log(item)
+    const [modalOpen, setModalOpen] = useState(true);
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
     const locationDeparture = item?.departure.split(", ")
@@ -24,7 +26,7 @@ const TravelerCard = ({
                         style={styles.image}
                     /> */}
                     <View style={styles.image}>
-                        <Fontisto name="shopping-bag" size={28} color="#555" />
+                        <AntDesign name="gift" size={30} color="#555" />
                     </View>
                     <View>
                         <Text style={{
@@ -70,10 +72,17 @@ const TravelerCard = ({
             <View style={styles.bottomWrapper}>
                 <View>
                     <Text style={styles.txtCountry}>
-                        {locationDepartureLength === 3 ? locationDeparture[2] : locationDeparture[1]}
+                    {locationDepartureLength === 3 ? locationDeparture[2] : locationDeparture[1]}
                     </Text>
                     <Text style={styles.txtCity}>
-                        {locationDepartureLength === 3 ? <>{`${locationDeparture[0]}, ${locationDeparture[1]}`}</> : locationDeparture[0]}
+                    {locationDepartureLength === 3 ? <>{`${locationDeparture[0]}, ${locationDeparture[1]}`}</> : locationDeparture[0]}
+                    </Text>
+                    <Text style={{
+                        fontFamily: "Poppins_500Medium",
+                        fontSize: 12,
+                        color: "#777"
+                    }}>
+                        {item?.startDate ? item?.startDate.slice(0, 10) : ""}
                     </Text>
                 </View>
                 <View style={styles.horizontal}>
@@ -85,13 +94,13 @@ const TravelerCard = ({
                 </View>
                 <View style={{alignItems: "flex-end"}}>
                     <Text style={styles.txtCountry}>
-                        {locationPickUp[locationPickUpLength - 1]}
+                    {locationPickUp[locationPickUpLength - 1]}
                     </Text>
                     <Text style={styles.txtCity}>
-                        {locationPickUpLength === 3 ? <>{`${locationPickUp[0]}, ${locationPickUp[1]}`}</> : locationPickUp[0]}
+                    {locationPickUpLength === 3 ? <>{`${locationPickUp[0]}, ${locationPickUp[1]}`}</> : locationPickUp[0]}
                     </Text>
                     <Text style={styles.date}>
-                        {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
+                        {item?.endDate ? item?.endDate.slice(0, 10) : ""}
                     </Text>
                 </View>
             </View>
@@ -99,7 +108,7 @@ const TravelerCard = ({
     )
 }
 
-export default TravelerCard
+export default BuyerCard
 
 const styles = StyleSheet.create({
     container: {
@@ -121,7 +130,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginRight: 10,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     topWrapper: {
         flexDirection: "row",

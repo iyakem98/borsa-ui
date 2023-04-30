@@ -103,7 +103,7 @@ const ProfileScreen = ({navigation}) => {
                             <Text style = {{
                                 //color: '#fff'
                             }}>
-                               {`borsa user since: 12/12/12`}
+                              {user?.email}
                             </Text>
                         </View>
                         
@@ -268,7 +268,7 @@ const ProfileScreen = ({navigation}) => {
                             Settings
                             </Text>
                     </Pressable> */}
-                    <Pressable onPress={() => navigation.navigate('Contact Us')}
+                    {/* <Pressable onPress={() => navigation.navigate('Contact Us')}
                         style = {styles.press}>
                             <View style = {styles.pressView1}> 
                                 <View style = {{
@@ -288,7 +288,7 @@ const ProfileScreen = ({navigation}) => {
                                 </Text>
                                 </View>
                                 <AntDesign name="caretright" size={22} color="lightgray" />
-                    </Pressable>
+                    </Pressable> */}
                     </View>
 
                     <View style = {styles.myRow}>
@@ -548,6 +548,22 @@ const ProfileScreen = ({navigation}) => {
                     4.5/5
                 </Text>
             </View> */}
+    <View style={{
+        position: "absolute",
+        alignItems: "center",
+        bottom: -10,
+        width: "100%"
+    }}>
+        <Text style={{
+            fontFamily: "Poppins_400Regular",
+            fontSize: 14
+        }}>Need support?</Text>
+        <Text style={{
+            color: "#777",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 12
+        }}>admin@borsa.world</Text>
+    </View>
               
             </ScrollView>
         </View>
@@ -641,7 +657,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         height: 700,
-        position: 'absolute',
+        // position: 'absolute',
        // marginTop: 70,
        // borderTopRightRadius: 15,
        // borderTopLeftRadius: 15,

@@ -5,6 +5,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Pressable } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import TravelerCard from './travelerCard'
+import BuyerCard from './buyerCard'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw';
 import { useIsFocused, useRoute } from "@react-navigation/native";
 
@@ -134,7 +135,7 @@ const Saved = () => {
                 paddingHorizontal: 10,
                 paddingTop: 10
             }}>
-               {/* {isLoading ? (
+               {isLoading ? (
                     <View style={{
                         paddingTop: 20
                     }}>
@@ -168,25 +169,17 @@ const Saved = () => {
                             </View>
                             //     )
                             // })
-                        ) : selectedTab === 2 && buyerData.length ? buyerData.map((item, index)=>{
-                            return (
-                                <TravelerCard key={index} item={item} addToWislistTraveler={addToWislistTraveler} />
-                            )
-                        }) : null}
+                        ) : selectedTab === 2 && buyerData.length ? (
+                            <View>
+                                <FlatList
+                                    data={buyerData}
+                                    renderItem={({item}) => <BuyerCard item={item} addToWislistTraveler={addToWislistTraveler} />}
+                                    keyExtractor={(item, index) => index}
+                                />
+                            </View>
+                        ) : null}
                     </>
-                    )} */}
-                      <View style={{
-                        alignItems: "center",
-                        paddingTop: 60
-                    }}>
-                        <EmptyUnDraw />
-                        <Text style={{
-                            fontFamily: "Poppins_500Medium",
-                            marginTop: 20,
-                            textAlign: "center",
-                            fontSize: 16
-                        }}>Wishlist is empty. Page coming soon!</Text>
-                    </View>
+                    )}
             </ScrollView>
         </SafeAreaView>
     )

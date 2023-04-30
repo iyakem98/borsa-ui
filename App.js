@@ -64,6 +64,7 @@ export default function App() {
       if (granted) {
         // Your app is authorized to track the user or their device
         console.log("GRANTED")
+        await requestTrackingPermissionsAsync();
       } else {
         console.log("NOT GRANTED")
         await requestTrackingPermissionsAsync();
