@@ -20,7 +20,8 @@ import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 import io from 'socket.io-client'
 import { useRoute } from '@react-navigation/native'
 import moment from 'moment/moment'
-import { API_BASE_URL } from '../utils/config'
+import { Octicons } from '@expo/vector-icons';
+import { API_BASE_URL, API_BASE_URL_Socket } from '../utils/config'
 
 const ChatScreen = () => {
    
@@ -55,9 +56,9 @@ const ChatScreen = () => {
     var yesterdaytest = null
     var todaytest = null
     const ENDPOINT = "http://192.168.100.2:5000"
-    // var socket = useRef(null)
+    var socket = useRef(null)
     var formatted_date = null
-    var socket = io(ENDPOINT)
+    // var socket = io(API_BASE_URL_Socket)
     const chatArr = []
     const chatArr2 = []
     const TodaysChats = []
@@ -68,26 +69,95 @@ const ChatScreen = () => {
     
     const [users, setUsers] = useState({})
     const [socketConnected, setsocketConnected] = useState(false)
+    const [NotifFlag, setNotifFlag] = useState(false)
+    // var storedNotifications = []
     const [storedNotifications, setstoredNotifications] = useState([])
     const [notifChat, setnotifChat] = useState()
     const openMenu = () => setVisible(true);
     
     const closeMenu = () => setVisible(false);
-
+      const socketURL = API_URL + '5000'
     const [messageOnce, setmessageOnce] = useState(false)
    
     var formatted_other_date = null
+    console.log('connected socket')
+    console.log(socketConnected)
     // var doubleJeopardy = null
+    // console.log(socketURL)
+    useLayoutEffect(() => {
+      // console.log("before" + socket.current)
+      socket.current = io(API_BASE_URL_Socket)
+      socket.current.emit("setup", user);
+      socket.current.on("connected", () => setsocketConnected(true) )
+      // console.log("socket connected" + socketConnected)
+     console.log('socket connection')
+    //  console.log(socket.current)
+     
+     
+      
+    },[])
+    // useEffect(() => {
+    //   const eventListener = (data) => {
+    //     console.log('data ja')
+    //    console.log(data.content)
+    // };
+    
+    // socket.current.on("message recieved", eventListener);
+    // // return () => socket.current.off("message recieved", eventListener);
+    // // return () =>  socket.current.off('message recieved', eventListener)
+    // return () =>   socket.current.disconnect()
+  
+    // // socket.current.off("message recieved", eventListener);
+    //   // socket.current.on("message recieved", (newMessageReceived) => {
+    //   //   console.log('chat screen ')
+       
+    //   //   // storeNotif(newMessageReceived)
+       
+    //   //   socket.current.off("message recieved");
+  
+           
+       
+    //   // })
+  
+  
+    // },[socket])
     useEffect(() => {
-        if(chatSelected== true){
-          dispatch(fetchChat())
-          setchatSelected(false)
+    
+      socket.current.on("message recieved", (newMessageReceived) => {
+        console.log(newMessageReceived)
+        storeNotif(newMessageReceived)
+      });
+
+    },[])
+   
+    
+    // useEffect(() => {
+    
+    // storeNotif()
+  
+  
+    // }, [])
+    // useEffect(() => {
+    
+    //   if(storedNotifications.length > 0){
+    //     setNotifFlag(true)
+    //   }
+    //   else{
+    //     setNotifFlag(false)
+    //   }
+  
+  
+    // }, [NotifFlag])
+//     useEffect(() => {
+//         if(chatSelected== true){
+//           dispatch(fetchChat())
+//           setchatSelected(false)
           
-        }
-        else{
-         return
-          }  
-      })
+//         }
+//         else{
+//          return
+//           }  
+//       })
 useEffect(() =>{
     dispatch(fetchChat())
 }, [fetchAgain])
@@ -124,8 +194,23 @@ useEffect(() => {
     setYesterday(false)
   }
   },[Yesterday])
-
+  // setstoredNotifications([])
+ const storeNotif = (newMessageReceived) => {
+  // storedNotifications = []
+  // storedNotifications.push(123)
+  // setNotifFlag(true)
+  // console.log("new messages content" + newMessageReceived.content)
+//  setstoredNotifications([])
+ setstoredNotifications(current => [...current, newMessageReceived]);
+// setstoredNotifications(null)
+//  console.log('stored notif broftr' + storedNotifications.length)
  
+// setstoredNotifications([newMessageReceived])
+//  storedNotifications.push(123)
+//  setstoredNotifications([])
+//  console.log('stored notif after' + storedNotifications.length)
+ }
+ console.log("stored notifcations array " + storedNotifications.length)
 
        return(
         
@@ -140,40 +225,43 @@ useEffect(() => {
             { chattts && chattts.length > 0 ? (chattts.map((chat) => {
            
               if(chat !== null || chat !== undefined){
-              // console.log(chat)
+              console.log(chat.lastestMessage)
 
-                if(chat.lastestMessage !== undefined || chat.lastestMessage !== null  ){
-                  
+                // if(chat.lastestMessage !== undefined || chat.lastestMessage !== null  ){
+                if(chat.lastestMessage == undefined || chat.lastestMessage == null  ){
+                  console.log('undefined chat(s)')
+                
+                 
+                }
+                if(chat.latestMessage){
+                  // reserved for displaying a single chat box for no messages rather than multiple
+                  // console.log('chat exists')
                   chatArr2.push(chat)
                   setSelectedChat(chat)
-                  let msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD")
+                  let msgdate = null
+                  msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD")
                   let today = moment()
                   let d = today.diff(msgdate, 'days')
                   if(d==0){
-                    console.log(d)
-                    console.log('pushing today messags')
+                    // console.log(d)
+                    // console.log('pushing today messags')
                     TodaysChats.push(chat)
-                    console.log('finished pushing today messages')
+                    // console.log('finished pushing today messages')
                     
                   }
                   else if(d == 1){
-                    console.log(d)
-                    console.log('pushing yesterday messags')
+                    // console.log(d)
+                    // console.log('pushing yesterday messags')
                     TodaysChats.push(chat)
-                    console.log('finished pushing yesterday messages')
+                    // console.log('finished pushing yesterday messages')
                   }
                   else{
-                    console.log(d)
-                    console.log('pushing other messags')
+                    // console.log(d)
+                    // console.log('pushing other messags')
                     OtherChats.push(chat)
-                    console.log('finished pushing other messages')
+                    // console.log('finished pushing other messages')
                   }
                   // formatted_date = moment(chat.latestMessage.createdAt).format("LT")
-                 
-                }
-                else{
-                  // reserved for displaying a single chat box for no messages rather than multiple
-                  null
                 }
                 
 
@@ -192,10 +280,16 @@ useEffect(() => {
             
                   
             } 
-          {(TodaysChats != null || TodaysChats != undefined )  && TodaysChats.map((chat)=> {
+          {(TodaysChats !== null || TodaysChats !== undefined )  && TodaysChats.map((chat)=> {
              console.log('todays chat ')
-            console.log(chat.latestMessage.content)
-           const  formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+            // console.log(chat.latestMessage.content)
+            var formatted_date = null 
+            if(chat.lastestMessage !== undefined || chat.lastestMessage !== null){
+             
+                formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+              
+            }
+            
             // return <View>
             //   <Text>Today</Text>
             // </View>
@@ -222,10 +316,13 @@ useEffect(() => {
                              
                               
                             {formatted_date}
-                          </Text>  
+                          </Text> 
+                         
                         
                       </View>
-                      {chat.latestMessage && chat.latestMessage.content != "" ?
+                     
+                      
+                      {(chat.latestMessage !== null || chat.latestMessage !== undefined )  && chat.latestMessage.content != "" ?
                       <View style = {{
                         flexDirection: 'row'
                       }}>
@@ -240,16 +337,32 @@ useEffect(() => {
                       </View>
                       
                          : <Text>File Uploaded</Text> }
+                         {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 ? <View style={styles.notif}>
+                            <Text style={styles.notifClr}>{storedNotifications.length}</Text>
+                          </View> : <Text></Text> }  */}
+                         {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0  && storedNotifications.map((notif) => {
+                          if(notif.chat._id == chat._id){
+                            return <View style={styles.notif}>
+                            {/* <Text style={styles.notifClr}>{storedNotifications.length}</Text> */}
+                           <Octicons name="dot-fill" size={24} color="red" />
+                          </View>
+                          }
+                          else{
+                            null
+                          }
+                         })} 
+                         {/* { NotifFlag && <View style={styles.notif}>
+                            <Text style={styles.notifClr}>{storedNotifications.length}</Text>
+                          </View>}  */}
+                         {/* {storedNotifications && <View style={styles.notif}>
+                            <Text style={styles.notifClr}>{storedNotifications.length}</Text>
+                          </View> }  */}
                   </View>
                   </Pressable>
           })}
-          {(YesterdaysChats != null || YesterdaysChats != undefined)  && YesterdaysChats.map((chat)=> {
+          {(YesterdaysChats !== null || YesterdaysChats !== undefined)  && YesterdaysChats.map((chat)=> {
              console.log('yesterday chat ')
-            console.log(chat.latestMessage.content)
-            // const  formatted_date = moment(chat.latestMessage.createdAt).format("LT")
-            // return <View>
-            //   <Text>Yesterday</Text>
-            // </View>
+         
             return <Pressable key={chat._id} onPress={() => 
               {
                 setloading(true)
@@ -276,7 +389,7 @@ useEffect(() => {
                           </Text>  
                         
                       </View>
-                      {chat.latestMessage && chat.latestMessage.content != "" ?
+                      {(chat.latestMessage !== null || chat.latestMessage !== undefined ) && chat.latestMessage.content != "" ?
                       <View style = {{
                         flexDirection: 'row'
                       }}>
@@ -294,10 +407,17 @@ useEffect(() => {
                   </View>
                   </Pressable>
           })}
-          {(OtherChats != null || OtherChats != undefined ) && OtherChats.map((chat)=> {
+          {(OtherChats !== null || OtherChats !== undefined ) && OtherChats.map((chat)=> {
              console.log('other chat ')
-            console.log(chat.latestMessage.content)
-            const  formatted_date = moment(chat.latestMessage.createdAt).format("YYYY/MM/DD")
+          
+            var formatted_date = null 
+            if(chat.lastestMessage !== undefined || chat.lastestMessage !== null){
+              
+                formatted_date = moment(chat.latestMessage.createdAt).format("YYYY/MM/DD")
+             
+              
+            }
+              
             // return <View>
             //   <Text>Other</Text>
             // </View>
@@ -327,7 +447,7 @@ useEffect(() => {
                           </Text>  
                         
                       </View>
-                      {chat.latestMessage && chat.latestMessage.content != "" ?
+                      {(chat.latestMessage !== null || chat.latestMessage !== undefined ) && chat.latestMessage.content != "" ?
                       <View style = {{
                         flexDirection: 'row'
                       }}>
@@ -406,6 +526,18 @@ container: {
   marginVertical: 5,
   height: 70,
   backgroundColor: '#fff'
+},
+notif: {
+  alignItems: 'flex-end',
+  
+  
+  
+},
+notifClr: {
+  color: 'red',
+  // paddingTop: 10
+  
+  
 },
 image: {
   width: 60,

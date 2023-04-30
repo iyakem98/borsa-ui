@@ -86,29 +86,45 @@ useEffect(() => {
     setOther(false)
   }
 })
+
   
 const OtherFunc = (messages)=>{
 
   // console.log(messages)
   for(var i = 0; i < messages.length; i++){
-    if(messages[i].createdAt == messages[i++].createdAt){
-      const formatted_date = moment(messages[i].createdAt).format("dddd, YYYY/MM/DD")
-      return <View style={{"alignItems": "center", "marginBottom" : 10}}>
-        <Text>{formatted_date}</Text>
-      </View>
-    }
-    else{
-      // const formatted_date = moment(messages[i].createdAt).format("dddd,YYYY-MM-DD")
-      const formatted_date2 = moment(messages[i++].createdAt).format("dddd, YYYY/MM/DD")
-      // return <View style={{"alignItems": "center", "marginBottom" : 10}}>
-      //   <Text>{formatted_date2}</Text>
-      //   {/* <Text>{formatted_date}</Text> */}
-      // </View>
-    }
+    
+    var formatted_Date = moment(messages[i].createdAt).format("YYYY/MM/DD")
+    
+    // displayDates(formatted_Date)
+    // displayDates(formatted_Date)
+ return DisplayDates(formatted_Date)
+    // if(messages[i].createdAt  messages[i++].createdAt){
+    //   console.log(messages[i].createdAt)
+    //   // var testdate= messages[i].createdAt
+    //   // const formattedDate = moment(testdate).format("dddd, YYYY/MM/DD")
+    //   // displayDates(formatted_date)
+      
+    // }
+    // else{
+    //   console.log('false')
+    //   // const formatted_date = moment(messages[i].createdAt).format("dddd,YYYY-MM-DD")
+    //   // const formatted_date2 = moment(messages[i++].createdAt).format("dddd, YYYY/MM/DD")
+    //   // return <View style={{"alignItems": "center", "marginBottom" : 10}}>
+    //   //   <Text>{formatted_date2}</Text>
+    //   //   {/* <Text>{formatted_date}</Text> */}
+    //   // </View>
+    // }
    
   }
   // return <Text>Other</Text>
   }
+  const DisplayDates = (formatted_date) => {
+    console.log(formatted_date)
+    return <View style={{"alignItems": "center", "marginBottom" : 10}}>
+    <Text>{formatted_date}</Text>
+  </View>
+  }
+  
   // const publicFolder = "http://192.168.100.2:5000/images/"
   const publicFolder = "http://192.168.100.2:5000/images/"
   const now = moment()
