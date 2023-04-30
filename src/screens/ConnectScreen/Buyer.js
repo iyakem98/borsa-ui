@@ -12,7 +12,8 @@ import { showMessage } from "react-native-flash-message";
 const width = Dimensions.get("screen").width
 
 const Buyer = ({
-    item
+    item,
+    onPress
 }) => {
     const buyer = item
     const dispatch = useDispatch()
@@ -259,6 +260,7 @@ const BuyerChat = async(buyerData)=> {
         <Pressable style={styles.container} onPress={() =>{
             setshowModal(true)
             setModal(true)
+            onPress()
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
