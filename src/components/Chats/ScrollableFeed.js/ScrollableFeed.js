@@ -325,10 +325,10 @@ const OtherFunc = (messages)=>{
        
     
      <View style={{flexDirection:"row"}}>
-       <Text style={{color:"white"}}>{formatted_date}</Text>
+       <Text style={{color:`${m.sender._id === user._id ? "white" : "black"}` }}>{formatted_date}</Text>
        {
          
-      <Ionicons name="checkmark-outline" size={20} color="white" />
+      <Ionicons name="checkmark-outline" size={20} color={m.sender._id === user._id ? "white" : "black"} />
       
       
       
@@ -340,7 +340,7 @@ const OtherFunc = (messages)=>{
       {
           m.sender._id === user._id  && m.receiver != null && m.marked == "true" &&  
        
-      <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
+      <Ionicons name="checkmark-done" size={20} color={m.sender._id === user._id ? "white" : "black" } style={{marginLeft:10}} />
       
       
       
