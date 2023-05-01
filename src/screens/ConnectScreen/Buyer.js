@@ -403,33 +403,27 @@ const BuyerChat = async(buyerData)=> {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-                      <Image source={{ uri: image }} style={{ 
-                        width: 200,
-                        height: 200,
-                        // borderRadius: "100%",
-                        borderRadius: 100,
-                        alignItems: 'flex-end',
-                        justifyContent: 'flex-end',
-                        }} />
                     <View style={{
                         marginTop:10,
                         fontSize:20,
                         fontWeight:700
                     }}>
-                        <Text>{buyer.user.firstName+' '+buyer.user.lastName}</Text>
+                        <Text style = {{
+                            fontSize: 20,
+                        }}>{buyer.user.firstName+' '+buyer.user.lastName}</Text>
                     </View>
 
-                    <View style={{
+                  {/*  <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
                         // flex: 1,
                         flexDirection:"row"
-                    }}>
-                        <Ionicons name="location" size={20} color="black" />
+                    }}> */}
+                       {/* <Ionicons name="location" size={20} color="black" /> */}
                         {/* <Text> &nbsp; &nbsp; {buyer.user.address}</Text> */}
-                        <Text>{buyer.user.address}</Text>
-                    </View>
+                        {/*<Text>{buyer.user.address}</Text> 
+                    </View> */}
 
                     <View style={{
                         marginTop:10,
@@ -438,22 +432,24 @@ const BuyerChat = async(buyerData)=> {
                         // flex: 1,
                         flexDirection:"row"
                     }}>
-                         <Foundation name="shopping-bag" size={20} color="black" />
+                         <Foundation name="shopping-bag" size={30} color="black" />
                          {/* <Text> &nbsp; &nbsp; {buyer.item}</Text> */}
-                         <Text>{buyer.item}</Text>
+                         <Text style = {{
+                            fontSize: 22
+                         }}>{buyer.item}</Text>
                     </View>
 
-                    <View style={{
+                  {/*  <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
                         // flex: 1,
                         flexDirection:"row"
-                    }}>
-                         <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
+                    }}> */}
+                        {/* <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
                          {/* <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text> */}
-                         <Text>{buyer.TotalWeight}</Text>
-                    </View>
+                        {/* <Text>{buyer.TotalWeight}</Text>
+                    </View> */}
 
                     <View style={{
                         marginTop:10,
@@ -462,9 +458,11 @@ const BuyerChat = async(buyerData)=> {
                         // flex: 1,
                         flexDirection:"row"
                     }}>
-                        <MaterialIcons name="pending-actions" size={20} color="black" />
+                        <MaterialIcons name="pending-actions" size={30} color="black" />
                         {/* <Text> &nbsp; &nbsp; {buyer.status}</Text> */}
-                        <Text>{buyer.status}</Text>
+                        <Text style = {{
+                            fontSize: 22,
+                        }}>{buyer.status}</Text>
                     </View>
 
             <Pressable
@@ -588,13 +586,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#593196',
     },
     buttonClose: {
-        backgroundColor: '#593196',
+        //backgroundColor: '#593196',
     },
     textStyle: {
-        color: 'white',
+        color: 'red',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontSize:19
+        fontSize:30
     },
       modalText: {
         marginBottom: 16,

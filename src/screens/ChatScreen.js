@@ -261,10 +261,11 @@ useEffect(() => {
         <>
             
             <ScrollView style = {{
-              backgroundColor: '#fff'
+              backgroundColor: '#fff',
+              paddingTop: 30,
             }}>
              
-             <ChatListHeader chatArr={chatArr2}/>
+            {/* <ChatListHeader chatArr={chatArr2}/> */}
           
             { chattts && chattts.length > 0 ? (chattts.map((chat) => {
            

@@ -1,18 +1,56 @@
 import { Dimensions, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../../components/Shared/Header'
 import { useRoute } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
+import axios from 'axios';
 
 const width = Dimensions.get("screen").width
 
 const AddPost = ({navigation}) => {
     
-   
+    const { user } = useSelector((state) => state.auth)
+    const { travelers } = useSelector((state) => state.auth)
 
     const route = useRoute()
     const params = route?.params?.cardToAdd
 
     const [selected, setSelected] = useState(params ? 2 : 1)
+
+    const [myTCards, setMyTCards] = useState([])
+    const [myBCards, setMyBCards] = useState([])
+
+    const getMyCards = async() => {
+        console.log("just fetching my cards", user)
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+              }}
+      
+          await axios.get(`http://143.198.168.244/api/travels/my`, config)
+              .then((data) => {
+               console.log("found these t cards", data.data.data)
+               setMyTCards(data.data.data)
+               })
+              .catch((err) => {
+                console.log("error", err)
+              });
+
+              await axios.get(`http://143.198.168.244/api/buyers/my`, config)
+              .then((data) => {
+               console.log("found these b cards", data.data.data)
+               setMyBCards(data.data.data)
+               })
+              .catch((err) => {
+                console.log("error", err)
+              });
+    }
+
+    useEffect(() => {
+            getMyCards()
+            console.log("my cards")
+        },[])
+
 
 
     return (
@@ -71,9 +109,23 @@ const AddPost = ({navigation}) => {
                     bottom: 0,
                     left: 15
                 }} 
-                onPress={()=>navigation.navigate("FromTo", {
-                    cardType: selected,
-                  })}
+                onPress={()=> {
+                    if (myTCards.length > 0 && selected == 1){
+                        alert('You have already posted a Traveler Card. You cannot post another one.')
+                    }
+
+                    else if (myBCards.length > 0 && selected == 2){
+                        alert('You have already posted a Buyer Card. You cannot post another one.')
+                    }
+
+                    else {
+                        navigation.navigate("FromTo", {
+                            cardType: selected,
+                          })
+                    }
+                }
+                    
+                    }
                 >
                     <Text style={{
                         color: "#fff",

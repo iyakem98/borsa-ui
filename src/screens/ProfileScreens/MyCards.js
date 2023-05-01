@@ -94,7 +94,7 @@ const MyCards = ({navigation}) => {
         </View> */}
 
 
-        <Text style={{marginBottom:5, fontSize:18, letterSpacing:1.5}}>Traveler Cards</Text>
+        <Text style={{marginBottom:10, fontSize:20}}>Traveler Cards</Text>
         
             
         <ScrollView
@@ -115,7 +115,7 @@ const MyCards = ({navigation}) => {
                     }}>
 
                 <Text style={{textAlign:"right"}}>
-                <MaterialIcons name="delete" size={24} color="white" />
+                {/*<MaterialIcons name="delete" size={24} color="white" /> */}
                 
                 </Text>
 
@@ -200,7 +200,7 @@ const MyCards = ({navigation}) => {
 
 </ScrollView>
 
-<Text style={{marginBottom:5, fontSize:18, letterSpacing:1.5, marginTop:10}}>Buyer Cards</Text>
+<Text style={{marginBottom:10, fontSize:20, marginTop:15}}>Buyer Cards</Text>
              
               <ScrollView
               horizontal 
@@ -220,7 +220,7 @@ const MyCards = ({navigation}) => {
                     }}>
 
                 <Text style={{textAlign:"right"}}>
-                <MaterialIcons name="delete" size={24} color="white" />
+                {/*<MaterialIcons name="delete" size={24} color="white" />*/}
                 
                 </Text>
 

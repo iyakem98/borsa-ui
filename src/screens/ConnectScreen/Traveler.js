@@ -332,32 +332,26 @@ const TravelerCard = ({
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-                      <Image source={{ uri: image }} style={{ 
-                        width: 200,
-                        height: 200,
-                        // borderRadius: "100%",
-                        borderRadius: 100,
-                        alignItems: 'flex-end',
-                        justifyContent: 'flex-end',
-                        }} />
                     <View style={{
                         marginTop:10,
                         fontSize:20,
                         fontWeight:700
                     }}>
-                        <Text>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
+                        <Text style = {{
+                            fontSize: 20,
+                        }}>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
                     </View>
 
-                    <View style={{
+                  {/*  <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
                         flexDirection:"row"
-                    }}>
-                        <Ionicons name="location" size={20} color="black" />
+                    }}> */}
+                      {/*  <Ionicons name="location" size={20} color="black" />
                        {/* <Text> &nbsp; &nbsp; {traveler.user.address}</Text> */}
-                       <Text>{traveler.user.address}</Text>
-                    </View>
+                      {/* <Text>{traveler.user.address}</Text> */}
+                   {/* </View> */}
 
                     <View style={{
                         marginTop:10,
@@ -365,20 +359,22 @@ const TravelerCard = ({
                         // display:"flex",
                         flexDirection:"row"
                     }}>
-                         <Foundation name="shopping-bag" size={20} color="black" />
+                         {/*<Foundation name="shopping-bag" size={20} color="black" />
                          {/* <Text> &nbsp; &nbsp; Unknown</Text> */}
-                         <Text>Unknown</Text>
+                        {/* <Text>Unknown</Text> */}
                     </View>
 
                     <View style={{
-                        marginTop:10,
+                        marginTop:1,
                         fontSize:18,
                         // display:"flex",
                         flexDirection:"row"
                     }}>
-                         <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
+                         <MaterialCommunityIcons name="weight-kilogram" size={30} color="black" />
                          {/* <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text> */}
-                         <Text>{traveler.luggageSpace}</Text>
+                         <Text style = {{
+                            fontSize: 22,
+                         }}>{traveler.luggageSpace}</Text>
                     </View>
 
                     <View style={{
@@ -387,9 +383,11 @@ const TravelerCard = ({
                         // display:"flex",
                         flexDirection:"row"
                     }}>
-                        <MaterialIcons name="pending-actions" size={20} color="black" />
+                        <MaterialIcons name="pending-actions" size={30} color="black" />
                         {/* <Text> &nbsp; &nbsp; {traveler.status}</Text> */}
-                        <Text>{traveler.status}</Text>
+                        <Text style = {{
+                            fontSize: 20,
+                        }}>{traveler.status}</Text>
                     </View>
 
             <Pressable
@@ -500,20 +498,20 @@ const styles = StyleSheet.create({
       },
       button: {
         borderRadius: 20,
-        padding: 10,
+        padding: 5,
         elevation: 2,
       },
       buttonOpen: {
         backgroundColor: '#593196',
       },
       buttonClose: {
-        backgroundColor: 'green',
+        //backgroundColor: 'red',
       },
       textStyle: {
-        color: 'white',
+        color: 'red',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontSize:19
+        fontSize:30
       },
       modalText: {
         marginBottom: 16,
