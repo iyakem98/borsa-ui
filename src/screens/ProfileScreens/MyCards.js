@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { ActivityIndicator, Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Alert, Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { getConsumers, getTravelers } from '../../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
@@ -49,8 +49,72 @@ const ConnectScreen = () => {
         setIsBuyer(true)
         // console.log(isBuyer)
     }
+
+    const deleteTraveler = async (id) => {
+        console.log("card to be deleted is:", id)
+        let config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+              }}
+
+              Alert.alert('Deleting your card', 'Are you sure to delete?', [
+                
+                {text: 'OK', onPress: async () => {
+
+        await axios.delete(`http://143.198.168.244/api/travels/${id}`, config)
+        .then((res) => {
+          
+           console.log("delllll:", res)
+            getCards()
+            setSelectedTab(2)
+        
+         })
+        .catch((err) => {
+         console.log("error:", err)
+        });
+                }},
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+              ]);
+
+    }
+
+    const deleteBuyer = async (id) => {
+        console.log("card to be deleted is:", id)
+        let config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+              }}
+
+              Alert.alert('Deleting your card', 'Are you sure to delete?', [
+                
+                {text: 'OK', onPress: async () => {
+
+        await axios.delete(`http://143.198.168.244/api/buyers/${id}`, config)
+        .then((res) => {
+          
+           console.log("delllll:", res)
+            getCards()
+            setSelectedTab(1)
+        
+         })
+        .catch((err) => {
+         console.log("error:", err)
+        });
+                }},
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+              ]);
+
+    }
     useEffect(() => {
-      navigation.addListener('focus', getUsers)
+      navigation.addListener('focus', getCards)
       // UpdateUserRoute()
      //  console.log(route.name)
        // setImage(null)
@@ -78,14 +142,14 @@ const ConnectScreen = () => {
 
     const [loading, setloading] = useState(true)
 
-    const getUsers = async () => {
+    const getCards = async () => {
 
       const config = {
       headers: {
           Authorization: `Bearer ${user.token}`
         }}
 
-    await axios.get(`http://143.198.168.244/api/travels/my`, config)
+        await axios.get(`http://143.198.168.244/api/travels/my`, config)
         .then((data) => {
           
           // console.log("tttttttttttttttt:", t)
@@ -183,9 +247,9 @@ const ConnectScreen = () => {
       }}>
         <ActivityIndicator size="large" color="#777" />
       </View>
-    ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
+    ) : (selectedTab === 1 && t && t.length === 0) ? (
       <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
-        {isBuyer ? (
+        {!isBuyer ? (
           <View style={{
             alignItems: "center",
             paddingTop: 60
@@ -197,6 +261,27 @@ const ConnectScreen = () => {
               textAlign: "center",
               fontSize: 16
             }}>No traveler card found.</Text>
+              <Pressable style={{
+                        backgroundColor: "green",
+                        borderRadius: 1,
+                        width: 100,
+                        height:30,
+                        marginTop:10,
+                        borderRadius:3
+                    }} 
+                    onPress={()=>{
+                        navigation.navigate("New Post")
+                    }}
+                    >
+                        <Text style={{
+                            color: "#fff",
+                            fontFamily: "Poppins_400Regular",
+                            fontSize: 14,
+                            textAlign: "center"
+                        }}>
+                            <Ionicons name="md-add" size={24} color="#fff" />
+                        </Text>
+                    </Pressable>
           </View>
         ) : (
             <View style = {{
@@ -261,6 +346,12 @@ const ConnectScreen = () => {
                            
     
                         </View>
+                        <View style={{
+                            marginTop:"15%",
+                            marginLeft:"90%"
+                        }}>
+                            <AntDesign name="delete" size={24} color="#fff" onPress={()=>deleteTraveler(travel._id)} />
+                            </View>
                         </View>
                     ))
                 }
@@ -310,7 +401,7 @@ const ConnectScreen = () => {
               </View>
         )}
       </View>
-    ) : (selectedTab === 2 && b && b.length === 0) || (selectedTab === 1 && t && t.length === 0) ? (
+    ) : (selectedTab === 2 && b && b.length === 0)  ? (
         <View style={{
             alignItems: "center",
             paddingTop: 60
@@ -322,6 +413,31 @@ const ConnectScreen = () => {
               textAlign: "center",
               fontSize: 16
             }}>No buyer card found.</Text>
+             
+
+                        <Pressable style={{
+                    backgroundColor: "#593196",
+                    borderRadius: 1,
+                    width: 100,
+                    height:30,
+                    marginTop:10,
+                    borderRadius:2
+                }} 
+                onPress={()=>{
+                    navigation.navigate("New Post", {
+                        cardToAdd: "buyer"
+                    })
+                }}
+                >
+                    <Text style={{
+                        color: "#",
+                        fontFamily: "Poppins_400Regular",
+                        fontSize: 14,
+                        textAlign: "center"
+                    }}>
+                        <Ionicons name="md-add" size={24} color="#fff" />
+                    </Text>
+                </Pressable>
           </View>
     ) : (
         <View style = {{
@@ -333,7 +449,7 @@ const ConnectScreen = () => {
               style={{marginTop:"25%"}} 
               >
 
-{
+        {
                b.length>0 && b.map((buyer, index) => (
                 <View key={index} style={{
                     width:300,
@@ -392,6 +508,14 @@ const ConnectScreen = () => {
                        
 
                     </View>
+
+                    <View style={{
+                            marginTop:"15%",
+                            marginLeft:"90%"
+                        }}>
+                            <AntDesign name="delete" size={24} color="#fff" onPress={()=>deleteBuyer(buyer._id)} />
+                            </View>
+                   
                     </View>
                 ))
             }
@@ -405,12 +529,12 @@ const ConnectScreen = () => {
                     justifyContent:"center"
                    }}>
                     
-                        <Text style={{
+                    <Text style={{
                             textAlign:"center",
                             fontSize:15,
                             color:"white"
                         }}>
-                            Add new traveler card.
+                            Add new buyer card.
                         </Text>
 
                         <Pressable style={{
@@ -421,7 +545,9 @@ const ConnectScreen = () => {
                     marginTop:10
                 }} 
                 onPress={()=>{
-                    navigation.navigate("New Post")
+                    navigation.navigate("New Post", {
+                        cardToAdd: "buyer"
+                    })
                 }}
                 >
                     <Text style={{
@@ -430,7 +556,7 @@ const ConnectScreen = () => {
                         fontSize: 14,
                         textAlign: "center"
                     }}>
-                        <Ionicons name="md-add" size={24} color="green" />
+                        <Ionicons name="md-add" size={24} color="#593196" />
                     </Text>
                 </Pressable>
 
@@ -440,6 +566,7 @@ const ConnectScreen = () => {
 </ScrollView>
           </View>
     )}
+
   </SafeAreaView>
   )
 }
