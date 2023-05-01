@@ -8,7 +8,12 @@
     "userInterfaceStyle": "light",
     "plugins": [
       "expo-build-properties",
-      "expo-tracking-transparency"
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ]
     ],
     "splash": {
       "image": "./assets/splash.png",
@@ -22,22 +27,24 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.daggy22.borsaapp"
+      "supportsTablet": false,
+      "bundleIdentifier": "com.borsa",
+      "buildNumber": "4"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.daggy22.borsaapp"
+      "package": "com.Borsa",
+       "versionCode": 8
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "af73a5ad-a4ce-4dc8-9247-8957301fe144"
+        "projectId": "b5d28df2-3c1c-48e9-873d-3aa415f0b35b"
       }
     }
   }

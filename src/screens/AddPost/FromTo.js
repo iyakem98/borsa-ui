@@ -309,13 +309,17 @@ const FromTo = ({navigation}) => {
                         }
                     } else if(params && params.cardType === 2) {
                         console.log("first")
-                        navigation.navigate("PostAdditional", {
-                            cardType: params && params?.cardType,
-                            departure: pickUpLocation,
-                            destination: retriveItemLocation,
-                            startDate: from,
-                            endDate: to,
-                        })
+                        if(!pickUpLocation || !retriveItemLocation || !to || !from) {
+                            alert("Please fill all the fields.")
+                        } else {
+                            navigation.navigate("PostAdditional", {
+                                cardType: params && params?.cardType,
+                                departure: pickUpLocation,
+                                destination: retriveItemLocation,
+                                startDate: from,
+                                endDate: to,
+                            })
+                        }
                     }
                 }}>
                     <Text style={{

@@ -84,7 +84,9 @@ function UserRecently({userData}) {
         </Pressable> */}
         {/* {singleChat()} */}
            {/* {displaySelectedUserDetails()} */}
-        <Text>{firstName}</Text>
+           <Text style = {{
+          fontSize: 18
+        }}>{firstName}</Text>
         {/* <Text>{lastSeen}</Text> */}
        {/* { status === "online" ?  <Text>Online</Text> : null}
        { status === "away" ?  <Text>last seen at {lastSeen} </Text>  : null} */}
