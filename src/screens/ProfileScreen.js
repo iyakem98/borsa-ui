@@ -551,7 +551,7 @@ const ProfileScreen = ({navigation}) => {
     <View style={{
         position: "absolute",
         alignItems: "center",
-        bottom: -20,
+        bottom: -36,
         width: "100%"
     }}>
         <Text style={{
