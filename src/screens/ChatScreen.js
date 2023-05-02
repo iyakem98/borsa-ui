@@ -252,7 +252,7 @@ useEffect(() => {
                   else if(d == 1){
                     // console.log(d)
                     // console.log('pushing yesterday messags')
-                    TodaysChats.push(chat)
+                    YesterdaysChats.push(chat)
                     // console.log('finished pushing yesterday messages')
                   }
                   else{

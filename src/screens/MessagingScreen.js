@@ -294,7 +294,7 @@ if(loading){
   behavior='padding'
   keyboardVerticalOffset={
   Platform.select({
-     ios: () => 0,
+     ios: () => -400,
      android: () => -400
   })()
  
