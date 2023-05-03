@@ -11,7 +11,7 @@ import { ChatState } from '../context/ChatProvider';
 import { fetchChat } from '../features/chat/chatSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native'
-import {Camera} from "expo-camera"
+// import {Camera} from "expo-camera"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as MediaLibrary from "expo-media-library"
 import * as Device from 'expo-device';

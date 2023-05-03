@@ -1,7 +1,7 @@
 import {View, Text, Pressable, StyleSheet} from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ChatsScreen from '../screens/ChatScreen';
-import ConnectScreen from "../screens/ConnectScreen"
+import ConnectScreen from "../screens/ConnectScreen/ConnectScreen"
 import TravelerScreen from '../screens/TravelerScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import NotImplementedScreen from '../screens/NotImplementedScreen';
@@ -70,7 +70,8 @@ const MainTabNavigator = () => {
         <Tab.Screen name="Connect" component={ConnectScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <SimpleLineIcons name="people" size={size} color={color} />
-            )
+            ),
+            headerShown: false
         }} />
 
         {/* <Tab.Screen name="Login" component={LoginScreen} options={{

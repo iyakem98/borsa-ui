@@ -8,6 +8,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { useRoute } from '@react-navigation/native'
+import axios from 'axios'
 
 const FromTo = ({navigation}) => {
     const route = useRoute()
@@ -18,7 +19,6 @@ const FromTo = ({navigation}) => {
     const [countryToCode, setCountryToCode] = useState('ET')
     const [countryTo, setCountryTo] = useState(null)
     const [withCallingCode, setWithCallingCode] = useState(false)
-    const [visible, setVisible] = useState(false)
     const [date, setDate] = useState(new Date())
     const [showDatePickerFrom, setShowDatePickerFrom] = useState(false)
     const [showDatePickerTo, setShowDatePickerTo] = useState(false)
@@ -29,31 +29,22 @@ const FromTo = ({navigation}) => {
     const [travelerDate, setTravelerDate] = useState("")
     const [travelerFrom, setTravelerFrom] = useState("")
     const [travelerTo, setTravelerTo] = useState("")
+    const [destinationTraveler, setDestinationTraveler] = useState("")
+    const [departureTraveler, setDepartureTraveler] = useState("")
+    const [flightData, setFlightData] = useState("")
+    const [pickUpLocation, setPickUpLocation] = useState("")
+    const [retriveItemLocation, setRetriveItemLocation] = useState("")
 
-    const handlePlaceFrom = (data) => {
-        
-         let Country = ""
-         let City = ""
+    const handlePlaceFrom = async(item) => {
+        const data = item?.description.split(", ")
+        let Country = data[2] ? data[2] : data[1]
+        let State = data[2] ? data[1] : null
+        let City = data[0]
 
-      if(place.address_components){
-         for(let i=0; i<place.address_components.length; i++){
-          let types = place.address_components[i].types
-          if(types.indexOf("country") != -1 && Country==""){
-            Country = place.address_components[i].long_name
-          }
-
-           if(types.indexOf("locality") != -1 && City==""){
-             City = place.address_components[i].long_name
-          }
+        console.log("=======++", Country, State, City)
+        if(params && params?.cardType === 1) {
 
         }
-      }
-       
-            console.log("Country:", Country)
-            console.log("State:", State)
-
-            setCountryFrom(`${City}, ${Country}`)
-
     }
 
      const handlePlaceTo = (data) => {
@@ -76,7 +67,7 @@ const FromTo = ({navigation}) => {
       }
        
             console.log("Country:", Country)
-            console.log("State:", State)
+            // console.log("State:", State)
 
             setCountryTo(`${City}, ${Country}`)
 
@@ -92,7 +83,8 @@ const FromTo = ({navigation}) => {
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={{
                     marginTop: 20,
-                    fontFamily: "Poppins_400Regular"
+                    fontFamily: "Poppins_400Regular",
+                    marginBottom: 5
                 }}>
                     {params && params?.cardType === 2 ? "Pick Up" : "Departure"}
                 </Text>
@@ -122,11 +114,14 @@ const FromTo = ({navigation}) => {
                     <GooglePlacesAutocomplete
                         placeholder='Take off location'
                         onPress={(data) => {
-                           handlePlaceFrom(data)
-                            console.log(data);
+                            if(params && params?.cardType === 1) {
+                                setDepartureTraveler(data?.description)
+                            } else {
+                                setPickUpLocation(data?.description)
+                            }
                         }}
                         query={{
-                            key: 'AIzaSyBEQjAi9JOrXgaekQKY6oeSYb8C_5rAudU',
+                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
                             language: 'en',
                             types: '(cities)'
                         }}
@@ -134,7 +129,8 @@ const FromTo = ({navigation}) => {
                 </View>
                 <Text style={{
                     marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
+                    fontFamily: "Poppins_400Regular",
+                    marginBottom: 5
                 }}>
                     {params && params?.cardType === 2 ? "Destination" : "Destination"}
                 </Text>
@@ -165,11 +161,14 @@ const FromTo = ({navigation}) => {
                     <GooglePlacesAutocomplete
                         placeholder='Destination location'
                         onPress={(data) => {
-                            handlePlaceFrom(data)
-                            console.log(data);
+                            if(params && params?.cardType === 1) {
+                                setDestinationTraveler(data?.description)
+                            } else {
+                                setRetriveItemLocation(data?.description)
+                            }
                         }}
                         query={{
-                            key: 'AIzaSyBEQjAi9JOrXgaekQKY6oeSYb8C_5rAudU',
+                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
                             language: 'en',
                             types: '(cities)'
                         }}
@@ -179,7 +178,8 @@ const FromTo = ({navigation}) => {
                     <>
                         <Text style={{
                             marginTop: 10,
-                            fontFamily: "Poppins_400Regular"
+                            fontFamily: "Poppins_400Regular",
+                            marginBottom: 5
                         }}>
                             Date from
                         </Text>
@@ -201,7 +201,8 @@ const FromTo = ({navigation}) => {
                         </Pressable>
                         <Text style={{
                             marginTop: 10,
-                            fontFamily: "Poppins_400Regular"
+                            fontFamily: "Poppins_400Regular",
+                            marginBottom: 5
                         }}>
                             Date to
                         </Text>
@@ -221,12 +222,37 @@ const FromTo = ({navigation}) => {
                             }}>{to.toLocaleString()}</Text>
                             <AntDesign name="calendar" size={24} color="#777" />
                         </Pressable>
+                        {showDatePickerFrom ? (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={date}
+                                mode={mode}
+                                // is24Hour={true}
+                                onChange={(date, selectedDate)=>{
+                                    setFrom(moment(selectedDate).format('L'))
+                                    setShowDatePickerFrom(false)
+                                }}
+                            />
+                        ) : null}
+                        {showDatePickerTo ? (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={date}
+                                mode={mode}
+                                // is24Hour={true}
+                                onChange={(date, selectedDate)=>{
+                                    setTo(moment(selectedDate).format('L'))
+                                    setShowDatePickerTo(false)
+                                }}
+                            />
+                        ) : null}
                     </>
                 ) : (
                     <>
                         <Text style={{
                             marginTop: 10,
-                            fontFamily: "Poppins_400Regular"
+                            fontFamily: "Poppins_400Regular",
+                            marginBottom: 5
                         }}>
                         Flight Date
                         </Text>
@@ -243,9 +269,21 @@ const FromTo = ({navigation}) => {
                         }}>
                             <Text style={{
                                 fontFamily: "Poppins_500Medium"
-                            }}>{travelerDate.toLocaleString()}</Text>
+                            }}>{flightData.toLocaleString()}</Text>
                             <AntDesign name="calendar" size={24} color="#777" />
                         </Pressable>
+                        {showDatePickerTravelerFrom ? (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={date}
+                                mode={mode}
+                                // is24Hour={true}
+                                onChange={(date, selectedDate)=>{
+                                    setFlightData(moment(selectedDate).format('L'))
+                                    setShowTravelerDatePickerFrom(false)
+                                }}
+                            />
+                        ) : null}
                     </>
                 )}
                 <Pressable style={{
@@ -258,15 +296,30 @@ const FromTo = ({navigation}) => {
                     bottom: 0,
                     left: 15
                 }} onPress={()=>{
-                    if(!travelerFrom || !travelerTo || !travelerDate){
-                        alert("Please fill all the fields.")
-                    } else {
-                        navigation.navigate("PostAdditional", {
-                            cardType: params && params?.cardType,
-                            travelerCountryFrom: travelerFrom,
-                            travelerCountryTo: travelerTo,
-                            travelerDate: travelerDate,
-                        })
+                    if(params && params.cardType === 1) {
+                        if(!departureTraveler || !destinationTraveler || !flightData){
+                            alert("Please fill all the fields.")
+                        } else {
+                            navigation.navigate("PostAdditional", {
+                                cardType: params && params?.cardType,
+                                departure: departureTraveler,
+                                destination: destinationTraveler,
+                                departureDate: flightData,
+                            })
+                        }
+                    } else if(params && params.cardType === 2) {
+                        console.log("first")
+                        if(!pickUpLocation || !retriveItemLocation || !to || !from) {
+                            alert("Please fill all the fields.")
+                        } else {
+                            navigation.navigate("PostAdditional", {
+                                cardType: params && params?.cardType,
+                                departure: pickUpLocation,
+                                destination: retriveItemLocation,
+                                startDate: from,
+                                endDate: to,
+                            })
+                        }
                     }
                 }}>
                     <Text style={{
@@ -277,42 +330,6 @@ const FromTo = ({navigation}) => {
                     }}>{"Next"}</Text>
                 </Pressable>
             </ScrollView>
-            {showDatePickerTravelerFrom ? (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={mode}
-                    // is24Hour={true}
-                    onChange={(date, selectedDate)=>{
-                        setTravelerDate(moment(selectedDate).format('L'))
-                        setShowTravelerDatePickerFrom(false)
-                    }}
-                />
-            ) : null}
-            {showDatePickerFrom ? (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={mode}
-                    // is24Hour={true}
-                    onChange={(date, selectedDate)=>{
-                        setFrom(moment(selectedDate).format('L'))
-                        setShowDatePickerFrom(false)
-                    }}
-                />
-            ) : null}
-            {showDatePickerTo && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={mode}
-                    // is24Hour={true}
-                    onChange={(date, selectedDate)=>{
-                        setTo(moment(selectedDate).format('L'))
-                        setShowDatePickerTo(false)
-                    }}
-                />
-            )}
         </SafeAreaView>
     )
 }

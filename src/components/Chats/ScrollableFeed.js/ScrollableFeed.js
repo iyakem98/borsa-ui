@@ -189,6 +189,7 @@ const OtherFunc = (messages)=>{
     </View>
     {messages && messages.map((m, i) => {
        var test_date = moment(m.createdAt).format("YYYY-MM-DD")
+       const formatted_date = moment(m.createdAt).format("LT")
       // console.log("msg content" + m.content)
       // console.log("msg content" + test_date)
       if(test_date == date){
@@ -230,7 +231,8 @@ const OtherFunc = (messages)=>{
     
      <View style={{flexDirection:"row"}}>
        {/* <Text style={{color:"white"}}>{formatted_date}</Text> */}
-       <Text style={{color:"white"}}>{test_date}</Text>
+       {/* <Text style={{color:"white"}}>{test_date}</Text> */}
+       <Text style={{color:"white"}}>{formatted_date}</Text>
        {
          
       <Ionicons name="checkmark-outline" size={20} color="white" />

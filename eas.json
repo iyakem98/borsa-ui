@@ -24,6 +24,12 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "tomastsega@yahoo.com",
+        "ascAppId": "6446364413",
+        "appleTeamId": "VG4LW5R68S"
+      }
+    }
   }
 }

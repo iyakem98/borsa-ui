@@ -420,7 +420,7 @@ const TravelerCard = ({traveler}) => {
             </Pressable>
           </View>
         </View>
-      </Modal>
+        </Modal>
 
     </View>
     </Pressable>

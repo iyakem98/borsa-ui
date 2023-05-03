@@ -1,7 +1,7 @@
 import { AntDesign } from '@expo/vector-icons'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Button, Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import {Camera} from "expo-camera"
+// import {Camera} from "expo-camera"
 import * as MediaLibrary from "expo-media-library"
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
@@ -38,14 +38,14 @@ function Test2() {
       };
       const formData = new FormData()
      
-      let newPhoto = await cameraRef.current.takePictureAsync(options);
-      let filename = newPhoto.uri.split('/').pop();
+      // let newPhoto = await cameraRef.current.takePictureAsync(options);
+      // let filename = newPhoto.uri.split('/').pop();
       console.log(filename)
       // console.log(newPhoto)
       // // console.log(data:image/jpg + base64newPhoto.base64)
       formData.append('image', {
         name: filename,
-        uri: newPhoto.uri ,
+        // uri: newPhoto.uri ,
         type: 'image/jpg',
       });
      
@@ -85,10 +85,10 @@ function Test2() {
 
     }
     const testCamera = async () =>{
-        const mediaPermissions = await MediaLibrary.requestPermissionsAsync()
-        const cameraStatus = await Camera.requestCameraPermissionsAsync()
-        sethasPermissions(cameraStatus.status === 'granted')
-        setMediaLibPermissions(mediaPermissions.status === 'granted')
+        // const mediaPermissions = await MediaLibrary.requestPermissionsAsync()
+        // const cameraStatus = await Camera.requestCameraPermissionsAsync()
+        // sethasPermissions(cameraStatus.status === 'granted')
+        // setMediaLibPermissions(mediaPermissions.status === 'granted')
        }
        let takePic = async () => {
     let options = {
@@ -97,9 +97,9 @@ function Test2() {
       exif: false
     };
 
-    let newPhoto = await cameraRef.current.takePictureAsync(options);
-    console.log(newPhoto.uri)
-    setImage(newPhoto);
+    // let newPhoto = await cameraRef.current.takePictureAsync(options);
+    // console.log(newPhoto.uri)
+    // setImage(newPhoto);
   };
   const getImgs = async() => {
     // console.log("try")
@@ -150,7 +150,7 @@ function Test2() {
         {/* <AntDesign name="camera" size={24} color="white" /> */}
         </Pressable>
          {/* <Pressable > */}
-          {cameraOnOff && <Camera
+          {/* {cameraOnOff && <Camera
             style={styles.camera}
             type={type}
             flashMode={flash}
@@ -159,7 +159,7 @@ function Test2() {
             >
                  {/* <Pressable  style={styles.text2} onPress={takePic}>
                  <Ionicons name="md-camera-reverse-outline" size={24} color="black" />
-                 </Pressable> */}
+                 </Pressable> 
                  <Pressable  style={styles.text2} 
                  onPress={()=> {
                 saveImg()
@@ -170,7 +170,7 @@ function Test2() {
                 <Text>Take a picture </Text>
              </Pressable>
             
-            </Camera>}
+            </Camera>} */}
             <View>
             {getPics && getPics.map(img => {
               
