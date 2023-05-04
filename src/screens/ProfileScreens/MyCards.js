@@ -293,7 +293,7 @@ const ConnectScreen = () => {
     }}>
       <ScrollView
         //horizontal
-        style={{marginTop:"5%"}} 
+        style={{marginTop:"3%"}} 
         >
 
           <View style = {{
@@ -347,8 +347,41 @@ const ConnectScreen = () => {
                 </Text>
             </Pressable>
 
-
           </View>
+
+          {t.length < 1 && 
+
+            <View style = {{
+              paddingTop: 20,
+              alignItems: 'center',
+            }}>
+              <Text style = {{
+                fontSize: 18,
+                marginBottom: 20,
+              }}>
+                You have not posted any traveler card yet.
+              </Text>
+              <Pressable 
+                onPress={()=>{
+                  navigation.navigate("New Post", {
+                      cardToAdd: "traveler"
+                  })
+              }}
+                style = {{
+                  backgroundColor: '#13b955',
+                  padding: 8,
+                  borderRadius: 10
+                }}>
+                <Text style = {{
+                  fontSize: 18,
+                  color: 'white',
+                }}>
+                  Add a new card
+                </Text>
+              </Pressable>
+            </View>
+            }
+
             {
          t.length>0 && t.map((travel, index) => (
              <View key={index} style={{
@@ -561,6 +594,41 @@ const ConnectScreen = () => {
 
 
           </View>
+
+          {b.length < 1 && 
+
+              <View style = {{
+                paddingTop: 20,
+                alignItems: 'center',
+              }}>
+                <Text style = {{
+                  fontSize: 18,
+                  marginBottom: 20,
+                }}>
+                  You have not posted any buyer card yet.
+                </Text>
+                <Pressable 
+                  onPress={()=>{
+                    navigation.navigate("New Post", {
+                        cardToAdd: "traveler"
+                    })
+                }}
+                  style = {{
+                    backgroundColor: '#13b955',
+                    backgroundColor: '#593196',
+                    padding: 8,
+                    borderRadius: 10
+                  }}>
+                  <Text style = {{
+                    fontSize: 18,
+                    color: 'white',
+                  }}>
+                    Add a new card
+                  </Text>
+                </Pressable>
+              </View>
+              }
+
 
           
 
