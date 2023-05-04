@@ -407,15 +407,15 @@ const ConnectScreen = () => {
           
           </Text>
 
-                  <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
+                  <Text style={{textAlign:"left", marginTop:2, fontSize:17, color:"black"}}>
                   {"  "}
-                  <AntDesign name="calendar" size={24} color="#696969" />
+                  <AntDesign name="calendar" size={22} color="#696969" />
                   {"  "+moment(travel.departureDate).format("DD-MM-YY")} 
                   
                   </Text> 
 
 
-                  <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
+                  <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
                   {"  "}
                   <MaterialIcons name="luggage" size={26} color="black" />
                   {"  "+travel.luggageSpace} kg 
@@ -425,12 +425,13 @@ const ConnectScreen = () => {
                   
                   <View style = {{
                     backgroundColor: '#13b955',
+                    backgroundColor: '#f0f0f0',
                     marginTop: 8,
                     paddingBottom: 10,
                   }}>
-                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
+                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
                   {"  "}
-                  <AntDesign name="infocirlce" size={22} color="white" />
+                  <AntDesign name="infocirlce" size={22} color="#13b955" />
                   {"  "+travel.status} 
                   
                   </Text> 
