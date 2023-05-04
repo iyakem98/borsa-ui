@@ -7,18 +7,22 @@ import { getConsumers, getTravelers } from '../../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { ChatState } from '../../context/ChatProvider'
-import { AntDesign, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { AntDesign, Feather, FontAwesome5, Foundation, Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw'
 import ErrorUnDraw from '../../assets/svg/errorUnDraw'
 import {registerSheet} from 'react-native-actions-sheet';
 import BottomSheet from '../../components/BottomSheet'
 import SheetManager from 'react-native-actions-sheet';
 import moment from 'moment'
+import { useRoute } from '@react-navigation/native'
 
 const width = Dimensions.get("screen").width
 
+
 const ConnectScreen = () => {
   registerSheet('example-two', <BottomSheet />);
+
+  const route = useRoute()
 
   const [bottomSheetData, setBottomSheetData] = useState(null)
   const [selectedTab, setSelectedTab] = useState(1)
@@ -52,6 +56,7 @@ const ConnectScreen = () => {
 
     const deleteTraveler = async (id) => {
         console.log("card to be deleted is:", id)
+       
         let config = {
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -60,18 +65,20 @@ const ConnectScreen = () => {
               Alert.alert('Deleting your card', 'Are you sure to delete?', [
                 
                 {text: 'OK', onPress: async () => {
-
+                  setSpinner(true)
         await axios.delete(`http://143.198.168.244/api/travels/${id}`, config)
         .then((res) => {
           
            console.log("delllll:", res)
             getCards()
-            setSelectedTab(2)
-        
+            setSelectedTab(1)
+            
          })
         .catch((err) => {
          console.log("error:", err)
+         
         });
+        setSpinner(false)
                 }},
                 {
                     text: 'Cancel',
@@ -80,10 +87,13 @@ const ConnectScreen = () => {
                   },
               ]);
 
+
+
     }
 
     const deleteBuyer = async (id) => {
         console.log("card to be deleted is:", id)
+        
         let config = {
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -92,18 +102,21 @@ const ConnectScreen = () => {
               Alert.alert('Deleting your card', 'Are you sure to delete?', [
                 
                 {text: 'OK', onPress: async () => {
+                  setSpinner(true)
 
         await axios.delete(`http://143.198.168.244/api/buyers/${id}`, config)
         .then((res) => {
           
            console.log("delllll:", res)
             getCards()
-            setSelectedTab(1)
-        
+            setSelectedTab(2)
+          
          })
         .catch((err) => {
          console.log("error:", err)
+         
         });
+        setSpinner(false)
                 }},
                 {
                     text: 'Cancel',
@@ -118,7 +131,7 @@ const ConnectScreen = () => {
       // UpdateUserRoute()
      //  console.log(route.name)
        // setImage(null)
-      },[travelers, consumers])
+      },[t, b])
   
     // const getConsumers = async () => {
     //   try{
@@ -143,6 +156,11 @@ const ConnectScreen = () => {
     const [loading, setloading] = useState(true)
 
     const getCards = async () => {
+      setSpinner(true)
+
+      if(route?.params?.selectedTab){
+        setSelectedTab(route.params.selectedTab)
+      }
 
       const config = {
       headers: {
@@ -152,8 +170,13 @@ const ConnectScreen = () => {
         await axios.get(`http://143.198.168.244/api/travels/my`, config)
         .then((data) => {
           
-          // console.log("tttttttttttttttt:", t)
-         setT(data.data.data)
+        console.log("tttttttttttttttt:", data.data.data)
+        if(data.data.data.length>0){
+          setT(data.data.data.reverse())
+        }else{
+          setT(data.data.data)
+        }
+         
          })
         .catch((err) => {
          setT(null)
@@ -162,14 +185,21 @@ const ConnectScreen = () => {
         await axios.get(`http://143.198.168.244/api/buyers/my`, config)
         .then((data) => {
           // console.log("bbbbbbbbbbbbb:", b)
-         setB(data.data.data)
+          if(data.data.data.length>0){
+            setB(data.data.data.reverse())
+          }else{
+            setB(data.data.data)
+          }
          })
         .catch((err) => {
           setB(null)
         });
 
         setloading(false)
+        setSpinner(false)
     }
+
+    const [spinner, setSpinner] = useState(false)
         // useEffect(() => {
         //   //  dispatch(getTravelers())
         //   //  console.log(travelers)
@@ -194,380 +224,531 @@ const ConnectScreen = () => {
   //  </ScrollView>
   // <ScrollView>
   <SafeAreaView style={styles.container}>
+  <View style={{
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 15
+  }}>
     <View style={{
-      backgroundColor: "#fff",
-      justifyContent: "center",
-      alignItems: "center",
-      paddingBottom: 15
+      flexDirection: "row",
+      alignItems: 'center',
+      justifyContent: "space-between",
+      width: width - 30,
+      backgroundColor: "#eee",
+      padding: 10,
+      borderRadius: 10
     }}>
-      <View style={{
-        flexDirection: "row",
-        alignItems: 'center',
-        justifyContent: "space-between",
-        width: width - 30,
-        backgroundColor: "#eee",
-        padding: 10,
-        borderRadius: 10
+      <Pressable style={{
+          backgroundColor: selectedTab === 1 ? "#fff" : "#eee",
+          borderRadius: 5,
+          width: "49%",
+          paddingVertical: 13,
+          alignItems: "center"
+      }} onPress={()=>{
+          isBuyer ? setIsBuyer(false) : null
+          setSelectedTab(1)
       }}>
-        <Pressable style={{
-            backgroundColor: selectedTab === 1 ? "#fff" : "#eee",
-            borderRadius: 5,
-            width: "49%",
-            paddingVertical: 13,
-            alignItems: "center"
-        }} onPress={()=>{
-            isBuyer ? setIsBuyer(false) : null
-            setSelectedTab(1)
-        }}>
-            <Text style={{
-                fontFamily: "Poppins_500Medium",
-                fontSize: 14
-            }}>Traveler</Text>
-        </Pressable>
-        <Pressable style={{
-            backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
-            borderRadius: 5,
-            width: "49%",
-            paddingVertical: 13,
-            alignItems: "center"
-        }} onPress={()=>{
-          !isBuyer ? setIsBuyer(true) : null
-          setSelectedTab(2)
-        }}>
-            <Text style={{
-                fontFamily: "Poppins_500Medium",
-                fontSize: 14
-            }}>Buyer</Text>
-        </Pressable>
-      </View>
+          <Text style={{
+              fontFamily: "Poppins_500Medium",
+              fontSize: 14
+          }}>Traveler</Text>
+      </Pressable>
+      <Pressable style={{
+          backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
+          borderRadius: 5,
+          width: "49%",
+          paddingVertical: 13,
+          alignItems: "center"
+      }} onPress={()=>{
+        !isBuyer ? setIsBuyer(true) : null
+        setSelectedTab(2)
+      }}>
+          <Text style={{
+              fontFamily: "Poppins_500Medium",
+              fontSize: 14
+          }}>Buyer</Text>
+      </Pressable>
     </View>
-    {loading ? (
-      <View style={{
-          paddingTop: 20
-      }}>
-        <ActivityIndicator size="large" color="#777" />
-      </View>
-    ) : (selectedTab === 1 && t && t.length === 0) ? (
-      <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
-        {!isBuyer ? (
-          <View style={{
-            alignItems: "center",
-            paddingTop: 60
+  </View>
+
+  {
+    spinner && 
+    <View style={{
+      position:"fixed",
+      top:"40%",
+      left:"0%",
+      zIndex: 200
+  }}>
+    <ActivityIndicator size="large" color="black" />
+  </View>
+  }
+ 
+
+  {
+    selectedTab==1 &&
+    <View style = {{
+      paddingHorizontal: 10,
+      backgroundColor: 'white'
+    }}>
+      <ScrollView
+        //horizontal
+        style={{marginTop:"5%"}} 
+        >
+
+          <View style = {{
+            width: '100%',
+            alignItems: 'center'
           }}>
-            <EmptyUnDraw />
-            <Text style={{
-              fontFamily: "Poppins_500Medium",
-              marginTop: 20,
-              textAlign: "center",
-              fontSize: 16
-            }}>No traveler card found.</Text>
-              <Pressable style={{
-                        backgroundColor: "green",
-                        borderRadius: 1,
-                        width: 100,
-                        height:30,
-                        marginTop:10,
-                        borderRadius:3
-                    }} 
-                    onPress={()=>{
-                        navigation.navigate("New Post")
-                    }}
-                    >
-                        <Text style={{
-                            color: "#fff",
-                            fontFamily: "Poppins_400Regular",
-                            fontSize: 14,
-                            textAlign: "center"
-                        }}>
-                            <Ionicons name="md-add" size={24} color="#fff" />
-                        </Text>
-                    </Pressable>
-          </View>
-        ) : (
-            <View style = {{
+              <View style = {{
+            flexDirection: 'row'
+          }}>
+            <Text style = {{
+              fontSize: 28,
+              marginBottom: 5,
+              marginRight: 5,
+              marginLeft:20,
+            }}>
+              My Traveler Cards
+            </Text>
+
+            <Pressable style={{
+                // backgroundColor: "white",
+                borderRadius: 20,
+                backgroundColor: '#e8e8e8',
+                //backgroundColor: '#593196',
+                textAlign: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                alignContent: 'center',
+                justifyItems: 'center',
                 paddingHorizontal: 10,
-                backgroundColor: 'white'
-              }}>
-                <ScrollView
-                  horizontal
-                  style={{marginTop:"25%"}} 
-                  >
-    
-    {
-                   t.length>0 && t.map((travel, index) => (
-                       <View key={index} style={{
-                        width:300,
-                        borderRadius:10,
-                        marginLeft:20,
-                        backgroundColor:"green",
-                        height:300,
-                        padding:30
-                       }}>
-                        <View style={{
-                            padding:5
-                        }}>
-    
-                    <Text style={{textAlign:"right"}}>
-                    {/*<MaterialIcons name="delete" size={24} color="white" /> */}
-                    
-                    </Text>
-    
-                        <Text style={{textAlign:"left", marginTop:20, fontSize:18, color:"white"}}>
-                        {"  "}
-    
-                        <MaterialIcons name="flight" size={24} color="white" />
-                            {" "+travel.departure.split(",")[0]+"   "} 
-                            <MaterialIcons name="flight-takeoff" size={24} color="white" />
-                             {"   "+travel.destination.split(",")[0]}
-                            </Text> 
-    
-                            <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
-                            {"  "}
-                            <MaterialIcons name="date-range" size={24} color="white" />
-                            {"  "+moment(travel.departureDate).format("DD-MM-YY")} 
-                            
-                            </Text> 
-    
-    
-                            <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
-                            {"  "}
-                            <MaterialIcons name="luggage" size={26} color="white" />
-                            {"  "+travel.luggageSpace} kg 
-                            
-                            </Text> 
-    
-                            <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
-                            {"  "}
-                            <AntDesign name="infocirlce" size={22} color="white" />
-                            {"  "+travel.status} 
-                            
-                            </Text> 
-    
-                           
-    
-                        </View>
-                        <View style={{
-                            marginTop:"15%",
-                            marginLeft:"90%"
-                        }}>
-                            <AntDesign name="delete" size={24} color="#fff" onPress={()=>deleteTraveler(travel._id)} />
-                            </View>
-                        </View>
-                    ))
-                }
-    
-                       <View style={{
-                        width:300,
-                        borderRadius:10,
-                        marginLeft:20,
-                        backgroundColor:"green",
-                        alignItems:"center",
-                        justifyContent:"center"
-                       }}>
-                        
-                            <Text style={{
-                                textAlign:"center",
-                                fontSize:15,
-                                color:"white"
-                            }}>
-                                Add new traveler card.
-                            </Text>
-    
-                            <Pressable style={{
-                        backgroundColor: "white",
-                        borderRadius: 1,
-                        width: 30,
-                        height:30,
-                        marginTop:10
-                    }} 
-                    onPress={()=>{
-                        navigation.navigate("New Post")
-                    }}
-                    >
-                        <Text style={{
-                            color: "#fff",
-                            fontFamily: "Poppins_400Regular",
-                            fontSize: 14,
-                            textAlign: "center"
-                        }}>
-                            <Ionicons name="md-add" size={24} color="green" />
-                        </Text>
-                    </Pressable>
-    
-                      
-                        </View>
-    
-    </ScrollView>
-              </View>
-        )}
-      </View>
-    ) : (selectedTab === 2 && b && b.length === 0)  ? (
-        <View style={{
-            alignItems: "center",
-            paddingTop: 60
-          }}>
-            <EmptyUnDraw />
-            <Text style={{
-              fontFamily: "Poppins_500Medium",
-              marginTop: 20,
-              textAlign: "center",
-              fontSize: 16
-            }}>No buyer card found.</Text>
-             
-
-                        <Pressable style={{
-                    backgroundColor: "#593196",
-                    borderRadius: 1,
-                    width: 100,
-                    height:30,
-                    marginTop:10,
-                    borderRadius:2
-                }} 
-                onPress={()=>{
-                    navigation.navigate("New Post", {
-                        cardToAdd: "buyer"
-                    })
-                }}
-                >
-                    <Text style={{
-                        color: "#",
-                        fontFamily: "Poppins_400Regular",
-                        fontSize: 14,
-                        textAlign: "center"
-                    }}>
-                        <Ionicons name="md-add" size={24} color="#fff" />
-                    </Text>
-                </Pressable>
-          </View>
-    ) : (
-        <View style = {{
-            paddingHorizontal: 10,
-            backgroundColor: 'white'
-          }}>
-            <ScrollView
-              horizontal
-              style={{marginTop:"25%"}} 
-              >
-
-        {
-               b.length>0 && b.map((buyer, index) => (
-                <View key={index} style={{
-                    width:300,
-                    borderRadius:10,
-                    marginLeft:20,
-                    backgroundColor:"#593196",
-                    height:300,
-                    padding:30
-                   }}>
-                    <View style={{
-                        padding:5
-                    }}>
-
-                <Text style={{textAlign:"right"}}>
-                {/*<MaterialIcons name="delete" size={24} color="white" />*/}
-                
+                marginLeft: 17
+                //width: 30,
+               // height:30,
+                //marginTop:10
+            }} 
+            onPress={()=>{
+                navigation.navigate("New Post", {
+                    cardToAdd: "traveler"
+                })
+            }}
+            >
+                <Text style={{
+                    color: "#fff",
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 14,
+                    textAlign: "center",
+                    //marginTop: 4,
+                    //marginLeft: 7,
+                }}>
+                    <Entypo name="plus" size={26} color="#13b955" />
+                 
                 </Text>
+            </Pressable>
 
-                    <Text style={{textAlign:"left", marginTop:20, fontSize:18, color:"white"}}>
-                    {"  "}
 
-                    <MaterialIcons name="flight" size={24} color="white" />
-                        {" "+buyer.departure.split(",")[0]+"   "} 
-                        <MaterialIcons name="flight-takeoff" size={24} color="white" />
-                         {"   "+buyer.destination.split(",")[0]}
-                        </Text> 
+          </View>
+            {
+         t.length>0 && t.map((travel, index) => (
+             <View key={index} style={{
+              width: "97%",
+              //borderRadius:10,
+              //marginLeft:20,
+              backgroundColor:"#593196",
+              backgroundColor: 'white',
+              paddingTop: 10,
+              //height:300,
+              //padding:5,
+              marginVertical: 17,
+              shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
 
-                        <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
-                        {"  "}
-                        <MaterialIcons name="date-range" size={24} color="white" />
-                        {"  "+moment(buyer.startDate).format("DD-MM-YY")} 
-                        
-                        </Text> 
+                elevation: 5,
+             }}>
 
-                        <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
-                        {"   "}
-                        <FontAwesome5 name="calendar-times" size={22} color="white" />
-                        {"  "+moment(buyer.endDate).format("DD-MM-YY")} 
-                        
-                        </Text> 
+            <View style={{
+                      //marginTop:"5%",
+                      //marginLeft:"90%",
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      //backgroundColor: '#e8e8e8',
+                      paddingVertical: 0,
+                      paddingRight: 10,
+                  }}>
 
-                        <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
-                        {"  "}
-                        <Foundation name="shopping-bag" size={22} color="white" />
-                        {"  "+buyer.item[0]} 
-                        
-                        </Text> 
+                    <View>
+                    <Text style={{fontSize:22}}>
+              {"  "}
 
-                        <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
-                        {"  "}
-                        <MaterialIcons name="description" size={24} color="white" />
-                        {"  "+buyer.description} 
-                        
-                        </Text> 
-
-                       
-
+                  {" "+travel.departure.split(",")[0]+"   "} 
+                  <MaterialIcons name="flight-takeoff" size={26} color="#593196" />
+                   {"   "+travel.destination.split(",")[0]}
+                  </Text> 
                     </View>
+                      
 
-                    <View style={{
-                            marginTop:"15%",
-                            marginLeft:"90%"
-                        }}>
-                            <AntDesign name="delete" size={24} color="#fff" onPress={()=>deleteBuyer(buyer._id)} />
-                            </View>
-                   
-                    </View>
-                ))
-            }
+                      <AntDesign name="delete" size={24} color="black" onPress={()=>deleteTraveler(travel._id)} />
+                      </View>
 
-                   <View style={{
-                    width:300,
-                    borderRadius:10,
-                    marginLeft:20,
-                    backgroundColor:"green",
-                    alignItems:"center",
-                    justifyContent:"center"
-                   }}>
-                    
-                    <Text style={{
-                            textAlign:"center",
-                            fontSize:15,
-                            color:"white"
-                        }}>
-                            Add new buyer card.
-                        </Text>
 
-                        <Pressable style={{
-                    backgroundColor: "white",
-                    borderRadius: 1,
-                    width: 30,
-                    height:30,
-                    marginTop:10
-                }} 
-                onPress={()=>{
-                    navigation.navigate("New Post", {
-                        cardToAdd: "buyer"
-                    })
-                }}
-                >
-                    <Text style={{
-                        color: "#fff",
-                        fontFamily: "Poppins_400Regular",
-                        fontSize: 14,
-                        textAlign: "center"
-                    }}>
-                        <Ionicons name="md-add" size={24} color="#593196" />
-                    </Text>
-                </Pressable>
+              <View style={{
+                  padding:1,
+                  marginTop: -10,
+              }}>
+
+          <Text style={{textAlign:"right"}}>
+          {/*<MaterialIcons name="delete" size={24} color="white" /> */}
+          
+          </Text>
+
+                  <Text style={{textAlign:"left", marginTop:2, fontSize:17, color:"black"}}>
+                  {"  "}
+                  <AntDesign name="calendar" size={22} color="#696969" />
+                  {"  "+moment(travel.departureDate).format("DD-MM-YY")} 
+                  
+                  </Text> 
+
+
+                  <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
+                  {"  "}
+                  <MaterialIcons name="luggage" size={26} color="black" />
+                  {"  "+travel.luggageSpace} kg 
+                  
+                  </Text> 
 
                   
-                    </View>
+                  <View style = {{
+                    backgroundColor: '#13b955',
+                    backgroundColor: '#f0f0f0',
+                    marginTop: 8,
+                    paddingBottom: 10,
+                  }}>
+                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
+                  {"  "}
+                  <AntDesign name="infocirlce" size={22} color="#13b955" />
+                  {"  "+travel.status} 
+                  
+                  </Text> 
+                  </View>
+
+                  
+
+                 
+
+              </View>
+            
+              </View>
+          ))
+      }
+          </View>
+
+
+
+            {/* <View style={{
+              width:300,
+              borderRadius:10,
+              marginLeft:20,
+              backgroundColor:"green",
+              alignItems:"center",
+              justifyContent:"center"
+             }}>
+              
+                  <Text style={{
+                      textAlign:"center",
+                      fontSize:15,
+                      color:"white"
+                  }}>
+                      Add new traveler card.
+                  </Text>
+
+                  <Pressable style={{
+              // backgroundColor: "white",
+              borderRadius: 1,
+              width: 30,
+              height:30,
+              marginTop:10
+          }} 
+          onPress={()=>{
+              navigation.navigate("New Post")
+          }}
+          >
+              <Text style={{
+                  color: "#fff",
+                  fontFamily: "Poppins_400Regular",
+                  fontSize: 14,
+                  textAlign: "center"
+              }}>
+                  <Ionicons name="md-add" size={24} color="#fff" />
+              </Text>
+          </Pressable>
+
+            
+            </View> */}
 
 </ScrollView>
-          </View>
-    )}
+    </View>
+  }
 
-  </SafeAreaView>
+{
+    selectedTab==2 &&
+    <View style = {{
+      paddingHorizontal: 10,
+      backgroundColor: 'white'
+    }}>
+      <ScrollView
+        //horizontal
+        style={{
+          marginTop:"3%",
+        }} 
+        >
+        <View style = {{
+          width: "100%",
+          alignItems: 'center'
+        }}>
+
+          <View style = {{
+            flexDirection: 'row'
+          }}>
+            <Text style = {{
+              fontSize: 28,
+              marginBottom: 5,
+              marginRight: 5,
+              marginLeft:20,
+            }}>
+              My Buyer Cards
+            </Text>
+
+            <Pressable style={{
+                // backgroundColor: "white",
+                borderRadius: 20,
+                backgroundColor: '#e8e8e8',
+                //backgroundColor: '#593196',
+                textAlign: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                alignContent: 'center',
+                justifyItems: 'center',
+                paddingHorizontal: 10,
+                marginLeft: 17
+                //width: 30,
+               // height:30,
+                //marginTop:10
+            }} 
+            onPress={()=>{
+                navigation.navigate("New Post", {
+                    cardToAdd: "buyer"
+                })
+            }}
+            >
+                <Text style={{
+                    color: "#fff",
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 14,
+                    textAlign: "center",
+                    //marginTop: 4,
+                    //marginLeft: 7,
+                }}>
+                    <Entypo name="plus" size={26} color="#593196" />
+                 
+                </Text>
+            </Pressable>
+
+
+          </View>
+
+          
+
+        {
+         b.length>0 && b.map((buyer, index) => (
+          <View key={index} style={{
+              width: "97%",
+              //borderRadius:10,
+              //marginLeft:20,
+              backgroundColor:"#593196",
+              backgroundColor: 'white',
+              paddingTop: 10,
+              //height:300,
+              //padding:5,
+              marginVertical: 17,
+              shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+
+                elevation: 5,
+             }}>
+
+          <View style={{
+                      //marginTop:"5%",
+                      //marginLeft:"90%",
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      //backgroundColor: '#e8e8e8',
+                      paddingVertical: 0,
+                      paddingHorizontal: 10,
+                  }}>
+
+                    <View>
+                    <Text style={{marginTop:3, fontSize:23, color:"black"}}>
+                  {"  "}
+                  <Foundation name="shopping-bag" size={24} color="#593196" />
+                  {"  "+buyer.item[0]} 
+                  
+                  </Text> 
+                    </View>
+                      
+
+                      <AntDesign name="delete" size={24} color="black" onPress={()=>deleteBuyer(buyer._id)} />
+                      </View>
+
+              <View style={{
+                  padding:1
+              }}>
+
+          <Text style={{textAlign:"right"}}>
+          {/*<MaterialIcons name="delete" size={24} color="white" />*/}
+          
+          </Text>
+          <View style = {{
+            //backgroundColor: 'yellow',
+            marginTop: -13,
+          }}>
+                    <Text style={{fontSize:18}}>
+              {"  "}
+
+                  {" "+buyer.departure.split(",")[0]+"   "} 
+                  <MaterialIcons name="flight-takeoff" size={20} color="black" />
+                   {"   "+buyer.destination.split(",")[0]}
+                  </Text> 
+                    </View>
+
+                    <View style = {{
+                      flexDirection: 'row',
+                      paddingTop: 8,
+                      //backgroundColor: 'red'
+
+                    }}>
+                    <Text style={{marginTop:0, fontSize:15, color:"#696969"}}>
+                  {"  "}
+                  <AntDesign name="calendar" size={18} color="#696969" />
+                  {"  "+moment(buyer.startDate).format("DD-MM-YY")} 
+                  
+                  </Text> 
+
+                  <Text style={{marginTop:0, fontSize:15, color:"#696969"}}>
+                  {"   "}
+                  <FontAwesome5 name="calendar-times" size={18} color="#696969" />
+                  {"  "+moment(buyer.endDate).format("DD-MM-YY")} 
+                  
+                  </Text> 
+                    </View>
+
+                  
+                  {buyer.description && 
+                    <View style = {{
+                      paddingVertical: 5,
+                      backgroundColor: '#f5f5f5',
+                      marginTop: 10,
+                    }}>
+                       <Text style={{textAlign:"left", marginTop:10, fontSize:15, color:"black"}}>
+                     {"  "}
+                    {/* <MaterialIcons name="description" size={24} color="black" /> */}
+                     {"  "+buyer.description} 
+                     
+                     </Text> 
+                    </View>
+                  }
+
+                {!buyer.description && 
+                    <View style = {{
+                      paddingVertical: 5,
+                      backgroundColor: '#f5f5f5',
+                      marginTop: 10,
+                    }}>
+                       <Text style={{textAlign:"left", marginTop:10, fontSize:15, color:"black"}}>
+                     {"  "}
+                     {/*<MaterialIcons name="description" size={24} color="black" /> */}
+                     No description 
+                     
+                     </Text> 
+                    </View>
+                  }
+
+                 
+
+                 
+
+              </View>
+
+             
+             
+              </View>
+          ))
+      }
+
+ {/* <View style={{
+              width:300,
+              borderRadius:10,
+              marginLeft:20,
+              backgroundColor:"#593196",
+              alignItems:"center",
+              justifyContent:"center"
+             }}>
+              
+              <Text style={{
+                      textAlign:"center",
+                      fontSize:15,
+                      color:"white"
+                  }}>
+                      Add new buyer card.
+                  </Text>
+
+                  <Pressable style={{
+              borderRadius: 1,
+              width: 30,
+              height:30,
+              marginTop:10
+          }} 
+          onPress={()=>{
+              navigation.navigate("New Post", {
+                  cardToAdd: "buyer"
+              })
+          }}
+          >
+              <Text style={{
+                  color: "#fff",
+                  fontFamily: "Poppins_400Regular",
+                  fontSize: 14,
+                  textAlign: "center"
+              }}>
+                  <Ionicons name="md-add" size={24} color="#fff" />
+              </Text>
+          </Pressable>
+
+            
+            </View> */}
+              
+
+
+
+        </View>
+
+ 
+           
+</ScrollView>
+    </View>
+  }
+
+</SafeAreaView>
   )
 }
 
