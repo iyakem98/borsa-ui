@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
+import { API_BASE_URL } from '../../utils/config'
 import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { showMessage } from "react-native-flash-message";

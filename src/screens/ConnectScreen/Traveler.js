@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
+import { API_BASE_URL } from '../../utils/config'
 import { showMessage } from "react-native-flash-message";
 
 const width = Dimensions.get("screen").width

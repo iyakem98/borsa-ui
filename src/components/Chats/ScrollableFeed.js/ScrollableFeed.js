@@ -480,10 +480,10 @@ const OtherFunc = (messages)=>{
       </View> */}
       <View key={m._id} style = {[styles.container, {
         backgroundColor:  `${
-          m.sender._id === user._id ? "#593196" : "#E8E8E8"
+          m?.sender?._id === user._id ? "#593196" : "#E8E8E8"
       }`,
         alignSelf:  `${
-          m.sender._id === user._id ? "flex-end" : "flex-start"
+          m?.sender?._id === user._id ? "flex-end" : "flex-start"
       }`,
       marginTop: isSameUser(messages, m , i , user._id)? 3: 10, 
     }]}>
