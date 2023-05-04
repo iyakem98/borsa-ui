@@ -232,11 +232,24 @@ const OtherFunc = (messages)=>{
      <View style={{flexDirection:"row"}}>
        {/* <Text style={{color:"white"}}>{formatted_date}</Text> */}
        {/* <Text style={{color:"white"}}>{test_date}</Text> */}
-       <Text style={{color:"white"}}>{formatted_date}</Text>
+       <Text style={{
+        color: `${
+          m.sender._id === user._id ? "#fff" : "#404040"
+      }`,
+        fontSize: 12,
+       }}>{formatted_date}</Text>
        {
-         
-      <Ionicons name="checkmark-outline" size={20} color="white" />
+
+       m.sender._id == user._id? (
+        <Ionicons name="checkmark-outline" size={17} color="white" />
       
+       ): (
+       <View>
+      </View>
+      
+       )
+         
+    
       
       
        
@@ -489,8 +502,13 @@ const OtherFunc = (messages)=>{
         
        
     
-     <View style={{flexDirection:"row"}}>
-       <Text style={{color:"white"}}>{formatted_date}</Text>
+     <View style={{flexDirection:"row", marginTop:3}}>
+       <Text style={{
+        color: `${
+          m.sender._id === user._id ? "#fff" : "#404040"
+      }`,
+        fontSize: 12,
+       }}>{formatted_date}</Text>
        {
          
       <Ionicons name="checkmark-outline" size={20} color="white" />

@@ -260,9 +260,20 @@ console.log(`loading is ` + loading)
 
 
 if(loading){
- return  <View>
-  <Feather name="loader" size={40} style={styles.loader1} color="black" />
-    <Text style={styles.loader}>fetching messages ....</Text>
+ return  <View style = {{
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  justifyItems: 'center',
+  alignContent: 'center',
+  paddingTop: 50,
+ }}>
+  <Feather name="loader" size={40} style={{
+    marginRight: 20,
+  }} color="black" />
+    <Text style={{
+      fontSize: 20,
+    }}>fetching messages ....</Text>
   </View>
 }
 
@@ -380,8 +391,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   loader1: {
-   marginTop: 200,
-   marginLeft: 190
+   
   },
   text2: {
     color: "green",
