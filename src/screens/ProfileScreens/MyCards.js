@@ -416,7 +416,7 @@ const ConnectScreen = () => {
       <ScrollView
         //horizontal
         style={{
-          marginTop:"5%",
+          marginTop:"3%",
         }} 
         >
         <View style = {{
@@ -424,12 +424,58 @@ const ConnectScreen = () => {
           alignItems: 'center'
         }}>
 
-          <Text style = {{
-            fontSize: 28,
-            marginBottom: 5,
+          <View style = {{
+            flexDirection: 'row'
           }}>
-            My Buyer Cards
-          </Text>
+            <Text style = {{
+              fontSize: 28,
+              marginBottom: 5,
+              marginRight: 5,
+              marginLeft:20,
+            }}>
+              My Buyer Cards
+            </Text>
+
+            <Pressable style={{
+                // backgroundColor: "white",
+                borderRadius: 20,
+                backgroundColor: '#e8e8e8',
+                //backgroundColor: '#593196',
+                textAlign: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                alignContent: 'center',
+                justifyItems: 'center',
+                paddingHorizontal: 10,
+                marginLeft: 17
+                //width: 30,
+               // height:30,
+                //marginTop:10
+            }} 
+            onPress={()=>{
+                navigation.navigate("New Post", {
+                    cardToAdd: "buyer"
+                })
+            }}
+            >
+                <Text style={{
+                    color: "#fff",
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 14,
+                    textAlign: "center",
+                    //marginTop: 4,
+                    //marginLeft: 7,
+                }}>
+                    <Entypo name="plus" size={26} color="#593196" />
+                 
+                </Text>
+            </Pressable>
+
+
+          </View>
+
+          
+
         {
          b.length>0 && b.map((buyer, index) => (
           <View key={index} style={{
@@ -561,7 +607,7 @@ const ConnectScreen = () => {
           ))
       }
 
-  <View style={{
+ {/* <View style={{
               width:300,
               borderRadius:10,
               marginLeft:20,
@@ -579,7 +625,6 @@ const ConnectScreen = () => {
                   </Text>
 
                   <Pressable style={{
-              // backgroundColor: "white",
               borderRadius: 1,
               width: 30,
               height:30,
@@ -602,7 +647,7 @@ const ConnectScreen = () => {
           </Pressable>
 
             
-              </View>
+            </View> */}
               
 
 
