@@ -1,7 +1,7 @@
 import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView} from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { useDispatch, useSelector } from "react-redux";
-import {AntDesign, MaterialIcons} from '@expo/vector-icons'
+import {AntDesign, MaterialIcons, FontAwesome} from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import axios from 'axios';
@@ -331,26 +331,34 @@ style={styles.bg}
       value={newmessage}
       onChangeText={setNewMessage}
       style = {styles.input} 
+      multiline
       placeholder='type your message...'/>
     
-    <Pressable onPress={() => {
-      console.log("new message" + newmessage)
-      if(newmessage == null || newmessage == undefined || newmessage == ""){
-         console.log('undefined')
-      }
-      else{
-        sendMessage()
-        // setcheckContent(true)
-        scrollViewRef.current.scrollToEnd()
-      }
-      // sendMessage()
-        // setcheckContent(true)
-      //   scrollViewRef.current.scrollToEnd()
-     
+    <Pressable style = {{
+      backgroundColor: '#13b955',
+      padding: 8,
+      borderRadius: 4,
+
+    }}
+      onPress={() => {
+        console.log("new message" + newmessage)
+        if(newmessage == null || newmessage == undefined || newmessage == ""){
+          console.log('undefined')
+        }
+        else{
+          sendMessage()
+          // setcheckContent(true)
+          scrollViewRef.current.scrollToEnd()
+        }
+        // sendMessage()
+          // setcheckContent(true)
+        //   scrollViewRef.current.scrollToEnd()
       
-      
-    }}>
-    <MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} />
+        
+        
+      }}>
+    {/*<MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} /> */}
+    <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
     </Pressable>
 
  
@@ -379,7 +387,8 @@ const styles = StyleSheet.create({
   TextSendingcontainer: {
     flexDirection: "row",
     backgroundColor: "whitesmoke",
-    padding: 5,
+    backgroundColor:'white',
+    padding: 2,
     paddingHorizontal: 10,
     alignItems: "center",
   },
@@ -426,16 +435,20 @@ const styles = StyleSheet.create({
 },
 input: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#f0f0f0",
     padding: 5,
     paddingHorizontal: 10,
     marginHorizontal: 10,
-    marginRight:20,
-    borderRadius: 50,
-    width: 40,
+    marginRight:6,
+    borderRadius: 10,
+    width: "90%",
+    height: 45,
+    fontSize: 17,
+    paddingTop: 10,
+    paddingBottom: 3,
     // marginTop: -30,
-    borderColor: "lightgray",
-    borderWidth: StyleSheet.hairlineWidth,
+    //borderColor: "lightgray",
+    //borderWidth: StyleSheet.hairlineWidth,
 },
 camera: {
    marginTop: 0,
