@@ -277,12 +277,12 @@ const BuyerChat = async(buyerData)=> {
                         <Text style={{
                             fontSize: 16,
                             fontFamily: "Poppins_500Medium"
-                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        }}>{item.item[0]}</Text>
                         <Text style={{
-                            fontSize: 12,
+                            fontSize: 14,
                             fontFamily: "Poppins_500Medium",
                             color: "#777"
-                        }}>{item?.user?.email}</Text>
+                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
                     </View>
                 </View>
                 <View style={styles.horizontal}>
@@ -290,7 +290,7 @@ const BuyerChat = async(buyerData)=> {
                         fontSize: 15,
                         fontFamily: "Poppins_600SemiBold",
                     }}>
-                        {item?.luggageSpace}
+                        {item?.totalWeight}
                         <Text style={{
                             fontFamily: "Poppins_400Regular",
                             fontSize: 13
