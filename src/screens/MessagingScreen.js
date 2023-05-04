@@ -160,15 +160,17 @@ console.log(`loading is ` + loading)
         }
     }
     
-    const {data} = await axios.post(`${API_BASE_URL}message/`, {
-      content : newmessage,
-      chatId: chattId,
-      image: "",
-      // receiver: route.params.userSelected._id
-      receiver: route.params.userSelected._id
-
-    },
-    config)
+    if(newmessage && newmessage.length > 0) {
+      const {data} = await axios.post(`${API_BASE_URL}message/`, {
+        content : newmessage,
+        chatId: chattId,
+        image: "",
+        // receiver: route.params.userSelected._id
+        receiver: route.params.userSelected._id
+  
+      },
+      config)
+    }
  
     console.log("message sent successfully")
 
@@ -326,17 +328,17 @@ style={styles.bg}
    {!loading && 
 <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
  
- {isTyping ? <View>
-    <Text> isTyping... </Text>
-    </View> : null}
+  {isTyping ? (
+    <View>
+      <Text> isTyping... </Text>
+    </View>
+  ) : null}
    <TextInput 
-
       value={newmessage}
       onChangeText={setNewMessage}
       style = {styles.input} 
       multiline
       placeholder='type your message...'/>
-    
     <Pressable style = {{
       backgroundColor: '#13b955',
       padding: 8,

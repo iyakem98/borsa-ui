@@ -53,10 +53,11 @@ const TravelerCard = ({
         
               }
           }
-         console.log(chattts)
+         console.log("--", chattts)
          if(chattts.length > 0){
             chattts.map(async(chat) => {
-                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+                console.log(chat?.users[0]?._id, userId, chat?.users[1]?._id, userId)
+                // if(chat?.users[0]?._id == userId || chat?.users[1]?._id == userId){
                     // setfetchAgain(true)
                     // setfetchAgain(false)
                     navigation.navigate('Messaging', {userSelected:
@@ -65,7 +66,7 @@ const TravelerCard = ({
                     setloading(true)
                     setchatSelected(true)
                     setchattId(chat._id)
-                }
+                // }
                 // ------------------------
             //     else{
             //         // setfetchAgain(true)

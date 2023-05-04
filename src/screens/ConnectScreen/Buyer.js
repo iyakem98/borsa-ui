@@ -98,7 +98,8 @@ const BuyerChat = async(buyerData)=> {
         // setloading(true)
         if(chattts.length > 0){
             chattts.map(async(chat) => {
-                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+                console.log("p-=-=-=", chat?.users[1]?._id, userId)
+                if(chat.users[0]._id == userId || chat?.users[1]?._id == userId){
                     navigation.navigate('Messaging', {userSelected:
                 
                         buyerData})
