@@ -45,6 +45,8 @@ const ChatListHeader = ( {chatArr} ) => {
     // console.log('query' + query)
    
     useEffect(()=> {
+      settriggerChange(true)
+      settriggerChange2(true)
         // setYtriggerChange(false)
         // console.log(chatArr[0])
         // console.log(chatArr.splice(0, 2))
