@@ -266,7 +266,9 @@ if(loading){
   justifyContent: 'center',
   justifyItems: 'center',
   alignContent: 'center',
-  paddingTop: 50,
+  backgroundColor: 'white',
+  paddingBottom: 100,
+  height: '100%'
  }}>
   <Feather name="loader" size={40} style={{
     marginRight: 20,
