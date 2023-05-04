@@ -318,7 +318,7 @@ const TravelerCard = ({
                     }}>
                         <Text style = {{
                             fontSize: 20,
-                        }}>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
+                        }}>{traveler?.user?.firstName+' '+traveler?.user?.lastName}</Text>
                     </View>
 
                   {/*  <View style={{
