@@ -414,26 +414,52 @@ const ConnectScreen = () => {
         backgroundColor: 'white'
       }}>
         <ScrollView
-          horizontal
-          style={{marginTop:"25%"}} 
+          //horizontal
+          style={{
+            marginTop:"5%",
+          }} 
           >
+          <View style = {{
+            width: "100%",
+            alignItems: 'center'
+          }}>
 
-    {
+            <Text>
+              My Buyer Cards
+            </Text>
+          {
            b.length>0 && b.map((buyer, index) => (
             <View key={index} style={{
-                width:300,
+                width: "97%",
                 borderRadius:10,
-                marginLeft:20,
+                //marginLeft:20,
                 backgroundColor:"#593196",
                 height:300,
-                padding:5
+                //padding:5,
+                marginVertical: 10,
                }}>
 
-<View style={{
-                        marginTop:"5%",
-                        marginLeft:"90%"
+            <View style={{
+                        //marginTop:"5%",
+                        //marginLeft:"90%",
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        backgroundColor: '#e8e8e8',
+                        paddingVertical: 10
                     }}>
-                        <AntDesign name="delete" size={24} color="#fff" onPress={()=>deleteBuyer(buyer._id)} />
+
+                      <View>
+                      <Text style={{textAlign:"left", fontSize:22, marginTop: 5}}>
+                {"  "}
+
+                    {" "+buyer.departure.split(",")[0]+"   "} 
+                    <MaterialIcons name="flight-takeoff" size={24} color="black" />
+                     {"   "+buyer.destination.split(",")[0]}
+                    </Text> 
+                      </View>
+                        
+
+                        <AntDesign name="delete" size={24} color="#593196" onPress={()=>deleteBuyer(buyer._id)} />
                         </View>
 
                 <View style={{
@@ -492,7 +518,7 @@ const ConnectScreen = () => {
             ))
         }
 
-               <View style={{
+    <View style={{
                 width:300,
                 borderRadius:10,
                 marginLeft:20,
@@ -534,7 +560,14 @@ const ConnectScreen = () => {
 
               
                 </View>
+                
 
+
+
+          </View>
+
+   
+             
 </ScrollView>
       </View>
     }
