@@ -226,7 +226,7 @@ useEffect(() => {
             
             <ScrollView style = {{
               backgroundColor: '#fff',
-              paddingTop: 30
+              paddingTop: 10
             }}>
              
              <ChatListHeader chatArr={chatArrAll}/>

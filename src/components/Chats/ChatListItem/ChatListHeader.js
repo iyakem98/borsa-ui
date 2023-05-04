@@ -334,6 +334,7 @@ const styles = StyleSheet.create ({
         paddingLeft: 10,
         alignItems: 'center',
         marginLeft: 40,
+        marginBottom: 20,
         
     },
     image: {
