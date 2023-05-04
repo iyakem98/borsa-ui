@@ -218,7 +218,9 @@ useEffect(() => {
 //  setstoredNotifications([])
 //  console.log('stored notif after' + storedNotifications.length)
  }
- console.log("stored notifcations array " + storedNotifications.length)
+//  console.log("stored notifcations array " + storedNotifications.length)
+//  console.log("stored notifcations array " + storedNotifications.length)
+ console.log(triggerChange)
 
        return(
         

@@ -16,7 +16,7 @@ const ChatProvider = ({ children }) => {
   const [onlineStatus, setonlineStatus] = useState(false)
   const [chatRoute, setchatRoute] = useState("Chats")
   const [chats, setChats] = useState();
-  const [triggerChange, settriggerChange] = useState(true);
+  const [triggerChange, settriggerChange] = useState(false);
   const [messageHeader, setmessageHeader] = useState(false);
   const [date, setDate] = useState(null)
   const [NewwMessage, setNewwMessage] = useState(false)
