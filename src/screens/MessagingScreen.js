@@ -111,7 +111,7 @@ console.log(`loading is ` + loading)
   }, [selectedChat])
   useEffect(() =>{
     chatRouteCompare = chatRoute
-    console.log(chatRouteCompare)
+    console.log("======----=-=-", chatRouteCompare)
   
   }, [])
 
@@ -208,6 +208,7 @@ console.log(`loading is ` + loading)
 
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
+    console.log("=======", data)
     if(data.latestMessage == null){
       setloading(false)
     }
