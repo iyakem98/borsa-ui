@@ -383,7 +383,7 @@ const ConnectScreen = () => {
                   }}>
 
                     <View>
-                    <Text style={{fontSize:22}}>
+                    <Text style={{fontSize:20}}>
               {"  "}
 
                   {" "+travel.departure.split(",")[0]+"   "} 
