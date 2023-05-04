@@ -292,30 +292,114 @@ const ConnectScreen = () => {
       backgroundColor: 'white'
     }}>
       <ScrollView
-        horizontal
-        style={{marginTop:"25%"}} 
+        //horizontal
+        style={{marginTop:"5%"}} 
         >
 
-{
+          <View style = {{
+            width: '100%',
+            alignItems: 'center'
+          }}>
+              <View style = {{
+            flexDirection: 'row'
+          }}>
+            <Text style = {{
+              fontSize: 28,
+              marginBottom: 5,
+              marginRight: 5,
+              marginLeft:20,
+            }}>
+              My Traveler Cards
+            </Text>
+
+            <Pressable style={{
+                // backgroundColor: "white",
+                borderRadius: 20,
+                backgroundColor: '#e8e8e8',
+                //backgroundColor: '#593196',
+                textAlign: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                alignContent: 'center',
+                justifyItems: 'center',
+                paddingHorizontal: 10,
+                marginLeft: 17
+                //width: 30,
+               // height:30,
+                //marginTop:10
+            }} 
+            onPress={()=>{
+                navigation.navigate("New Post", {
+                    cardToAdd: "traveler"
+                })
+            }}
+            >
+                <Text style={{
+                    color: "#fff",
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 14,
+                    textAlign: "center",
+                    //marginTop: 4,
+                    //marginLeft: 7,
+                }}>
+                    <Entypo name="plus" size={26} color="#13b955" />
+                 
+                </Text>
+            </Pressable>
+
+
+          </View>
+            {
          t.length>0 && t.map((travel, index) => (
              <View key={index} style={{
-              width:300,
-              borderRadius:10,
-              marginLeft:20,
-              backgroundColor:"green",
-              height:300,
-              padding:10
+              width: "97%",
+              //borderRadius:10,
+              //marginLeft:20,
+              backgroundColor:"#593196",
+              backgroundColor: 'white',
+              paddingTop: 10,
+              //height:300,
+              //padding:5,
+              marginVertical: 17,
+              shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+
+                elevation: 5,
              }}>
 
             <View style={{
-                  marginTop:"3%",
-                  marginLeft:"91%"
-              }}>
-                  <AntDesign name="delete" size={24} color="#fff" onPress={()=>deleteTraveler(travel._id)} />
-                  </View>
+                      //marginTop:"5%",
+                      //marginLeft:"90%",
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      //backgroundColor: '#e8e8e8',
+                      paddingVertical: 0,
+                      paddingRight: 10,
+                  }}>
+
+                    <View>
+                    <Text style={{fontSize:22}}>
+              {"  "}
+
+                  {" "+travel.departure.split(",")[0]+"   "} 
+                  <MaterialIcons name="flight-takeoff" size={26} color="#593196" />
+                   {"   "+travel.destination.split(",")[0]}
+                  </Text> 
+                    </View>
+                      
+
+                      <AntDesign name="delete" size={24} color="black" onPress={()=>deleteTraveler(travel._id)} />
+                      </View>
+
 
               <View style={{
-                  padding:1
+                  padding:1,
+                  marginTop: -10,
               }}>
 
           <Text style={{textAlign:"right"}}>
@@ -323,36 +407,36 @@ const ConnectScreen = () => {
           
           </Text>
 
-              <Text style={{textAlign:"left", marginTop:20, fontSize:18, color:"white"}}>
-              {"  "}
-
-              <MaterialIcons name="flight" size={24} color="white" />
-                  {" "+travel.departure.split(",")[0]+"   "} 
-                  <MaterialIcons name="flight-takeoff" size={24} color="white" />
-                   {"   "+travel.destination.split(",")[0]}
-                  </Text> 
-
-                  <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
+                  <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
                   {"  "}
-                  <MaterialIcons name="date-range" size={24} color="white" />
+                  <AntDesign name="calendar" size={24} color="#696969" />
                   {"  "+moment(travel.departureDate).format("DD-MM-YY")} 
                   
                   </Text> 
 
 
-                  <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
+                  <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
                   {"  "}
-                  <MaterialIcons name="luggage" size={26} color="white" />
+                  <MaterialIcons name="luggage" size={26} color="black" />
                   {"  "+travel.luggageSpace} kg 
                   
                   </Text> 
 
-                  <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
+                  
+                  <View style = {{
+                    backgroundColor: '#13b955',
+                    marginTop: 8,
+                    paddingBottom: 10,
+                  }}>
+                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"white"}}>
                   {"  "}
                   <AntDesign name="infocirlce" size={22} color="white" />
                   {"  "+travel.status} 
                   
                   </Text> 
+                  </View>
+
+                  
 
                  
 
@@ -361,8 +445,11 @@ const ConnectScreen = () => {
               </View>
           ))
       }
+          </View>
 
-             <View style={{
+
+
+            {/* <View style={{
               width:300,
               borderRadius:10,
               marginLeft:20,
@@ -401,7 +488,7 @@ const ConnectScreen = () => {
           </Pressable>
 
             
-              </View>
+            </View> */}
 
 </ScrollView>
     </View>
