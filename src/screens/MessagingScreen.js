@@ -353,8 +353,8 @@ style={styles.bg}
       placeholder='type your message...'/>
     <Pressable style = {{
       backgroundColor: '#13b955',
-      padding: 5,
-      borderRadius: 4,
+      padding: 8,
+      borderRadius: 50,
 
     }}
       onPress={() => {
@@ -375,7 +375,7 @@ style={styles.bg}
         
       }}>
     {/*<MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} /> */}
-    <FontAwesome name="send" size={22} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
+    <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
     </Pressable>
 
     </SafeAreaView>
