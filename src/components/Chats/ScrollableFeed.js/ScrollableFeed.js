@@ -296,7 +296,7 @@ const OtherFunc = (messages)=>{
     <ScrollView
     ref={scrollref}
    // ref={ref => {this.scrollView = ref}}
-   // onContentSizeChange={() =>  scrollViewRef.current.scrollToEnd()}
+    onContentSizeChange={() =>  scrollref.current.scrollToEnd({animated: false})}
     
     style = {{
       backgroundColor: "#fff", 
