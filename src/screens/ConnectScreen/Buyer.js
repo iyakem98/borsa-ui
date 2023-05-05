@@ -39,12 +39,7 @@ const Buyer = ({
   
 }, [user])
 const BuyerChat = async(buyerData)=> {
-    // console.log(buyerData)
-    // console.log(buyerID)
     const userId = buyerData._id
-    // console.log(buyerData)
-    // const checkbuyer = await AsyncStorage.getItem('initialChat') 
-    // const checkbuyerarr = []
     try{
         const config = {
             headers: {
@@ -52,52 +47,49 @@ const BuyerChat = async(buyerData)=> {
     
             }
         }
-        // --------
-        // if((checkbuyer != null || checkbuyer != undefined) ){
-        //     checkbuyerarr.push()
-        //     for(var i = 0; i <checkbuyerarr.length ; i++){
-        //         if(checkbuyerarr[i] ==  buyerData._id){
-        //             setloading(true)
-        //             navigation.navigate('Messaging', {userSelected:
-                
-        //                     buyerData})
-        //              const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-        //             setchatSelected(true)
-        //              setchattId(data._id)
-        //              await AsyncStorage.setItem('initialChat') 
-        //         }
-        //     }
-        //     // if(checkbuyer == buyerData._id){
-        //     //     console.log('true')
-        //     // }
-        //     // setloading(true)
-        //     // // navigation.navigate('Messaging', {userSelected:
-        
-        //     // //         buyerData})
-        //     //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-        //     // setchatSelected(true)
-        //     //  setchattId(data._id)
-        //     // else{
-        //     //     console.log('false')
-        //     // }
-        // }
-        // else{
-        //     await AsyncStorage.removeItem('initialChat') 
-        //     setloading(false)
 
-        //     navigation.navigate('Messaging', {userSelected:
+        if((chattts.length < 0) || chattts != null || chattts != undefined){
+            navigation.navigate('Messaging', {userSelected:
         
-        //         buyerData})
-        //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-        // setchatSelected(true)
-        //  setchattId(data._id)
-        //  const BuyerID = data.users[1]._id
-        //  await AsyncStorage.setItem('initialChat', BuyerID)
-        // }
-        // ----------
-        // setloading(true)
-        // setloading(true)
-        if(chattts.length > 0){
+                buyerData})
+                setloading(false)
+            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+            setchatSelected(true)
+            setchattId(data._id)
+        }
+        else{
+
+            chattts.map(async(chat) => {
+                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+                    navigation.navigate('Messaging', {userSelected:
+                
+                        buyerData})
+                    setloading(true)
+                    setchatSelected(true)
+                    setchattId(chat._id)
+                }
+
+                else {
+                    navigation.navigate('Messaging', {userSelected:
+        
+                        buyerData})
+                        setloading(false)
+                    const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                    setchatSelected(true)
+                    setchattId(data._id)
+                }
+    
+              })
+           /* navigation.navigate('Messaging', {userSelected:
+        
+                travData})
+                setloading(false)
+            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+            setchatSelected(true)
+            setchattId(data._id) */
+        }
+       
+       {/* if(chattts.length > 0){
             chattts.map(async(chat) => {
                 console.log("p-=-=-=", chat?.users[1]?._id, userId)
                 if(chat.users[0]._id == userId || chat?.users[1]?._id == userId){
@@ -117,13 +109,6 @@ const BuyerChat = async(buyerData)=> {
                     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
                     setchatSelected(true)
                     setchattId(data._id)
-                    // setloading(false)
-                    // navigation.navigate('Messaging', {userSelected:
-                
-                    //     buyerData})
-                    // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-                    // setchatSelected(true)
-                    // setchattId(data._id)
     
     
                 }
@@ -140,72 +125,11 @@ const BuyerChat = async(buyerData)=> {
             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
             setchatSelected(true)
             setchattId(data._id)
-        }
-        // -----------------
-        // chattts.map(async(chat) => {
-        //     if(chat.users[0]._id == userId || chat.users[1]._id == userId){
-        //         navigation.navigate('Messaging', {userSelected:
-        
-        //             buyerData})
-        //         setloading(true)
-        //         setchatSelected(true)
-        //         setchattId(chat._id)
-        //     }
-        //     else if (chat == null){
-        //         setloading(false)
-        //         navigation.navigate('Messaging', {userSelected:
-            
-        //             buyerData})
-        //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-        //         setchatSelected(true)
-        //         setchattId(data._id)
-
-
-        //     }
-            
-
-        //   })
-        // ------------------------------------------ 
-        // setloading(true)
-        // navigation.navigate('Messaging', {userSelected:
-        
-        //     buyerData})
-        //     const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-           
-        //     setchatSelected(true)
-        //     setchattId(data._id)
-        // -----------------------------
-        // if(data.latestMessage != null){
-            
-        // }
-        // const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-        
-        //     setchatSelected(true)
-        // setchattId(data._id)
-        // const BuyerID = data.users[1]._id
-        // console.log(data.users[1]._id)
-        // console.log(buyerData._id)
-        // await AsyncStorage.setItem('initialChat', BuyerID)
-        // const checkbuyer = await AsyncStorage.getItem('initialChat') 
-        // console.log(checkbuyer)          
-        // console.log(data.latestMessage)
-        // if(data.latestMessage != null || data.latestMessage != undefined){
-        //     setloading(true)
-        //     setchatSelected(true)
-        // setchattId(data._id)
-        // }
-        
-    
-        // navigation.navigate('Messaging', {chatId: data._id, userSelected:
-        
-        //     user != null ? getSenderFull(user, data.users) : null })
-            
-        
-        // return data
+        } */}
+      
     }
     catch(err){
         console.log(err)
-    // }
 }
 }
 
