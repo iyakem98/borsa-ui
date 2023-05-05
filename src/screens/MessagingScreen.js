@@ -326,7 +326,19 @@ style={styles.bg}
   
    
    {!loading && 
-<SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+      keyboardVerticalOffset={
+        Platform.select({
+           ios: () => 76,
+           android: () => 110
+        })()
+       
+      }
+      //style={styles.TextSendingcontainer}
+      > 
+
+      <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
  
   {isTyping ? (
     <View>
@@ -341,7 +353,7 @@ style={styles.bg}
       placeholder='type your message...'/>
     <Pressable style = {{
       backgroundColor: '#13b955',
-      padding: 8,
+      padding: 5,
       borderRadius: 4,
 
     }}
@@ -363,11 +375,13 @@ style={styles.bg}
         
       }}>
     {/*<MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} /> */}
-    <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
+    <FontAwesome name="send" size={22} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
     </Pressable>
 
+    </SafeAreaView>
+
  
- </SafeAreaView>
+ </KeyboardAvoidingView>
  }
 
 
