@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView} from 'react-native';
+import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView, ActivityIndicator} from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { useDispatch, useSelector } from "react-redux";
 import {AntDesign, MaterialIcons, FontAwesome} from '@expo/vector-icons'
@@ -282,9 +282,10 @@ if(loading){
   paddingBottom: 100,
   height: '100%'
  }}>
-  <Feather name="loader" size={40} style={{
+  {/*<Feather name="loader" size={40} style={{
     marginRight: 20,
-  }} color="black" />
+  }} color="black" /> */}
+  <ActivityIndicator size="large" color="#000" style = {{marginRight: 15}} />
     <Text style={{
       fontSize: 20,
     }}>fetching messages ....</Text>

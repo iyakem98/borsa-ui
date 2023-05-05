@@ -516,7 +516,7 @@ useEffect(() => {
                       <Pressable style={styles.connectBtn} onPress={() => navigation.navigate("Connect")}>
                       <Text style={{
                         fontSize: 18,
-                        color: 'red',
+                        color: 'white',
                       }} >Click here to start chatting </Text>
                       </Pressable> 
                       </View>}

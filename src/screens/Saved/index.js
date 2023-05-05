@@ -74,6 +74,8 @@ const Saved = () => {
             getData(selectedTab)
         }
     }, [])
+    
+    
 
     // useEffect(()=>{
     //     if(selectedTab === 2) {
@@ -152,7 +154,7 @@ const Saved = () => {
                             marginTop: 20,
                             textAlign: "center",
                             fontSize: 16
-                        }}>Wishlist is empty</Text>
+                        }}>No card saved yet</Text>
                     </View>
                 ) : (
                     <>

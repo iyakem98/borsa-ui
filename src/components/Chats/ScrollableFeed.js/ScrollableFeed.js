@@ -1,11 +1,11 @@
 import { Ionicons } from '@expo/vector-icons'
 import moment from 'moment'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Text, View, ScrollView, StyleSheet, Image, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, Image, ImageBackground, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native'
 import { useSelector } from 'react-redux'
 import { isSameSender, isLastMessage, isSameSenderMargin, isSameUser, getSender } from '../../../ChatConfig/ChatLogics'
 import { ChatState } from '../../../context/ChatProvider'
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, AntDesign } from '@expo/vector-icons';
 
 const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
 
@@ -554,13 +554,16 @@ const OtherFunc = (messages)=>{
     }]}>
            <Text style={{
           
-          color: "white"   
+          color: "white",
+          marginBottom: 3   
       }}>
       {latestMessage}
        </Text>
       <View style={{flexDirection:"row"}}>
-      <Text  style={{color:"white"}}>{now.format('LT')}</Text>
-       <Ionicons name="checkmark-outline" size={20} color="white" />
+      <Text  style={{color:"white", fontSize: 12}}>{now.format('LT')}</Text>
+      {/* <Ionicons name="checkmark-outline" size={20} color="white" /> */}
+       
+       <ActivityIndicator size="small" color="#fff" />
       </View>
       </View>
         }
