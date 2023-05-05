@@ -349,7 +349,7 @@ const ConnectScreen = () => {
 
           </View>
 
-          {!t && 
+          {t && t.length <1 && 
 
             <View style = {{
               paddingTop: 20,
