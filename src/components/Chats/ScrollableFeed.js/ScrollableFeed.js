@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux'
 import { isSameSender, isLastMessage, isSameSenderMargin, isSameUser, getSender } from '../../../ChatConfig/ChatLogics'
 import { ChatState } from '../../../context/ChatProvider'
 import { FontAwesome5, AntDesign } from '@expo/vector-icons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
 
