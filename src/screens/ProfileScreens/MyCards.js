@@ -349,7 +349,7 @@ const ConnectScreen = () => {
 
           </View>
 
-          {t.length < 1 && 
+          {!t && 
 
             <View style = {{
               paddingTop: 20,
@@ -383,7 +383,7 @@ const ConnectScreen = () => {
             }
 
             {
-         t.length>0 && t.map((travel, index) => (
+         t && t.length>0 && t.map((travel, index) => (
              <View key={index} style={{
               width: "97%",
               //borderRadius:10,
@@ -595,7 +595,7 @@ const ConnectScreen = () => {
 
           </View>
 
-          {b.length < 1 && 
+          {b < 1 && 
 
               <View style = {{
                 paddingTop: 20,
@@ -633,7 +633,7 @@ const ConnectScreen = () => {
           
 
         {
-         b.length>0 && b.map((buyer, index) => (
+         b && b.length>0 && b.map((buyer, index) => (
           <View key={index} style={{
               width: "97%",
               //borderRadius:10,

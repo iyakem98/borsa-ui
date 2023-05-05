@@ -206,6 +206,7 @@ const FromTo = ({navigation}) => {
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
+                    display='inline'
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setFrom(moment(selectedDate).format('YYYY-MM-DD'))
@@ -218,6 +219,7 @@ const FromTo = ({navigation}) => {
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
+                    display='inline'
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setTo(moment(selectedDate).format('YYYY-MM-DD'))
@@ -341,6 +343,7 @@ const FromTo = ({navigation}) => {
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
+                    display='inline'
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setTravelerDate(moment(selectedDate).format('YYYY-MM-DD'))
