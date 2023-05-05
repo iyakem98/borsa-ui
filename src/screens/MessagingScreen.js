@@ -116,21 +116,21 @@ console.log(`loading is ` + loading)
   }, [])
 
  
-  // useEffect(() => {
+  useEffect(() => {
     
-  //   socket.current.on("message recieved", (newMessageReceived) => {
-  //     setMessages([...messages, newMessageReceived])
-  //     console.log('messaging screen ')
-  //     console.log('message recieved')
-  //     //  setreceivedMessage(true)
+    socket.current.on("message recieved", (newMessageReceived) => {
+      setMessages([...messages, newMessageReceived])
+      // console.log('messaging screen ')
+      // console.log('message recieved')
+      //  setreceivedMessage(true)
      
 
          
      
-  //   })
+    })
 
 
-  // })
+  })
 
   // search how to run an async func in react 
 

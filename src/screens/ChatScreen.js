@@ -255,6 +255,7 @@ useEffect(() => {
                   msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD")
                   let today = moment()
                   let d = today.diff(msgdate, 'days')
+                  console.log("d" + d)
                   if(d==0){
                     var formatted_date = null 
  if(chat.lastestMessage !== undefined || chat.lastestMessage !== null){

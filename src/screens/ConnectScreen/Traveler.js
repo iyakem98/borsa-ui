@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { showMessage } from "react-native-flash-message";
+import { API_BASE_URL } from '../../utils/config'
 
 const width = Dimensions.get("screen").width
 
@@ -38,76 +39,73 @@ const TravelerCard = ({
     
   
 }, [user])
+  useEffect(() =>{
+
+    dispatch(fetchChat())
+    // console.log(chattts[1])
+    
+  
+}, [])
+//   useEffect(() =>{
+
+//     dispatch(fetchChat())
+//     // console.log(chattts[1])
+    
+  
+// }, [fetchAgain])
 
     
     const TravelerChat = async(travData) => {
-        // console.log(travData)
+        
         const userId = travData._id
-        // console.log(userId)
-        // // console.log(userId)
-        // // // console.log(travelerId.current)
+    //    console.log(travData._id)
+       console.log(chattts)
         try{
             const config = {
               headers: {
                   Authorization: `Bearer ${user.token}`
         
               }
-          }
-         console.log(chattts)
-         if(chattts.length > 0){
-            chattts.map(async(chat) => {
-                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
-                    // setfetchAgain(true)
-                    // setfetchAgain(false)
-                    navigation.navigate('Messaging', {userSelected:
-                
-                        travData})
-                    setloading(true)
-                    setchatSelected(true)
-                    setchattId(chat._id)
-                }
-                // ------------------------
-            //     else{
-            //         // setfetchAgain(true)
-            //         // setfetchAgain(false)
-            // navigation.navigate('Messaging', {userSelected:
-        
-            //     travData})
-            //     setloading(false)
-            // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            // setchatSelected(true)
-            // setchattId(data._id)
-            //     }
-            // ------------------------------------------
-            //     else if (chat){
-            //         setloading(false)
-            //         navigation.navigate('Messaging', {userSelected:
-                
-            //             travData})
-            //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            //         setchatSelected(true)
-            //         setchattId(data._id)
-    
-    
-            //     }
-    
-              })
 
-        }
-        else{
-           
-            navigation.navigate('Messaging', {userSelected:
-        
-                travData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id)
-        }
+            
+          }
        
+    //   if(chattts.length < 0 || chattts == null || chattts == undefined){
+    //     navigation.navigate('Messaging', {userSelected:
+        
+    //                 travData})
+    //             setloading(false)
+    //             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+    //             setchatSelected(true)
+    //             setchattId(data._id)
+    //   }
+    //   else{
+    //     chattts.map(async(chat)=> {
+    //         if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+    //                         // setfetchAgain(true)
+    //                         // setfetchAgain(false)
+    //                         navigation.navigate('Messaging', {userSelected:
+                        
+    //                             travData})
+    //                         setloading(true)
+    //                         setchatSelected(true)
+    //                         setchattId(chat._id)
+    //         }
+    //         else{
+                
+    //             navigation.navigate('Messaging', {userSelected:
+                        
+    //                 travData})
+    //             setloading(false)
+    //             setchatSelected(true)
+    //             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+    //             setchattId(chat._id)
+    //         }
+    //     })
+    //   }
                 
             }
-            // return data
+            
             
             
         catch(err){
@@ -164,7 +162,8 @@ const TravelerCard = ({
 
     return (
         <>
-        <Pressable style={styles.container} onPress={() =>{
+        
+         <Pressable style={styles.container} onPress={() =>{
             setshowModal(true)
             setModal(true)
         }}>
@@ -317,7 +316,7 @@ const TravelerCard = ({
                     }}>
                         <Text style = {{
                             fontSize: 20,
-                        }}>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
+                        }}>{ traveler.user.firstName+' '+traveler.user.lastName}</Text>
                     </View>
 
                   {/*  <View style={{
@@ -376,7 +375,9 @@ const TravelerCard = ({
           </View>
         </View>
         </Modal>
+       
         </>
+                    
     )
 }
 

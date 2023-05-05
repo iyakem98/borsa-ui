@@ -49,6 +49,7 @@ const TravelerCard = ({traveler}) => {
     const TravelerChat = async(travData) => {
         // console.log(travData)
         const userId = travData._id
+        console.log(userId)
         // console.log(userId)
         // // console.log(userId)
         // // // console.log(travelerId.current)
@@ -68,56 +69,56 @@ const TravelerCard = ({traveler}) => {
         //   console.log(userId)
         //   console.log(chattts[1].users[1]._id)
         // ---
-        if(chattts.length > 0){
-            chattts.map(async(chat) => {
-                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
-                    // setfetchAgain(true)
-                    // setfetchAgain(false)
-                    navigation.navigate('Messaging', {userSelected:
+        // if(chattts.length > 0){
+        //     chattts.map(async(chat) => {
+        //         if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+        //             // setfetchAgain(true)
+        //             // setfetchAgain(false)
+        //             navigation.navigate('Messaging', {userSelected:
                 
-                        travData})
-                    setloading(true)
-                    setchatSelected(true)
-                    setchattId(chat._id)
-                }
-                // ------------------------
-            //     else{
-            //         // setfetchAgain(true)
-            //         // setfetchAgain(false)
-            // navigation.navigate('Messaging', {userSelected:
+        //                 travData})
+        //             setloading(true)
+        //             setchatSelected(true)
+        //             setchattId(chat._id)
+        //         }
+        //         // ------------------------
+        //     //     else{
+        //     //         // setfetchAgain(true)
+        //     //         // setfetchAgain(false)
+        //     // navigation.navigate('Messaging', {userSelected:
         
-            //     travData})
-            //     setloading(false)
-            // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            // setchatSelected(true)
-            // setchattId(data._id)
-            //     }
-            // ------------------------------------------
-            //     else if (chat){
-            //         setloading(false)
-            //         navigation.navigate('Messaging', {userSelected:
+        //     //     travData})
+        //     //     setloading(false)
+        //     // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //     // setchatSelected(true)
+        //     // setchattId(data._id)
+        //     //     }
+        //     // ------------------------------------------
+        //     //     else if (chat){
+        //     //         setloading(false)
+        //     //         navigation.navigate('Messaging', {userSelected:
                 
-            //             travData})
-            //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            //         setchatSelected(true)
-            //         setchattId(data._id)
+        //     //             travData})
+        //     //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //     //         setchatSelected(true)
+        //     //         setchattId(data._id)
     
     
-            //     }
+        //     //     }
     
-              })
+        //       })
 
-        }
-        else{
+        // }
+        // else{
            
-            navigation.navigate('Messaging', {userSelected:
+        //     navigation.navigate('Messaging', {userSelected:
         
-                travData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id)
-        }
+        //         travData})
+        //         setloading(false)
+        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //     setchatSelected(true)
+        //     setchattId(data._id)
+        // }
         //   ---
         //   for(var i = 0; i < chattts.length ; i++){
         //     if(chattts[i].users[0]._id == userId || chattts[i].users[1]._id == userId){

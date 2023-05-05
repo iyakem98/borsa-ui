@@ -1327,3 +1327,151 @@ preview: {
        </View>
        </Pressable>
 })}
+
+
+// --------------------------------------------------
+
+{YchatArr &&    YchatArr.map(chat => {
+                
+  if( chat != null &&  chat.latestMessage != null){
+      formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+      
+      if(chat.users && (chat.users[1].firstName.toLowerCase().includes(query)) && chat.latestMessage != null )
+      {
+          return  <View key={chat._id}> 
+  
+          
+          
+          
+          
+          
+         {triggerChange2 && <Pressable key={chat._id} onPress={()=> {
+          // setYtriggerChange(true)
+          setSelectedChat(chat)
+          setchattId(chat._id)
+       setloading(true)
+              navigation.navigate('Messaging', {chatId: chat._id, userSelected:
+          
+                  user != null ? getSenderFull(user, chat.users) : null })}}
+                  style={styles.box}
+          >
+              <View>
+              <Image 
+                source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+                style = {styles.image}
+             />
+              </View>
+              <View style = {styles.content}>
+                      <View style = {styles.row}>
+                          <Text style = {styles.name}>
+                              {user != null ? getSenderFull(user, chat.users).firstName : null}
+                          </Text> 
+                          <Text style = {styles.subTitle}>
+                              {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                              {/* {formatted_date} */}
+                              Yesterday
+                          </Text>   
+                      </View>
+                      {chat.latestMessage && chat.latestMessage.content ?
+                          <View style = {{
+                          flexDirection: 'row'
+                          }}>
+      
+                          
+                          {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
+                          
+                          <Text  numberOfLines={2} style = {styles.subTitle}>
+                              {chat.latestMessage.content}
+                          </Text>
+                          </View>
+              
+                 : "" }    
+
+              </View>
+
+          </Pressable>
+      
+                      }
+
+         
+          
+          
+              {/* {chat.users && } */}
+          </View>
+      } 
+    
+ 
+  }
+  })}
+{TchatArr &&    TchatArr.map(chat => {
+  
+  if( chat != null &&  chat.latestMessage != null){
+      formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+      
+      if(chat.users && (chat.users[1].firstName.toLowerCase().includes(query)) && chat.latestMessage != null )
+      {
+          return  <View key={chat._id}> 
+  
+          
+          
+          
+          
+          
+         {triggerChange2 && <Pressable key={chat._id} onPress={()=> {
+          // setYtriggerChange(true)
+          setSelectedChat(chat)
+          setchattId(chat._id)
+       setloading(true)
+              navigation.navigate('Messaging', {chatId: chat._id, userSelected:
+          
+                  user != null ? getSenderFull(user, chat.users) : null })}}
+                  style={styles.box}
+          >
+              <View>
+              <Image 
+                source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+                style = {styles.image}
+             />
+              </View>
+              <View style = {styles.content}>
+                      <View style = {styles.row}>
+                          <Text style = {styles.name}>
+                              {user != null ? getSenderFull(user, chat.users).firstName : null}
+                          </Text> 
+                          <Text style = {styles.subTitle}>
+                              {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                              {/* {formatted_date} */}
+                              Yesterday
+                          </Text>   
+                      </View>
+                      {chat.latestMessage && chat.latestMessage.content ?
+                          <View style = {{
+                          flexDirection: 'row'
+                          }}>
+      
+                          
+                          {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
+                          
+                          <Text  numberOfLines={2} style = {styles.subTitle}>
+                              {chat.latestMessage.content}
+                          </Text>
+                          </View>
+              
+                 : "" }    
+
+              </View>
+
+          </Pressable>
+      
+                      }
+
+         
+          
+          
+              {/* {chat.users && } */}
+          </View>
+      } 
+    
+ 
+  }
+  })}
