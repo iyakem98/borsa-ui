@@ -1327,3 +1327,58 @@ preview: {
        </View>
        </Pressable>
 })}
+
+
+
+
+
+
+
+
+
+if(chattts.length == 0){
+  navigation.navigate('Messaging', {userSelected:
+  
+      travData})
+      setloading(false)
+  const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+  setchatSelected(true)
+  setchattId(data._id)
+}
+//   else if(chattts.length > 0){
+else{
+  chattts.map(async(chat) => {
+      console.log(chat._id)
+     
+      
+      if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+          navigation.navigate('Messaging', {userSelected:
+      
+              travData})
+          setloading(true)
+          console.log("loading" + loading)
+          setchatSelected(true)
+          setchattId(chat._id)
+      }
+      else{
+          console.log('create new chat here')
+          // navigation.navigate('Messaging', {userSelected:
+  
+          //             travData})
+          //             setloading(false)
+          //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+          //         setchatSelected(true)
+          //         setchattId(data._id)  
+      }
+      // else{
+      //     navigation.navigate('Messaging', {userSelected:
+  
+      //         travData})
+      //         setloading(false)
+      //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+      //     setchatSelected(true)
+      //     setchattId(data._id)   
+      // }
+    })
+  
+}

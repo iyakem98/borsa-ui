@@ -47,47 +47,58 @@ const BuyerChat = async(buyerData)=> {
     
             }
         }
+        navigation.navigate('Messaging', {userSelected:
+                            
+            buyerData})
+            
+        // // // console.log("loading" + loading)
+         setloading(true)
+        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        // console.log(data)
+        setchatSelected(true)
+        setchattId(data._id)
+        // console.log("chatt id"+  chattId)
 
-        if((chattts.length < 0) || chattts != null || chattts != undefined){
-            navigation.navigate('Messaging', {userSelected:
+        // if((chattts.length < 0) || chattts != null || chattts != undefined){
+        //     navigation.navigate('Messaging', {userSelected:
         
-                buyerData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id)
-        }
-        else{
+        //         buyerData})
+        //         setloading(false)
+        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //     setchatSelected(true)
+        //     setchattId(data._id)
+        // }
+        // else{
 
-            chattts.map(async(chat) => {
-                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
-                    navigation.navigate('Messaging', {userSelected:
+        //     chattts.map(async(chat) => {
+        //         if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+        //             navigation.navigate('Messaging', {userSelected:
                 
-                        buyerData})
-                    setloading(true)
-                    setchatSelected(true)
-                    setchattId(chat._id)
-                }
+        //                 buyerData})
+        //             setloading(true)
+        //             setchatSelected(true)
+        //             setchattId(chat._id)
+        //         }
 
-                else {
-                    navigation.navigate('Messaging', {userSelected:
+        //         else {
+        //             navigation.navigate('Messaging', {userSelected:
         
-                        buyerData})
-                        setloading(false)
-                    const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-                    setchatSelected(true)
-                    setchattId(data._id)
-                }
+        //                 buyerData})
+        //                 setloading(false)
+        //             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //             setchatSelected(true)
+        //             setchattId(data._id)
+        //         }
     
-              })
-           /* navigation.navigate('Messaging', {userSelected:
+        //       })
+        //    /* navigation.navigate('Messaging', {userSelected:
         
-                travData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id) */
-        }
+        //         travData})
+        //         setloading(false)
+        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //     setchatSelected(true)
+        //     setchattId(data._id) */
+        // }
        
        {/* if(chattts.length > 0){
             chattts.map(async(chat) => {

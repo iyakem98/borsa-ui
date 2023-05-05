@@ -202,7 +202,7 @@ const ConnectScreen = () => {
                 return (
                   // <BuyerCard buyer={item} />
                   <Buyer item={item} onPress={()=>{
-                    console.log("first")
+                    // console.log("first")
                     // SheetManager.show('example-two');
                   }} />
                 )
@@ -220,7 +220,7 @@ const ConnectScreen = () => {
                 paddingBottom: 100
               }}
               renderItem={({item}) => {
-                console.log(item)
+                // console.log(item)
                 return (
                   // <TravelerCard traveler= {item} />
                   <TravelerCard item={item} />

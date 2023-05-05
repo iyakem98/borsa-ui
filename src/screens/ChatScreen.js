@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import {View, Text,FlatList, StyleSheet, Pressable, TouchableOpacity, Image, ScrollView, AppState} from 'react-native'
+import {View, Text,FlatList, StyleSheet, Pressable, TouchableOpacity, Image, ScrollView, AppState, Platform} from 'react-native'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 import ChatListItem from '../components/Chats/ChatListItem'
 // import ChatListHeader from '../components/Chats/ChatListItem/ChatListHeader'
@@ -240,8 +240,8 @@ useEffect(() => {
 
                 // if(chat.lastestMessage !== undefined || chat.lastestMessage !== null  ){
                 if(chat.lastestMessage == undefined || chat.lastestMessage == null  ){
-                  console.log('undefined chat(s)')
-                
+                  // console.log('undefined chat(s)')
+                null
                  
                 }
                 if(chat.latestMessage){
@@ -458,7 +458,41 @@ useEffect(() => {
 
     
                   })): (
-                    <View style = {{
+                    <>
+                   
+                    {Platform.OS == 'android' ?<View style = {{
+                      alignItems:'center',
+                      justifyContent: 'center',
+                      // height: '100%',
+                      paddingTop: 30
+                    }}>
+                      <Image 
+                      source = {require ('../../assets/images/pug_glasses.jpeg')} 
+                      style = {{
+                          width: 260,
+                          height: 200,
+                          resizeMode: 'cover',
+                          marginBottom: 20,
+                          background: 'white'
+                      }}
+                      />
+                      <Text style = {{
+                        fontSize: 18,
+                        marginBottom: 20,
+                        marginHorizontal: 10,
+                      }}>Security Doggo wants you to start a new chat</Text>
+                      
+                      <View style={styles.connectBtn} >
+                         <Pressable onPress={() => navigation.navigate("Connect")}>
+                      <Text style={{
+                        fontSize: 18,
+                        color: 'white',
+                      }} >Click here to start chatting </Text>
+                      </Pressable>
+                      </View>
+                      
+                        
+                      </View> :  <View style = {{
                       alignItems:'center',
                       justifyContent: 'center',
                       height: '100%',
@@ -482,11 +516,11 @@ useEffect(() => {
                       <Pressable style={styles.connectBtn} onPress={() => navigation.navigate("Connect")}>
                       <Text style={{
                         fontSize: 18,
-                        color: 'white',
+                        color: 'red',
                       }} >Click here to start chatting </Text>
-                      </Pressable>
-                        
-                      </View>
+                      </Pressable> 
+                      </View>}
+                      </>
             )
             
                   
@@ -516,7 +550,7 @@ const styles = StyleSheet.create({
     
 },
 connectBtn: {
-  backgroundColor: "lightgreen",
+  // backgroundColor: "red",
   backgroundColor: '#593196',
   width: "65%",
   height: 43,

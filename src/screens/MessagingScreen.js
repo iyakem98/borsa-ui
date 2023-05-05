@@ -67,7 +67,8 @@ const MessagingScreen = () => {
     chatSelected, setchatSelected,
     chattId,setchatId,
     loading,  setloading,
-    checkContent, setcheckContent
+    checkContent, setcheckContent,
+    activeToday,setactiveToday,
     } = ChatState(); 
  
   
@@ -89,7 +90,7 @@ const MessagingScreen = () => {
  
   const cameraRef = useRef()
   useLayoutEffect(() => {
-   
+    
     socket.current =io(API_BASE_URL_Socket)
     socket.current.emit("setup", user);
     
@@ -100,18 +101,21 @@ const MessagingScreen = () => {
    
     
   }, [])
-  useEffect(() =>{
-
-
-console.log(`loading is ` + loading)
+  useEffect(()=> {
     fetchMessage()
+  }, [chattId])
+  useEffect(() =>{
+    
+    fetchMessage()
+console.log(`loading is ` + loading)
+    
     selectedChatCompare = selectedChat
     
   
   }, [selectedChat])
   useEffect(() =>{
     chatRouteCompare = chatRoute
-    console.log("======----=-=-", chatRouteCompare)
+    // console.log("======----=-=-", chatRouteCompare)
   
   }, [])
 
@@ -146,6 +150,7 @@ console.log(`loading is ` + loading)
     var storeNewMessage = newmessage
     
       setlatestMess(newmessage)
+      setactiveToday(true)
        setNewwMessage(true)
        setNewMessage('')
       console.log('timeout')
@@ -160,7 +165,7 @@ console.log(`loading is ` + loading)
         }
     }
     
-    if(newmessage && newmessage.length > 0) {
+    
       const {data} = await axios.post(`${API_BASE_URL}message/`, {
         content : newmessage,
         chatId: chattId,
@@ -170,7 +175,7 @@ console.log(`loading is ` + loading)
   
       },
       config)
-    }
+    
  
     console.log("message sent successfully")
 
@@ -199,6 +204,7 @@ console.log(`loading is ` + loading)
   }
   
   const fetchMessage = async() => {
+    console.log('fetching messages')
   
     try{
       const config = {
@@ -211,10 +217,13 @@ console.log(`loading is ` + loading)
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
     console.log("=======", data)
-    if(data.latestMessage == null){
-      setloading(false)
-    }
+    // if(data == undefined || data == [] || data == null){
+    //   // setloading(false)
+    //   setMessages([])
+    // }
+    
     setloading(false)
+
     setMessages(data)
     
     setMessages((state) => {
@@ -227,14 +236,14 @@ console.log(`loading is ` + loading)
     }
     catch(error){
       console.log(error)
-       let msgs =  await AsyncStorage.getItem(`chat-${chattId}`)
-       if(msgs){
-          setMessages(JSON.parse(msgs))
-          setloading(false)
-       }else{
-          setMessages([])
-          setloading(false)
-       }
+      //  let msgs =  await AsyncStorage.getItem(`chat-${chattId}`)
+      //  if(msgs){
+      //     setMessages(JSON.parse(msgs))
+      //     setloading(false)
+      //  }else{
+      //     setMessages([])
+      //     setloading(false)
+      //  }
       }
     }
   

@@ -15,6 +15,7 @@ const width = Dimensions.get("screen").width
 const TravelerCard = ({
     item
 }) => {
+    var changeChat = false
     let traveler = item
     const { user } = useSelector((state) => state.auth)
     const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
@@ -26,24 +27,52 @@ const TravelerCard = ({
     function tweakBuyer() {
         setIsBuyer(!isBuyer)
     }
-
+var store1 = null
+var store2 = null
     const [modal, setModal] = useState(false)
     const [showModal, setshowModal] = useState(false)
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
 
-  useEffect(() =>{
+//   useEffect(() =>{
 
-    dispatch(fetchChat())
-    // console.log(chattts[1])
+//     dispatch(fetchChat())
+//     // console.log(chattts[1])
     
   
-}, [user])
+// }, [user])
+//   useEffect(() =>{
+
+//     dispatch(fetchChat())
+//     // console.log(chattts[1])
+    
+  
+// }, [])
+
+useEffect(() => {
+   
+    // setchattId(null)
+}, [chattId])
+
 
     
     const TravelerChat = async(travData) => {
+        // setchattId(13)
+        // console.log('cccc' + chattId)
+        // store2 = true
+    //     setchattId(false)
+    // setchattId(123)
+    // setchattId((state) => {
+    //   return state
+    // })
+        
+        
+        // setchattId(121)
+        // console.log('ccccddd' + chattId)
+        // console.log('ccccss' + chattId)
         const userId = travData._id
-      
+        const userFName = travData.firstName
+    //   console.log(chattts)
         try{
             const config = {
               headers: {
@@ -51,48 +80,34 @@ const TravelerCard = ({
         
               }
           }
-         console.log("--", chattts)
-         if((chattts.length < 0) || chattts != null || chattts != undefined){
-            navigation.navigate('Messaging', {userSelected:
-        
-                travData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id)
-        }
-        else{
-
-            chattts.map(async(chat) => {
-                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
-                    navigation.navigate('Messaging', {userSelected:
-                
-                        travData})
-                    setloading(true)
-                    setchatSelected(true)
-                    setchattId(chat._id)
-                }
-
-                else {
-                    navigation.navigate('Messaging', {userSelected:
-        
-                        travData})
-                        setloading(false)
-                    const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-                    setchatSelected(true)
-                    setchattId(data._id)
-                }
-    
-              })
-           /* navigation.navigate('Messaging', {userSelected:
-        
-                travData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id) */
-        }
-       
+        //   if(!chattts){
+        //     console.log("ghiegwighiewg")
+        //   }
+        //   else{
+        //     console.log(chattts)
+        //     console.log('existing chat')
+        //   }
+         
+//    console.log(chattts)
+                        
+                       
+                        
+                       
+                        navigation.navigate('Messaging', {userSelected:
+                            
+                            travData})
+                            
+                        // // // console.log("loading" + loading)
+                         setloading(true)
+                        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                        // console.log(data)
+                        setchatSelected(true)
+                        setchattId(data._id)
+                        console.log("chatt id"+  chattId)
+                      
+                        
+                        
+                        
                 
             }
             
@@ -100,6 +115,55 @@ const TravelerCard = ({
         catch(err){
             console.log(err)
         }
+    }
+    const createChat = async(chat, userId, travData, userFName ,config)  => {
+        // console.log(userFName)
+        console.log('user[0]' + chat.users[0].firstName)
+        console.log('user[1]' + chat.users[1].firstName)
+        // if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+        if(chat.users[1]._id == userId){
+            console.log('chat exists')
+                navigation.navigate('Messaging', {userSelected:
+            
+                    travData})
+                setloading(true)
+                // console.log("loading" + loading)
+                setchatSelected(true)
+                setchattId(chat._id)
+            }
+            // else if(chat.users[1].firstName != userFName){
+            // else if(chat.latestMessage == null || chat.latestMessage == undefined){
+            //     // console.log(chat.users[1].firstName )
+            //     navigation.navigate('Messaging', {userSelected:
+        
+            //                     travData})
+            //                     setloading(false)
+                            // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                            
+            //                 setchatSelected(true)
+            //                 setchattId(data._id)   
+            // }
+
+
+
+        //     else if(chat.users[0]._id != userId ||chat.users[1]._id != userId){
+        //     // else if(chat.users[1]._id != userId){
+        //         console.log('no chat users')
+        //         // console.log(chat.users[1].firstName)
+        //         // console.log('chat does not exist')
+        //         
+        //     }
+
+    }
+    const createChat2 = async(chat, userId, travData, userFName ,config)  => {
+        navigation.navigate('Messaging', {userSelected:
+        
+                                travData})
+                                setloading(false)
+                            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                            setchatSelected(true)
+                            setchattId(data._id)   
+        
     }
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
@@ -276,6 +340,8 @@ const TravelerCard = ({
                   paddingVertical: 8,
                   borderRadius: 8
                 }} onPress={()=>{
+                    store1 = true
+                    setchattId(null)
                     TravelerChat(traveler.user)
                 }}>
                   <Text style={{

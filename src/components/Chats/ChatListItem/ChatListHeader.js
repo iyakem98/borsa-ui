@@ -12,11 +12,11 @@ import moment from 'moment';
 // const ChatListHeader = ( {YchatArr, TchatArr, OchatArr} ) => {
 const ChatListHeader = ( {chatArr} ) => {
     // console.log("todays chats " + TchatArr.length)
-    if(chatArr != undefined)
-    console.log("All chatsss " + chatArr)
-    else{
-        console.log(false)
-    }
+    // if(chatArr != undefined)
+    // console.log("All chatsss " + chatArr)
+    // else{
+    //     console.log(false)
+    // }
     // if(TchatArr != undefined)
     // console.log("Todays chatsss " + TchatArr)
     // if(OchatArr != undefined)
@@ -108,7 +108,7 @@ const ChatListHeader = ( {chatArr} ) => {
 
             // if(chat.lastestMessage !== undefined || chat.lastestMessage !== null  ){
             if(chat.lastestMessage == undefined || chat.lastestMessage == null  ){
-              console.log('undefined chat(s)')
+              // console.log('undefined chat(s)')
             
              
             }

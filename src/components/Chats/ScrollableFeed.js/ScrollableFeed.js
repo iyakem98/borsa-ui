@@ -7,7 +7,6 @@ import { isSameSender, isLastMessage, isSameSenderMargin, isSameUser, getSender 
 import { ChatState } from '../../../context/ChatProvider'
 import { FontAwesome5 } from '@expo/vector-icons';
 
-
 const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
 
   const scrollViewRef = useRef();
@@ -16,7 +15,8 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
     sentMessage, setsentMessage, 
     receivedMessage, setreceivedMessage,
     messageSentOrReceived, setmessageSentOrReceived,
-    NewwMessage, setNewwMessage
+    NewwMessage, setNewwMessage,
+    activeToday,setactiveToday
         } = ChatState()
         const [Today, setToday] = useState(false)
         const [Yesterday, setYesterday] = useState(false)
@@ -324,6 +324,8 @@ const OtherFunc = (messages)=>{
       todaytest = true
       // console.log(todaytest)
       Tmessages.push(m)
+      setactiveToday(false)
+
     }
     else if(d == 1){
       Ymessages.push(m)
@@ -471,7 +473,10 @@ const OtherFunc = (messages)=>{
      
     
 })}
-{Tmessages && Today &&   <View style={{"alignItems": "center", "marginBottom" : 10}}>
+{Tmessages && Today && !activeToday &&  <View style={{"alignItems": "center", "marginBottom" : 10}}>
+        <Text >Today</Text>
+      </View>}
+{activeToday &&  <View style={{"alignItems": "center", "marginBottom" : 10}}>
         <Text >Today</Text>
       </View>}
     {Tmessages && Tmessages.map((m, i) => {
