@@ -8,7 +8,7 @@ const BuyerCard = ({
     item,
     addToWislistTraveler
 }) => {
-    console.log(item)
+    // console.log(item)
     const [modalOpen, setModalOpen] = useState(true);
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
