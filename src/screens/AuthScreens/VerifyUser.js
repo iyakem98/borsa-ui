@@ -1,21 +1,23 @@
 import {View, Text, SafeAreaView, Pressable, ScrollView} from 'react-native'
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../components/Shared/Header';
 import { TextInput } from 'react-native-paper';
-import { showMessage } from 'react-native-flash-message';
+import { showMessage } from "react-native-flash-message";
 
 
-const LoginScreen = ({navigation}) => {
+const VerifyUser = ({navigation, route}) => {
+    const params = route.params
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [userEmailError, setUserEmailError] = useState("");
-  const [userPasswordError, setUserPasswordError] = useState("");
+  const [userOtp, setUserOtp] = useState("");
+
+  useEffect(()=>{
+    console.log("--", params)
+  } ,[])
 
   const handleUserData = async (value) => {
     try {
@@ -33,23 +35,18 @@ const LoginScreen = ({navigation}) => {
   const handleLogin = async() => {
     setIsLoading(true)
     try {
-      const res = await axios.post('http://143.198.168.244/api/users/forgot-password', {
-        email: userEmail
+      const res = await axios.post('http://143.198.168.244/api/users/verify-email', {
+        userId: params?._id,
+        otp: userOtp
       });
       console.log(res.data);
-      await navigation.navigate('VerifyUser', res.data)
+      await handleUserData();
     } catch(e) {
       console.log("------------", e.response.data)
-      if(e?.response?.data?.message === "Invalid Email") {
+      if(e?.response?.data?.message === "Invalid Request, missing parameters") {
         showMessage({
-            message: "Invalid Email",
-            description: `Please make sure you have a registered email`,
-            type: "warning",
-        });
-      } else {
-        showMessage({
-            message: "Something went wrong",
-            description: `Please check your email or connection`,
+            message: "Invalid Code",
+            description: `Please make sure the sent to your email is the same.`,
             type: "warning",
         });
       }
@@ -72,18 +69,18 @@ const LoginScreen = ({navigation}) => {
           fontSize: 30,
           marginTop: 10,
         }}>
-          Forgot your Password?
+          Verify your email?
         </Text>
         <Text style={{
           fontFamily: "Poppins_400Regular",
           fontSize: 14,
         }}>
-          We will send you an email after you put your email.
+          Please fill the Fields from your email we recently sent you.
         </Text>
         <TextInput
-          label="Email"
-          value={userEmail}
-          onChangeText={text => setUserEmail(text)}
+          label="Code"
+          value={userOtp}
+          onChangeText={text => setUserOtp(text)}
           mode="outlined"
           style={{
             marginTop: 15,
@@ -118,5 +115,5 @@ const LoginScreen = ({navigation}) => {
   )
 }
 
-export default LoginScreen
+export default VerifyUser
 

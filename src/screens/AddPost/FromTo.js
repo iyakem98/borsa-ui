@@ -49,16 +49,16 @@ const FromTo = ({navigation}) => {
 
     const findTravelerFrom = (ar) => {
         let lngth = ar.length
-        let country = ar[lngth-1].value
-        let city = ar[lngth-2].value
+        let country = ar[lngth-1]?.value
+        let city = ar[lngth-2]?.value
         console.log("workeeeeeed", `${city}, ${country}`)
         setTravelerFrom(`${city}, ${country}`)
     }
 
     const findTravelerTo = (ar) => {
         let lngth = ar.length
-        let country = ar[lngth-1].value
-        let city = ar[lngth-2].value
+        let country = ar[lngth-1]?.value
+        let city = ar[lngth-2]?.value
         console.log("workeeeeeed", `${city}, ${country}`)
         setTravelerTo(`${city}, ${country}`)
     }
