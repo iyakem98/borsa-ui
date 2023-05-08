@@ -124,8 +124,8 @@ console.log(`loading is ` + loading)
     
     socket.current.on("message recieved", (newMessageReceived) => {
       setMessages([...messages, newMessageReceived])
-      console.log('messaging screen ')
-      console.log('message recieved')
+      // console.log('messaging screen ')
+      // console.log('message recieved')
       //  setreceivedMessage(true)
      
 
@@ -297,12 +297,58 @@ if(loading){
 
  
 
-  return ( 
-    <>
-{!loading &&  <KeyboardAwareScrollView
+  return ( <>
+
+
+
+ 
+    
+
+
+ 
+
+
+
+
+ <View>
+    
+    </View>
+    
+    {!loading &&  
+  
+  <KeyboardAvoidingView 
+  behavior='padding'
+  keyboardVerticalOffset={
+  Platform.select({
+     ios: () => -400,
+     android: () => -400
+  })()
+ 
+}
+style={styles.bg}
 >
-  <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
-  <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
+    <View>
+    
+    <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
+    </View>
+    </KeyboardAvoidingView>}
+  
+  
+   
+   {!loading && 
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+      keyboardVerticalOffset={
+        Platform.select({
+           ios: () => 76,
+           android: () => 110
+        })()
+       
+      }
+      //style={styles.TextSendingcontainer}
+      > 
+
+      <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
  
   {isTyping ? (
     <View>
@@ -343,10 +389,15 @@ if(loading){
     </Pressable>
 
     </SafeAreaView>
-   
-  </KeyboardAwareScrollView>}
-    </>
-  
+
+ 
+ </KeyboardAvoidingView>
+ }
+
+
+
+
+</>  
     
   
   
@@ -367,7 +418,6 @@ const styles = StyleSheet.create({
     backgroundColor: "whitesmoke",
     backgroundColor:'white',
     padding: 2,
-    paddingTop: 10,
     paddingHorizontal: 10,
     alignItems: "center",
   },
@@ -394,16 +444,6 @@ const styles = StyleSheet.create({
 
 
  },
- input: {
-  flex: 1,
-  backgroundColor: "white",
-  padding: 5,
-  paddingHorizontal: 10,
-  marginHorizontal: 10,
-  borderRadius: 50,
-  borderColor: "lightgray",
-  borderWidth: StyleSheet.hairlineWidth,
-},
  minicamera: {
   height: 100
  },
