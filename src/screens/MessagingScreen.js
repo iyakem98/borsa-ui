@@ -124,8 +124,10 @@ console.log(`loading is ` + loading)
     
     socket.current.on("message recieved", (newMessageReceived) => {
       setMessages([...messages, newMessageReceived])
-      console.log('messaging screen ')
-      console.log('message recieved')
+      return () => socket.current.off("message recieved");
+      //return () =>   socket.current.disconnect()
+     //console.log('messaging screen ')
+      //console.log('message recieved')
       //  setreceivedMessage(true)
      
 
@@ -297,63 +299,114 @@ if(loading){
 
  
 
-  return ( 
-    <>
-{!loading &&  <KeyboardAwareScrollView
->
-  <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
-  <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
+return ( <>
+
+
+
  
-  {isTyping ? (
-    <View>
-      <Text> isTyping... </Text>
-    </View>
-  ) : null}
-   <TextInput 
-      value={newmessage}
-      onChangeText={setNewMessage}
-      style = {styles.input} 
-      multiline
-      placeholder='type your message...'/>
-    <Pressable style = {{
-      backgroundColor: '#13b955',
-      padding: 8,
-      borderRadius: 50,
-
-    }}
-      onPress={() => {
-        console.log("new message" + newmessage)
-        if(newmessage == null || newmessage == undefined || newmessage == ""){
-          console.log('undefined')
-        }
-        else{
-          sendMessage()
-          // setcheckContent(true)
-          scrollViewRef.current.scrollToEnd()
-        }
-        // sendMessage()
-          // setcheckContent(true)
-        //   scrollViewRef.current.scrollToEnd()
-      
-        
-        
-      }}>
-    {/*<MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} /> */}
-    <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
-    </Pressable>
-
-    </SafeAreaView>
-   
-  </KeyboardAwareScrollView>}
-    </>
-  
     
-  
-  
-   
-  )
-}
 
+
+ 
+
+
+
+
+  <View>
+     
+     </View>
+     
+     {!loading &&  
+   
+   <KeyboardAvoidingView 
+   behavior='padding'
+   keyboardVerticalOffset={
+   Platform.select({
+      ios: () => -400,
+      android: () => -400
+   })()
+  
+ }
+ style={styles.bg}
+ >
+     <View>
+     
+     <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
+     </View>
+     </KeyboardAvoidingView>}
+   
+   
+    
+    {!loading && 
+     <KeyboardAvoidingView
+       behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+       keyboardVerticalOffset={
+         Platform.select({
+            ios: () => 76,
+            android: () => 110
+         })()
+        
+       }
+       //style={styles.TextSendingcontainer}
+       > 
+ 
+       <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
+  
+   {isTyping ? (
+     <View>
+       <Text> isTyping... </Text>
+     </View>
+   ) : null}
+    <TextInput 
+       value={newmessage}
+       onChangeText={setNewMessage}
+       style = {styles.input} 
+       multiline
+       placeholder='type your message...'/>
+     <Pressable style = {{
+       backgroundColor: '#13b955',
+       padding: 8,
+       borderRadius: 50,
+ 
+     }}
+       onPress={() => {
+         console.log("new message" + newmessage)
+         if(newmessage == null || newmessage == undefined || newmessage == ""){
+           console.log('undefined')
+         }
+         else{
+           sendMessage()
+           // setcheckContent(true)
+           scrollViewRef.current.scrollToEnd()
+         }
+         // sendMessage()
+           // setcheckContent(true)
+         //   scrollViewRef.current.scrollToEnd()
+       
+         
+         
+       }}>
+     {/*<MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} /> */}
+     <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
+     </Pressable>
+ 
+     </SafeAreaView>
+ 
+  
+  </KeyboardAvoidingView>
+  }
+ 
+ 
+ 
+ 
+ </>  
+     
+   
+   
+    
+   )
+ }
+ 
 
 export default MessagingScreen
 
