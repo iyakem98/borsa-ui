@@ -42,6 +42,7 @@ import PostIndex from "../screens/AddPost/index"
 import FromTo from "../screens/AddPost/FromTo"
 import Description from "../screens/AddPost/Description"
 import PostAdditional from "../screens/AddPost/PostAdditional"
+import VerifyUser from "../screens/AuthScreens/VerifyUser"
 
 
 const Stack = createStackNavigator();
@@ -169,6 +170,7 @@ const Navigator = ({showOnBoarding}) => {
       {/* <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} /> */}
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown: false}}/>
+      <Stack.Screen name="VerifyUser" component={VerifyUser} options={{headerShown: false}}/>
       <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
     </Stack.Navigator>
    )}     

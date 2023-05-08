@@ -47,14 +47,15 @@ const OnBoarding = ({navigation}) => {
                     fontFamily: "Poppins_600SemiBold",
                     fontSize: 30
                 }}>
-                    Best place for you to get Medicine across country's
+                    Find cheap ways to deliver your packages
                 </Text>
                 <Text style={{
                     color: "#ddd",
                     fontFamily: "Poppins_400Regular",
                     fontSize: 14,
+                    marginTop: 10
                 }}>
-                    a gradient from the first color to the second from the 50% point to the 80% point
+                    We will help you connect with peoples across the world to deliver your package or in reverse be the delivery person
                 </Text>
                 <Pressable style={{
                     backgroundColor: "#514590",
