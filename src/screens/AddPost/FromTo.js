@@ -345,17 +345,22 @@ const FromTo = ({navigation}) => {
                 <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
                 
                 <Text style={{
-                    marginTop: 20,
-                    fontFamily: "Poppins_400Regular"
+                   marginTop: 20,
+                   marginBottom: 3,
+                   fontFamily: "Poppins_400Regular",
+                   fontSize: 18,
                 }}>
                     Departure
                 </Text>
                 <View style={{
                     borderWidth: 1,
-                    borderColor: "#777",
+                    borderColor: "gray",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
                     paddingHorizontal: 5,
                     //paddingVertical: 5,
-                    borderRadius: 5
+                    borderRadius: 5,
                 }}>
                     
                    
@@ -392,17 +397,22 @@ const FromTo = ({navigation}) => {
                 </View>
                 </View>
                 <Text style={{
-                    marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
+                     marginTop: 20,
+                     marginBottom: 3,
+                     fontFamily: "Poppins_400Regular",
+                     fontSize: 18,
                 }}>
                     Destination
                 </Text>
                 <View style={{
                     borderWidth: 1,
-                    borderColor: "#777",
+                    borderColor: "gray",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
                     paddingHorizontal: 5,
                     //paddingVertical: 5,
-                    borderRadius: 5
+                    borderRadius: 5,
                 }}>
                     
 
@@ -437,8 +447,10 @@ const FromTo = ({navigation}) => {
                         />
                 </View>
                 <Text style={{
-                    marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
+                     marginTop: 20,
+                     marginBottom: 3,
+                     fontFamily: "Poppins_400Regular",
+                     fontSize: 18,
                 }}>
                    Flight Date
                 </Text>
@@ -449,7 +461,15 @@ const FromTo = ({navigation}) => {
                     paddingVertical: 11,
                     borderRadius: 5,
                     flexDirection: "row",
-                    justifyContent: "space-between"
+                    justifyContent: "space-between",
+                    borderWidth: 1,
+                    borderColor: "gray",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
+                    paddingHorizontal: 5,
+                    //paddingVertical: 5,
+                    borderRadius: 5,
                 }} onPress={()=>{
                     setShowTravelerDatePickerFrom(true)
                 }}>

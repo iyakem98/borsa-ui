@@ -145,7 +145,8 @@ const Description = ({navigation}) => {
                     marginTop: 2,
                 }}>
                     <Text style={{
-                        fontFamily: "Poppins_400Regular"
+                        fontFamily: "Poppins_400Regular",
+                        fontSize: 18,
                     }}>
                         Item name
                     </Text>
@@ -153,11 +154,45 @@ const Description = ({navigation}) => {
                         label="Name of item"
                         value={itmName}
                         onChangeText={text => setItmName(text)}
-                        mode="outlined"
+                        //mode="outlined"
                         style={{
                             width: "100%",
-                            marginTop:10
+                            marginTop:10,
+                            backgroundColor: 'white',
                         }}
+                        // error={userPasswordError}
+                        outlineStyle={{
+                            backgroundColor: "#fff",
+                        }}
+                        placeholderTextColor= "#e8e8e8"
+                    />
+                </View>
+
+              
+                <View style={{
+                    //flexDirection: "row",
+                    alignItems: "left",
+                    justifyContent: "space-between",
+                    marginTop: 7,
+                }}>
+                    <Text style={{
+                        fontFamily: "Poppins_400Regular",
+                        fontSize: 18,
+                        marginTop: 20
+                    }}>
+                        Weight (in kg)
+                    </Text>
+                    <TextInput
+                        label="Ex. 50kg"
+                        value={kilo}
+                        onChangeText={text => setKilo(text)}
+                        //mode="outlined"
+                        style={{
+                            width: "100%",
+                            marginTop:10,
+                            backgroundColor: 'white'
+                        }}
+                        keyboardType="numeric"
                         // error={userPasswordError}
                         outlineStyle={{
                             backgroundColor: "#fff",
@@ -173,13 +208,16 @@ const Description = ({navigation}) => {
                     marginTop: 10,
                 }}>
                     <Text style={{
-                        fontFamily: "Poppins_400Regular"
+                        fontFamily: "Poppins_400Regular",
+                        fontSize: 18,
+                        marginTop: 20,
                     }}>
                         Description (optional)
                     </Text>
                     <TextInput
                         label="Describe your item"
                         value={itmDesc}
+                        multiline = {true}
                         onChangeText={text => setItmDesc(text)}
                         mode="outlined"
                         style={{
@@ -190,39 +228,12 @@ const Description = ({navigation}) => {
                         // error={userPasswordError}
                         outlineStyle={{
                             backgroundColor: "#fff",
+                            borderColor: 'lightgray',
                         }}
                         placeholderTextColor= "#eee"
                     />
                 </View>
 
-                <View style={{
-                    //flexDirection: "row",
-                    alignItems: "left",
-                    justifyContent: "space-between",
-                    marginTop: 7,
-                }}>
-                    <Text style={{
-                        fontFamily: "Poppins_400Regular"
-                    }}>
-                        Weight (in kg)
-                    </Text>
-                    <TextInput
-                        label="Ex. 50kg"
-                        value={kilo}
-                        onChangeText={text => setKilo(text)}
-                        mode="outlined"
-                        style={{
-                            width: "100%",
-                            marginTop:10
-                        }}
-                        keyboardType="numeric"
-                        // error={userPasswordError}
-                        outlineStyle={{
-                            backgroundColor: "#fff",
-                        }}
-                        placeholderTextColor= "#eee"
-                    />
-                </View>
 
 
                 <Pressable style={{
@@ -265,7 +276,8 @@ const Description = ({navigation}) => {
                     marginTop: 2,
                 }}>
                     <Text style={{
-                        fontFamily: "Poppins_400Regular"
+                        fontFamily: "Poppins_400Regular",
+                        fontSize: 18,
                     }}>
                         Proof code
                     </Text>
@@ -273,16 +285,17 @@ const Description = ({navigation}) => {
                         label="Proof code"
                         value={proofCode}
                         onChangeText={text => setProofCode(text)}
-                        mode="outlined"
+                        //mode="outlined"
                         style={{
                             width: "100%",
-                            marginTop:10
+                            marginTop:10,
+                            backgroundColor: 'white',
                         }}
                         // error={userPasswordError}
                         outlineStyle={{
                             backgroundColor: "#fff",
                         }}
-                        placeholderTextColor= "#eee"
+                        placeholderTextColor= "#e8e8e8"
                         // keyboardType='numeric'
                     />
                 </View>
@@ -294,7 +307,9 @@ const Description = ({navigation}) => {
                     marginTop: 10,
                 }}>
                     <Text style={{
-                        fontFamily: "Poppins_400Regular"
+                        fontFamily: "Poppins_400Regular",
+                        fontSize: 18,
+                        marginTop: 20,
                     }}>
                         Luggage space (in kg)
                     </Text>
@@ -303,17 +318,18 @@ const Description = ({navigation}) => {
                         value={luggageSpace}
                         keyboardType="numeric"
                         onChangeText={text => setLuggageSpace(text)}
-                        mode="outlined"
+                        //mode="outlined"
                         style={{
                             width: "100%",
-                            marginTop:2,
-                            height:100,
+                            marginTop:10,
+                            backgroundColor: 'white',
                         }}
                         // error={userPasswordError}
                         outlineStyle={{
                             backgroundColor: "#fff",
                         }}
-                        placeholderTextColor= "#eee"
+                        placeholderTextColor= "#e8e8e8"
+                        //placeholderTextColor= "#eee"
                     />
                 </View>
 
