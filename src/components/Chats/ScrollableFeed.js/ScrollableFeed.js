@@ -187,7 +187,10 @@ const OtherFunc = (messages)=>{
     return <>
     <View style={{"alignItems": "center", "marginBottom" : 10}}>
       {/* <Text>{main_formatted_date}</Text> */}
-      <Text>{date}</Text>
+      <Text style = {{
+        marginBottom: 10,
+        marginTop: 30,
+      }}>{date}</Text>
     </View>
     {messages && messages.map((m, i) => {
        var test_date = moment(m.createdAt).format("YYYY-MM-DD")
@@ -239,6 +242,7 @@ const OtherFunc = (messages)=>{
           m.sender._id === user._id ? "#fff" : "#404040"
       }`,
         fontSize: 12,
+        marginTop: 2,
        }}>{formatted_date}</Text>
        {
 
@@ -410,7 +414,10 @@ const OtherFunc = (messages)=>{
     
 })}
 {Ymessages && Yesterday &&  <View style={{"alignItems": "center", "marginBottom" : 10}}>
-        <Text>Yesterday</Text>
+        <Text style = {{
+          marginBottom: 10,
+          marginTop: 30,
+        }}>Yesterday</Text>
       </View>}
     {Ymessages && Ymessages.map((m, i) => {
        const formatted_date =  moment(m.createdAt).format("LT")
@@ -443,10 +450,28 @@ const OtherFunc = (messages)=>{
        
     
      <View style={{flexDirection:"row"}}>
-       <Text style={{color:"white"}}>{formatted_date}</Text>
+     <Text style={{
+        color: `${
+          m.sender._id === user._id ? "#fff" : "#404040"
+      }`,
+        fontSize: 12,
+        marginTop: 2,
+       }}>{formatted_date}</Text>
        {
-         
-      <Ionicons name="checkmark-outline" size={20} color="white" />
+
+       m.sender._id == user._id? (
+        <Ionicons name="checkmark-outline" size={17} color="white" />
+      
+       ): (
+       <View>
+      </View>
+      
+       )
+       
+
+        
+               
+     
       
       
       
@@ -476,7 +501,10 @@ const OtherFunc = (messages)=>{
     
 })}
 {Tmessages && Today && !activeToday &&  <View style={{"alignItems": "center", "marginBottom" : 10}}>
-        <Text >Today</Text>
+        <Text style = {{
+          marginBottom: 10,
+          marginTop: 30,
+        }} >Today</Text>
       </View>}
 {activeToday &&  <View style={{"alignItems": "center", "marginBottom" : 10}}>
         <Text >Today</Text>
@@ -512,15 +540,24 @@ const OtherFunc = (messages)=>{
        
     
      <View style={{flexDirection:"row", marginTop:3}}>
-       <Text style={{
+     <Text style={{
         color: `${
           m.sender._id === user._id ? "#fff" : "#404040"
       }`,
         fontSize: 12,
+        marginTop: 2
        }}>{formatted_date}</Text>
        {
-         
-      <Ionicons name="checkmark-outline" size={20} color="white" />
+
+       m.sender._id == user._id? (
+        <Ionicons name="checkmark-outline" size={17} color="white" />
+      
+       ): (
+       <View>
+      </View>
+      
+       )
+      
       
       
       

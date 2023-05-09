@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, FlatList, SectionList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
 import { TextInput } from 'react-native-paper'
@@ -8,6 +8,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment'
 import GooglePlaces from 'react-native-autocomplete-googleplaces-tnmt'
 import { useRoute } from '@react-navigation/native'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 const FromTo = ({navigation}) => {
     const [countryFromCode, setCountryFromCode] = useState('FR')
@@ -34,7 +35,10 @@ const FromTo = ({navigation}) => {
     const findLocationFrom = (ar) => {
         let lngth = ar.length
         let country = ar[lngth-1].value
-        let city = ar[lngth-2].value
+        let city = ar[0].value
+        if (lngth > 2) {
+            city += ', ' + ar[1].value
+        }
         console.log("workeeeeeed", `${city}, ${country}`)
         setCountryFrom(`${city}, ${country}`)
     }
@@ -42,7 +46,10 @@ const FromTo = ({navigation}) => {
     const findLocationTo = (ar) => {
         let lngth = ar.length
         let country = ar[lngth-1].value
-        let city = ar[lngth-2].value
+        let city = ar[0].value
+        if (lngth > 2) {
+            city += ', ' + ar[1].value
+        }
         console.log("workeeeeeed", `${city}, ${country}`)
         setCountryTo(`${city}, ${country}`)
     }
@@ -50,7 +57,10 @@ const FromTo = ({navigation}) => {
     const findTravelerFrom = (ar) => {
         let lngth = ar.length
         let country = ar[lngth-1]?.value
-        let city = ar[lngth-2]?.value
+        let city = ar[0]?.value
+        if (lngth > 2) {
+            city += ', ' + ar[1].value
+        }
         console.log("workeeeeeed", `${city}, ${country}`)
         setTravelerFrom(`${city}, ${country}`)
     }
@@ -58,7 +68,10 @@ const FromTo = ({navigation}) => {
     const findTravelerTo = (ar) => {
         let lngth = ar.length
         let country = ar[lngth-1]?.value
-        let city = ar[lngth-2]?.value
+        let city = ar[0]?.value
+        if (lngth > 2) {
+            city += ', ' + ar[1].value
+        }
         console.log("workeeeeeed", `${city}, ${country}`)
         setTravelerTo(`${city}, ${country}`)
     }
@@ -74,53 +87,121 @@ const FromTo = ({navigation}) => {
             <Header title={route.params.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
             {route.params.cardType == 2 && 
             <>
-                <ScrollView contentContainerStyle={styles.scrollView}>
+                <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
                 
                 <Text style={{
                     marginTop: 20,
-                    fontFamily: "Poppins_400Regular"
+                    marginBottom: 3,
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 18,
                 }}>
                     Pick Up
                 </Text>
                 <View style={{
                     borderWidth: 1,
-                    borderColor: "#777",
+                    borderColor: "gray",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
                     paddingHorizontal: 5,
-                    paddingVertical: 5,
-                    borderRadius: 5
+                    //paddingVertical: 5,
+                    borderRadius: 5,
+                    //width: "95%"
                 }}>
                     
                    
                    <View style={styles.container}>
-                        <GooglePlaces 
+                      {/*  <GooglePlaces 
 					apiKey="AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4" //required (Get from https://developers.google.com/places/web-service/get-api-key)
-					onAddressSelect={(value)=>findLocationFrom(value.terms)}
-				/>
+					onAddressSelect={(value)=>findLocationFrom(value.terms)} 
+            /> */}
+
+                <GooglePlacesAutocomplete
+                        placeholder='Enter your pickup location'
+                        onPress={(value)=>findLocationFrom(value.terms)}
+                        query={{
+                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
+                            language: 'en',
+                            types: '(cities)'
+                        }}
+                        //keyboardAppearance= {'dark'}
+                        styles={{
+                          textInputContainer: {
+                            // backgroundColor: 'grey',
+                          },
+                          textInput: {
+                            //height: 50,
+                            border:"1px solid black",
+                            width:300,
+                            color: '#5d5d5d',
+                            fontSize: 16,
+                            borderRadius:10,
+                          },
+                          predefinedPlacesDescription: {
+                            color: '#1faadb',
+                          },
+                        }}
+                        />
+
                 </View>
                 </View>
                 <Text style={{
-                    marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
+                    marginTop: 20,
+                    marginBottom: 3,
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 18,
                 }}>
                     Destination
                 </Text>
                 <View style={{
                     borderWidth: 1,
-                    borderColor: "#777",
+                    borderColor: "gray",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
                     paddingHorizontal: 5,
-                    paddingVertical: 5,
-                    borderRadius: 5
+                    //paddingVertical: 5,
+                    borderRadius: 5,
+                    //width: "95%"
                 }}>
                     
 
-                <GooglePlaces 
+                {/*<GooglePlaces 
 					apiKey="AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4" //required (Get from https://developers.google.com/places/web-service/get-api-key)
 					onAddressSelect={(value)=>findLocationTo(value.terms)}
-				/>
+            /> */}
+
+                <GooglePlacesAutocomplete
+                        placeholder='Enter your destination'
+                        onPress={(value)=>findLocationTo(value.terms)}
+                        query={{
+                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
+                            language: 'en',
+                            types: '(cities)'
+                        }}
+                        styles={{
+                          textInputContainer: {
+                            // backgroundColor: 'grey',
+                          },
+                          textInput: {
+                            //height: 50,
+                            border:"1px solid black",
+                            width:300,
+                            color: '#5d5d5d',
+                            fontSize: 16,
+                            borderRadius:10,
+                          },
+                          predefinedPlacesDescription: {
+                            color: '#1faadb',
+                          },
+                        }}
+                        />
                 </View>
                 <Text style={{
-                    marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
+                    marginTop: 20,
+                    marginBottom: 3,
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 18,
                 }}>
                     Date from
                 </Text>
@@ -130,10 +211,22 @@ const FromTo = ({navigation}) => {
                     paddingHorizontal: 15,
                     paddingVertical: 11,
                     borderRadius: 5,
+                    borderWidth: 1,
+                    borderColor: "gray",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
+                    paddingHorizontal: 5,
+                    //paddingVertical: 5,
+                    borderRadius: 5,
+                    width: "95%",
                     flexDirection: "row",
                     justifyContent: "space-between"
                 }} onPress={()=>{
-                    setShowDatePickerFrom(true)
+                    if (showDatePickerFrom == false && showDatePickerTo == true) {
+                        setShowDatePickerTo(false)
+                    }
+                    setShowDatePickerFrom(!showDatePickerFrom)
                 }}>
                     <Text style={{
                         fontFamily: "Poppins_500Medium"
@@ -141,21 +234,36 @@ const FromTo = ({navigation}) => {
                     <AntDesign name="calendar" size={24} color="#777" />
                 </Pressable>
                 <Text style={{
-                    marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
+                    marginTop: 20,
+                    marginBottom: 3,
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 18,
                 }}>
                     Date to
                 </Text>
                 <Pressable style={{
-                    borderWidth: 1,
-                    borderColor: "#777",
-                    paddingHorizontal: 15,
-                    paddingVertical: 11,
-                    borderRadius: 5,
-                    flexDirection: "row",
-                    justifyContent: "space-between"
+                     borderWidth: 1,
+                     borderColor: "#777",
+                     paddingHorizontal: 15,
+                     paddingVertical: 11,
+                     borderRadius: 5,
+                     borderWidth: 1,
+                     borderColor: "gray",
+                     borderWidth: 0,
+                     borderBottomWidth: 1,
+                     borderColor: 'lightgray',
+                     paddingHorizontal: 5,
+                     //paddingVertical: 5,
+                     borderRadius: 5,
+                     width: "95%",
+                     flexDirection: "row",
+                     justifyContent: "space-between"
+                    
                 }} onPress={()=>{
-                    setShowDatePickerTo(true)
+                    if (showDatePickerTo == false && showDatePickerFrom == true){
+                        setShowDatePickerFrom(false)
+                    }
+                    setShowDatePickerTo(!showDatePickerTo)
                 }}>
                     <Text style={{
                         fontFamily: "Poppins_500Medium"
@@ -166,11 +274,12 @@ const FromTo = ({navigation}) => {
                     backgroundColor: "#514590",
                     paddingVertical: 15,
                     borderRadius: 5,
-                    marginBottom: 25,
+                    marginTop: 35,
+                    //marginBottom: 25,
                     width: "100%",
-                    position: "absolute",
+                    //position: "absolute",
                     bottom: 0,
-                    left: 15
+                    //left: 15
                 }}
                 onPress={()=>
                     {
@@ -233,53 +342,115 @@ const FromTo = ({navigation}) => {
 
     {route.params.cardType == 1 && 
             <>
-                <ScrollView contentContainerStyle={styles.scrollView}>
+                <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
                 
                 <Text style={{
-                    marginTop: 20,
-                    fontFamily: "Poppins_400Regular"
+                   marginTop: 20,
+                   marginBottom: 3,
+                   fontFamily: "Poppins_400Regular",
+                   fontSize: 18,
                 }}>
                     Departure
                 </Text>
                 <View style={{
                     borderWidth: 1,
-                    borderColor: "#777",
+                    borderColor: "gray",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
                     paddingHorizontal: 5,
-                    paddingVertical: 5,
-                    borderRadius: 5
+                    //paddingVertical: 5,
+                    borderRadius: 5,
                 }}>
                     
                    
                    <View style={styles.container}>
-                        <GooglePlaces 
+                       {/* <GooglePlaces 
 					apiKey="AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4" //required (Get from https://developers.google.com/places/web-service/get-api-key)
 					onAddressSelect={(value)=>findTravelerFrom(value.terms)}
-				/>
+            /> */}
+                <GooglePlacesAutocomplete
+                        placeholder='Enter your departure city'
+                        onPress={(value)=>findTravelerFrom(value.terms)}
+                        query={{
+                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
+                            language: 'en',
+                            types: '(cities)'
+                        }}
+                        styles={{
+                          textInputContainer: {
+                            // backgroundColor: 'grey',
+                          },
+                          textInput: {
+                            //height: 50,
+                            border:"1px solid black",
+                            width:300,
+                            color: '#5d5d5d',
+                            fontSize: 16,
+                            borderRadius:10,
+                          },
+                          predefinedPlacesDescription: {
+                            color: '#1faadb',
+                          },
+                        }}
+                        />
                 </View>
                 </View>
                 <Text style={{
-                    marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
+                     marginTop: 20,
+                     marginBottom: 3,
+                     fontFamily: "Poppins_400Regular",
+                     fontSize: 18,
                 }}>
                     Destination
                 </Text>
                 <View style={{
                     borderWidth: 1,
-                    borderColor: "#777",
+                    borderColor: "gray",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
                     paddingHorizontal: 5,
-                    paddingVertical: 5,
-                    borderRadius: 5
+                    //paddingVertical: 5,
+                    borderRadius: 5,
                 }}>
                     
 
-                <GooglePlaces 
+                {/*<GooglePlaces 
 					apiKey="AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4" //required (Get from https://developers.google.com/places/web-service/get-api-key)
 					onAddressSelect={(value)=>findTravelerTo(value.terms)}
-				/>
+            /> */}
+                 <GooglePlacesAutocomplete
+                        placeholder='Enter your destination'
+                        onPress={(value)=>findTravelerTo(value.terms)}
+                        query={{
+                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
+                            language: 'en',
+                            types: '(cities)'
+                        }}
+                        styles={{
+                          textInputContainer: {
+                            // backgroundColor: 'grey',
+                          },
+                          textInput: {
+                            //height: 50,
+                            border:"1px solid black",
+                            width:300,
+                            color: '#5d5d5d',
+                            fontSize: 16,
+                            borderRadius:10,
+                          },
+                          predefinedPlacesDescription: {
+                            color: '#1faadb',
+                          },
+                        }}
+                        />
                 </View>
                 <Text style={{
-                    marginTop: 10,
-                    fontFamily: "Poppins_400Regular"
+                     marginTop: 20,
+                     marginBottom: 3,
+                     fontFamily: "Poppins_400Regular",
+                     fontSize: 18,
                 }}>
                    Flight Date
                 </Text>
@@ -290,7 +461,15 @@ const FromTo = ({navigation}) => {
                     paddingVertical: 11,
                     borderRadius: 5,
                     flexDirection: "row",
-                    justifyContent: "space-between"
+                    justifyContent: "space-between",
+                    borderWidth: 1,
+                    borderColor: "gray",
+                    borderWidth: 0,
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
+                    paddingHorizontal: 5,
+                    //paddingVertical: 5,
+                    borderRadius: 5,
                 }} onPress={()=>{
                     setShowTravelerDatePickerFrom(true)
                 }}>
@@ -301,7 +480,7 @@ const FromTo = ({navigation}) => {
                 </Pressable>
                 
                 <Pressable style={{
-                    backgroundColor: "#514590",
+                    backgroundColor: "green",
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,

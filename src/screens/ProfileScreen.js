@@ -66,7 +66,7 @@ const ProfileScreen = ({navigation}) => {
   return (
     
     <View style = {{
-        paddingVertical: 70,
+        paddingVertical: 30,
         backgroundColor: "white"
     }}>
          <View>
@@ -85,7 +85,7 @@ const ProfileScreen = ({navigation}) => {
                     justifyContent: 'flex-end',
                     }} />
                     <View style = {{
-                         marginLeft: 20
+                         marginLeft: 6
                     }}>
                         <Text style = {{
                             fontSize: 25,
@@ -190,7 +190,7 @@ const ProfileScreen = ({navigation}) => {
         <View>
             <ScrollView style = {styles.v2b}>
                 <View style = {{
-                     paddingVertical: 30,
+                     paddingVertical: 40,
                      paddingHorizontal: 15,
                 }}>
                 <Text style = {{
@@ -206,7 +206,29 @@ const ProfileScreen = ({navigation}) => {
                 }}>
                     <View style = {styles.myRow}>
 
-                    <Pressable onPress={() => navigation.navigate('Account')}
+                    <TouchableOpacity onPress={() => navigation.navigate('My Cards')}
+                    style = {styles.press}>
+                        <View style = {styles.pressView1}>
+                            <View style = {{
+                            backgroundColor: '#a991d4',
+                            backgroundColor: "#593196",
+                            padding: 8,
+                            borderRadius: 50,
+                            marginRight: 20,
+                        }}>
+                        <MaterialCommunityIcons name="cards" size={24} color="white" />
+                        </View>
+    
+                        <Text style = {{
+                            fontSize: 17,
+                        }}>
+                            My Cards
+                            </Text>  
+                            </View>
+                            <AntDesign name="caretright" size={22} color="lightgray" />
+                </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('Account')}
                         style = {styles.press}>
                         <View style = {styles.pressView1}>
                         <View style = {{
@@ -227,7 +249,7 @@ const ProfileScreen = ({navigation}) => {
                         </View>
                         
                             <AntDesign name="caretright" size={22} color="lightgray" />
-                    </Pressable>
+                    </TouchableOpacity>
                    {/* <Pressable onPress={() => navigation.navigate('Security')}
                         style = {styles.press}>
                         <View style = {{
@@ -293,28 +315,8 @@ const ProfileScreen = ({navigation}) => {
 
                     <View style = {styles.myRow}>
 
-                    <Pressable onPress={() => navigation.navigate('My Cards')}
-                    style = {styles.press}>
-                        <View style = {styles.pressView1}>
-                            <View style = {{
-                            backgroundColor: '#a991d4',
-                            backgroundColor: "#593196",
-                            padding: 8,
-                            borderRadius: 50,
-                            marginRight: 20,
-                        }}>
-                        <MaterialCommunityIcons name="cards" size={24} color="white" />
-                        </View>
-    
-                        <Text style = {{
-                            fontSize: 17,
-                        }}>
-                            My Cards
-                            </Text>  
-                            </View>
-                            <AntDesign name="caretright" size={22} color="lightgray" />
-                </Pressable>
-                <Pressable onPress={() => handleLogout()}
+                    
+                <TouchableOpacity onPress={() => handleLogout()}
                         style = {styles.press}>
                             <View style = {styles.pressView1}> 
                                 <View style = {{
@@ -333,7 +335,7 @@ const ProfileScreen = ({navigation}) => {
                                 Log out
                                 </Text>
                                 </View>
-                    </Pressable>
+                    </TouchableOpacity>
                 
 <TouchableOpacity onPress={() => {
     setModalVisible(true)
@@ -551,7 +553,7 @@ const ProfileScreen = ({navigation}) => {
     <View style={{
         position: "absolute",
         alignItems: "center",
-        bottom: -20,
+        bottom: -40,
         width: "100%"
     }}>
         <Text style={{
@@ -586,19 +588,43 @@ const ProfileScreen = ({navigation}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure to delete your account? This action can not be reversed.</Text>
+            <View>
+            <Text style={{
+                fontWeight: 'bold',
+                marginBottom: 10,
+                fontSize: 22
+            }}>Are you sure you want to delete your account?</Text> 
+            <Text style = {{
+                //fontWeight: 'bold',
+                marginBottom: 4,
+                fontSize: 15
+            }}>This action cannot be reversed</Text>
             
+            </View>
+
+            <View style = {{
+                flexDirection: 'row',
+                marginLeft: "40%"
+            }}>
+            
+            <Pressable
+              style={[styles.button, styles.buttonCloseNo]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={{
+               // fontWeight: 'bold',
+                textAlign: 'center',
+              }}>No</Text>
+            </Pressable>
+
             <Pressable
               style={[styles.button, styles.buttonCloseYes]}
               onPress={() => deleteAcc()}>
               <Text style={styles.textStyle}>Yes</Text>
             </Pressable>
 
-            <Pressable
-              style={[styles.button, styles.buttonCloseNo]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>No</Text>
-            </Pressable>
+            </View>
+            
+          
           </View>
         </View>
       </Modal>
@@ -686,7 +712,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         alignItems: 'center',
         justifyContent: 'space-between',
-        shadowColor: "#000",
+        /*shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 1,
@@ -694,7 +720,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.18,
         shadowRadius: 2.00,
     
-        elevation: 1, 
+        elevation: 1, */
        
         
     },
@@ -724,8 +750,8 @@ const styles = StyleSheet.create({
       modalView: {
         margin: 20,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
+        borderRadius: 10,
+        padding: 20,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -737,8 +763,10 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
       button: {
-        borderRadius: 20,
-        padding: 10,
+        borderRadius: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        marginHorizontal: 4,
         elevation: 2,
       },
       buttonOpen: {
@@ -747,22 +775,26 @@ const styles = StyleSheet.create({
       buttonCloseYes: {
         backgroundColor: 'red',
         marginTop:10,
-        width:200
+        //width:200
       },
       buttonCloseNo: {
         backgroundColor: 'green',
+        backgroundColor: '#13b955',
+        backgroundColor: '#e8e8e8',
         marginTop:10,
-        width:200,
+        //width:200,
         color:"black"
       },
       textStyle: {
         color: 'white',
-        fontWeight: 'bold',
+        //fontWeight: 'bold',
         textAlign: 'center',
       },
       modalText: {
-        marginBottom: 18,
+        marginBottom: 9,
         textAlign: 'center',
+        fontSize: 16,
+        
       },
     
 
