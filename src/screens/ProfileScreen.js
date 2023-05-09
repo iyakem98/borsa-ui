@@ -66,7 +66,7 @@ const ProfileScreen = ({navigation}) => {
   return (
     
     <View style = {{
-        paddingVertical: 80,
+        paddingVertical: 30,
         backgroundColor: "white"
     }}>
          <View>

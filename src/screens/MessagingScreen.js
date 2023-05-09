@@ -212,8 +212,7 @@ console.log(`loading is ` + loading)
       const config = {
         headers: {
             Authorization: `Bearer ${user.token}`
-
-        }
+          }
     }
 
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
