@@ -588,19 +588,43 @@ const ProfileScreen = ({navigation}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure to delete your account? This action can not be reversed.</Text>
+            <View>
+            <Text style={{
+                fontWeight: 'bold',
+                marginBottom: 10,
+                fontSize: 22
+            }}>Are you sure you want to delete your account?</Text> 
+            <Text style = {{
+                //fontWeight: 'bold',
+                marginBottom: 4,
+                fontSize: 15
+            }}>This action cannot be reversed</Text>
             
+            </View>
+
+            <View style = {{
+                flexDirection: 'row',
+                marginLeft: "40%"
+            }}>
+            
+            <Pressable
+              style={[styles.button, styles.buttonCloseNo]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={{
+               // fontWeight: 'bold',
+                textAlign: 'center',
+              }}>No</Text>
+            </Pressable>
+
             <Pressable
               style={[styles.button, styles.buttonCloseYes]}
               onPress={() => deleteAcc()}>
               <Text style={styles.textStyle}>Yes</Text>
             </Pressable>
 
-            <Pressable
-              style={[styles.button, styles.buttonCloseNo]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>No</Text>
-            </Pressable>
+            </View>
+            
+          
           </View>
         </View>
       </Modal>
@@ -726,8 +750,8 @@ const styles = StyleSheet.create({
       modalView: {
         margin: 20,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
+        borderRadius: 10,
+        padding: 20,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -739,8 +763,10 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
       button: {
-        borderRadius: 20,
-        padding: 10,
+        borderRadius: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        marginHorizontal: 4,
         elevation: 2,
       },
       buttonOpen: {
@@ -749,22 +775,26 @@ const styles = StyleSheet.create({
       buttonCloseYes: {
         backgroundColor: 'red',
         marginTop:10,
-        width:200
+        //width:200
       },
       buttonCloseNo: {
         backgroundColor: 'green',
+        backgroundColor: '#13b955',
+        backgroundColor: '#e8e8e8',
         marginTop:10,
-        width:200,
+        //width:200,
         color:"black"
       },
       textStyle: {
         color: 'white',
-        fontWeight: 'bold',
+        //fontWeight: 'bold',
         textAlign: 'center',
       },
       modalText: {
-        marginBottom: 18,
+        marginBottom: 9,
         textAlign: 'center',
+        fontSize: 16,
+        
       },
     
 
