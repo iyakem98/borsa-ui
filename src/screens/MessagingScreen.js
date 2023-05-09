@@ -107,7 +107,7 @@ const MessagingScreen = () => {
   useEffect(() =>{
     
     fetchMessage()
-console.log(`loading is ` + loading)
+// console.log(`loading is ` + loading)
     
     selectedChatCompare = selectedChat
     
@@ -121,11 +121,19 @@ console.log(`loading is ` + loading)
 
  
   useEffect(() => {
-    
+    // console.log("messages legnth" +  messages.length)
+    // locallyStoredMessages(messages)
     socket.current.on("message recieved", (newMessageReceived) => {
-      setMessages([...messages, newMessageReceived])
-      console.log('messaging screen ')
-      console.log('message recieved')
+      // console.log("messages legnth" +  messages.length)
+      
+      // var newMessage = 
+      // setMessages([...messages, data])
+      // setMessages([...messages, newMessageReceived])
+      testNewMessages(newMessageReceived)
+      // setMessages([...messages, newMessageReceived])
+      // return () =>   socket.current.disconnect()
+      // console.log('messaging screen ')
+      // console.log('123')
       //  setreceivedMessage(true)
      
 
@@ -134,9 +142,44 @@ console.log(`loading is ` + loading)
     })
 
 
-  })
+  }, [])
+const testNewMessages = async(newMessageReceived) => {
+  // var storedMessages = await AsyncStorage.getItem('messages')
+  // console.log('stored messages' + JSON.parse(storedMessages))
+  // setMessages(storedMessages)
+  // setMessages(...messages, newMessageReceived)
+  // const config = {
+  //   headers: {
+  //       Authorization: `Bearer ${user.token}`
 
-  // search how to run an async func in react 
+  //   }
+  // }
+  // const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
+  //   config)
+    // setMessages(data)
+    // setMessages(...messages, newMessageReceived)
+    const config = {
+      headers: {
+          Authorization: `Bearer ${user.token}`
+  
+      }
+    }
+    const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
+      config)
+      setMessages(data, newMessageReceived)
+      // setMessages(data, newMessageReceived)
+      // console.log('fetched data' + data)
+}
+const locallyStoredMessages = async(messages) => {
+  // await AsyncStorage.removeItem('messages')
+  // await AsyncStorage.setItem("messages", messages)
+  // var mess = await AsyncStorage.getItem('messages')
+  // console.log('stored messages locally' + JSON.parse(mess))
+ 
+    // setMessages(data)
+    // setMessages(...messages, newMessageReceived)
+}
+ 
 
 
 
@@ -183,6 +226,8 @@ console.log(`loading is ` + loading)
     
   socket.current.emit("new message", data)
   setMessages([...messages, data])
+  // await AsyncStorage.removeItem('messages')
+  // await AsyncStorage.setItem('messages', JSON.stringify(messages))
   setNewwMessage(false)
   setmessageSentOrReceived(false)
   setfetchAgain(true)
@@ -216,7 +261,7 @@ console.log(`loading is ` + loading)
 
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
-    console.log("=======", data)
+    // console.log("=======", data)
     // if(data == undefined || data == [] || data == null){
     //   // setloading(false)
     //   setMessages([])
@@ -248,13 +293,13 @@ console.log(`loading is ` + loading)
     }
   
   const typingHandler = (e) => {
-    setNewMessage(e.target.value)
+    setNewMessage(e)
      
     if(!socketConnected) return
 
     if(!typing) {
      setTyping(true)
-     socket.current.emit('typing', chatId);
+     socket.current.emit('typing', chattId);
     }
 
     let lastTypingTime = new Date().getTime()
@@ -264,7 +309,7 @@ console.log(`loading is ` + loading)
      var timeDiff = timeNow - lastTypingTime;
 
      if(timeDiff >= timerLength && typing) {
-         socket.current.emit("stop typing", chatId)
+         socket.current.emit("stop typing", chattId)
          setTyping(false)
      }
     }, timerLength);
@@ -299,8 +344,9 @@ if(loading){
 
   return ( 
     <>
-{!loading &&  <KeyboardAwareScrollView
+{/* {!loading &&  <KeyboardAwareScrollView
 >
+ 
   <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
   <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
  
@@ -338,13 +384,94 @@ if(loading){
         
         
       }}>
-    {/*<MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} /> */}
+  
     <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
     </Pressable>
 
     </SafeAreaView>
    
-  </KeyboardAwareScrollView>}
+  </KeyboardAwareScrollView>
+  } */}
+   {!loading &&  
+  
+  <KeyboardAvoidingView 
+  behavior='padding'
+  keyboardVerticalOffset={
+  Platform.select({
+     ios: () => -400,
+     android: () => -400
+  })()
+ 
+}
+style={styles.bg}
+>
+    <View>
+    
+    <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
+    </View>
+    </KeyboardAvoidingView>}
+  
+  
+   
+   {!loading && 
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+      keyboardVerticalOffset={
+        Platform.select({
+           ios: () => 76,
+           android: () => 110
+        })()
+       
+      }
+      //style={styles.TextSendingcontainer}
+      > 
+
+      <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
+ 
+  {!loading && isTyping ? (
+    <View>
+      <Text> isTyping... </Text>
+    </View>
+  ) : null}
+   <TextInput 
+      value={newmessage}
+      onChangeText={setNewMessage}
+      onChange={typingHandler}
+      style = {styles.input} 
+      multiline
+      placeholder='type your message...'/>
+    <Pressable style = {{
+      backgroundColor: '#13b955',
+      padding: 8,
+      borderRadius: 50,
+
+    }}
+      onPress={() => {
+        console.log("new message" + newmessage)
+        if(newmessage == null || newmessage == undefined || newmessage == ""){
+          console.log('undefined')
+        }
+        else{
+          sendMessage()
+          // setcheckContent(true)
+          scrollViewRef.current.scrollToEnd()
+        }
+        // sendMessage()
+          // setcheckContent(true)
+        //   scrollViewRef.current.scrollToEnd()
+      
+        
+        
+      }}>
+    {/*<MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} /> */}
+    <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
+    </Pressable>
+
+    </SafeAreaView>
+
+ 
+ </KeyboardAvoidingView>
+ }
     </>
   
     

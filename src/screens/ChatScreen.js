@@ -50,7 +50,7 @@ const ChatScreen = () => {
       OtriggerChange, setOtriggerChange,
       // onlineStatus, setonlineStatus
       } = ChatState();
-      console.log(" yesterday trigger" + YtriggerChange)
+      // console.log(" yesterday trigger" + YtriggerChange)
     const navigation = useNavigation();
     const [visible, setVisible] = useState(false);
     const [Today, setToday] = useState(false);
@@ -88,8 +88,8 @@ const ChatScreen = () => {
     const [messageOnce, setmessageOnce] = useState(false)
    
     var formatted_other_date = null
-    console.log('connected socket')
-    console.log(socketConnected)
+    // console.log('connected socket')
+    // console.log(socketConnected)
     // var doubleJeopardy = null
     // console.log(socketURL)
     useLayoutEffect(() => {
@@ -129,14 +129,14 @@ const ChatScreen = () => {
   
   
     // },[socket])
-    useEffect(() => {
+    // useEffect(() => {
     
-      socket.current.on("message recieved", (newMessageReceived) => {
-        console.log(newMessageReceived)
-        storeNotif(newMessageReceived)
-      });
+    //   socket.current.on("message recieved", (newMessageReceived) => {
+    //     // console.log(newMessageReceived)
+    //     storeNotif(newMessageReceived)
+    //   });
 
-    },[])
+    // },[])
    
     
     // useEffect(() => {
@@ -169,9 +169,9 @@ const ChatScreen = () => {
 useEffect(() =>{
     dispatch(fetchChat())
 }, [fetchAgain])
-useEffect(() =>{
-    console.log(route.name)
-}, [])
+// useEffect(() =>{
+// //     console.log(route.name)
+// // }, [])
 useEffect(() =>{
     dispatch(fetchChat())
 
@@ -218,7 +218,7 @@ useEffect(() => {
 //  setstoredNotifications([])
 //  console.log('stored notif after' + storedNotifications.length)
  }
- console.log("stored notifcations array " + storedNotifications.length)
+//  console.log("stored notifcations array " + storedNotifications.length)
 
        return(
         
@@ -236,7 +236,7 @@ useEffect(() => {
             { chattts && chattts.length > 0 ? (chattts.map((chat) => {
               chatArrAll.push(chat)
               if(chat !== null || chat !== undefined){
-              console.log(chat.lastestMessage)
+              // console.log(chat.lastestMessage)
 
                 // if(chat.lastestMessage !== undefined || chat.lastestMessage !== null  ){
                 if(chat.lastestMessage == undefined || chat.lastestMessage == null  ){

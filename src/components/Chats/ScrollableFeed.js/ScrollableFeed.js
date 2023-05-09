@@ -91,39 +91,39 @@ useEffect(() => {
 
   
 const OtherFunc2 = ()=>{
-  console.log('display each date  along with their messages')
+  // console.log('display each date  along with their messages')
   // console.log('123456789')
   
   }
 const OtherFunc = (messages)=>{
-  console.log('other funcs messages')
+  // console.log('other funcs messages')
   var datesArray = []
   for(var i = 0; i <= messages.length; i++){
     
     if(messages[i] == undefined || messages[i+1]== undefined){
-      console.log('undefined')
+      // console.log('undefined')
       break
     }
    else{
     var formatted_date1 = moment(messages[i].createdAt).format("YYYY-MM-DD")
     var formatted_date2 = moment(messages[i + 1].createdAt).format("YYYY-MM-DD")
     if(formatted_date1 == formatted_date2){
-            console.log('first date' + formatted_date1)
-            console.log('second date' + formatted_date2)
+            // console.log('first date' + formatted_date1)
+            // console.log('second date' + formatted_date2)
             datesArray.push(formatted_date2)
             console.log(true)
           }
     else if (formatted_date1 !== formatted_date2){
-            console.log('first date' + formatted_date1)
-            console.log('second date' + formatted_date2)
+            // console.log('first date' + formatted_date1)
+            // console.log('second date' + formatted_date2)
             datesArray.push(formatted_date1)
-            console.log(false)
+            // console.log(false)
           }
    }
     
   }
 
-  console.log('dates array before' + datesArray.length)
+  // console.log('dates array before' + datesArray.length)
   for(var i = datesArray.length ; i >= 0; i--){
     // var formatted_date1 = moment(datesArray[i]).format("YYYY-MM-DD")
     // console.log("date setted" + datesArray[i])
@@ -131,7 +131,7 @@ const OtherFunc = (messages)=>{
       datesArray.splice(i, 1)
     }
   }
-  console.log('dates array after' + datesArray.length)
+  // console.log('dates array after' + datesArray.length)
   // for(var i = 0 ; i < datesArray.length ; i++){
    
   //   console.log("date setted" + datesArray[i])
@@ -142,7 +142,7 @@ const OtherFunc = (messages)=>{
   <View>
     
   {datesArray.map((date)=> {
-    console.log(date)
+    // console.log(date)
   return displayotherMs(date, messages)
     
   })}
@@ -320,9 +320,9 @@ const OtherFunc = (messages)=>{
     let msgdate = moment(m.createdAt, "YYYY-MM-DD")
     let today = moment()
     let d = today.diff(msgdate, 'days')
-    console.log(d)
+    // console.log(d)
     if(d==0){
-      console.log('pushing today messags')
+      // console.log('pushing today messags')
       todaytest = true
       // console.log(todaytest)
       Tmessages.push(m)
