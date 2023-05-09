@@ -31,13 +31,17 @@ const Buyer = ({
 
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
-  useEffect(() =>{
+//   useEffect(() =>{
 
-    dispatch(fetchChat())
-    // console.log(chattts[1])
+//     dispatch(fetchChat())
+//     // console.log(chattts[1])
     
   
-}, [user])
+// }, [user])
+useEffect(() => {
+   
+    // setchattId(null)
+}, [chattId])
 const BuyerChat = async(buyerData)=> {
     const userId = buyerData._id
     try{

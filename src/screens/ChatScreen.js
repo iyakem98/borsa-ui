@@ -98,7 +98,7 @@ const ChatScreen = () => {
       socket.current.emit("setup", user);
       socket.current.on("connected", () => setsocketConnected(true) )
       // console.log("socket connected" + socketConnected)
-     console.log('socket connection')
+    //  console.log('socket connection')
     //  console.log(socket.current)
      
      
@@ -129,14 +129,14 @@ const ChatScreen = () => {
   
   
     // },[socket])
-    // useEffect(() => {
+    useEffect(() => {
     
-    //   socket.current.on("message recieved", (newMessageReceived) => {
-    //     // console.log(newMessageReceived)
-    //     storeNotif(newMessageReceived)
-    //   });
+      socket.current.on("message recieved", (newMessageReceived) => {
+        // console.log(newMessageReceived)
+        storeNotif(newMessageReceived)
+      });
 
-    // },[])
+    },[])
    
     
     // useEffect(() => {
@@ -202,6 +202,9 @@ useEffect(() => {
     setYesterday(false)
   }
   },[Yesterday])
+  // useEffect(()=> {
+
+  // }, [storedNotifications])
   // setstoredNotifications([])
  const storeNotif = (newMessageReceived) => {
   // storedNotifications = []
@@ -210,6 +213,8 @@ useEffect(() => {
   // console.log("new messages content" + newMessageReceived.content)
 //  setstoredNotifications([])
  setstoredNotifications(current => [...current, newMessageReceived]);
+//  setstoredNotifications(123);
+//  console.log("stored notifff" + storedNotifications)
 // setstoredNotifications(null)
 //  console.log('stored notif broftr' + storedNotifications.length)
  
@@ -229,12 +234,12 @@ useEffect(() => {
               paddingTop: 10
             }}>
              
-             <ChatListHeader chatArr={chatArrAll}/>
+             {/* <ChatListHeader chatArr={chatArrAll}/> */}
              {/* <ChatListHeader TchatArr={chat1} YchatArr={chat2} OchatArr={chat3}/> */}
              {/* <ChatListHeader TchatArr={chat1} YchatArr={chat2} OchatArr={chat3} /> */}
           
             { chattts && chattts.length > 0 ? (chattts.map((chat) => {
-              chatArrAll.push(chat)
+              // chatArrAll.push(chat)
               if(chat !== null || chat !== undefined){
               // console.log(chat.lastestMessage)
 
@@ -262,7 +267,7 @@ useEffect(() => {
  }
                     // TodaysChats.push(chat)
                     // chat1.push(chat)
-                    if(triggerChange == false){
+                    // if(triggerChange == false){
 
                     
                     return <Pressable key={chat._id} onPress={() => 
@@ -280,7 +285,7 @@ useEffect(() => {
                               style = {styles.image}
                            />
                           </View>
-                            
+                             
                           <View style = {styles.content}>
                               <View style = {styles.row}>
                                   <Text style = {styles.name}>
@@ -307,38 +312,47 @@ useEffect(() => {
                                 </Text>
                                     {/* <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text> */}
                                   </View>
-                                 
+                                  
                               </View>
+                              
                               
                                  : <Text>File Uploaded</Text> }
                                  {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 ? <View style={styles.notif}>
                                     <Text style={styles.notifClr}>{storedNotifications.length}</Text>
                                   </View> : <Text></Text> }  */}
-                                 {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0  && storedNotifications.map((notif) => {
-                                  if(notif.chat._id == chat._id){
-                                    return <View style={styles.notif}>
-                                    {/* <Text style={styles.notifClr}>{storedNotifications.length}</Text> */}
-                                   <Octicons name="dot-fill" size={24} color="red" />
-                                  </View>
-                                  }
-                                  else{
-                                    null
-                                  }
-                                 })} 
-                                 {/* { NotifFlag && <View style={styles.notif}>
-                                    <Text style={styles.notifClr}>{storedNotifications.length}</Text>
-                                  </View>}  */}
-                                 {/* {storedNotifications && <View style={styles.notif}>
-                                    <Text style={styles.notifClr}>{storedNotifications.length}</Text>
-                                  </View> }  */}
+                                 {storedNotifications  && storedNotifications.map((notif) => {
+                               
+                              //  console.log('bbnn',notif)
+                                    if(notif == undefined){
+                                      console.log('notif undefined')
+                                    }
+                                    else{
+                                      if(notif.chat._id == chat._id){
+                                        return <View style={styles.notif}>
+                                       
+                                       <Octicons name="dot-fill" size={24} color="red" />
+                                      </View>
+                                      }
+                                    }
+                                    
+                                  
+                                  
+                                  
+                                 })
+                                 } 
+                               {/* <Text>notifffehih</Text> */}
+                                 {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 
+                                  &&  <View  style={styles.notif}><Text>notif</Text></View>
+                                 }  */}
+                             
                           </View>
                           </Pressable>
-                    }
+                    // }
                     
                     
                   }
                   else if(d == 1){
-                    if(triggerChange == false){
+                    // if(triggerChange == false){
                     return <Pressable key={chat._id} onPress={() => 
                       {
                         setloading(true)
@@ -385,7 +399,7 @@ useEffect(() => {
                                  : <Text>File Uploaded</Text> }
                           </View>
                           </Pressable>
-                    }
+                    // }
                     // YesterdaysChats.push(chat)
                     // chat2.push(chat)
                    
@@ -398,7 +412,8 @@ useEffect(() => {
   
    
  }
-   if(triggerChange == false){
+  //  if(triggerChange == false){
+
  
  return <Pressable key={chat._id} onPress={() => 
    {
@@ -444,7 +459,7 @@ useEffect(() => {
               : <Text>File Uploaded</Text> }
        </View>
        </Pressable>
-   }
+  //  }
                     // OtherChats.push(chat)
                     // chat3.push(chat)
                     
