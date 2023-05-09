@@ -223,6 +223,9 @@ console.log(`loading is ` + loading)
     //   // setloading(false)
     //   setMessages([])
     // }
+
+    let yess = AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data))
+    console.log("stored in local")
     
     setloading(false)
 
@@ -238,14 +241,14 @@ console.log(`loading is ` + loading)
     }
     catch(error){
       console.log(error)
-      //  let msgs =  await AsyncStorage.getItem(`chat-${chattId}`)
-      //  if(msgs){
-      //     setMessages(JSON.parse(msgs))
-      //     setloading(false)
-      //  }else{
-      //     setMessages([])
-      //     setloading(false)
-      //  }
+       let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
+       if(msgs){
+          setMessages(JSON.parse(msgs))
+          setloading(false)
+       }else{
+          setMessages([])
+          setloading(false)
+       }
       }
     }
   
@@ -287,10 +290,8 @@ if(loading){
   {/*<Feather name="loader" size={40} style={{
     marginRight: 20,
   }} color="black" /> */}
-  <ActivityIndicator size="large" color="#000" style = {{marginRight: 15}} />
-    <Text style={{
-      fontSize: 20,
-    }}>fetching messages ....</Text>
+  <ActivityIndicator size="large" color="#000" style = {{marginRight: 0}} />
+    
   </View>
 }
 
