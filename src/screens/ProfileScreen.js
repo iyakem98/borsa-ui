@@ -85,7 +85,7 @@ const ProfileScreen = ({navigation}) => {
                     justifyContent: 'flex-end',
                     }} />
                     <View style = {{
-                         marginLeft: 20
+                         marginLeft: 6
                     }}>
                         <Text style = {{
                             fontSize: 25,
