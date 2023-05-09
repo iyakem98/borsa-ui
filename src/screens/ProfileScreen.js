@@ -66,7 +66,7 @@ const ProfileScreen = ({navigation}) => {
   return (
     
     <View style = {{
-        paddingVertical: 70,
+        paddingVertical: 80,
         backgroundColor: "white"
     }}>
          <View>
@@ -190,7 +190,7 @@ const ProfileScreen = ({navigation}) => {
         <View>
             <ScrollView style = {styles.v2b}>
                 <View style = {{
-                     paddingVertical: 30,
+                     paddingVertical: 40,
                      paddingHorizontal: 15,
                 }}>
                 <Text style = {{
@@ -206,7 +206,29 @@ const ProfileScreen = ({navigation}) => {
                 }}>
                     <View style = {styles.myRow}>
 
-                    <Pressable onPress={() => navigation.navigate('Account')}
+                    <TouchableOpacity onPress={() => navigation.navigate('My Cards')}
+                    style = {styles.press}>
+                        <View style = {styles.pressView1}>
+                            <View style = {{
+                            backgroundColor: '#a991d4',
+                            backgroundColor: "#593196",
+                            padding: 8,
+                            borderRadius: 50,
+                            marginRight: 20,
+                        }}>
+                        <MaterialCommunityIcons name="cards" size={24} color="white" />
+                        </View>
+    
+                        <Text style = {{
+                            fontSize: 17,
+                        }}>
+                            My Cards
+                            </Text>  
+                            </View>
+                            <AntDesign name="caretright" size={22} color="lightgray" />
+                </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('Account')}
                         style = {styles.press}>
                         <View style = {styles.pressView1}>
                         <View style = {{
@@ -227,7 +249,7 @@ const ProfileScreen = ({navigation}) => {
                         </View>
                         
                             <AntDesign name="caretright" size={22} color="lightgray" />
-                    </Pressable>
+                    </TouchableOpacity>
                    {/* <Pressable onPress={() => navigation.navigate('Security')}
                         style = {styles.press}>
                         <View style = {{
@@ -293,28 +315,8 @@ const ProfileScreen = ({navigation}) => {
 
                     <View style = {styles.myRow}>
 
-                    <Pressable onPress={() => navigation.navigate('My Cards')}
-                    style = {styles.press}>
-                        <View style = {styles.pressView1}>
-                            <View style = {{
-                            backgroundColor: '#a991d4',
-                            backgroundColor: "#593196",
-                            padding: 8,
-                            borderRadius: 50,
-                            marginRight: 20,
-                        }}>
-                        <MaterialCommunityIcons name="cards" size={24} color="white" />
-                        </View>
-    
-                        <Text style = {{
-                            fontSize: 17,
-                        }}>
-                            My Cards
-                            </Text>  
-                            </View>
-                            <AntDesign name="caretright" size={22} color="lightgray" />
-                </Pressable>
-                <Pressable onPress={() => handleLogout()}
+                    
+                <TouchableOpacity onPress={() => handleLogout()}
                         style = {styles.press}>
                             <View style = {styles.pressView1}> 
                                 <View style = {{
@@ -333,7 +335,7 @@ const ProfileScreen = ({navigation}) => {
                                 Log out
                                 </Text>
                                 </View>
-                    </Pressable>
+                    </TouchableOpacity>
                 
 <TouchableOpacity onPress={() => {
     setModalVisible(true)
@@ -551,7 +553,7 @@ const ProfileScreen = ({navigation}) => {
     <View style={{
         position: "absolute",
         alignItems: "center",
-        bottom: -20,
+        bottom: -40,
         width: "100%"
     }}>
         <Text style={{
@@ -686,7 +688,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         alignItems: 'center',
         justifyContent: 'space-between',
-        shadowColor: "#000",
+        /*shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 1,
@@ -694,7 +696,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.18,
         shadowRadius: 2.00,
     
-        elevation: 1, 
+        elevation: 1, */
        
         
     },

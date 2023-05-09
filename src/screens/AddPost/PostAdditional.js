@@ -117,7 +117,7 @@ const Description = ({navigation}) => {
                 navigation.navigate("My Cards") })
               .catch((err) => {
                console.log("error:", err)
-               alert('Something went wrong.')
+               alert('You already have a traveler card.')
               });
 
         }
