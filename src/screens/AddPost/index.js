@@ -12,30 +12,34 @@ const AddPost = ({navigation}) => {
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={{
                     marginTop: 20,
-                    fontFamily: "Poppins_400Regular"
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 18,
+                    marginBottom: 10,
                 }}>
-                    Are you a traveler or a buyer?
+                    Are you a traveling or getting items?
                 </Text>
                 <View style={styles.horizontal}>
                     <Pressable style={[styles.component, selected === 1 ? {
                         borderColor: "#514590",
+                        borderColor: "#13b955",
                         borderWidth: 2
                     } : {
                         borderColor: "#f7f7f7",
                     }]} onPress={()=>setSelected(1)}>
-                        <View style={[styles.radioWrapper, selected !== 1 ? {
+                        <View style={[styles.radioWrapperTr, selected !== 1 ? {
                             borderColor: "#ccc"
                         } : {}]}>
                             {selected === 1 ? (
-                                <View style={[styles.radio, selected !== 1 ? {
+                                <View style={[styles.radioTr, selected !== 1 ? {
                                     backgroundColor: "#ccc"
                                 } : {}]} />
                             ) : null}
                         </View>
-                        <Text style={styles.compTxt}>Traveler</Text>
+                        <Text style={styles.compTxt}>Traveling</Text>
                     </Pressable>
                     <Pressable style={[styles.component, selected === 2 ? {
                         borderColor: "#514590",
+                        //borderColor: '#13b955',
                         borderWidth: 2
                     } : {
                         borderColor: "#f7f7f7",
@@ -49,7 +53,7 @@ const AddPost = ({navigation}) => {
                                 } : {}]} />
                             ) : null}
                         </View>
-                        <Text style={styles.compTxt}>Buyer</Text>
+                        <Text style={styles.compTxt}>Buying</Text>
                     </Pressable>
                 </View>
                 <Pressable style={{
@@ -133,8 +137,29 @@ const styles = StyleSheet.create({
         top: 15,
         right: 15
     },
+    radioWrapperTr: {
+        // backgroundColor: "#aaa",
+        height: 21,
+        width: 21,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 2,
+        borderStyle: "solid",
+        borderColor: "#13b955",
+        position: "absolute",
+        top: 15,
+        right: 15
+    },
     radio: {
         backgroundColor: "#514590",
+        height: 14,
+        width: 14,
+        borderRadius: 10
+    },
+
+    radioTr: {
+        backgroundColor: '#13b955',
         height: 14,
         width: 14,
         borderRadius: 10

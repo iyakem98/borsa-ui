@@ -37,7 +37,7 @@ const FromTo = ({navigation}) => {
         let country = ar[lngth-1].value
         let city = ar[0].value
         if (lngth > 2) {
-            city += ' ' + ar[1].value
+            city += ', ' + ar[1].value
         }
         console.log("workeeeeeed", `${city}, ${country}`)
         setCountryFrom(`${city}, ${country}`)
@@ -48,7 +48,7 @@ const FromTo = ({navigation}) => {
         let country = ar[lngth-1].value
         let city = ar[0].value
         if (lngth > 2) {
-            city += ' ' + ar[1].value
+            city += ', ' + ar[1].value
         }
         console.log("workeeeeeed", `${city}, ${country}`)
         setCountryTo(`${city}, ${country}`)
@@ -59,7 +59,7 @@ const FromTo = ({navigation}) => {
         let country = ar[lngth-1]?.value
         let city = ar[0]?.value
         if (lngth > 2) {
-            city += ' ' + ar[1].value
+            city += ', ' + ar[1].value
         }
         console.log("workeeeeeed", `${city}, ${country}`)
         setTravelerFrom(`${city}, ${country}`)
@@ -70,7 +70,7 @@ const FromTo = ({navigation}) => {
         let country = ar[lngth-1]?.value
         let city = ar[0]?.value
         if (lngth > 2) {
-            city += ' ' + ar[1].value
+            city += ', ' + ar[1].value
         }
         console.log("workeeeeeed", `${city}, ${country}`)
         setTravelerTo(`${city}, ${country}`)
