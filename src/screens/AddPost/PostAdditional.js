@@ -336,7 +336,7 @@ const Description = ({navigation}) => {
                
 
                 <Pressable style={{
-                    backgroundColor: "#514590",
+                    backgroundColor: "green",
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,
