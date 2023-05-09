@@ -124,7 +124,6 @@ const MessagingScreen = () => {
     // console.log("messages legnth" +  messages.length)
     // locallyStoredMessages(messages)
     socket.current.on("message recieved", (newMessageReceived) => {
-<<<<<<< HEAD
       // console.log("messages legnth" +  messages.length)
       
       // var newMessage = 
@@ -135,13 +134,6 @@ const MessagingScreen = () => {
       // return () =>   socket.current.disconnect()
       // console.log('messaging screen ')
       // console.log('123')
-=======
-      setMessages([...messages, newMessageReceived])
-      return () => socket.current.off("message recieved");
-      //return () =>   socket.current.disconnect()
-     //console.log('messaging screen ')
-      //console.log('message recieved')
->>>>>>> 9570d9b8458d39a32e6b3d7c7b5d82992adb7f63
       //  setreceivedMessage(true)
      
 
