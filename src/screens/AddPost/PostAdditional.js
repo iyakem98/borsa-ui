@@ -336,7 +336,7 @@ const Description = ({navigation}) => {
                
 
                 <Pressable style={{
-                    backgroundColor: "green",
+                    backgroundColor: "#13b955",
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,
@@ -350,7 +350,7 @@ const Description = ({navigation}) => {
                         fontFamily: "Poppins_400Regular",
                         fontSize: 14,
                         textAlign: "center"
-                    }}>{"Next"}</Text>
+                    }}>{"Finish"}</Text>
                 </Pressable>
             </ScrollView>
               </>  

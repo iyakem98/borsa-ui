@@ -57,7 +57,7 @@ const AddPost = ({navigation}) => {
                     </Pressable>
                 </View>
                 <Pressable style={{
-                    backgroundColor: `${selected == 1 ? 'green' : '#514590'}`,
+                    backgroundColor: `${selected == 1 ? '#514590' : '#514590'}`,
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,
