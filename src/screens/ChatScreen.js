@@ -22,6 +22,7 @@ import { useRoute } from '@react-navigation/native'
 import moment from 'moment/moment'
 import { Octicons } from '@expo/vector-icons';
 import { API_BASE_URL, API_BASE_URL_Socket } from '../utils/config'
+import ChatItem from '../components/Chats/ChatItem'
 
 const ChatScreen = () => {
    
@@ -50,7 +51,7 @@ const ChatScreen = () => {
       OtriggerChange, setOtriggerChange,
       // onlineStatus, setonlineStatus
       } = ChatState();
-      console.log(" yesterday trigger" + YtriggerChange)
+      // console.log(" yesterday trigger" + YtriggerChange)
     const navigation = useNavigation();
     const [visible, setVisible] = useState(false);
     const [Today, setToday] = useState(false);
@@ -88,8 +89,8 @@ const ChatScreen = () => {
     const [messageOnce, setmessageOnce] = useState(false)
    
     var formatted_other_date = null
-    console.log('connected socket')
-    console.log(socketConnected)
+    // console.log('connected socket')
+    // console.log(socketConnected)
     // var doubleJeopardy = null
     // console.log(socketURL)
     useLayoutEffect(() => {
@@ -98,7 +99,7 @@ const ChatScreen = () => {
       socket.current.emit("setup", user);
       socket.current.on("connected", () => setsocketConnected(true) )
       // console.log("socket connected" + socketConnected)
-     console.log('socket connection')
+    //  console.log('socket connection')
     //  console.log(socket.current)
      
      
@@ -130,12 +131,10 @@ const ChatScreen = () => {
   
     // },[socket])
     useEffect(() => {
-    
       socket.current.on("message recieved", (newMessageReceived) => {
-        console.log(newMessageReceived)
+        // console.log(newMessageReceived)
         storeNotif(newMessageReceived)
       });
-
     },[])
    
     
@@ -169,9 +168,9 @@ const ChatScreen = () => {
 useEffect(() =>{
     dispatch(fetchChat())
 }, [fetchAgain])
-useEffect(() =>{
-    console.log(route.name)
-}, [])
+// useEffect(() =>{
+// //     console.log(route.name)
+// // }, [])
 useEffect(() =>{
     dispatch(fetchChat())
 
@@ -202,6 +201,9 @@ useEffect(() => {
     setYesterday(false)
   }
   },[Yesterday])
+  // useEffect(()=> {
+
+  // }, [storedNotifications])
   // setstoredNotifications([])
  const storeNotif = (newMessageReceived) => {
   // storedNotifications = []
@@ -210,6 +212,8 @@ useEffect(() => {
   // console.log("new messages content" + newMessageReceived.content)
 //  setstoredNotifications([])
  setstoredNotifications(current => [...current, newMessageReceived]);
+//  setstoredNotifications(123);
+//  console.log("stored notifff" + storedNotifications)
 // setstoredNotifications(null)
 //  console.log('stored notif broftr' + storedNotifications.length)
  
@@ -218,7 +222,7 @@ useEffect(() => {
 //  setstoredNotifications([])
 //  console.log('stored notif after' + storedNotifications.length)
  }
- console.log("stored notifcations array " + storedNotifications.length)
+//  console.log("stored notifcations array " + storedNotifications.length)
 
        return(
         
@@ -229,14 +233,15 @@ useEffect(() => {
               paddingTop: 10
             }}>
              
-             <ChatListHeader chatArr={chatArrAll}/>
+             {/* <ChatListHeader chatArr={chatArrAll}/> */}
              {/* <ChatListHeader TchatArr={chat1} YchatArr={chat2} OchatArr={chat3}/> */}
              {/* <ChatListHeader TchatArr={chat1} YchatArr={chat2} OchatArr={chat3} /> */}
           
             { chattts && chattts.length > 0 ? (chattts.map((chat) => {
-              chatArrAll.push(chat)
+              let newMessage
+              // chatArrAll.push(chat)
               if(chat !== null || chat !== undefined){
-              console.log(chat.lastestMessage)
+              // console.log(chat.lastestMessage)
 
                 // if(chat.lastestMessage !== undefined || chat.lastestMessage !== null  ){
                 if(chat.lastestMessage == undefined || chat.lastestMessage == null  ){
@@ -262,83 +267,27 @@ useEffect(() => {
  }
                     // TodaysChats.push(chat)
                     // chat1.push(chat)
-                    if(triggerChange == false){
+                    // if(triggerChange == false){
 
                     
-                    return <Pressable key={chat._id} onPress={() => 
-                      {
-                        setloading(true)
-                        setchattId(chat._id)
-                        // chatArr2.push(chat)
-                        setSelectedChat(chat)
-                      navigation.navigate('Messaging', {userSelected:
-                        
-                      user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
-                          <View>
-                          <Image 
-                              source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
-                              style = {styles.image}
-                           />
-                          </View>
-                            
-                          <View style = {styles.content}>
-                              <View style = {styles.row}>
-                                  <Text style = {styles.name}>
-                                      {user != null ? getSenderFull(user, chat.users).firstName : null}
-                                  </Text> 
-                               <Text style = {styles.subTitle}>
-                                     
-                                      
-                                    {formatted_date}
-                                  </Text> 
-                                 
-                                
-                              </View>
-                             
-                              
-                              {(chat.latestMessage !== null || chat.latestMessage !== undefined )  && chat.latestMessage.content != "" ?
-                              <View style = {{
-                                flexDirection: 'row'
-                              }}>
-                                
-                                <View>
-                                <Text  numberOfLines={2} style = {styles.subTitle}>
-                                  {chat.latestMessage.content}
-                                </Text>
-                                    {/* <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text> */}
-                                  </View>
-                                 
-                              </View>
-                              
-                                 : <Text>File Uploaded</Text> }
-                                 {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 ? <View style={styles.notif}>
-                                    <Text style={styles.notifClr}>{storedNotifications.length}</Text>
-                                  </View> : <Text></Text> }  */}
-                                 {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0  && storedNotifications.map((notif) => {
-                                  if(notif.chat._id == chat._id){
-                                    return <View style={styles.notif}>
-                                    {/* <Text style={styles.notifClr}>{storedNotifications.length}</Text> */}
-                                   <Octicons name="dot-fill" size={24} color="red" />
-                                  </View>
-                                  }
-                                  else{
-                                    null
-                                  }
-                                 })} 
-                                 {/* { NotifFlag && <View style={styles.notif}>
-                                    <Text style={styles.notifClr}>{storedNotifications.length}</Text>
-                                  </View>}  */}
-                                 {/* {storedNotifications && <View style={styles.notif}>
-                                    <Text style={styles.notifClr}>{storedNotifications.length}</Text>
-                                  </View> }  */}
-                          </View>
-                          </Pressable>
-                    }
+                    return (
+                      <ChatItem 
+                        storedNotifications={storedNotifications} 
+                        setchattId={setchattId} 
+                        setloading={setloading} 
+                        chat={chat} 
+                        user={user} 
+                        getSenderFull={getSenderFull} 
+                        formatted_date={formatted_date}
+                        setSelectedChat={setSelectedChat}
+                      />
+                    )
+                    // }
                     
                     
                   }
                   else if(d == 1){
-                    if(triggerChange == false){
+                    // if(triggerChange == false){
                     return <Pressable key={chat._id} onPress={() => 
                       {
                         setloading(true)
@@ -385,7 +334,7 @@ useEffect(() => {
                                  : <Text>File Uploaded</Text> }
                           </View>
                           </Pressable>
-                    }
+                    // }
                     // YesterdaysChats.push(chat)
                     // chat2.push(chat)
                    
@@ -398,7 +347,8 @@ useEffect(() => {
   
    
  }
-   if(triggerChange == false){
+  //  if(triggerChange == false){
+
  
  return <Pressable key={chat._id} onPress={() => 
    {
@@ -410,7 +360,7 @@ useEffect(() => {
    user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
        <View>
        <Image 
-           source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+           source={{uri: user != null ? getSenderFull(user, chat?.users)?.profilePic : null}}  
            style = {styles.image}
         />
        </View>
@@ -418,7 +368,7 @@ useEffect(() => {
        <View style = {styles.content}>
            <View style = {styles.row}>
                <Text style = {styles.name}>
-                   {user != null ? getSenderFull(user, chat.users).firstName : null}
+                   {user != null ? getSenderFull(user, chat?.users)?.firstName : null}
                </Text> 
             <Text style = {styles.subTitle}>
                   
@@ -444,7 +394,7 @@ useEffect(() => {
               : <Text>File Uploaded</Text> }
        </View>
        </Pressable>
-   }
+  //  }
                     // OtherChats.push(chat)
                     // chat3.push(chat)
                     

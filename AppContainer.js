@@ -75,7 +75,7 @@ function AppContainer({showOnBoarding}) {
       // UpdateLastSeenAndStatus(online)
       if(user != null){
         // sendData(online, user._id)
-        console.log(user)
+        // console.log(user)
         console.log('12')
       }
       

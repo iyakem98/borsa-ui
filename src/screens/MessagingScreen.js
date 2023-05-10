@@ -107,7 +107,7 @@ const MessagingScreen = () => {
   useEffect(() =>{
     
     fetchMessage()
-console.log(`loading is ` + loading)
+// console.log(`loading is ` + loading)
     
     selectedChatCompare = selectedChat
     
@@ -121,13 +121,19 @@ console.log(`loading is ` + loading)
 
  
   useEffect(() => {
-    
+    // console.log("messages legnth" +  messages.length)
+    // locallyStoredMessages(messages)
     socket.current.on("message recieved", (newMessageReceived) => {
-      setMessages([...messages, newMessageReceived])
-      return () => socket.current.off("message recieved");
-      //return () =>   socket.current.disconnect()
-     //console.log('messaging screen ')
-      //console.log('message recieved')
+      // console.log("messages legnth" +  messages.length)
+      
+      // var newMessage = 
+      // setMessages([...messages, data])
+      // setMessages([...messages, newMessageReceived])
+      testNewMessages(newMessageReceived)
+      // setMessages([...messages, newMessageReceived])
+      // return () =>   socket.current.disconnect()
+      // console.log('messaging screen ')
+      // console.log('123')
       //  setreceivedMessage(true)
      
 
@@ -136,9 +142,44 @@ console.log(`loading is ` + loading)
     })
 
 
-  })
+  }, [])
+const testNewMessages = async(newMessageReceived) => {
+  // var storedMessages = await AsyncStorage.getItem('messages')
+  // console.log('stored messages' + JSON.parse(storedMessages))
+  // setMessages(storedMessages)
+  // setMessages(...messages, newMessageReceived)
+  // const config = {
+  //   headers: {
+  //       Authorization: `Bearer ${user.token}`
 
-  // search how to run an async func in react 
+  //   }
+  // }
+  // const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
+  //   config)
+    // setMessages(data)
+    // setMessages(...messages, newMessageReceived)
+    const config = {
+      headers: {
+          Authorization: `Bearer ${user.token}`
+  
+      }
+    }
+    const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
+      config)
+      setMessages(data, newMessageReceived)
+      // setMessages(data, newMessageReceived)
+      // console.log('fetched data' + data)
+}
+const locallyStoredMessages = async(messages) => {
+  // await AsyncStorage.removeItem('messages')
+  // await AsyncStorage.setItem("messages", messages)
+  // var mess = await AsyncStorage.getItem('messages')
+  // console.log('stored messages locally' + JSON.parse(mess))
+ 
+    // setMessages(data)
+    // setMessages(...messages, newMessageReceived)
+}
+ 
 
 
 
@@ -185,6 +226,8 @@ console.log(`loading is ` + loading)
     
   socket.current.emit("new message", data)
   setMessages([...messages, data])
+  // await AsyncStorage.removeItem('messages')
+  // await AsyncStorage.setItem('messages', JSON.stringify(messages))
   setNewwMessage(false)
   setmessageSentOrReceived(false)
   setfetchAgain(true)
@@ -217,7 +260,7 @@ console.log(`loading is ` + loading)
 
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
-    console.log("=======", data)
+    // console.log("=======", data)
     // if(data == undefined || data == [] || data == null){
     //   // setloading(false)
     //   setMessages([])
@@ -252,13 +295,13 @@ console.log(`loading is ` + loading)
     }
   
   const typingHandler = (e) => {
-    setNewMessage(e.target.value)
+    setNewMessage(e)
      
     if(!socketConnected) return
 
     if(!typing) {
      setTyping(true)
-     socket.current.emit('typing', chatId);
+     socket.current.emit('typing', chattId);
     }
 
     let lastTypingTime = new Date().getTime()
@@ -268,7 +311,7 @@ console.log(`loading is ` + loading)
      var timeDiff = timeNow - lastTypingTime;
 
      if(timeDiff >= timerLength && typing) {
-         socket.current.emit("stop typing", chatId)
+         socket.current.emit("stop typing", chattId)
          setTyping(false)
      }
     }, timerLength);

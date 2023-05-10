@@ -47,7 +47,7 @@ const OnBoarding = ({navigation}) => {
                     fontFamily: "Poppins_600SemiBold",
                     fontSize: 30
                 }}>
-                    Find cheap ways to deliver your packages
+                    Time to Democratize Shipment!
                 </Text>
                 <Text style={{
                     color: "#ddd",
@@ -55,14 +55,31 @@ const OnBoarding = ({navigation}) => {
                     fontSize: 14,
                     marginTop: 10
                 }}>
-                    We will help you connect with peoples across the world to deliver your package or in reverse be the delivery person
+                    Do you want to get paid to travel? 
+                </Text>
+                <Text style={{
+                    color: "#ddd",
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 14,
+                    marginTop: 10
+                }}>
+                    Do you want to get your items delivered asap? 
+                </Text>
+                <Text style={{
+                    color: "#ddd",
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 16,
+                    marginTop: 10,
+                    fontWeight: 'bold'
+                }}>
+                    Just click below and begin your journey!
                 </Text>
                 <Pressable style={{
                     backgroundColor: "#514590",
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,
-                    marginTop: 50,
+                    marginTop: 20,
                     width: "100%"
                 }} onPress={()=>{
                     storeData();
