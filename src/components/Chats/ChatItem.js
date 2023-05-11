@@ -2,6 +2,9 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Octicons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import { fetchChat } from '../../features/chat/chatSlice';
+import axios from 'axios';
 
 const ChatItem = ({
   storedNotifications,
@@ -14,11 +17,13 @@ const ChatItem = ({
   setSelectedChat
 }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [newMessage, setNewMessage]=  useState();
   const [notifLength, setNotifLength] = useState(0)
 
   useEffect(()=>{
     if(storedNotifications) {
+      setNewMessage()
       storedNotifications.map((notif) => {
       //  console.log('bbnn',notif)
       if(notif == undefined){
@@ -31,6 +36,25 @@ const ChatItem = ({
       }})
     }
   }, [storedNotifications])
+
+  useEffect(() =>{
+    console.log("-=======", chat.latestMessage)
+    setNewMessage()
+    dispatch(fetchChat())
+  }, [notifLength])
+
+  const handleMarked = async() => {
+    // try {
+    //   const res = await axios.put('http://143.198.168.244/api/message/marked', {}, {})
+    //   console.log(";;;;", res.data)
+    // } catch(e) {
+    //   console.log("ERROR WHILE MARKING: ", e)
+    // }
+  }
+
+  useEffect(()=>{
+    handleMarked()
+  }, [])
 
   return (
     <Pressable 
