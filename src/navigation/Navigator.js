@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, AppState } from "react-native"
+import { View, Text, StyleSheet, AppState , Button} from "react-native"
 import {NavigationContainer} from '@react-navigation/native'
-import { createStackNavigator } from "@react-navigation/stack"
+import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack"
 import MessagingScreen from "../screens/MessagingScreen"
 import ChatScreen from "../screens/ChatScreen"
 import LoginScreen from "../screens/AuthScreens/LoginScreen"
@@ -168,7 +168,19 @@ const Navigator = ({showOnBoarding}) => {
           
           headerTintColor: "#fff"
         }}/>
-      <Stack.Screen name = "My Cards" component={MyCards} />
+      {/* <Stack.Screen name = "My Cards" component={MyCards} options={{headerShown: false}}/>
+      */}
+    <Stack.Screen
+        name="My Cards"
+        component={MyCards}
+        options={{
+          headerBackTitleVisible: false,
+          headerBackVisible: false,
+          headerMode: null,
+          headerLeft: () => <>
+          </>
+        }}
+      />
       <Stack.Screen name = "Edit UserName" component={EditUserName} />
       <Stack.Screen name = "Edit Name" component={EditName} />
       <Stack.Screen name = "Edit Email" component={EditEmail} />

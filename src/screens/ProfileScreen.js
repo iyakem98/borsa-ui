@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { API_BASE_URL } from '../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ProfileScreen = ({navigation}) => {
     const { user } = useSelector((state) => state.auth)
@@ -65,7 +66,7 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     
-    <View style = {{
+    <SafeAreaView style = {{
         paddingVertical: 30,
         backgroundColor: "white"
     }}>
@@ -631,7 +632,7 @@ const ProfileScreen = ({navigation}) => {
      
     </View>
             
-    </View>
+    </SafeAreaView>
   )
 }
 

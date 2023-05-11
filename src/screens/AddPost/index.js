@@ -1,11 +1,58 @@
-import { Dimensions, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import { Dimensions, ActivityIndicator, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { API_BASE_URL } from '../../utils/config'
 
 const width = Dimensions.get("screen").width
 
 const AddPost = ({navigation}) => {
     const [selected, setSelected] = useState(1)
+
+    const [isAlreadyTraveler, setIsAlreadyTraveler] = useState(false)
+
+    const { user} = useSelector(
+        (state) => state.auth
+      )
+
+      const [spinner, setSpinner] = useState(false)
+
+    const checkTraveler = async () => {
+        setSpinner(true)
+        let config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+              }}
+        
+        let {data} =   await axios.get(`http://143.198.168.244/api/travels/my`,
+        config)
+        console.log("=======", data.data)
+        if(data.data.length>0){
+            Alert.alert('Already a Traveler', 'Do you want to delete your previous traveler card and add a new one?', [
+                
+                {text: 'OK', onPress: async () => {
+                    navigation.navigate("My Cards")
+                }},
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+              ]);
+        }else{
+
+        navigation.navigate("FromTo", {
+            cardType: selected,
+          })
+        }
+
+
+       setSpinner(false)
+  
+      }
+
+   
     return (
         <SafeAreaView style={styles.container}>
             <Header title={"Add Post"} />
@@ -56,8 +103,23 @@ const AddPost = ({navigation}) => {
                         <Text style={styles.compTxt}>Buying</Text>
                     </Pressable>
                 </View>
+
+
+                {
+    spinner && 
+    <View style={{
+      position:"fixed",
+      top:"40%",
+      left:"0%",
+      zIndex: 200
+  }}>
+    <ActivityIndicator size="large" color="black" />
+  </View>
+  }
+
+
                 <Pressable style={{
-                    backgroundColor: `${selected == 1 ? 'green' : '#514590'}`,
+                    backgroundColor: `${selected == 1 ? '#514590' : '#514590'}`,
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,
@@ -67,9 +129,21 @@ const AddPost = ({navigation}) => {
                     left: 15
                 }} 
                 //onPress={()=>navigation.navigate("FromTo")}
-                onPress={()=>navigation.navigate("FromTo", {
-                    cardType: selected,
-                  })}
+                onPress={()=>{
+                //     navigation.navigate("FromTo", {
+                //     cardType: selected,
+                 
+                //   })
+                  if(selected==1){
+                    checkTraveler()
+                }
+                else{
+                    navigation.navigate("FromTo", {
+                        cardType: selected,
+                      })
+                }
+            }
+                }
                 >
                     <Text style={{
                         color: "#fff",
@@ -78,6 +152,9 @@ const AddPost = ({navigation}) => {
                         textAlign: "center"
                     }}>{"Next"}</Text>
                 </Pressable>
+
+
+
             </ScrollView>
         </SafeAreaView>
     )
