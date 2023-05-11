@@ -127,8 +127,8 @@ const Navigator = ({showOnBoarding}) => {
     
     <Stack.Navigator>
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
-      {/* <Stack.Screen name="Chats" component={ChatScreen} /> */}
-      <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} />
+      <Stack.Screen name="Chats" component={ChatScreen} />
+      {/* <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} /> */}
       <Stack.Screen name="Search" component={SearchScreen}  options={({ route }) => ({
           
           // title: <SearchBar chats={chattts}/>,

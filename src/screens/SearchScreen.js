@@ -12,6 +12,7 @@ import { StyleSheet } from 'react-native';
 import { Pressable } from 'react-native';
 import { Image } from 'react-native';
 import { useLayoutEffect } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function SearchScreen() {
   const { user } = useSelector((state) => state.auth)
@@ -36,28 +37,29 @@ const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((sta
 const dispatch = useDispatch();
 const navigation = useNavigation();
 
-useLayoutEffect(() =>{
-  dispatch(fetchChat())
-}, [])
-useEffect(() =>{
-  dispatch(fetchChat())
-}, [fetchAgain])
+// useLayoutEffect(() =>{
+//   dispatch(fetchChat())
+// }, [])
+// useEffect(() =>{
+//   dispatch(fetchChat())
+// }, [fetchAgain])
 // useEffect(() =>{
 // //     console.log(route.name)
 // // }, [])
-useEffect(() =>{
-  dispatch(fetchChat())
+// useEffect(() =>{
+//   dispatch(fetchChat())
 
-}, [user])
-useEffect(() => {
-navigation.addListener('focus', () => dispatch(fetchChat()))
+// }, [])
+// useEffect(() => {
+// navigation.addListener('focus', () => dispatch(fetchChat()))
 
-}, [])
+// }, [])
 // console.log('chattts present', chattts)
 // console.log('search first name', searchFirstName)
 
   return (
    <>
+   <ScrollView>
    {/* <View>
     <Text>search screen</Text>
     <Text>{searchFirstName}</Text>
@@ -114,8 +116,8 @@ navigation.addListener('focus', () => dispatch(fetchChat()))
                                <Text style = {styles.subTitle}>
                                      
                                       
-                                    {/* {formatted_date} */}
-                                    Today
+                                    {formatted_date}
+                                    {/* Today */}
                                   </Text> 
                                  
                                 
@@ -395,8 +397,8 @@ navigation.addListener('focus', () => dispatch(fetchChat()))
                      <Text style = {styles.subTitle}>
                            
                             
-                          {/* {formatted_date} */}
-                          Today
+                          {formatted_date}
+                          {/* Today */}
                         </Text> 
                        
                       
@@ -609,6 +611,7 @@ navigation.addListener('focus', () => dispatch(fetchChat()))
 
     
                   }))}
+  </ScrollView>
    </>
   )
 }
