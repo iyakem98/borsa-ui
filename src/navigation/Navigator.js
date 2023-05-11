@@ -43,6 +43,11 @@ import FromTo from "../screens/AddPost/FromTo"
 import Description from "../screens/AddPost/Description"
 import PostAdditional from "../screens/AddPost/PostAdditional"
 import VerifyUser from "../screens/AuthScreens/VerifyUser"
+import Chattest from "../screens/chattest"
+import SearchScreen from "../screens/SearchScreen"
+import SearchBar from "../components/Chats/ChatListItem/SearchBar"
+import { fetchChat } from "../features/chat/chatSlice"
+
 
 
 const Stack = createStackNavigator();
@@ -51,6 +56,7 @@ const Navigator = ({showOnBoarding}) => {
   // const appState = useRef(AppState.currentState);
   const { user } = useSelector((state) => state.auth)
   const {messageHeader, setmessageHeader} = ChatState()
+  const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
   // useEffect(() =>{
 
   //   const subscription = AppState.addEventListener('change', nextAppState => {
@@ -103,7 +109,13 @@ const Navigator = ({showOnBoarding}) => {
   useEffect(()=>{
     checkUserData()
   }, [])
+  useEffect(() =>{
 
+    dispatch(fetchChat())
+    // console.log(chattts[1])
+    
+  
+}, [user])
   useEffect(()=>{
     console.log("=====================", showOnBoarding)
   }, [showOnBoarding])
@@ -115,7 +127,15 @@ const Navigator = ({showOnBoarding}) => {
     
     <Stack.Navigator>
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
-      <Stack.Screen name="Chats" component={ChatScreen} />
+      {/* <Stack.Screen name="Chats" component={ChatScreen} /> */}
+      <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} />
+      <Stack.Screen name="Search" component={SearchScreen}  options={({ route }) => ({
+          
+          // title: <SearchBar chats={chattts}/>,
+          title: <SearchBar/>,
+        
+          headerShown: true
+        })}/>
       <Stack.Screen name="Connect" component={ConnectScreen} />
       <Stack.Screen name="User Details" component={OtherProfile} />
       <Stack.Screen name="New Post" component={PostIndex} />

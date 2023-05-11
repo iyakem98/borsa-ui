@@ -24,6 +24,8 @@ import RecentlyTest from '../screens/RecentlyTest';
 import UserTest from '../screens/UserTest';
 import PushScreen from '../screens/PushScreen';
 import Saved from '../screens/Saved';
+import Chattest from '../screens/chattest';
+import Search from '../components/Chats/ChatListItem/Search';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -81,11 +83,22 @@ const MainTabNavigator = () => {
             headerShown: false
         }} /> */}
         
-        <Tab.Screen name="Chats" component={ChatScreen} options={{
+        {/* <Tab.Screen name="Chats" component={ChatScreen} options={{
+           tabBarIcon: ({color, size}) => (
+            <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
+            
+        ), */}
+        <Tab.Screen name="Chats" component={Chattest} options={{
            tabBarIcon: ({color, size}) => (
             <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
             
         ),
+        headerRight: () => (
+          
+           <Search/>
+          
+           
+        )
         // headerRight: () => (
         //     <>
         //     <Pressable style={styles.notificationBell} onPress={() => showMenu()}>
