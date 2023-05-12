@@ -24,6 +24,7 @@ import RecentlyTest from '../screens/RecentlyTest';
 import UserTest from '../screens/UserTest';
 import PushScreen from '../screens/PushScreen';
 import Saved from '../screens/Saved';
+import Search from '../components/Chats/ChatListItem/Search';
 import { io } from 'socket.io-client';
 import { API_BASE_URL_Socket } from '../utils/config';
 const Tab = createBottomTabNavigator();
@@ -101,6 +102,11 @@ const MainTabNavigator = () => {
             headerShown: false
         }} /> */}
         
+        {/* <Tab.Screen name="Chats" component={ChatScreen} options={{
+           tabBarIcon: ({color, size}) => (
+            <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
+            
+        ), */}
         <Tab.Screen name="Chats" component={ChatScreen} options={{
            tabBarIcon: ({color, size}) => (
             <View style={{
@@ -119,6 +125,12 @@ const MainTabNavigator = () => {
             </View>
             
         ),
+        headerRight: () => (
+          
+           <Search/>
+          
+           
+        )
         // headerRight: () => (
         //     <>
         //     <Pressable style={styles.notificationBell} onPress={() => showMenu()}>

@@ -270,18 +270,83 @@ useEffect(() => {
                     // if(triggerChange == false){
 
                     
-                    return (
-                      <ChatItem 
-                        storedNotifications={storedNotifications} 
-                        setchattId={setchattId} 
-                        setloading={setloading} 
-                        chat={chat} 
-                        user={user} 
-                        getSenderFull={getSenderFull} 
-                        formatted_date={formatted_date}
-                        setSelectedChat={setSelectedChat}
-                      />
-                    )
+                    return <Pressable key={chat._id} onPress={() => 
+                      {
+                        setloading(true)
+                        setchattId(chat._id)
+                        // chatArr2.push(chat)
+                        setSelectedChat(chat)
+                      navigation.navigate('Messaging', {userSelected:
+                        
+                      user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
+                          <View>
+                          <Image 
+                              source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
+                              style = {styles.image}
+                           />
+                          </View>
+                             
+                          <View style = {styles.content}>
+                              <View style = {styles.row}>
+                                  <Text style = {styles.name}>
+                                      {user != null ? getSenderFull(user, chat.users)?.firstName : null}
+                                  </Text> 
+                               <Text style = {styles.subTitle}>
+                                     
+                                      
+                                    {formatted_date}
+                                  </Text> 
+                                 
+                                
+                              </View>
+                             
+                              
+                              {(chat.latestMessage !== null || chat.latestMessage !== undefined )  && chat.latestMessage.content != "" ?
+                              <View style = {{
+                                flexDirection: 'row'
+                              }}>
+                                
+                                <View>
+                                <Text  numberOfLines={2} style = {styles.subTitle}>
+                                  {chat.latestMessage.content}
+                                </Text>
+                                    {/* <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text> */}
+                                  </View>
+                                  
+                              </View>
+                              
+                              
+                                 : <Text>File Uploaded</Text> }
+                                 {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 ? <View style={styles.notif}>
+                                    <Text style={styles.notifClr}>{storedNotifications.length}</Text>
+                                  </View> : <Text></Text> }  */}
+                                 {storedNotifications  && storedNotifications.map((notif) => {
+                               
+                              //  console.log('bbnn',notif)
+                                    if(notif == undefined){
+                                      console.log('notif undefined')
+                                    }
+                                    else{
+                                      if(notif.chat._id == chat._id){
+                                        return <View style={styles.notif}>
+                                       
+                                       <Octicons name="dot-fill" size={24} color="red" />
+                                      </View>
+                                      }
+                                    }
+                                    
+                                  
+                                  
+                                  
+                                 })
+                                 } 
+                               {/* <Text>notifffehih</Text> */}
+                                 {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 
+                                  &&  <View  style={styles.notif}><Text>notif</Text></View>
+                                 }  */}
+                             
+                          </View>
+                          </Pressable>
                     // }
                     
                     
@@ -360,7 +425,7 @@ useEffect(() => {
    user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
        <View>
        <Image 
-           source={{uri: user != null ? getSenderFull(user, chat?.users)?.profilePic : null}}  
+           source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
            style = {styles.image}
         />
        </View>
@@ -368,7 +433,7 @@ useEffect(() => {
        <View style = {styles.content}>
            <View style = {styles.row}>
                <Text style = {styles.name}>
-                   {user != null ? getSenderFull(user, chat?.users)?.firstName : null}
+                   {user != null ? getSenderFull(user, chat.users)?.firstName : null}
                </Text> 
             <Text style = {styles.subTitle}>
                   

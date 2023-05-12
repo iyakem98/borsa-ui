@@ -22,6 +22,8 @@ const ChatProvider = ({ children }) => {
   const [NewwMessage, setNewwMessage] = useState(false)
   const [chattId, setchattId] = useState()
   const [loading, setloading] = useState(false)
+  const [searchTriggerChange, setsearchTriggerChange] = useState(false)
+  const [searchFirstName, setsearchFirstName] = useState(undefined)
   const [activeToday, setactiveToday] = useState(false)
   const [checkContent, setcheckContent] = useState(false)
   const [TtriggerChange, setTtriggerChange] = useState(false)
@@ -79,6 +81,10 @@ const ChatProvider = ({ children }) => {
         setOtriggerChange,
         activeToday, 
         setactiveToday,
+        searchTriggerChange,
+        setsearchTriggerChange,
+        searchFirstName, 
+        setsearchFirstName
 
 
 
