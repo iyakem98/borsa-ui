@@ -602,7 +602,7 @@ const OtherFunc = (messages)=>{
       <Text  style={{color:"white", fontSize: 12}}>{now.format('LT')}</Text>
       {/* <Ionicons name="checkmark-outline" size={20} color="white" /> */}
        
-       <ActivityIndicator size="small" color="#fff" />
+      {/* <ActivityIndicator size="small" color="#fff" /> */}
       </View>
       </View>
         }
