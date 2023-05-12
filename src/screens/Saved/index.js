@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import TravelerCard from './travelerCard'
 import BuyerCard from './buyerCard'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw';
-import { useIsFocused, useRoute } from "@react-navigation/native";
+import { useIsFocused } from '@react-navigation/native'
 
 const width = Dimensions.get("screen").width
 
@@ -23,13 +23,12 @@ const Saved = () => {
         setSelectedTab(index)
         setIsLoading(true)
         try {
-            console.log("index", index)
             // await AsyncStorage.removeItem(checkIndex)
             const jsonValue = await AsyncStorage.getItem(checkIndex)
             // // const jsonValue =  null
             if(jsonValue) {
                 const data = await JSON.parse(jsonValue)
-                console.log("====[[[", data)
+                // console.log("====[[[", data)
                 if(index === 1) {
                     setTravelerData(data)
                 } else 
@@ -70,10 +69,13 @@ const Saved = () => {
     }
 
     useEffect(()=>{
+        console.log("first", isFocused)
         if(isFocused){
             getData(selectedTab)
         }
-    }, [])
+    }, [isFocused])
+    
+    
 
     // useEffect(()=>{
     //     if(selectedTab === 2) {
@@ -152,7 +154,7 @@ const Saved = () => {
                             marginTop: 20,
                             textAlign: "center",
                             fontSize: 16
-                        }}>Wishlist is empty</Text>
+                        }}>No card saved yet</Text>
                     </View>
                 ) : (
                     <>

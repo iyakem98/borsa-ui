@@ -22,8 +22,12 @@ const ChatProvider = ({ children }) => {
   const [NewwMessage, setNewwMessage] = useState(false)
   const [chattId, setchattId] = useState()
   const [loading, setloading] = useState(false)
+  const [activeToday, setactiveToday] = useState(false)
   const [checkContent, setcheckContent] = useState(false)
-  const [chatLoaded, setchatLoaded] = useState(false)
+  const [TtriggerChange, setTtriggerChange] = useState(false)
+  const [YtriggerChange, setYtriggerChange] = useState(false)
+  const [OtriggerChange, setOtriggerChange] = useState(false)
+ 
 
 
   
@@ -66,7 +70,17 @@ const ChatProvider = ({ children }) => {
         loading,
         setloading,
         checkContent,
-        setcheckContent
+        setcheckContent,
+        TtriggerChange, 
+        setTtriggerChange,
+        YtriggerChange, 
+        setYtriggerChange,
+        OtriggerChange, 
+        setOtriggerChange,
+        activeToday, 
+        setactiveToday,
+
+
 
       }}
     >

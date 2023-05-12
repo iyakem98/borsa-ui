@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
+import { API_BASE_URL } from '../../utils/config'
 import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { showMessage } from "react-native-flash-message";
@@ -12,7 +13,8 @@ import { showMessage } from "react-native-flash-message";
 const width = Dimensions.get("screen").width
 
 const Buyer = ({
-    item
+    item,
+    onPress
 }) => {
     const buyer = item
     const dispatch = useDispatch()
@@ -29,20 +31,19 @@ const Buyer = ({
 
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
-  useEffect(() =>{
+//   useEffect(() =>{
 
-    dispatch(fetchChat())
-    // console.log(chattts[1])
+//     dispatch(fetchChat())
+//     // console.log(chattts[1])
     
   
-}, [user])
+// }, [user])
+useEffect(() => {
+   
+    // setchattId(null)
+}, [chattId])
 const BuyerChat = async(buyerData)=> {
-    // console.log(buyerData)
-    // console.log(buyerID)
     const userId = buyerData._id
-    // console.log(buyerData)
-    // const checkbuyer = await AsyncStorage.getItem('initialChat') 
-    // const checkbuyerarr = []
     try{
         const config = {
             headers: {
@@ -50,54 +51,63 @@ const BuyerChat = async(buyerData)=> {
     
             }
         }
-        // --------
-        // if((checkbuyer != null || checkbuyer != undefined) ){
-        //     checkbuyerarr.push()
-        //     for(var i = 0; i <checkbuyerarr.length ; i++){
-        //         if(checkbuyerarr[i] ==  buyerData._id){
-        //             setloading(true)
-        //             navigation.navigate('Messaging', {userSelected:
-                
-        //                     buyerData})
-        //              const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-        //             setchatSelected(true)
-        //              setchattId(data._id)
-        //              await AsyncStorage.setItem('initialChat') 
-        //         }
-        //     }
-        //     // if(checkbuyer == buyerData._id){
-        //     //     console.log('true')
-        //     // }
-        //     // setloading(true)
-        //     // // navigation.navigate('Messaging', {userSelected:
-        
-        //     // //         buyerData})
-        //     //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-        //     // setchatSelected(true)
-        //     //  setchattId(data._id)
-        //     // else{
-        //     //     console.log('false')
-        //     // }
-        // }
-        // else{
-        //     await AsyncStorage.removeItem('initialChat') 
-        //     setloading(false)
+        navigation.navigate('Messaging', {userSelected:
+                            
+            buyerData})
+            
+        // // // console.log("loading" + loading)
+         setloading(true)
+        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        // console.log(data)
+        setchatSelected(true)
+        setchattId(data._id)
+        // console.log("chatt id"+  chattId)
 
+        // if((chattts.length < 0) || chattts != null || chattts != undefined){
         //     navigation.navigate('Messaging', {userSelected:
         
         //         buyerData})
-        //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-        // setchatSelected(true)
-        //  setchattId(data._id)
-        //  const BuyerID = data.users[1]._id
-        //  await AsyncStorage.setItem('initialChat', BuyerID)
+        //         setloading(false)
+        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //     setchatSelected(true)
+        //     setchattId(data._id)
         // }
-        // ----------
-        // setloading(true)
-        // setloading(true)
-        if(chattts.length > 0){
+        // else{
+
+        //     chattts.map(async(chat) => {
+        //         if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+        //             navigation.navigate('Messaging', {userSelected:
+                
+        //                 buyerData})
+        //             setloading(true)
+        //             setchatSelected(true)
+        //             setchattId(chat._id)
+        //         }
+
+        //         else {
+        //             navigation.navigate('Messaging', {userSelected:
+        
+        //                 buyerData})
+        //                 setloading(false)
+        //             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //             setchatSelected(true)
+        //             setchattId(data._id)
+        //         }
+    
+        //       })
+        //    /* navigation.navigate('Messaging', {userSelected:
+        
+        //         travData})
+        //         setloading(false)
+        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //     setchatSelected(true)
+        //     setchattId(data._id) */
+        // }
+       
+       {/* if(chattts.length > 0){
             chattts.map(async(chat) => {
-                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+                console.log("p-=-=-=", chat?.users[1]?._id, userId)
+                if(chat.users[0]._id == userId || chat?.users[1]?._id == userId){
                     navigation.navigate('Messaging', {userSelected:
                 
                         buyerData})
@@ -114,13 +124,6 @@ const BuyerChat = async(buyerData)=> {
                     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
                     setchatSelected(true)
                     setchattId(data._id)
-                    // setloading(false)
-                    // navigation.navigate('Messaging', {userSelected:
-                
-                    //     buyerData})
-                    // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-                    // setchatSelected(true)
-                    // setchattId(data._id)
     
     
                 }
@@ -137,72 +140,11 @@ const BuyerChat = async(buyerData)=> {
             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
             setchatSelected(true)
             setchattId(data._id)
-        }
-        // -----------------
-        // chattts.map(async(chat) => {
-        //     if(chat.users[0]._id == userId || chat.users[1]._id == userId){
-        //         navigation.navigate('Messaging', {userSelected:
-        
-        //             buyerData})
-        //         setloading(true)
-        //         setchatSelected(true)
-        //         setchattId(chat._id)
-        //     }
-        //     else if (chat == null){
-        //         setloading(false)
-        //         navigation.navigate('Messaging', {userSelected:
-            
-        //             buyerData})
-        //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-        //         setchatSelected(true)
-        //         setchattId(data._id)
-
-
-        //     }
-            
-
-        //   })
-        // ------------------------------------------ 
-        // setloading(true)
-        // navigation.navigate('Messaging', {userSelected:
-        
-        //     buyerData})
-        //     const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-           
-        //     setchatSelected(true)
-        //     setchattId(data._id)
-        // -----------------------------
-        // if(data.latestMessage != null){
-            
-        // }
-        // const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-        
-        //     setchatSelected(true)
-        // setchattId(data._id)
-        // const BuyerID = data.users[1]._id
-        // console.log(data.users[1]._id)
-        // console.log(buyerData._id)
-        // await AsyncStorage.setItem('initialChat', BuyerID)
-        // const checkbuyer = await AsyncStorage.getItem('initialChat') 
-        // console.log(checkbuyer)          
-        // console.log(data.latestMessage)
-        // if(data.latestMessage != null || data.latestMessage != undefined){
-        //     setloading(true)
-        //     setchatSelected(true)
-        // setchattId(data._id)
-        // }
-        
-    
-        // navigation.navigate('Messaging', {chatId: data._id, userSelected:
-        
-        //     user != null ? getSenderFull(user, data.users) : null })
-            
-        
-        // return data
+        } */}
+      
     }
     catch(err){
         console.log(err)
-    // }
 }
 }
 
@@ -259,6 +201,7 @@ const BuyerChat = async(buyerData)=> {
         <Pressable style={styles.container} onPress={() =>{
             setshowModal(true)
             setModal(true)
+            onPress()
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
@@ -275,12 +218,12 @@ const BuyerChat = async(buyerData)=> {
                         <Text style={{
                             fontSize: 16,
                             fontFamily: "Poppins_500Medium"
-                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        }}>{item.item[0]}</Text>
                         <Text style={{
-                            fontSize: 12,
+                            fontSize: 14,
                             fontFamily: "Poppins_500Medium",
                             color: "#777"
-                        }}>{item?.user?.email}</Text>
+                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
                     </View>
                 </View>
                 <View style={styles.horizontal}>
@@ -288,7 +231,7 @@ const BuyerChat = async(buyerData)=> {
                         fontSize: 15,
                         fontFamily: "Poppins_600SemiBold",
                     }}>
-                        {item?.luggageSpace}
+                        {item?.totalWeight}
                         <Text style={{
                             fontFamily: "Poppins_400Regular",
                             fontSize: 13
@@ -401,33 +344,27 @@ const BuyerChat = async(buyerData)=> {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-                      <Image source={{ uri: image }} style={{ 
-                        width: 200,
-                        height: 200,
-                        // borderRadius: "100%",
-                        borderRadius: 100,
-                        alignItems: 'flex-end',
-                        justifyContent: 'flex-end',
-                        }} />
                     <View style={{
                         marginTop:10,
                         fontSize:20,
                         fontWeight:700
                     }}>
-                        <Text>{buyer.user.firstName+' '+buyer.user.lastName}</Text>
+                        <Text style = {{
+                            fontSize: 20,
+                        }}>{buyer.user.firstName+' '+buyer.user.lastName}</Text>
                     </View>
 
-                    <View style={{
+                  {/*  <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
                         // flex: 1,
                         flexDirection:"row"
-                    }}>
-                        <Ionicons name="location" size={20} color="black" />
+                    }}> */}
+                       {/* <Ionicons name="location" size={20} color="black" /> */}
                         {/* <Text> &nbsp; &nbsp; {buyer.user.address}</Text> */}
-                        <Text>{buyer.user.address}</Text>
-                    </View>
+                        {/*<Text>{buyer.user.address}</Text> 
+                    </View> */}
 
                     <View style={{
                         marginTop:10,
@@ -436,22 +373,24 @@ const BuyerChat = async(buyerData)=> {
                         // flex: 1,
                         flexDirection:"row"
                     }}>
-                         <Foundation name="shopping-bag" size={20} color="black" />
+                         <Foundation name="shopping-bag" size={30} color="black" />
                          {/* <Text> &nbsp; &nbsp; {buyer.item}</Text> */}
-                         <Text>{buyer.item}</Text>
+                         <Text style = {{
+                            fontSize: 22
+                         }}>{buyer.item}</Text>
                     </View>
 
-                    <View style={{
+                  {/*  <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
                         // flex: 1,
                         flexDirection:"row"
-                    }}>
-                         <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
+                    }}> */}
+                        {/* <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
                          {/* <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text> */}
-                         <Text>{buyer.TotalWeight}</Text>
-                    </View>
+                        {/* <Text>{buyer.TotalWeight}</Text>
+                    </View> */}
 
                     <View style={{
                         marginTop:10,
@@ -460,9 +399,11 @@ const BuyerChat = async(buyerData)=> {
                         // flex: 1,
                         flexDirection:"row"
                     }}>
-                        <MaterialIcons name="pending-actions" size={20} color="black" />
+                        <MaterialIcons name="pending-actions" size={30} color="black" />
                         {/* <Text> &nbsp; &nbsp; {buyer.status}</Text> */}
-                        <Text>{buyer.status}</Text>
+                        <Text style = {{
+                            fontSize: 22,
+                        }}>{buyer.status}</Text>
                     </View>
 
             <Pressable
@@ -586,13 +527,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#593196',
     },
     buttonClose: {
-        backgroundColor: '#593196',
+        //backgroundColor: '#593196',
     },
     textStyle: {
-        color: 'white',
+        color: 'red',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontSize:19
+        fontSize:30
     },
       modalText: {
         marginBottom: 16,

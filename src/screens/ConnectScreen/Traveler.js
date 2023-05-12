@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
+import { API_BASE_URL } from '../../utils/config'
 import { showMessage } from "react-native-flash-message";
 
 const width = Dimensions.get("screen").width
@@ -14,6 +15,7 @@ const width = Dimensions.get("screen").width
 const TravelerCard = ({
     item
 }) => {
+    var changeChat = false
     let traveler = item
     const { user } = useSelector((state) => state.auth)
     const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
@@ -25,27 +27,52 @@ const TravelerCard = ({
     function tweakBuyer() {
         setIsBuyer(!isBuyer)
     }
-
+var store1 = null
+var store2 = null
     const [modal, setModal] = useState(false)
     const [showModal, setshowModal] = useState(false)
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
 
-  useEffect(() =>{
+//   useEffect(() =>{
 
-    dispatch(fetchChat())
-    // console.log(chattts[1])
+//     dispatch(fetchChat())
+//     // console.log(chattts[1])
     
   
-}, [user])
+// }, [user])
+//   useEffect(() =>{
+
+//     dispatch(fetchChat())
+//     // console.log(chattts[1])
+    
+  
+// }, [])
+
+useEffect(() => {
+   
+    // setchattId(null)
+}, [chattId])
+
 
     
     const TravelerChat = async(travData) => {
-        // console.log(travData)
+        // setchattId(13)
+        // console.log('cccc' + chattId)
+        // store2 = true
+    //     setchattId(false)
+    // setchattId(123)
+    // setchattId((state) => {
+    //   return state
+    // })
+        
+        
+        // setchattId(121)
+        // console.log('ccccddd' + chattId)
+        // console.log('ccccss' + chattId)
         const userId = travData._id
-        // console.log(userId)
-        // // console.log(userId)
-        // // // console.log(travelerId.current)
+        const userFName = travData.firstName
+    //   console.log(chattts)
         try{
             const config = {
               headers: {
@@ -53,88 +80,90 @@ const TravelerCard = ({
         
               }
           }
-         console.log(chattts)
-        //   console.log(userId)
-        //   console.log(chattts[1].users[1]._id)
-        // ---
-        if(chattts.length > 0){
-            chattts.map(async(chat) => {
-                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
-                    navigation.navigate('Messaging', {userSelected:
-                
-                        travData})
-                    setloading(true)
-                    setchatSelected(true)
-                    setchattId(chat._id)
-                }
-                else{
-                    
-            navigation.navigate('Messaging', {userSelected:
-        
-                travData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id)
-                }
-            //     else if (chat){
-            //         setloading(false)
-            //         navigation.navigate('Messaging', {userSelected:
-                
-            //             travData})
-            //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            //         setchatSelected(true)
-            //         setchattId(data._id)
-    
-    
-            //     }
-    
-              })
-
-        }
-        else{
-           
-            navigation.navigate('Messaging', {userSelected:
-        
-                travData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id)
-        }
-        //   ---
-        //   for(var i = 0; i < chattts.length ; i++){
-        //     if(chattts[i].users[0]._id == userId || chattts[i].users[1]._id == userId){
-        //         navigation.navigate('Messaging', {userSelected:
-            
-        //                 travData})
-        //         setloading(true)
-        //         setchatSelected(true)
-        //         setchattId(chattts[i]._id)
-        //     }
+        //   if(!chattts){
+        //     console.log("ghiegwighiewg")
         //   }
-        //   setloading(true)
-        //   navigation.navigate('Messaging', {userSelected:
-            
-        //     travData})
-        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-        //     // console.log(data._id)
-        //     setchatSelected(true)
-        //     setchattId(data._id)
-            // console.log(data._id)
-            // setchatSelected(true)
-        
-            // navigation.navigate('Messaging', {chatId: data._id, userSelected:
-            
-            //     user != null ? getSenderFull(user, data.users) : null })
+        //   else{
+        //     console.log(chattts)
+        //     console.log('existing chat')
+        //   }
+         
+//    console.log(chattts)
+                        
+                       
+                        
+                       
+                        navigation.navigate('Messaging', {userSelected:
+                            
+                            travData})
+                            
+                        // // // console.log("loading" + loading)
+                         setloading(true)
+                        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                        // console.log(data)
+                        setchatSelected(true)
+                        setchattId(data._id)
+                        console.log("chatt id"+  chattId)
+                      
+                        
+                        
+                        
                 
             }
-            // return data
             
             
         catch(err){
             console.log(err)
         }
+    }
+    const createChat = async(chat, userId, travData, userFName ,config)  => {
+        // console.log(userFName)
+        console.log('user[0]' + chat.users[0].firstName)
+        console.log('user[1]' + chat.users[1].firstName)
+        // if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+        if(chat.users[1]._id == userId){
+            console.log('chat exists')
+                navigation.navigate('Messaging', {userSelected:
+            
+                    travData})
+                setloading(true)
+                // console.log("loading" + loading)
+                setchatSelected(true)
+                setchattId(chat._id)
+            }
+            // else if(chat.users[1].firstName != userFName){
+            // else if(chat.latestMessage == null || chat.latestMessage == undefined){
+            //     // console.log(chat.users[1].firstName )
+            //     navigation.navigate('Messaging', {userSelected:
+        
+            //                     travData})
+            //                     setloading(false)
+                            // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                            
+            //                 setchatSelected(true)
+            //                 setchattId(data._id)   
+            // }
+
+
+
+        //     else if(chat.users[0]._id != userId ||chat.users[1]._id != userId){
+        //     // else if(chat.users[1]._id != userId){
+        //         console.log('no chat users')
+        //         // console.log(chat.users[1].firstName)
+        //         // console.log('chat does not exist')
+        //         
+        //     }
+
+    }
+    const createChat2 = async(chat, userId, travData, userFName ,config)  => {
+        navigation.navigate('Messaging', {userSelected:
+        
+                                travData})
+                                setloading(false)
+                            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                            setchatSelected(true)
+                            setchattId(data._id)   
+        
     }
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
@@ -311,6 +340,8 @@ const TravelerCard = ({
                   paddingVertical: 8,
                   borderRadius: 8
                 }} onPress={()=>{
+                    store1 = true
+                    setchattId(null)
                     TravelerChat(traveler.user)
                 }}>
                   <Text style={{
@@ -332,32 +363,26 @@ const TravelerCard = ({
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-                      <Image source={{ uri: image }} style={{ 
-                        width: 200,
-                        height: 200,
-                        // borderRadius: "100%",
-                        borderRadius: 100,
-                        alignItems: 'flex-end',
-                        justifyContent: 'flex-end',
-                        }} />
                     <View style={{
                         marginTop:10,
                         fontSize:20,
                         fontWeight:700
                     }}>
-                        <Text>{traveler.user.firstName+' '+traveler.user.lastName}</Text>
+                        <Text style = {{
+                            fontSize: 20,
+                        }}>{traveler?.user?.firstName+' '+traveler?.user?.lastName}</Text>
                     </View>
 
-                    <View style={{
+                  {/*  <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
                         flexDirection:"row"
-                    }}>
-                        <Ionicons name="location" size={20} color="black" />
+                    }}> */}
+                      {/*  <Ionicons name="location" size={20} color="black" />
                        {/* <Text> &nbsp; &nbsp; {traveler.user.address}</Text> */}
-                       <Text>{traveler.user.address}</Text>
-                    </View>
+                      {/* <Text>{traveler.user.address}</Text> */}
+                   {/* </View> */}
 
                     <View style={{
                         marginTop:10,
@@ -365,20 +390,22 @@ const TravelerCard = ({
                         // display:"flex",
                         flexDirection:"row"
                     }}>
-                         <Foundation name="shopping-bag" size={20} color="black" />
+                         {/*<Foundation name="shopping-bag" size={20} color="black" />
                          {/* <Text> &nbsp; &nbsp; Unknown</Text> */}
-                         <Text>Unknown</Text>
+                        {/* <Text>Unknown</Text> */}
                     </View>
 
                     <View style={{
-                        marginTop:10,
+                        marginTop:1,
                         fontSize:18,
                         // display:"flex",
                         flexDirection:"row"
                     }}>
-                         <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
+                         <MaterialCommunityIcons name="weight-kilogram" size={30} color="black" />
                          {/* <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text> */}
-                         <Text>{traveler.luggageSpace}</Text>
+                         <Text style = {{
+                            fontSize: 22,
+                         }}>{traveler.luggageSpace}</Text>
                     </View>
 
                     <View style={{
@@ -387,9 +414,11 @@ const TravelerCard = ({
                         // display:"flex",
                         flexDirection:"row"
                     }}>
-                        <MaterialIcons name="pending-actions" size={20} color="black" />
+                        <MaterialIcons name="pending-actions" size={30} color="black" />
                         {/* <Text> &nbsp; &nbsp; {traveler.status}</Text> */}
-                        <Text>{traveler.status}</Text>
+                        <Text style = {{
+                            fontSize: 20,
+                        }}>{traveler.status}</Text>
                     </View>
 
             <Pressable
@@ -500,20 +529,20 @@ const styles = StyleSheet.create({
       },
       button: {
         borderRadius: 20,
-        padding: 10,
+        padding: 5,
         elevation: 2,
       },
       buttonOpen: {
         backgroundColor: '#593196',
       },
       buttonClose: {
-        backgroundColor: 'green',
+        //backgroundColor: 'red',
       },
       textStyle: {
-        color: 'white',
+        color: 'red',
         fontWeight: 'bold',
         textAlign: 'center',
-        fontSize:19
+        fontSize:30
       },
       modalText: {
         marginBottom: 16,

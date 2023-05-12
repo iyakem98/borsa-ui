@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ActivityIndicator, Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import BuyerCard from '../../components/Connect/BuyerCard'
@@ -11,17 +11,27 @@ import { fetchChat } from '../../features/chat/chatSlice'
 import { ChatState } from '../../context/ChatProvider'
 import { Feather } from '@expo/vector-icons'
 import Buyer from './Buyer'
+import EmptyUnDraw from '../../assets/svg/emptyUnDraw'
+import ErrorUnDraw from '../../assets/svg/errorUnDraw'
+import {registerSheet} from 'react-native-actions-sheet';
+import BottomSheet from '../../components/BottomSheet'
+import SheetManager from 'react-native-actions-sheet';
 
 const width = Dimensions.get("screen").width
 
 const ConnectScreen = () => {
+  registerSheet('example-two', <BottomSheet />);
+
+  const [bottomSheetData, setBottomSheetData] = useState(null)
   const [selectedTab, setSelectedTab] = useState(1)
   const { consumers } = useSelector(
     (state) => state.auth
   )
+  const snapPoints = useMemo(() => ['80%', '80%'], []);
   const { travelers} = useSelector(
     (state) => state.auth
   )
+  
   const { user} = useSelector(
     (state) => state.auth
   )
@@ -36,6 +46,7 @@ const ConnectScreen = () => {
         setIsBuyer(false)
         // console.log(isBuyer)
     }
+
     function tweakBuyer2() {
         setIsBuyer(true)
         // console.log(isBuyer)
@@ -83,7 +94,7 @@ const ConnectScreen = () => {
          setT(data.data.data)
          })
         .catch((err) => {
-         
+         setT(null)
         });
      
         await axios.get(`http://143.198.168.244/api/buyers/`, config)
@@ -92,7 +103,7 @@ const ConnectScreen = () => {
          setB(data.data.data)
          })
         .catch((err) => {
-         
+          setB(null)
         });
 
         setloading(false)
@@ -174,7 +185,7 @@ const ConnectScreen = () => {
       }}>
         <ActivityIndicator size="large" color="#777" />
       </View>
-    ) : (
+    ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
       <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
         {isBuyer ? (
           <View style={{
@@ -190,7 +201,10 @@ const ConnectScreen = () => {
                 // console.log("first", item)
                 return (
                   // <BuyerCard buyer={item} />
-                  <Buyer item={item} />
+                  <Buyer item={item} onPress={()=>{
+                    // console.log("first")
+                    // SheetManager.show('example-two');
+                  }} />
                 )
               }}
             />
@@ -206,7 +220,7 @@ const ConnectScreen = () => {
                 paddingBottom: 100
               }}
               renderItem={({item}) => {
-                console.log(item)
+                // console.log(item)
                 return (
                   // <TravelerCard traveler= {item} />
                   <TravelerCard item={item} />
@@ -215,6 +229,32 @@ const ConnectScreen = () => {
             />
           </View>
         )}
+      </View>
+    ) : (selectedTab === 2 && b && b.length === 0) || (selectedTab === 1 && t && t.length === 0) ? (
+      <View style={{
+        alignItems: "center",
+        paddingTop: 60
+      }}>
+        <EmptyUnDraw />
+        <Text style={{
+          fontFamily: "Poppins_500Medium",
+          marginTop: 20,
+          textAlign: "center",
+          fontSize: 16
+        }}>No Ads Found</Text>
+      </View>
+    ) : (
+      <View style={{
+        alignItems: "center",
+        paddingTop: 60
+      }}>
+        <ErrorUnDraw />
+        <Text style={{
+          fontFamily: "Poppins_500Medium",
+          marginTop: 20,
+          textAlign: "center",
+          fontSize: 16
+        }}>Something went wrong</Text>
       </View>
     )}
   </SafeAreaView>
@@ -227,6 +267,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff"
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
   },
   pressActiveB: {
       //backgroundColor: '#593196',

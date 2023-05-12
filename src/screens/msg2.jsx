@@ -107,7 +107,7 @@ const MessagingScreen = () => {
   useEffect(() =>{
     
     fetchMessage()
-// console.log(`loading is ` + loading)
+console.log(`loading is ` + loading)
     
     selectedChatCompare = selectedChat
     
@@ -121,19 +121,11 @@ const MessagingScreen = () => {
 
  
   useEffect(() => {
-    // console.log("messages legnth" +  messages.length)
-    // locallyStoredMessages(messages)
+    
     socket.current.on("message recieved", (newMessageReceived) => {
-      // console.log("messages legnth" +  messages.length)
-      
-      // var newMessage = 
-      // setMessages([...messages, data])
-      // setMessages([...messages, newMessageReceived])
-      testNewMessages(newMessageReceived)
-      // setMessages([...messages, newMessageReceived])
-      // return () =>   socket.current.disconnect()
+      setMessages([...messages, newMessageReceived])
       // console.log('messaging screen ')
-      // console.log('123')
+      // console.log('message recieved')
       //  setreceivedMessage(true)
      
 
@@ -142,44 +134,9 @@ const MessagingScreen = () => {
     })
 
 
-  }, [])
-const testNewMessages = async(newMessageReceived) => {
-  // var storedMessages = await AsyncStorage.getItem('messages')
-  // console.log('stored messages' + JSON.parse(storedMessages))
-  // setMessages(storedMessages)
-  // setMessages(...messages, newMessageReceived)
-  // const config = {
-  //   headers: {
-  //       Authorization: `Bearer ${user.token}`
+  })
 
-  //   }
-  // }
-  // const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
-  //   config)
-    // setMessages(data)
-    // setMessages(...messages, newMessageReceived)
-    const config = {
-      headers: {
-          Authorization: `Bearer ${user.token}`
-  
-      }
-    }
-    const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
-      config)
-      setMessages(data, newMessageReceived)
-      // setMessages(data, newMessageReceived)
-      // console.log('fetched data' + data)
-}
-const locallyStoredMessages = async(messages) => {
-  // await AsyncStorage.removeItem('messages')
-  // await AsyncStorage.setItem("messages", messages)
-  // var mess = await AsyncStorage.getItem('messages')
-  // console.log('stored messages locally' + JSON.parse(mess))
- 
-    // setMessages(data)
-    // setMessages(...messages, newMessageReceived)
-}
- 
+  // search how to run an async func in react 
 
 
 
@@ -226,8 +183,6 @@ const locallyStoredMessages = async(messages) => {
     
   socket.current.emit("new message", data)
   setMessages([...messages, data])
-  // await AsyncStorage.removeItem('messages')
-  // await AsyncStorage.setItem('messages', JSON.stringify(messages))
   setNewwMessage(false)
   setmessageSentOrReceived(false)
   setfetchAgain(true)
@@ -255,19 +210,17 @@ const locallyStoredMessages = async(messages) => {
       const config = {
         headers: {
             Authorization: `Bearer ${user.token}`
-          }
+
+        }
     }
 
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
-    // console.log("=======", data)
+    console.log("=======", data)
     // if(data == undefined || data == [] || data == null){
     //   // setloading(false)
     //   setMessages([])
     // }
-
-    let yess = AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data))
-    console.log("stored in local")
     
     setloading(false)
 
@@ -283,25 +236,25 @@ const locallyStoredMessages = async(messages) => {
     }
     catch(error){
       console.log(error)
-       let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
-       if(msgs){
-          setMessages(JSON.parse(msgs))
-          setloading(false)
-       }else{
-          setMessages([])
-          setloading(false)
-       }
+      //  let msgs =  await AsyncStorage.getItem(`chat-${chattId}`)
+      //  if(msgs){
+      //     setMessages(JSON.parse(msgs))
+      //     setloading(false)
+      //  }else{
+      //     setMessages([])
+      //     setloading(false)
+      //  }
       }
     }
   
   const typingHandler = (e) => {
-    setNewMessage(e)
+    setNewMessage(e.target.value)
      
     if(!socketConnected) return
 
     if(!typing) {
      setTyping(true)
-     socket.current.emit('typing', chattId);
+     socket.current.emit('typing', chatId);
     }
 
     let lastTypingTime = new Date().getTime()
@@ -311,7 +264,7 @@ const locallyStoredMessages = async(messages) => {
      var timeDiff = timeNow - lastTypingTime;
 
      if(timeDiff >= timerLength && typing) {
-         socket.current.emit("stop typing", chattId)
+         socket.current.emit("stop typing", chatId)
          setTyping(false)
      }
     }, timerLength);
@@ -332,8 +285,10 @@ if(loading){
   {/*<Feather name="loader" size={40} style={{
     marginRight: 20,
   }} color="black" /> */}
-  <ActivityIndicator size="large" color="#000" style = {{marginRight: 0}} />
-    
+  <ActivityIndicator size="large" color="#000" style = {{marginRight: 15}} />
+    <Text style={{
+      fontSize: 20,
+    }}>fetching messages ....</Text>
   </View>
 }
 
@@ -342,7 +297,7 @@ if(loading){
 
  
 
-return ( <>
+  return ( <>
 
 
 
@@ -355,101 +310,101 @@ return ( <>
 
 
 
-  <View>
-     
-     </View>
-     
-     {!loading &&  
-   
-   <KeyboardAvoidingView 
-   behavior='padding'
-   keyboardVerticalOffset={
-   Platform.select({
-      ios: () => -400,
-      android: () => -400
-   })()
-  
- }
- style={styles.bg}
- >
-     <View>
-     
-     <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
-     </View>
-     </KeyboardAvoidingView>}
-   
-   
+ <View>
     
-    {!loading && 
-     <KeyboardAvoidingView
-       behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-       keyboardVerticalOffset={
-         Platform.select({
-            ios: () => 76,
-            android: () => 110
-         })()
-        
-       }
-       //style={styles.TextSendingcontainer}
-       > 
- 
-       <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
+    </View>
+    
+    {!loading &&  
   
-   {isTyping ? (
-     <View>
-       <Text> isTyping... </Text>
-     </View>
-   ) : null}
-    <TextInput 
-       value={newmessage}
-       onChangeText={setNewMessage}
-       style = {styles.input} 
-       multiline
-       placeholder='type your message...'/>
-     <Pressable style = {{
-       backgroundColor: '#13b955',
-       padding: 8,
-       borderRadius: 50,
+  <KeyboardAvoidingView 
+  behavior='padding'
+  keyboardVerticalOffset={
+  Platform.select({
+     ios: () => -400,
+     android: () => -400
+  })()
  
-     }}
-       onPress={() => {
-         console.log("new message" + newmessage)
-         if(newmessage == null || newmessage == undefined || newmessage == ""){
-           console.log('undefined')
-         }
-         else{
-           sendMessage()
-           // setcheckContent(true)
-           scrollViewRef.current.scrollToEnd()
-         }
-         // sendMessage()
-           // setcheckContent(true)
-         //   scrollViewRef.current.scrollToEnd()
+}
+style={styles.bg}
+>
+    <View>
+    
+    <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
+    </View>
+    </KeyboardAvoidingView>}
+  
+  
+   
+   {!loading && 
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+      keyboardVerticalOffset={
+        Platform.select({
+           ios: () => 76,
+           android: () => 110
+        })()
        
-         
-         
-       }}>
-     {/*<MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} /> */}
-     <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
-     </Pressable>
+      }
+      //style={styles.TextSendingcontainer}
+      > 
+
+      <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
  
-     </SafeAreaView>
+  {isTyping ? (
+    <View>
+      <Text> isTyping... </Text>
+    </View>
+  ) : null}
+   <TextInput 
+      value={newmessage}
+      onChangeText={setNewMessage}
+      style = {styles.input} 
+      multiline
+      placeholder='type your message...'/>
+    <Pressable style = {{
+      backgroundColor: '#13b955',
+      padding: 8,
+      borderRadius: 50,
+
+    }}
+      onPress={() => {
+        console.log("new message" + newmessage)
+        if(newmessage == null || newmessage == undefined || newmessage == ""){
+          console.log('undefined')
+        }
+        else{
+          sendMessage()
+          // setcheckContent(true)
+          scrollViewRef.current.scrollToEnd()
+        }
+        // sendMessage()
+          // setcheckContent(true)
+        //   scrollViewRef.current.scrollToEnd()
+      
+        
+        
+      }}>
+    {/*<MaterialIcons  name='send' size={24} color = "#17141f" style={{paddingTop: 5, paddingRight: 3}} /> */}
+    <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
+    </Pressable>
+
+    </SafeAreaView>
+
  
-  
-  </KeyboardAvoidingView>
-  }
- 
- 
- 
- 
- </>  
-     
-   
-   
-    
-   )
+ </KeyboardAvoidingView>
  }
- 
+
+
+
+
+</>  
+    
+  
+  
+   
+  )
+}
+
 
 export default MessagingScreen
 
@@ -463,7 +418,6 @@ const styles = StyleSheet.create({
     backgroundColor: "whitesmoke",
     backgroundColor:'white',
     padding: 2,
-    paddingTop: 10,
     paddingHorizontal: 10,
     alignItems: "center",
   },
@@ -490,16 +444,6 @@ const styles = StyleSheet.create({
 
 
  },
- input: {
-  flex: 1,
-  backgroundColor: "white",
-  padding: 5,
-  paddingHorizontal: 10,
-  marginHorizontal: 10,
-  borderRadius: 50,
-  borderColor: "lightgray",
-  borderWidth: StyleSheet.hairlineWidth,
-},
  minicamera: {
   height: 100
  },

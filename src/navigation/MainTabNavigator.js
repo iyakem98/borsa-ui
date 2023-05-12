@@ -9,7 +9,7 @@ import { Entypo, AntDesign, MaterialIcons, FontAwesome, Feather, Ionicons, Mater
 import LoginScreen from '../../src/screens/AuthScreens/LoginScreen';
 import { Badge, Icon, withBadge } from '@rneui/themed';
 import RegisterScreen from '../../src/screens/AuthScreens/RegisterScreen';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 import { getSenderFull } from '../ChatConfig/ChatLogics';
@@ -24,6 +24,8 @@ import RecentlyTest from '../screens/RecentlyTest';
 import UserTest from '../screens/UserTest';
 import PushScreen from '../screens/PushScreen';
 import Saved from '../screens/Saved';
+import { io } from 'socket.io-client';
+import { API_BASE_URL_Socket } from '../utils/config';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -31,10 +33,12 @@ const MainTabNavigator = () => {
     const [storedNotifications, setstoredNotifications] = useState([])
     const [notifChat, setnotifChat] = useState()
     const [visible, setVisible] = useState(false);
+    const [newMessage, setNewMessage] = useState(false)
     const navigate = useNavigation()
     const hideMenu = () => setVisible(false);
 
     const showMenu = () => setVisible(true);
+    var socket = useRef(null)
     const { user } = useSelector((state) => state.auth)
     useEffect(() =>{
        getNotif()
@@ -43,6 +47,22 @@ const MainTabNavigator = () => {
     //     console.log(notificationstored)
       
       }, [])
+
+      useEffect(() => {
+        socket.current = io(API_BASE_URL_Socket)
+        socket.current.emit("setup", user);
+        socket.current.on("connected", () => {
+            // setsocketConnected(true)
+        })
+        socket.current.on("message recieved", (newMessageReceived) => {
+          console.log(newMessageReceived)
+        //   storeNotif(newMessageReceived)
+            if(newMessageReceived) {
+                setNewMessage(true)
+            }
+        });
+      },[])
+
       const getNotif = async() =>{
         const notif  = await AsyncStorage.getItem('notification')
         const notifChat =  await AsyncStorage.getItem('notifChat')
@@ -83,7 +103,20 @@ const MainTabNavigator = () => {
         
         <Tab.Screen name="Chats" component={ChatScreen} options={{
            tabBarIcon: ({color, size}) => (
-            <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
+            <View style={{
+                position: "relative"
+            }}>
+                <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
+                {newMessage ? (
+                    <View style={{
+                        backgroundColor: "red",
+                        height: 15,
+                        width: 15,
+                        borderRadius: 15,
+                        position: "absolute"
+                    }} />
+                ) : null}
+            </View>
             
         ),
         // headerRight: () => (

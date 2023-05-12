@@ -37,6 +37,13 @@ const TravelerCard = ({traveler}) => {
     
   
 }, [user])
+  useEffect(() =>{
+
+    dispatch(fetchChat())
+    // console.log(chattts[1])
+    
+  
+}, [fetchAgain])
 
     
     const TravelerChat = async(travData) => {
@@ -52,13 +59,20 @@ const TravelerCard = ({traveler}) => {
         
               }
           }
-         console.log(chattts)
+        // if(chattts.length > 0){
+        //     chattts.map((chat) => {
+        //         console.log(chat.users[1].firstName)
+        //         console.log(userId)
+        //     })
+        // }
         //   console.log(userId)
         //   console.log(chattts[1].users[1]._id)
         // ---
         if(chattts.length > 0){
             chattts.map(async(chat) => {
                 if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+                    // setfetchAgain(true)
+                    // setfetchAgain(false)
                     navigation.navigate('Messaging', {userSelected:
                 
                         travData})
@@ -66,16 +80,19 @@ const TravelerCard = ({traveler}) => {
                     setchatSelected(true)
                     setchattId(chat._id)
                 }
-                else{
-                    
-            navigation.navigate('Messaging', {userSelected:
+                // ------------------------
+            //     else{
+            //         // setfetchAgain(true)
+            //         // setfetchAgain(false)
+            // navigation.navigate('Messaging', {userSelected:
         
-                travData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id)
-                }
+            //     travData})
+            //     setloading(false)
+            // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+            // setchatSelected(true)
+            // setchattId(data._id)
+            //     }
+            // ------------------------------------------
             //     else if (chat){
             //         setloading(false)
             //         navigation.navigate('Messaging', {userSelected:

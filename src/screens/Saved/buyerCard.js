@@ -1,6 +1,7 @@
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 const width = Dimensions.get("screen").width
 
@@ -8,7 +9,8 @@ const BuyerCard = ({
     item,
     addToWislistTraveler
 }) => {
-    console.log(item)
+    // console.log(item)
+    const navigation = useNavigation()
     const [modalOpen, setModalOpen] = useState(true);
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
@@ -16,7 +18,9 @@ const BuyerCard = ({
     const locationDepartureLength = locationDeparture.length
 
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={()=>{
+            navigation.navigate('Messaging', {userSelected: item})
+        }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
                     {/* <Image
@@ -104,7 +108,7 @@ const BuyerCard = ({
                     </Text>
                 </View>
             </View>
-        </View>
+        </Pressable>
     )
 }
 
