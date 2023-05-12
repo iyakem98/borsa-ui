@@ -16,6 +16,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { FontAwesome } from '@expo/vector-icons';
 import Header from '../components/Shared/Header';
 import SearchBar from '../components/Chats/ChatListItem/SearchBar';
+import ChatItem from '../components/Chats/ChatItem';
 function SearchScreen() {
   const { user } = useSelector((state) => state.auth)
   const {
@@ -65,7 +66,7 @@ useEffect(()=>{
 
   return (
     <SafeAreaView style={styles.con}>
-      <Header backBtn textField textData={searchFirstName} onTextChange={(text)=>{
+      <Header backBtn textField textData={searchFirstName} shadow onBackPress={()=>setsearchFirstName("")} onTextChange={(text)=>{
         setsearchFirstName(text)
       }} />
       {/* <SearchBar /> */}
@@ -102,116 +103,49 @@ useEffect(()=>{
                         formatted_date = moment(chat.latestMessage.createdAt).format("LT")
                       }
                       return (
-                        <Pressable key={chat._id} onPress={() => {
-                            setloading(true)
-                            setchattId(chat._id)
-                            setSelectedChat(chat)
-                            navigation.navigate('Messaging', {userSelected: user != null ? getSenderFull(user, chat.users) : null })
-                          }}
-                          style={styles.container}
-                        >
-                          <View>
-                            <Image 
-                              source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
-                              style = {styles.image}
-                            />
-                          </View>
-                          <View style = {styles.content}>
-                            <View style = {styles.row}>
-                              <Text style = {styles.name}>
-                                {user != null ? getSenderFull(user, chat.users).firstName : null}
-                              </Text> 
-                              <Text style = {styles.subTitle}>{formatted_date}</Text>
-                            </View>
-                            {(chat.latestMessage !== null || chat.latestMessage !== undefined )  && chat.latestMessage.content != "" ? (
-                              <View style = {{
-                                flexDirection: 'row'
-                              }}>
-                                <View>
-                                  <Text  numberOfLines={2} style = {styles.subTitle}>
-                                    {chat.latestMessage.content}
-                                  </Text>
-                                </View>
-                              </View>
-                            ) : <Text>File Uploaded</Text>}
-                          </View>
-                        </Pressable>
-                      )} else if(d == 1){
-                        return (
-                          <Pressable key={chat._id} onPress={() => {
-                            setloading(true)
-                            setchattId(chat._id)
-                            setSelectedChat(chat)
-                            navigation.navigate('Messaging', {userSelected: user != null ? getSenderFull(user, chat.users) : null })
-                          }} 
-                          style={styles.container}>
-                            <View>
-                              <Image 
-                                source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
-                                style = {styles.image}
-                              />
-                            </View> 
-                            <View style = {styles.content}>
-                              <View style = {styles.row}>
-                                <Text style = {styles.name}>
-                                  {user != null ? getSenderFull(user, chat.users).firstName : null}
-                                </Text>
-                                <Text style = {styles.subTitle}>Yesterday</Text>
-                              </View>
-                              {(chat.latestMessage !== null || chat.latestMessage !== undefined )  && chat.latestMessage.content != "" ? (
-                                <View style = {{
-                                  flexDirection: 'row'
-                                }}>
-                                  <View>
-                                    <Text  numberOfLines={2} style = {styles.subTitle}>
-                                      {chat.latestMessage.content}
-                                    </Text>
-                                  </View>
-                                </View>
-                              ) : <Text>File Uploaded</Text>}
-                            </View>
-                          </Pressable>
-                        )
-                      } else {
-                        if(chat.lastestMessage !== undefined || chat.lastestMessage !== null){
-                          formatted_date = moment(chat.latestMessage.createdAt).format("DD/MM/YY")
-                        }
-                        return (
-                          <Pressable key={chat._id} onPress={() => {
-                            setloading(true)
-                            setchattId(chat._id)
-                            setSelectedChat(chat)
-                            navigation.navigate('Messaging', {userSelected: user != null ? getSenderFull(user, chat.users) : null })}} 
-                          style={styles.container}>
-                            <View>
-                              <Image 
-                                source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
-                                style = {styles.image}
-                              />
-                            </View>
-                            <View style = {styles.content}>
-                              <View style = {styles.row}>
-                                <Text style = {styles.name}>
-                                    {user != null ? getSenderFull(user, chat.users).firstName : null}
-                                </Text> 
-                                <Text style = {styles.subTitle}>{formatted_date}</Text>
-                              </View>
-                              {(chat.latestMessage !== null || chat.latestMessage !== undefined )  && chat.latestMessage.content != "" ? (
-                                <View style = {{
-                                  flexDirection: 'row'
-                                }}>
-                                  <View>
-                                    <Text  numberOfLines={2} style = {styles.subTitle}>
-                                      {chat.latestMessage.content}
-                                    </Text>
-                                  </View>
-                                </View>
-                              ) : <Text>File Uploaded</Text>}
-                        </View>
-                      </Pressable>   
-                    )
+                        <ChatItem
+                          // storedNotifications={storedNotifications} 
+                          setchattId={setchattId} 
+                          setloading={setloading} 
+                          chat={chat}
+                          user={user} 
+                          getSenderFull={getSenderFull} 
+                          formatted_date={formatted_date}
+                          setSelectedChat={setSelectedChat}
+                        />
+                      )
+                    } else if(d == 1){
+                      return (
+                        <ChatItem
+                          // storedNotifications={storedNotifications} 
+                          setchattId={setchattId} 
+                          setloading={setloading} 
+                          chat={chat}
+                          user={user} 
+                          getSenderFull={getSenderFull} 
+                          formatted_date={formatted_date}
+                          setSelectedChat={setSelectedChat}
+                        />
+                      )
+                    } else {
+                      if(chat.lastestMessage !== undefined || chat.lastestMessage !== null){
+                        formatted_date = moment(chat.latestMessage.createdAt).format("DD/MM/YY")
+                      }
+                      return (
+                        <ChatItem
+                          // storedNotifications={storedNotifications} 
+                          setchattId={setchattId} 
+                          setloading={setloading} 
+                          chat={chat}
+                          user={user} 
+                          getSenderFull={getSenderFull} 
+                          formatted_date={formatted_date}
+                          setSelectedChat={setSelectedChat}
+                        />
+                      )
+                    }
                   }
-                }}
+                }
               }
             }
           })
@@ -226,10 +160,12 @@ export default SearchScreen
 const styles = StyleSheet.create({
   con: {
     flex:1,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
-    users: {
-      backgroundColor: "white"
+  users: {
+    backgroundColor: "white",
+    paddingHorizontal: 15,
+    paddingTop: 20
   },
   connectBtn: {
     // backgroundColor: "red",

@@ -10,14 +10,18 @@ const Header = ({
   shadow,
   onTextChange,
   textField,
-  textData
+  textData,
+  onBackPress
 }) => {
   const navigation = useNavigation();
 
   return (
     <View style={[styles.header, shadow ? styles.shadow : null]}>
       {backBtn ? (
-        <Pressable onPress={()=>navigation.goBack()} style={{
+        <Pressable onPress={()=> {
+          onBackPress ? onBackPress() : null;
+          navigation.goBack()
+        }} style={{
           marginRight: 10,
           // flex: 0.1
         }}>
@@ -71,14 +75,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 2
+    borderBottomColor: "#eee",
+    borderBottomWidth: 1,
+    borderStyle: "solid",
+    paddingBottom: 10
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
+    // elevation: 2
   }
 })

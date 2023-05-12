@@ -14,7 +14,8 @@ const ChatItem = ({
   user,
   getSenderFull,
   formatted_date,
-  setSelectedChat
+  setSelectedChat,
+  popNav
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -72,14 +73,14 @@ const ChatItem = ({
     >
       <View>
         <Image
-          source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+          source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
           style = {styles.image}
         />
       </View>
       <View style = {styles.content}>
         <View style = {styles.row}>
           <Text style = {styles.name}>
-            {user != null ? getSenderFull(user, chat.users).firstName : null}
+            {user != null ? getSenderFull(user, chat.users)?.firstName : null}
           </Text> 
           <Text style = {styles.subTitle}>
             {formatted_date}
