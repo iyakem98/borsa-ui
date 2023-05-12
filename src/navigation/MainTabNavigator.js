@@ -113,7 +113,7 @@ const MainTabNavigator = () => {
                 position: "relative"
             }}>
                 <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
-                {newMessage ? (
+                {/* {newMessage ? (
                     <View style={{
                         backgroundColor: "red",
                         height: 15,
@@ -121,7 +121,7 @@ const MainTabNavigator = () => {
                         borderRadius: 15,
                         position: "absolute"
                     }} />
-                ) : null}
+                ) : null} */}
             </View>
             
         ),
