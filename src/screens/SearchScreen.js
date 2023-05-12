@@ -70,8 +70,14 @@ const navigation = useNavigation();
         <Text>Nothing to look for in here</Text>
       </View>
              
+
+                
+                
+              
+            }
+
     
-                  }
+                  
       { searchFirstName && chattts && chattts.length > 0 && (chattts.map((chat) => {
               var formatted_date = null
               if( chat != null &&  chat.latestMessage != null){
