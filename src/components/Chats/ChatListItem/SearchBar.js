@@ -49,7 +49,7 @@ function SearchBar() {
 <View>
 <TextInput
          
-            placeholder='Search'
+            placeholder='Search for users'
             placeholderTextColor="gray" 
             autoCapitalize="none"
             autoFocus={true}
