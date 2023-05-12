@@ -1,5 +1,5 @@
 // import { StatusBar } from 'expo-status-bar';
-import {AppState, StatusBar, StyleSheet, Text, View } from 'react-native';
+import {AppState, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 import ChatListItem from './src/components/Chats/ChatListItem';
 import ChatScreen from './src/screens/ChatScreen';
 import MessagingScreen from './src/screens/MessagingScreen';
@@ -60,18 +60,20 @@ export default function App() {
   }
 
   const checktracking = async()=>{
-    try {
-      const granted = await getTrackingPermissionsAsync()
-      if (granted) {
-        // Your app is authorized to track the user or their device
-        console.log("GRANTED")
-        await requestTrackingPermissionsAsync();
-      } else {
-        console.log("NOT GRANTED")
-        await requestTrackingPermissionsAsync();
+    if(Platform.OS == 'ios') {
+      try {
+        const granted = await getTrackingPermissionsAsync()
+        if (granted) {
+          // Your app is authorized to track the user or their device
+          console.log("GRANTED")
+          await requestTrackingPermissionsAsync();
+        } else {
+          console.log("NOT GRANTED")
+          await requestTrackingPermissionsAsync();
+        }
+      } catch(e) {
+        console.log("ERROR ON TRACKING")
       }
-    } catch(e) {
-      console.log("ERROR ON TRACKING")
     }
   }
 
