@@ -52,7 +52,7 @@ function SearchBar() {
             placeholder='Search for users'
             placeholderTextColor="gray" 
             autoCapitalize="none"
-            autoFocus={true}
+            // autoFocus={true}
             onFocus={handleFocus}
             onChangeText={(e) => setsearchFirstName(e)}
             />   

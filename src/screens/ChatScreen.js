@@ -270,20 +270,6 @@ useEffect(() => {
                     // if(triggerChange == false){
 
                     
-<<<<<<< HEAD
-                    return (
-                      <ChatItem 
-                        storedNotifications={storedNotifications} 
-                        setchattId={setchattId} 
-                        setloading={setloading} 
-                        chat={chat} 
-                        user={user} 
-                        getSenderFull={getSenderFull} 
-                        formatted_date={formatted_date}
-                        setSelectedChat={setSelectedChat}
-                      />
-                    )
-=======
                     return <Pressable key={chat._id} onPress={() => 
                       {
                         setloading(true)
@@ -361,7 +347,6 @@ useEffect(() => {
                              
                           </View>
                           </Pressable>
->>>>>>> b859a4fdd668f871edbf02aae3fce494d759473b
                     // }
                     
                     
@@ -440,11 +425,7 @@ useEffect(() => {
    user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
        <View>
        <Image 
-<<<<<<< HEAD
-           source={{uri: user != null ? getSenderFull(user, chat?.users)?.profilePic : null}}  
-=======
            source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
->>>>>>> b859a4fdd668f871edbf02aae3fce494d759473b
            style = {styles.image}
         />
        </View>
@@ -452,11 +433,7 @@ useEffect(() => {
        <View style = {styles.content}>
            <View style = {styles.row}>
                <Text style = {styles.name}>
-<<<<<<< HEAD
-                   {user != null ? getSenderFull(user, chat?.users)?.firstName : null}
-=======
                    {user != null ? getSenderFull(user, chat.users)?.firstName : null}
->>>>>>> b859a4fdd668f871edbf02aae3fce494d759473b
                </Text> 
             <Text style = {styles.subTitle}>
                   
