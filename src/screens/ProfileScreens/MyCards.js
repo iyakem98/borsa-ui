@@ -15,6 +15,7 @@ import BottomSheet from '../../components/BottomSheet'
 import SheetManager from 'react-native-actions-sheet';
 import moment from 'moment'
 import { useRoute } from '@react-navigation/native'
+import Header from '../../components/Shared/Header'
 
 const width = Dimensions.get("screen").width
 
@@ -224,6 +225,24 @@ const ConnectScreen = () => {
   //  </ScrollView>
   // <ScrollView>
   <SafeAreaView style={styles.container}>
+    {/* <Header title="Buyer" backBtn /> */}
+    <Pressable onPress={()=>navigation.popToTop()}
+      style = {{
+        backgroundColor: '#593196',
+        flexDirection: 'row',
+        paddingVertical: 2,
+        paddingHorizontal: 4,
+        width: "25%",
+        marginVertical: 10,
+        marginLeft: 10,
+        borderRadius: 20,
+    }}>
+       <Text style={{fontSize:29, marginTop:-3, marginLeft:3, color: 'white'}}>&larr;</Text>
+       <Text style={{fontSize:20, marginTop:2, marginLeft:4, color: 'white'}}>
+        Back
+       </Text>
+    </Pressable>
+   
   <View style={{
     backgroundColor: "#fff",
     justifyContent: "center",
@@ -825,7 +844,7 @@ export default ConnectScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   contentContainer: {
     flex: 1,
