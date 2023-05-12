@@ -281,7 +281,7 @@ useEffect(() => {
                       user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
                           <View>
                           <Image 
-                              source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+                              source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
                               style = {styles.image}
                            />
                           </View>
@@ -289,7 +289,7 @@ useEffect(() => {
                           <View style = {styles.content}>
                               <View style = {styles.row}>
                                   <Text style = {styles.name}>
-                                      {user != null ? getSenderFull(user, chat.users).firstName : null}
+                                      {user != null ? getSenderFull(user, chat.users)?.firstName : null}
                                   </Text> 
                                <Text style = {styles.subTitle}>
                                      
@@ -425,7 +425,7 @@ useEffect(() => {
    user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
        <View>
        <Image 
-           source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+           source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
            style = {styles.image}
         />
        </View>
@@ -433,7 +433,7 @@ useEffect(() => {
        <View style = {styles.content}>
            <View style = {styles.row}>
                <Text style = {styles.name}>
-                   {user != null ? getSenderFull(user, chat.users).firstName : null}
+                   {user != null ? getSenderFull(user, chat.users)?.firstName : null}
                </Text> 
             <Text style = {styles.subTitle}>
                   

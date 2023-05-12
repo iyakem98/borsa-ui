@@ -103,7 +103,7 @@ const navigation = useNavigation();
                       user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
                           <View>
                           <Image 
-                              source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+                              source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
                               style = {styles.image}
                            />
                           </View>
@@ -111,7 +111,7 @@ const navigation = useNavigation();
                           <View style = {styles.content}>
                               <View style = {styles.row}>
                                   <Text style = {styles.name}>
-                                      {user != null ? getSenderFull(user, chat.users).firstName : null}
+                                      {user != null ? getSenderFull(user, chat.users)?.firstName : null}
                                   </Text> 
                                <Text style = {styles.subTitle}>
                                      
@@ -188,7 +188,7 @@ const navigation = useNavigation();
                       user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
                           <View>
                           <Image 
-                              source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+                              source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
                               style = {styles.image}
                            />
                           </View>
@@ -196,7 +196,7 @@ const navigation = useNavigation();
                           <View style = {styles.content}>
                               <View style = {styles.row}>
                                   <Text style = {styles.name}>
-                                      {user != null ? getSenderFull(user, chat.users).firstName : null}
+                                      {user != null ? getSenderFull(user, chat.users)?.firstName : null}
                                   </Text> 
                                <Text style = {styles.subTitle}>
                                      
@@ -248,7 +248,7 @@ const navigation = useNavigation();
    user != null ? getSenderFull(user, chat.users) : null })}}  style={styles.container}>
        <View>
        <Image 
-           source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+           source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
            style = {styles.image}
         />
        </View>
@@ -256,7 +256,7 @@ const navigation = useNavigation();
        <View style = {styles.content}>
            <View style = {styles.row}>
                <Text style = {styles.name}>
-                   {user != null ? getSenderFull(user, chat.users).firstName : null}
+                   {user != null ? getSenderFull(user, chat.users)?.firstName : null}
                </Text> 
             <Text style = {styles.subTitle}>
                   
