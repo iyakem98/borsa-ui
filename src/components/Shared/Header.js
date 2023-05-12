@@ -33,7 +33,7 @@ const Header = ({
           flex: 1,
         }}>
           <TextInput
-            label="Email"
+            label="Search"
             value={textData}
             onChangeText={text => onTextChange(text)}
             mode="outlined"

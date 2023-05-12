@@ -123,7 +123,6 @@ const MainTabNavigator = () => {
                     }} />
                 ) : null} */}
             </View>
-            
         ),
         headerRight: () => (
           
