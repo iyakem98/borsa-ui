@@ -132,9 +132,9 @@ const Navigator = ({showOnBoarding}) => {
       <Stack.Screen name="Search" component={SearchScreen}  options={({ route }) => ({
           
           // title: <SearchBar chats={chattts}/>,
-          title: <SearchBar/>,
+          // title: <SearchBar/>,
         
-          headerShown: true
+          headerShown: false
         })}/>
       <Stack.Screen name="Connect" component={ConnectScreen} />
       <Stack.Screen name="User Details" component={OtherProfile} />
