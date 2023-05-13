@@ -594,16 +594,16 @@ const OtherFunc = (messages)=>{
            <Text style={{
           
           color: "white",
-          marginBottom: 3   
+          marginBottom: 3, 
       }}>
       {latestMessage}
        </Text>
       <View style={{flexDirection:"row"}}>
-      <Text  style={{color:"white", fontSize: 12}}>{now.format('LT')}</Text>
+      <Text  style={{color:"white", fontSize: 12, marginTop: 2}}>{now.format('LT')}</Text>
       {/* <Ionicons name="checkmark-outline" size={20} color="white" /> */}
        
       {/* <ActivityIndicator size="small" color="#fff" /> */}
-      <Ionicons name="checkmark-outline" size={20} color="white" style={{marginLeft:10}} />
+      <Ionicons name="checkmark-outline" size={17} color="#593196"/>
       </View>
       </View>
         }
