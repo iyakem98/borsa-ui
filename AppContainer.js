@@ -21,9 +21,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function AppContainer({showOnBoarding}) {
   
     const { user } = useSelector((state) => state.auth)
+    const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
     const dispatch = useDispatch()
     const appState = useRef(AppState.currentState);
-    const [online, setOnline] = useState("online")
+    const [online, setOnline] = useState("online");
     const [away, setAway] = useState("away")
     // console.log(user)
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
@@ -41,6 +42,9 @@ function AppContainer({showOnBoarding}) {
     }
   }
 
+  useEffect(() =>{
+    getUser()
+  }, [user])
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {

@@ -239,14 +239,14 @@ const OtherFunc = (messages)=>{
        {/* <Text style={{color:"white"}}>{test_date}</Text> */}
        <Text style={{
         color: `${
-          m.sender._id === user._id ? "#fff" : "#404040"
+          m.sender?._id === user?._id ? "#fff" : "#404040"
       }`,
         fontSize: 12,
         marginTop: 2,
        }}>{formatted_date}</Text>
        {
 
-       m.sender._id == user._id? (
+       m.sender?._id == user?._id? (
         <Ionicons name="checkmark-outline" size={17} color="white" />
       
        ): (
@@ -264,7 +264,7 @@ const OtherFunc = (messages)=>{
         
       }
       {
-          m.sender._id === user._id  && m.receiver != null && m.marked == "true" &&  
+          m.sender?._id === user._id  && m.receiver != null && m.marked == "true" &&  
        
       <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
       

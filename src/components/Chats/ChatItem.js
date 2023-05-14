@@ -15,12 +15,13 @@ const ChatItem = ({
   getSenderFull,
   formatted_date,
   setSelectedChat,
-  popNav
+  popNav,
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [newMessage, setNewMessage]=  useState();
   const [notifLength, setNotifLength] = useState(0)
+  const [isMarked, setIsMarked] = useState(chat.latestMessage?.marked)
 
   useEffect(()=>{
     if(storedNotifications) {
@@ -39,7 +40,7 @@ const ChatItem = ({
   }, [storedNotifications])
 
   useEffect(() =>{
-    console.log("-=======", chat.latestMessage)
+    // console.log("-=======", chat.latestMessage)
     setNewMessage()
     dispatch(fetchChat())
   }, [notifLength])
@@ -61,6 +62,7 @@ const ChatItem = ({
     <Pressable 
       key={chat._id} 
       onPress={() => {
+        setIsMarked(true)
         setNotifLength(0)
         setloading(true)
         setchattId(chat._id)
@@ -103,7 +105,7 @@ const ChatItem = ({
           {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 ? <View style={styles.notif}>
             <Text style={styles.notifClr}>{storedNotifications.length}</Text>
           </View> : <Text></Text> }  */}
-        {notifLength > 0 ? (
+        {notifLength > 0 || !isMarked ? (
           <View style={styles.notif}>
             {/* <Text style={styles.notifTxt}>{notifLength}</Text> */}
           </View>

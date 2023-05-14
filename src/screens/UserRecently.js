@@ -12,11 +12,11 @@ function UserRecently({userData}) {
   // console.log(userData)
   const [selectedUserData, setselectedUserData] = useState([])
   const { user } = useSelector((state) => state.auth)
-  const userId = userData._id
+  const userId = userData?._id
   // const [status, setStatus] = useState(data.status)
   // const formatted_date = data.lastSeen
   // const [userName, setUsername] = useState(userData.firstName)
-  const [firstName, setFirstName] = useState(userData.firstName)
+  const [firstName, setFirstName] = useState(userData?.firstName)
   // const [lastSeen, setlastSeen] = useState(moment(formatted_date).format("MMMM Do LT"))
   // const [status, setStatus] = useState(data.status)
 

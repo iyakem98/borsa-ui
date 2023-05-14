@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 import { getSenderFull } from '../ChatConfig/ChatLogics';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Test from '../screens/Test';
 import ChatScreen from '../screens/ChatScreen';
 import AddPost from '../screens/AddPost';
@@ -27,20 +27,43 @@ import Saved from '../screens/Saved';
 import Search from '../components/Chats/ChatListItem/Search';
 import { io } from 'socket.io-client';
 import { API_BASE_URL_Socket } from '../utils/config';
+import { fetchChat } from '../features/chat/chatSlice';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
-   
+    const dispatch = useDispatch()
     const [storedNotifications, setstoredNotifications] = useState([])
+    const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
     const [notifChat, setnotifChat] = useState()
     const [visible, setVisible] = useState(false);
     const [newMessage, setNewMessage] = useState(false)
     const navigate = useNavigation()
     const hideMenu = () => setVisible(false);
+    const [notifFlag, setNotifFlag] = useState(false)
 
     const showMenu = () => setVisible(true);
     var socket = useRef(null)
     const { user } = useSelector((state) => state.auth)
+
+    const checkIsMarked = () => {
+        for (let index = 0; index < chattts.length; index++) {
+            const isMarked = chattts[index]?.latestMessage?.marked;
+            if(!isMarked) {
+                console.log("-=====----=-===----", isMarked)
+                setNotifFlag(true)
+                break;
+            }
+        }
+    }
+
+    useEffect(() =>{
+        dispatch(fetchChat())
+    }, [user])
+
+    useEffect(() =>{
+        checkIsMarked()
+    }, [user, chattts])
+    
     useEffect(() =>{
        getNotif()
     //    {storedNotifications  && console.log(storedNotifications[0].chatUsers)}
@@ -113,15 +136,17 @@ const MainTabNavigator = () => {
                 position: "relative"
             }}>
                 <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
-                {/* {newMessage ? (
+                {newMessage || notifFlag ? (
                     <View style={{
-                        backgroundColor: "red",
+                        backgroundColor: "#514590",
                         height: 15,
                         width: 15,
                         borderRadius: 15,
-                        position: "absolute"
+                        position: "absolute",
+                        right: -5,
+                        top: -5
                     }} />
-                ) : null} */}
+                ) : null}
             </View>
         ),
         headerRight: () => (

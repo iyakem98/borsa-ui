@@ -90,6 +90,7 @@ const ChatScreen = () => {
 
   useEffect(() => {
     socket.current.on("message recieved", (newMessageReceived) => {
+      console.log("====-=---=--===", newMessageReceived)
       storeNotif(newMessageReceived)
     });
   },[])
@@ -138,7 +139,7 @@ const ChatScreen = () => {
         paddingTop: 10
       }}>
         {chattts && chattts.length > 0 ? (
-          chattts.map((chat) => {
+          chattts.map((chat, index) => {
             let newMessage
             // chatArrAll.push(chat)
             if(chat !== null || chat !== undefined){
@@ -166,6 +167,7 @@ const ChatScreen = () => {
                   }
                   return (
                     <ChatItem 
+                      key={index}
                       storedNotifications={storedNotifications} 
                       setchattId={setchattId} 
                       setloading={setloading} 
@@ -180,6 +182,7 @@ const ChatScreen = () => {
                   // if(triggerChange == false){
                   return (
                     <ChatItem 
+                      key={index}
                       storedNotifications={storedNotifications} 
                       setchattId={setchattId} 
                       setloading={setloading} 
@@ -197,6 +200,7 @@ const ChatScreen = () => {
                   }
                   return (
                     <ChatItem 
+                      key={index}
                       storedNotifications={storedNotifications} 
                       setchattId={setchattId} 
                       setloading={setloading} 

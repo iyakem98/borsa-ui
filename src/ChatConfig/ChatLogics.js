@@ -5,7 +5,7 @@ and the id of the logged in user, compares them, and returns the name of the id 
   sender/other user's name)  */
   export const getSender = (loggedUser, users) => {
    
-    return users[0]._id === loggedUser._id ? users[1].firstName + " " + users[1].lastName : users[0].firstName + " " + users[0].lastName;
+    return users[0]._id === loggedUser?._id ? users[1].firstName + " " + users[1].lastName : users[0].firstName + " " + users[0].lastName;
   };
   
 /* This does exactly what the getSender function above does but instead of returning the name specifically, it just returns the id.
@@ -55,5 +55,5 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
 
 // Checks whether the next message is from the same user as the previous message.
 export const isSameUser = (messages, m, i) => {
-  return i > 0 && messages[i - 1].sender._id === m.sender._id;
+  return i > 0 && messages[i - 1].sender?._id === m.sender?._id;
 };
