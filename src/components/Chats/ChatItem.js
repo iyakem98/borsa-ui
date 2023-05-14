@@ -1,7 +1,7 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Octicons } from '@expo/vector-icons';
+import { Ionicons, Octicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { fetchChat } from '../../features/chat/chatSlice';
 import axios from 'axios';
@@ -20,7 +20,8 @@ const ChatItem = ({
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [newMessage, setNewMessage]=  useState();
-  const [notifLength, setNotifLength] = useState(0)
+  const [notifLength, setNotifLength] = useState(0);
+  const [isUserSender, setIsUserSender] = useState(chat.latestMessage?.sender?._id === user?._id ? true : false);
   const [isMarked, setIsMarked] = useState(chat.latestMessage?.marked)
 
   useEffect(()=>{
@@ -34,13 +35,15 @@ const ChatItem = ({
         if(notif.chat._id == chat._id){
           setNotifLength(prev => prev + 1)
           setNewMessage(notif?.content)
+          console.log("==-2323=23-", notif)
+          setIsUserSender(false)
         }
       }})
     }
   }, [storedNotifications])
 
   useEffect(() =>{
-    // console.log("-=======", chat.latestMessage)
+    console.log("-=======", chat.latestMessage, user)
     setNewMessage()
     dispatch(fetchChat())
   }, [notifLength])
@@ -62,7 +65,9 @@ const ChatItem = ({
     <Pressable 
       key={chat._id} 
       onPress={() => {
-        setIsMarked(true)
+        if(!isUserSender) {
+          setIsMarked(true)
+        }
         setNotifLength(0)
         setloading(true)
         setchattId(chat._id)
@@ -105,11 +110,17 @@ const ChatItem = ({
           {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 ? <View style={styles.notif}>
             <Text style={styles.notifClr}>{storedNotifications.length}</Text>
           </View> : <Text></Text> }  */}
-        {notifLength > 0 || !isMarked ? (
-          <View style={styles.notif}>
-            {/* <Text style={styles.notifTxt}>{notifLength}</Text> */}
+        {isUserSender && !isMarked ? (
+          <View style={styles.notifCheckmark}>
+            <Ionicons name="checkmark-outline" size={24} color="black" />
           </View>
-        ) : null}
+        ) : isUserSender && isMarked ? (
+          <View style={styles.notifCheckmark}>
+            <Ionicons name="checkmark-done-outline" size={24} color="black" />
+          </View>
+        ) : notifLength > 0 || (!isUserSender && !isMarked) ? (
+          <View style={styles.notif} />
+        ) : (null)}
         {/* <Text>notifffehih</Text> */}
           {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 
           &&  <View  style={styles.notif}><Text>notif</Text></View>
@@ -159,6 +170,16 @@ const styles = StyleSheet.create({
   notifClr: {
     color: 'red',
     // paddingTop: 10
+  },
+  notifCheckmark: {
+    alignItems: 'center',
+    justifyContent: "center",
+    position: "absolute",
+    right: 10,
+    bottom: 20,
+    width: 19,
+    height: 19,
+    borderRadius: 15
   },
   row: {
     flexDirection: 'row'
