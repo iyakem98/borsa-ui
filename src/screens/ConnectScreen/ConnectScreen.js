@@ -17,6 +17,7 @@ import {registerSheet} from 'react-native-actions-sheet';
 import BottomSheet from '../../components/BottomSheet'
 import SheetManager from 'react-native-actions-sheet';
 
+
 const width = Dimensions.get("screen").width
 
 const ConnectScreen = () => {
@@ -24,6 +25,7 @@ const ConnectScreen = () => {
 
   const [bottomSheetData, setBottomSheetData] = useState(null)
   const [selectedTab, setSelectedTab] = useState(1)
+  const [scrollY, setScrollY] = useState(0);
   const { consumers } = useSelector(
     (state) => state.auth
   )
@@ -56,7 +58,16 @@ const ConnectScreen = () => {
       // UpdateUserRoute()
      //  console.log(route.name)
        // setImage(null)
-      },[travelers, consumers])
+      },[travelers, consumers, pageBuyer])
+
+    const handleLoadMore = () => {
+      const { page } = useState(b.length / 10 + 1);
+      getUsers({ page }).then((b) => {
+        setBuyers(prevBuyers => [...prevBuyers, ...b]);
+      });
+    };
+
+    const[pagLim, setPageLim] = useState(0)
   
     // const getConsumers = async () => {
     //   try{
@@ -77,37 +88,105 @@ const ConnectScreen = () => {
     //     }
     const [t, setT] = useState([])
     const [b, setB] = useState([])
+    const [pageBuyer, setPageBuyer] = useState(1);
+    const [pageTraveler, setPageTraveler] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [p, setP] = useState(pageBuyer)
 
     const [loading, setloading] = useState(true)
 
     const getUsers = async () => {
-
+      alert('inside get users')
       const config = {
       headers: {
           Authorization: `Bearer ${user.token}`
         }}
 
-    await axios.get(`http://143.198.168.244/api/travels/`, config)
+    await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=${limit}`, config)
         .then((data) => {
           
           // console.log("tttttttttttttttt:", t)
          setT(data.data.data)
+         setPageTraveler(pageTraveler + 1)
+         alert(pageTraveler)
          })
         .catch((err) => {
          setT(null)
         });
      
-        await axios.get(`http://143.198.168.244/api/buyers/`, config)
+        await axios.get(`http://143.198.168.244/api/buyers?page=${pageBuyer}&limit=${limit}`, config)
         .then((data) => {
           // console.log("bbbbbbbbbbbbb:", b)
          setB(data.data.data)
+         setPageBuyer(pageBuyer + 1)
+         alert(pageBuyer)
+
          })
         .catch((err) => {
-          setB(null)
+          if(pageBuyer > 1) {
+            alert('end of list bro')
+          }
+          else {
+            setB(null)
+          }
         });
 
         setloading(false)
     }
+
+    const handleBeforeNextPage = async() => {
+      // Increment the page
+
+      setPageBuyer(pageBuyer + 1)
+    
+    
+    };
+
+
+    const re = async() => {
+      // Increment the page
+
+      await handleBeforeNextPage()
+
+      getUsers()
+    
+    
+    };
+
+    const handleNextPage = async() => {
+      // Increment the page
+
+      await handleBeforeNextPage()
+
+      getUsers()
+    
+    
+    };
+
+    
+
+    const decrementBuyerPage = async() => {
+      // Increment the page
+
+      setPageBuyer(pageBuyer - 1)
+    
+    
+    };
+
+    const decFunc = async() => {
+      // Increment the page
+
+      await decrementBuyerPage()
+      alert(pageBuyer)
+
+      getUsers()
+    
+    
+    };
+
+    const handleEmpty = () => {
+      return <Text style={styles.title}> No data present!</Text>;
+    };
         // useEffect(() => {
         //   //  dispatch(getTravelers())
         //   //  console.log(travelers)
@@ -138,6 +217,9 @@ const ConnectScreen = () => {
       alignItems: "center",
       paddingBottom: 15
     }}>
+      <Text>
+      {b.length}
+      </Text>
       <View style={{
         flexDirection: "row",
         alignItems: 'center',
@@ -194,9 +276,12 @@ const ConnectScreen = () => {
           }}>
             <FlatList
               data={b}
+              //maxToRenderPerBatch={3} 
+              ListEmptyComponent={handleEmpty}
               contentContainerStyle={{
                 paddingBottom: 100
               }}
+             
               renderItem={({item}) => {
                 // console.log("first", item)
                 return (
@@ -204,9 +289,23 @@ const ConnectScreen = () => {
                   <Buyer item={item} onPress={()=>{
                     // console.log("first")
                     // SheetManager.show('example-two');
-                  }} />
+                  }}
+                  
+                  />
                 )
               }}
+              onEndReached={() => {
+                if (b.length < 10) {
+                  alert('You have reached the end of the list')
+                }
+
+                else {
+                  setPageBuyer(pageBuyer + 1)
+                  getUsers()
+                }
+               
+              }}
+              //inverted
             />
           </View> 
         ) : (
@@ -225,6 +324,17 @@ const ConnectScreen = () => {
                   // <TravelerCard traveler= {item} />
                   <TravelerCard item={item} />
                 )
+              }}
+              onEndReached={() => {
+                if (t.length < 10) {
+                  alert('You have reached the end of the list')
+                }
+
+                else {
+                  setPageTraveler(pageTraveler + 1)
+                  getUsers()
+                }
+               
               }}
             />
           </View>
