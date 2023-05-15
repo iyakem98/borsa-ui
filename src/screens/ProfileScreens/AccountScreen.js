@@ -10,7 +10,7 @@ import { API_BASE_URL } from "../../utils/config";
 import { getUserDetails, logout } from '../../features/auth/authSlice';
 import io from 'socket.io-client'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as ImagePicker from 'expo-image-picker';
+//import * as ImagePicker from 'expo-image-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
@@ -23,7 +23,7 @@ const AccountScreen = () => {
   const [image, setImage] = useState(def);
 
 
-  const pickImage = async () => {
+  {/*const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -37,7 +37,7 @@ const AccountScreen = () => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
-  };
+  }; */}
 
   const navigate = useNavigation()
 
@@ -186,6 +186,7 @@ const AccountScreen = () => {
 
   return (
     <SafeAreaView style={{flex: 1,
+      backgroundColor: 'white'
     }}>
         <ScrollView style={{
 
@@ -193,7 +194,7 @@ const AccountScreen = () => {
     <View style = {{
         paddingTop: 20,
         backgroundColor: '#fff',
-        height: 900,
+        height: "100%",
         width: "100%",
         alignItems: 'center'
     }}>
@@ -219,7 +220,7 @@ const AccountScreen = () => {
   justifyContent: 'flex-end',
  }} />
 
-<Entypo name="edit" size={24} color="red" onPress={()=>{
+{/*<Entypo name="edit" size={24} color="red" onPress={()=>{
   if(isEditing){
     pickImage()
   }
@@ -232,7 +233,7 @@ style={{
   marginTop:-30,
   zIndex:100
 }}
-/>
+/> */}
 
 
 
@@ -253,7 +254,7 @@ style={{
 
         </View>
 
-        <View style={{marginTop:10, alignItems: 'center'}}>
+        <View style={{marginTop:0, alignItems: 'center'}}>
         {
           !isEditing &&
 
@@ -267,7 +268,7 @@ style={{
             //height: 40,
             paddingHorizontal: 10,
             paddingVertical: 10,
-            borderRadius: 0,
+            borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center',
             letterSpacing:2
@@ -319,7 +320,7 @@ style={{
             color:"white",
             width: 150,
             height: 40,
-            //borderRadius: 10,
+            borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center',
             letterSpacing:2
@@ -377,6 +378,12 @@ style={{
            paddingVertical:10,
            borderColor: 'black',
            borderWidth: StyleSheet.hairlineWidth,
+           borderWidth: `${
+            isEditing? 0 : StyleSheet.hairlineWidth
+          }`,
+          borderBottomWidth: `${
+            isEditing? StyleSheet.hairlineWidth : StyleSheet.hairlineWidth
+          }`,
           //  opacity:`${isEditing? 1 : 0.5}`
           opacity: 1
         }}
@@ -410,7 +417,12 @@ style={{
           paddingHorizontal: 5,
           paddingVertical:10,
            borderColor: 'black',
-           borderWidth: StyleSheet.hairlineWidth,
+           borderWidth: `${
+            isEditing? 0 : StyleSheet.hairlineWidth
+          }`,
+          borderBottomWidth: `${
+            isEditing? StyleSheet.hairlineWidth : StyleSheet.hairlineWidth
+          }`,
           //  opacity:`${isEditing? 1 : 0.5}`,
           opacity: 1
         }}
@@ -444,7 +456,12 @@ style={{
            paddingHorizontal: 5,
            paddingVertical:10,
            borderColor: 'black',
-           borderWidth: StyleSheet.hairlineWidth,
+           borderWidth: `${
+            isEditing? 0 : StyleSheet.hairlineWidth
+          }`,
+          borderBottomWidth: `${
+            isEditing? StyleSheet.hairlineWidth : StyleSheet.hairlineWidth
+          }`,
           //  opacity:`${isEditing? 1 : 0.5}`
           opacity: 1
         }}
