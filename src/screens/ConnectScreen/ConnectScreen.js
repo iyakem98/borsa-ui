@@ -44,37 +44,16 @@ const ConnectScreen = () => {
     const navigation = useNavigation();
     function tweakBuyer() {
         setIsBuyer(false)
-        // console.log(isBuyer)
     }
 
     function tweakBuyer2() {
         setIsBuyer(true)
-        // console.log(isBuyer)
     }
     useEffect(() => {
       navigation.addListener('focus', getUsers)
-      // UpdateUserRoute()
-     //  console.log(route.name)
-       // setImage(null)
       },[travelers, consumers])
   
-    // const getConsumers = async () => {
-    //   try{
-    //     const {data} = await axios.get('http://192.168.100.2:5000/api/users/consumers')
-    //     console.log(data)
-    //     setConsumers(data)
-    // setConsumers((state) => {
-    //   // console.log(state)
-    //   return state
-    // })
-        
-
-    //   }
-    //   catch(error){
-    //     console.log('error in getting customers')
-    //   }
-         
-    //     }
+    
     const [t, setT] = useState([])
     const [b, setB] = useState([])
     const [pageBuyer, setPageBuyer] = useState(1);
@@ -119,29 +98,9 @@ const ConnectScreen = () => {
 
         setloading(false)
     }
-        // useEffect(() => {
-        //   //  dispatch(getTravelers())
-        //   //  console.log(travelers)
-        //   //  dispatch(getConsumers())
-        //   //  getUsers()
-        //   //  console.log(consumers)
-        //   //  console.log(isBuyer)
-        //   // console.log("my travelerrrrrrrs are:", travelers)
-        //   // console.log("my buyerrrrrrrrs are:", consumers)
-        //   let u = AsyncStorage.getItem('user')
-        //   console.log("userrrrrr:", user)
-        // }, [travelers, consumers])
         
   return (
-  //  <ScrollView>
-  //  {travelers  && travelers.map((traveler) => (
-  //   <View key={traveler._id}>
-  //     <TravelerCard  traveler={traveler} />
-  //   </View>
-    
-  //  ))}
-  //  </ScrollView>
-  // <ScrollView>
+
   <SafeAreaView style={styles.container}>
     <View style={{
       backgroundColor: "#fff",
