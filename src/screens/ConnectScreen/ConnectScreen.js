@@ -77,8 +77,15 @@ const ConnectScreen = () => {
     //     }
     const [t, setT] = useState([])
     const [b, setB] = useState([])
+    const [pageBuyer, setPageBuyer] = useState(1);
+    const [pageTraveler, setPageTraveler] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [buyerTotal, setBuyerTotal] = useState([])
+    const [travelerTotal, setTravelerTotal] = useState([])
 
     const [loading, setloading] = useState(true)
+    const [loadingBuyer, setLoadingBuyer] = useState(false)
+    const [loadingTraveler, setLoadingTraveler] = useState(false)
 
     const getUsers = async () => {
 
@@ -87,20 +94,24 @@ const ConnectScreen = () => {
           Authorization: `Bearer ${user.token}`
         }}
 
-    await axios.get(`http://143.198.168.244/api/travels/`, config)
+    await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=${limit}`, config)
         .then((data) => {
           
           // console.log("tttttttttttttttt:", t)
          setT(data.data.data)
+         setPageTraveler(pageTraveler + 1)
+         setTravelerTotal([...travelerTotal, ...data.data.data])
          })
         .catch((err) => {
          setT(null)
         });
      
-        await axios.get(`http://143.198.168.244/api/buyers/`, config)
+        await axios.get(`http://143.198.168.244/api/buyers?page=${pageBuyer}&limit=${limit}`, config)
         .then((data) => {
-          // console.log("bbbbbbbbbbbbb:", b)
          setB(data.data.data)
+         setPageBuyer(pageBuyer + 1)
+         setBuyerTotal([...buyerTotal, ...data.data.data])
+         //alert(buyerTotal.length)
          })
         .catch((err) => {
           setB(null)
@@ -193,7 +204,7 @@ const ConnectScreen = () => {
             backgroundColor: 'white'
           }}>
             <FlatList
-              data={b}
+              data={buyerTotal}
               contentContainerStyle={{
                 paddingBottom: 100
               }}
@@ -206,6 +217,20 @@ const ConnectScreen = () => {
                     // SheetManager.show('example-two');
                   }} />
                 )
+              }}
+              onEndReached={() => {
+                
+                if (b.length < 10) {
+                  return
+                }
+
+                else {
+                  setPageBuyer(pageBuyer + 1)
+                  getUsers()
+                }
+               
+               
+               
               }}
             />
           </View> 
@@ -225,6 +250,20 @@ const ConnectScreen = () => {
                   // <TravelerCard traveler= {item} />
                   <TravelerCard item={item} />
                 )
+              }}
+              onEndReached={() => {
+                
+                if (t.length < 10) {
+                  alert(travelerTotal.length)
+                }
+
+                else {
+                  setPageTraveler(pageBuyer + 1)
+                  getUsers()
+                }
+               
+               
+               
               }}
             />
           </View>
