@@ -59,13 +59,18 @@ const ConnectScreen = () => {
     const [limit, setLimit] = useState(50);
     const [buyerTotal, setBuyerTotal] = useState([])
     const [travelerTotal, setTravelerTotal] = useState([])
+    const [totBuyer, setTotBuyer] = useState(0)
+    const [totTraveler, setTotTraveler] = useState(0)
+    const [pageLimBuyer, setPageLimBuyer] = useState(0)
+    const [pageLimTraveler, setPageLimTraveler] = useState(0)
+
 
     const [loading, setloading] = useState(true)
     const [loadingBuyer, setLoadingBuyer] = useState(false)
     const [notLoadingBuyer, setNotLoadingBuyer] = useState(false)
     const [loadingTraveler, setLoadingTraveler] = useState(false)
 
-    //pageLim = Math.ceil(total / 50)
+   
 
     useEffect(() => {   
       getUsers()
@@ -90,12 +95,13 @@ const ConnectScreen = () => {
         }}
 
     await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=${limit}`, config)
-        .then((data) => {
+        .then((data, total) => {
           
           // console.log("tttttttttttttttt:", t)
          setT(data.data.data)
          //setPageTraveler(pageTraveler + 1)
          setTravelerTotal([...travelerTotal, ...data.data.data])
+         setTotTraveler(data.data.total)
          })
         .catch((err) => {
          setT(null)
@@ -106,11 +112,15 @@ const ConnectScreen = () => {
          setB(data.data.data)
          //setPageBuyer(pageBuyer + 1)
          setBuyerTotal([...buyerTotal, ...data.data.data])
+         setTotBuyer(data.data.total)
          //alert(buyerTotal.length)
          })
         .catch((err) => {
           setB(null)
         });
+
+        setPageLimTraveler(Math.ceil(totBuyer/limit))
+        setPageLimBuyer(Math.ceil(totTraveler/limit))
 
         setloading(false)
     }
@@ -125,7 +135,7 @@ const ConnectScreen = () => {
       paddingBottom: 15
     }}>
       <Text>
-        {buyerTotal.length}
+        {pageLimTraveler}
       </Text>
       <View style={{
         flexDirection: "row",
