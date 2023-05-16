@@ -71,10 +71,6 @@ const MessagingScreen = ({navigation}) => {
   const myRef = createRef();  
   const cameraRef = useRef()
 
-  useEffect(()=>{
-    console.log("first", selectedChat)
-  }, [])
-
   useLayoutEffect(() => {
     socket.current =io(API_BASE_URL_Socket)
     socket.current.emit("setup", user);
@@ -155,7 +151,6 @@ const MessagingScreen = ({navigation}) => {
       //   // setloading(false)
       //   setMessages([])
       // }
-      await AsyncStorage.removeItem(`me&${chattId}`)
       let yess = AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data))
       console.log("stored in local")
       
@@ -172,7 +167,6 @@ const MessagingScreen = ({navigation}) => {
    
     } catch(error){
       console.log(error)
-      await AsyncStorage.removeItem(`me&${chattId}`)
        let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
         if(msgs){
           setMessages(JSON.parse(msgs))
@@ -273,7 +267,7 @@ const MessagingScreen = ({navigation}) => {
                 }}
               />
               <View style={{marginLeft: 10}}>
-                <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{selectedChat?.users[0]?.firstName} {selectedChat?.users[0]?.lastName}</Text>
+                <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{selectedChat?.users[0]?.firstName[0]._id === user._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {selectedChat?.users[0]?.firstName[0]._id === user._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text>
                 <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>Active</Text>
               </View>
             </View>
