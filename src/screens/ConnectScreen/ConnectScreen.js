@@ -56,7 +56,7 @@ const ConnectScreen = () => {
     const [pageBuyer, setPageBuyer] = useState(1);
     //const pageBuyerRef = useRef(pageBuyer);
     const [pageTraveler, setPageTraveler] = useState(1);
-    const [limit, setLimit] = useState(50);
+    const [limit, setLimit] = useState(10);
     const [buyerTotal, setBuyerTotal] = useState([])
     const [travelerTotal, setTravelerTotal] = useState([])
     const [totBuyer, setTotBuyer] = useState(0)
@@ -74,6 +74,8 @@ const ConnectScreen = () => {
 
     useEffect(() => {   
       getUsers()
+      setPageLimTraveler(totTraveler)
+      
     }, [pageBuyer, pageTraveler])
  
     const changeBuyerPage = () => {
@@ -82,7 +84,7 @@ const ConnectScreen = () => {
     }
 
     const changeTravelerPage = () => {
-      setPageTraveler(pageTrasetPageTraveler+1)
+      setPageTraveler(pageTraveler+1)
       
     }
 
@@ -102,6 +104,7 @@ const ConnectScreen = () => {
          //setPageTraveler(pageTraveler + 1)
          setTravelerTotal([...travelerTotal, ...data.data.data])
          setTotTraveler(data.data.total)
+         setPageLimTraveler(Math.ceil(data.data.total/10))
          })
         .catch((err) => {
          setT(null)
@@ -113,14 +116,13 @@ const ConnectScreen = () => {
          //setPageBuyer(pageBuyer + 1)
          setBuyerTotal([...buyerTotal, ...data.data.data])
          setTotBuyer(data.data.total)
+         setPageLimBuyer(Math.ceil(data.data.total/10))
          //alert(buyerTotal.length)
          })
         .catch((err) => {
           setB(null)
         });
 
-        setPageLimTraveler(Math.ceil(totBuyer/limit))
-        setPageLimBuyer(Math.ceil(totTraveler/limit))
 
         setloading(false)
     }
@@ -208,17 +210,15 @@ const ConnectScreen = () => {
                 )
               }}
               onEndReached={() => {
-                
-                if (b.length < 10) {
-                  return
+
+                if (pageBuyer == pageLimBuyer){
+                  alert('end of list')
                 }
 
                 else {
-                  //changeBuyerLoading()
                   changeBuyerPage()
-                  //getUsers()
                 }
-               
+                
                
                
               }}
@@ -251,14 +251,13 @@ const ConnectScreen = () => {
               }}
               onEndReached={() => {
                 
-                if (t.length < 10) {
-                  return
+                if (pageTraveler == pageLimTraveler){
+                  alert('end of list')
                 }
 
                 else {
                   changeTravelerPage()
                 }
-               
                
                
               }}
