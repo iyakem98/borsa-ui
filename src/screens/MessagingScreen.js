@@ -106,7 +106,7 @@ const MessagingScreen = ({navigation}) => {
   }
 
   const sendMessage = async() => {
-    setlatestMess(newmessage)
+    setlatestMess(newmessage.trim())
     setactiveToday(true)
     setNewwMessage(true)
     setNewMessage('')
@@ -305,8 +305,7 @@ const MessagingScreen = ({navigation}) => {
             <TextInput 
               value={newmessage}
               onChangeText={(text)=>{
-                let msg = text.trim()
-                setNewMessage(msg)
+                setNewMessage(text)
               }}
               style = {styles.input} 
               multiline
