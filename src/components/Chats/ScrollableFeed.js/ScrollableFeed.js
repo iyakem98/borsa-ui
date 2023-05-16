@@ -275,8 +275,7 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
           backgroundColor:   "#593196",
           alignSelf:  "flex-end" ,
           marginTop: 5, 
-          borderBottomRightRadius: m?.sender?._id === user?._id ? 0 : 8,
-          borderBottomLeftRadius: m?.sender?._id === user?._id ? 8 : 0,
+          borderBottomRightRadius: 0,
         }]}>
           <Text style={{
             color: "white",
@@ -289,7 +288,7 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
             {/* <Ionicons name="checkmark-outline" size={20} color="white" /> */}
        
             {/* <ActivityIndicator size="small" color="#fff" /> */}
-            <Ionicons name="checkmark-outline" size={17} color="#593196"/>
+            <Ionicons name="checkmark-outline" size={17} color="#fff"/>
           </View>
         </View>
       )}
