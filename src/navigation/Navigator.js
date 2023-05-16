@@ -153,7 +153,7 @@ const Navigator = ({showOnBoarding}) => {
           // title: route.params.userSelected,
           title: <UserRecently  userData={route.params.userSelected}/>,
           //  title: <UserRecently data={route.params.chatId} userData={route.params.userSelected}/>,
-          headerShown: true
+          headerShown: false
         })}/>
       )}
       <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>

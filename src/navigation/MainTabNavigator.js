@@ -149,6 +149,7 @@ const MainTabNavigator = () => {
                 ) : null}
             </View>
         ),
+        headerShown: true,
         headerRight: () => (
           
            <Search/>
