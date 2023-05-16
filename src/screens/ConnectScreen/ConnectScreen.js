@@ -49,52 +49,78 @@ const ConnectScreen = () => {
     function tweakBuyer2() {
         setIsBuyer(true)
     }
-    useEffect(() => {
-      navigation.addListener('focus', getUsers)
-      },[travelers, consumers])
-  
+
     
     const [t, setT] = useState([])
     const [b, setB] = useState([])
     const [pageBuyer, setPageBuyer] = useState(1);
+    //const pageBuyerRef = useRef(pageBuyer);
     const [pageTraveler, setPageTraveler] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(50);
     const [buyerTotal, setBuyerTotal] = useState([])
     const [travelerTotal, setTravelerTotal] = useState([])
+    const [totBuyer, setTotBuyer] = useState(0)
+    const [totTraveler, setTotTraveler] = useState(0)
+    const [pageLimBuyer, setPageLimBuyer] = useState(0)
+    const [pageLimTraveler, setPageLimTraveler] = useState(0)
+
 
     const [loading, setloading] = useState(true)
     const [loadingBuyer, setLoadingBuyer] = useState(false)
+    const [notLoadingBuyer, setNotLoadingBuyer] = useState(false)
     const [loadingTraveler, setLoadingTraveler] = useState(false)
 
-    const getUsers = async () => {
+   
 
+    useEffect(() => {   
+      getUsers()
+    }, [pageBuyer, pageTraveler])
+ 
+    const changeBuyerPage = () => {
+      setPageBuyer(pageBuyer+1)
+      //setLoadingBuyer(true)
+    }
+
+    const changeTravelerPage = () => {
+      setPageTraveler(pageTrasetPageTraveler+1)
+      
+    }
+
+
+
+    const getUsers = async () => {
       const config = {
       headers: {
           Authorization: `Bearer ${user.token}`
         }}
 
     await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=${limit}`, config)
-        .then((data) => {
+        .then((data, total) => {
           
           // console.log("tttttttttttttttt:", t)
          setT(data.data.data)
-         setPageTraveler(pageTraveler + 1)
+         //setPageTraveler(pageTraveler + 1)
          setTravelerTotal([...travelerTotal, ...data.data.data])
+         setTotTraveler(data.data.total)
          })
         .catch((err) => {
          setT(null)
         });
      
         await axios.get(`http://143.198.168.244/api/buyers?page=${pageBuyer}&limit=${limit}`, config)
-        .then((data) => {
+        .then((data, total) => {
          setB(data.data.data)
-         setPageBuyer(pageBuyer + 1)
+         //setPageBuyer(pageBuyer + 1)
          setBuyerTotal([...buyerTotal, ...data.data.data])
+         setTotBuyer(data.data.total)
          //alert(buyerTotal.length)
          })
         .catch((err) => {
           setB(null)
         });
+
+        setPageLimTraveler(Math.ceil(totBuyer/limit))
+        setPageLimBuyer(Math.ceil(totTraveler/limit))
 
         setloading(false)
     }
@@ -108,6 +134,9 @@ const ConnectScreen = () => {
       alignItems: "center",
       paddingBottom: 15
     }}>
+      <Text>
+        {pageLimTraveler}
+      </Text>
       <View style={{
         flexDirection: "row",
         alignItems: 'center',
@@ -167,6 +196,7 @@ const ConnectScreen = () => {
               contentContainerStyle={{
                 paddingBottom: 100
               }}
+              maxToRenderPerBatch={2}
               renderItem={({item}) => {
                 // console.log("first", item)
                 return (
@@ -184,14 +214,23 @@ const ConnectScreen = () => {
                 }
 
                 else {
-                  setPageBuyer(pageBuyer + 1)
-                  getUsers()
+                  //changeBuyerLoading()
+                  changeBuyerPage()
+                  //getUsers()
                 }
                
                
                
               }}
             />
+            {loadingBuyer &&  
+              <View style={{
+                height: 20000,
+                backgroundColor: 'yellow'
+            }}>
+              <ActivityIndicator size="large" color="#777" />
+            </View>
+            }
           </View> 
         ) : (
           <View style = {{
@@ -213,18 +252,18 @@ const ConnectScreen = () => {
               onEndReached={() => {
                 
                 if (t.length < 10) {
-                  alert(travelerTotal.length)
+                  return
                 }
 
                 else {
-                  setPageTraveler(pageBuyer + 1)
-                  getUsers()
+                  changeTravelerPage()
                 }
                
                
                
               }}
             />
+            
           </View>
         )}
       </View>
