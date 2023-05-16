@@ -49,25 +49,41 @@ const ConnectScreen = () => {
     function tweakBuyer2() {
         setIsBuyer(true)
     }
-    useEffect(() => {
-      navigation.addListener('focus', getUsers)
-      },[travelers, consumers])
-  
+
     
     const [t, setT] = useState([])
     const [b, setB] = useState([])
     const [pageBuyer, setPageBuyer] = useState(1);
+    //const pageBuyerRef = useRef(pageBuyer);
     const [pageTraveler, setPageTraveler] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(50);
     const [buyerTotal, setBuyerTotal] = useState([])
     const [travelerTotal, setTravelerTotal] = useState([])
 
     const [loading, setloading] = useState(true)
     const [loadingBuyer, setLoadingBuyer] = useState(false)
+    const [notLoadingBuyer, setNotLoadingBuyer] = useState(false)
     const [loadingTraveler, setLoadingTraveler] = useState(false)
 
-    const getUsers = async () => {
+    //pageLim = Math.ceil(total / 50)
 
+    useEffect(() => {   
+      getUsers()
+    }, [pageBuyer, pageTraveler])
+ 
+    const changeBuyerPage = () => {
+      setPageBuyer(pageBuyer+1)
+      //setLoadingBuyer(true)
+    }
+
+    const changeTravelerPage = () => {
+      setPageTraveler(pageTrasetPageTraveler+1)
+      
+    }
+
+
+
+    const getUsers = async () => {
       const config = {
       headers: {
           Authorization: `Bearer ${user.token}`
@@ -78,7 +94,7 @@ const ConnectScreen = () => {
           
           // console.log("tttttttttttttttt:", t)
          setT(data.data.data)
-         setPageTraveler(pageTraveler + 1)
+         //setPageTraveler(pageTraveler + 1)
          setTravelerTotal([...travelerTotal, ...data.data.data])
          })
         .catch((err) => {
@@ -86,9 +102,9 @@ const ConnectScreen = () => {
         });
      
         await axios.get(`http://143.198.168.244/api/buyers?page=${pageBuyer}&limit=${limit}`, config)
-        .then((data) => {
+        .then((data, total) => {
          setB(data.data.data)
-         setPageBuyer(pageBuyer + 1)
+         //setPageBuyer(pageBuyer + 1)
          setBuyerTotal([...buyerTotal, ...data.data.data])
          //alert(buyerTotal.length)
          })
@@ -108,6 +124,9 @@ const ConnectScreen = () => {
       alignItems: "center",
       paddingBottom: 15
     }}>
+      <Text>
+        {buyerTotal.length}
+      </Text>
       <View style={{
         flexDirection: "row",
         alignItems: 'center',
@@ -167,6 +186,7 @@ const ConnectScreen = () => {
               contentContainerStyle={{
                 paddingBottom: 100
               }}
+              maxToRenderPerBatch={2}
               renderItem={({item}) => {
                 // console.log("first", item)
                 return (
@@ -184,14 +204,23 @@ const ConnectScreen = () => {
                 }
 
                 else {
-                  setPageBuyer(pageBuyer + 1)
-                  getUsers()
+                  //changeBuyerLoading()
+                  changeBuyerPage()
+                  //getUsers()
                 }
                
                
                
               }}
             />
+            {loadingBuyer &&  
+              <View style={{
+                height: 20000,
+                backgroundColor: 'yellow'
+            }}>
+              <ActivityIndicator size="large" color="#777" />
+            </View>
+            }
           </View> 
         ) : (
           <View style = {{
@@ -213,18 +242,18 @@ const ConnectScreen = () => {
               onEndReached={() => {
                 
                 if (t.length < 10) {
-                  alert(travelerTotal.length)
+                  return
                 }
 
                 else {
-                  setPageTraveler(pageBuyer + 1)
-                  getUsers()
+                  changeTravelerPage()
                 }
                
                
                
               }}
             />
+            
           </View>
         )}
       </View>
