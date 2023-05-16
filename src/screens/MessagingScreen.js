@@ -95,6 +95,11 @@ const MessagingScreen = ({navigation}) => {
       testNewMessages(newMessageReceived)
     })
   }, [])
+
+  useEffect(()=>{
+    console.log('fetching messages', messages[messages.length - 1])
+  }, [messages])
+
   const testNewMessages = async(newMessageReceived) => {
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`, {
       headers: {
@@ -267,7 +272,7 @@ const MessagingScreen = ({navigation}) => {
                 }}
               />
               <View style={{marginLeft: 10}}>
-                <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{selectedChat?.users[0]?.firstName[0]._id === user._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {selectedChat?.users[0]?.firstName[0]._id === user._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text>
+                <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text>
                 <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>Active</Text>
               </View>
             </View>
