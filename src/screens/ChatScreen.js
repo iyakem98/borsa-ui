@@ -89,10 +89,13 @@ const ChatScreen = () => {
   },[])
 
   useEffect(() => {
+    socket.current.emit("active", user._id)
     socket.current.on("message recieved", (newMessageReceived) => {
-      console.log("====-=---=--===", newMessageReceived)
       storeNotif(newMessageReceived)
     });
+    return () => {
+      socket.current.emit("inActive", user._id)
+    }
   },[])
 
   useEffect(() =>{
@@ -207,7 +210,7 @@ const ChatScreen = () => {
                       chat={chat} 
                       user={user} 
                       getSenderFull={getSenderFull} 
-                      formatted_date={formatted_date}
+                      formatted_date={chat.latestMessage.createdAt}
                       setSelectedChat={setSelectedChat}
                     />
                   )

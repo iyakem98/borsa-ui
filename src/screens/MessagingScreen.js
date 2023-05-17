@@ -56,7 +56,8 @@ const MessagingScreen = ({navigation}) => {
   const [refresh, setRefresh] = useState(false)
   const [expoPushToken, setExpoPushToken] = useState('');
   const [pushnotification, setpushNotification] = useState(false);
-  const [latestMess, setlatestMess] = useState()
+  const [latestMess, setlatestMess] = useState();
+  const [isActive, setIsActive] = useState(false);
 
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -77,6 +78,8 @@ const MessagingScreen = ({navigation}) => {
     socket.current.on("connected", () => setsocketConnected(true) )
     socket.current.on("typing", () => setIsTyping(true))
     socket.current.on("stop typing", () => setIsTyping(false))
+    // socket.current.on("active", () => setIsActive(true) )
+    // socket.current.on("inActive", () => setIsActive(false) )
   }, [])
   useEffect(()=> {
     fetchMessage()
@@ -95,10 +98,6 @@ const MessagingScreen = ({navigation}) => {
       testNewMessages(newMessageReceived)
     })
   }, [])
-
-  useEffect(()=>{
-    console.log('fetching messages', messages[messages.length - 1])
-  }, [messages])
 
   const testNewMessages = async(newMessageReceived) => {
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`, {
@@ -273,7 +272,20 @@ const MessagingScreen = ({navigation}) => {
               />
               <View style={{marginLeft: 10}}>
                 <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text>
-                <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>Active</Text>
+                <View>
+                  {isActive && !isTyping ? (
+                    <View style={{
+                      backgroundColor: 'green',
+                      height: 10,
+                      width: 10,
+                      borderRadius: 10,
+                      position: "absolute",
+                      bottom: 14,
+                      right: 14
+                    }} />
+                  ) : null}
+                  <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>{isTyping ? "Typing..." : isActive ? "Active" : "Offline"}</Text>
+                </View>
               </View>
             </View>
             {/* <Pressable>
@@ -315,6 +327,12 @@ const MessagingScreen = ({navigation}) => {
               style = {styles.input} 
               multiline
               placeholder='type your message...'
+              onFocus={()=>{
+                socket.current.emit('typing', chattId);
+              }}
+              onBlur={()=>{
+                socket.current.emit("stop typing", chattId);
+              }}
             />
             <Pressable style={{
               backgroundColor: "#593196",
@@ -324,7 +342,7 @@ const MessagingScreen = ({navigation}) => {
               alignItems: "center",
               justifyContent: "center"
             }} onPress={() => {
-              console.log("new message" + newmessage)
+              // console.log("new message" + newmessage)
               if(newmessage == null || newmessage == undefined || newmessage == ""){
                 console.log('undefined')
               } else {

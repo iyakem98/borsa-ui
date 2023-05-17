@@ -1,10 +1,12 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons, Octicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { fetchChat } from '../../features/chat/chatSlice';
 import axios from 'axios';
+import { io } from 'socket.io-client';
+import { API_BASE_URL_Socket } from '../../utils/config';
 
 const ChatItem = ({
   storedNotifications,
@@ -21,21 +23,30 @@ const ChatItem = ({
   const dispatch = useDispatch();
   const [newMessage, setNewMessage]=  useState();
   const [notifLength, setNotifLength] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const [isUserSender, setIsUserSender] = useState(chat.latestMessage?.sender?._id === user?._id ? true : false);
   const [isMarked, setIsMarked] = useState(chat.latestMessage?.marked)
+  var socket = useRef(null);
+
+  useLayoutEffect(() => {
+    socket.current=io(API_BASE_URL_Socket)
+    // socket.current.on("active", () => setIsActive(true))
+    // socket.current.on("inActive", () => setIsActive(false))
+    socket.current.on("typing", () => setIsTyping(true))
+    socket.current.on("stop typing", () => setIsTyping(false))
+  }, [])
 
   useEffect(()=>{
     if(storedNotifications) {
       setNewMessage()
       storedNotifications.map((notif) => {
-      //  console.log('bbnn',notif)
       if(notif == undefined){
         console.log('notif undefined')
       } else {
         if(notif.chat._id == chat._id){
           setNotifLength(prev => prev + 1)
           setNewMessage(notif?.content)
-          console.log("==-2323=23-", notif)
           setIsUserSender(false)
         }
       }})
@@ -43,10 +54,13 @@ const ChatItem = ({
   }, [storedNotifications])
 
   useEffect(() =>{
-    console.log("-=======", chat.latestMessage, user)
     setNewMessage()
     dispatch(fetchChat())
   }, [notifLength])
+
+  useEffect(()=>{
+    console.log("--000=--", isUserSender, !isMarked)
+  } ,[isUserSender, !isMarked])
 
   const handleMarked = async() => {
     // try {
@@ -83,11 +97,24 @@ const ChatItem = ({
           source={{uri: user != null ? getSenderFull(user, chat.users)?.profilePic : null}}  
           style = {styles.image}
         />
+        {isActive ? (
+          <View style={{
+            backgroundColor: 'green',
+            height: 10,
+            width: 10,
+            borderRadius: 10,
+            position: "absolute",
+            bottom: 14,
+            right: 14
+          }} />
+        ) : null}
       </View>
       <View style = {styles.content}>
         <View style = {styles.row}>
           <Text style = {styles.name}>
-            {user != null ? getSenderFull(user, chat.users)?.firstName : null}
+            {user != null ? (
+              getSenderFull(user, chat.users)?.firstName + " " + getSenderFull(user, chat.users)?.lastName
+            ) : null}
           </Text> 
           <Text style = {styles.subTitle}>
             {formatted_date}
@@ -99,7 +126,7 @@ const ChatItem = ({
           }}>
             <View>
               <Text  numberOfLines={2} style = {styles.subTitle}>
-                {newMessage ? newMessage : chat.latestMessage.content}
+                {isTyping ? "Typing..." : newMessage ? newMessage : chat.latestMessage.content}
               </Text>
               {/* <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text> */}
             </View>
@@ -138,7 +165,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 5,
     height: 70,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#ccc'
   },
   image: {
     width: 60,
@@ -148,8 +177,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'lightgray'
   },
   notif: {
     alignItems: 'center',
