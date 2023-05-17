@@ -29,10 +29,6 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
   const Ymessages = []
   const Omessages = []
 
-  // useEffect(()=>{
-  //   console.log("=-=-=-=-=", messages)
-  // }, [messages])
-
   const [localrec, setlocalrec] = useState(false)
   const updateMessStatus = async(messId) => {
     try{
@@ -55,7 +51,6 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
   }
 
   useEffect(() => {
-    console.log(todaytest)
     if(todaytest == true){
       setToday(true)
     } else {
@@ -83,7 +78,6 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
         var formatted_date2 = moment(messages[i + 1].createdAt).format("YYYY-MM-DD")
         if(formatted_date1 == formatted_date2){
           datesArray.push(formatted_date2)
-          console.log(true)
         } else if(formatted_date1 !== formatted_date2) {
           datesArray.push(formatted_date1)
         }
@@ -138,7 +132,7 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
                     {m.sender?._id == user?._id? (
                       <Ionicons name="checkmark-outline" size={17} color="white" />
                     ) : null}
-                    {m.sender?._id === user._id  && m.receiver != null && m.marked == "true" && (
+                    {m.sender?._id === user._id  && m.receiver != null && m.marked && (
                       <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
                     )}
                   </View>
@@ -163,11 +157,9 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
         paddingBottom: 30
       }}>
       {messages && messages?.data ? messages?.data.map((m, i) => {
-        // console.log("=====sf", m)
         let msgdate = moment(m?.createdAt, "YYYY-MM-DD")
         let today = moment()
         let d = today.diff(msgdate, 'days')
-        console.log("=====sf", d)
         if(d==0){
           // console.log('pushing today messags')
           todaytest = true
@@ -216,12 +208,11 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
                     fontSize: 12,
                     marginTop: 2,
                   }}>{formatted_date}</Text>
-                  {m.sender._id == user._id? (
-                    <Ionicons name="checkmark-outline" size={17} color="white" />
-                  ) : (null)}
-                  {m.sender._id === user._id  && m.receiver != null && m.marked == "true" && (
+                  {m.sender._id === user._id  && m.receiver != null && m.marked ? (
                     <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
-                  )}
+                  ) : m.sender._id === user._id  && m.receiver != null && !m.marked ? (
+                    <Ionicons name="checkmark-outline" size={17} color="white" />
+                  ) : null}
                 </View>
               </View>
             </>
@@ -264,12 +255,11 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
                   fontSize: 12,
                   marginTop: 2
                 }}>{formatted_date}</Text>
-                {m.sender._id == user._id? (
-                  <Ionicons name="checkmark-outline" size={17} color="white" />
-                ) : (null)}
-                {m.sender._id === user._id  && m.receiver != null && m.marked == "true" && (
+                {m.sender._id === user._id  && m.receiver != null && m.marked ? (
                   <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
-                )}
+                ) : m.sender._id === user._id  && m.receiver != null && !m.marked ? (
+                  <Ionicons name="checkmark-outline" size={17} color="white" />
+                ) : null}
               </View>
             </View>
           </>

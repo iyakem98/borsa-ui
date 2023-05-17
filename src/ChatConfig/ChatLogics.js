@@ -55,7 +55,5 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
 
 // Checks whether the next message is from the same user as the previous message.
 export const isSameUser = (messages, m, i) => {
-  console.log("m, i===== = = ", messages?.data[i - 1])
   return i > 0 && messages?.data[i - 1]?.sender?._id === m.sender?._id;
-  // return true
 };
