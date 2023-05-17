@@ -29,6 +29,10 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
   const Ymessages = []
   const Omessages = []
 
+  // useEffect(()=>{
+  //   console.log("=-=-=-=-=", messages)
+  // }, [messages])
+
   const [localrec, setlocalrec] = useState(false)
   const updateMessStatus = async(messId) => {
     try{
@@ -158,11 +162,12 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
         backgroundColor: "#fff",
         paddingBottom: 30
       }}>
-      {messages && messages.map((m, i) => {
-        let msgdate = moment(m.createdAt, "YYYY-MM-DD")
+      {messages && messages?.data ? messages?.data.map((m, i) => {
+        // console.log("=====sf", m)
+        let msgdate = moment(m?.createdAt, "YYYY-MM-DD")
         let today = moment()
         let d = today.diff(msgdate, 'days')
-        // console.log(d)
+        console.log("=====sf", d)
         if(d==0){
           // console.log('pushing today messags')
           todaytest = true
@@ -177,7 +182,7 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
           Omessages.push(m)
           othertest = true
         }
-      })}
+      }) : null}
       {Omessages && Other && OtherFunc(Omessages)}
       {Omessages && Omessages.map((m, i) => {
         const formatted_date =  moment(m.createdAt).format("LT")
@@ -198,7 +203,7 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
               <View key={m._id} style = {[styles.container, {
                 backgroundColor: m.sender._id === user._id ? "#593196" : "#E8E8E8",
                 alignSelf: m.sender._id === user._id ? "flex-end" : "flex-start",
-                marginTop: isSameUser(messages, m , i , user._id)? 5 : 10, 
+                marginTop: isSameUser(messages, m , i , user._id) ? 5 : 10, 
                 borderBottomRightRadius: m?.sender?._id === user?._id ? 0 : 8,
                 borderBottomLeftRadius: m?.sender?._id === user?._id ? 8 : 0,
               }]}>
