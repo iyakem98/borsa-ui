@@ -173,6 +173,7 @@ const MessagingScreen = ({navigation}) => {
     catch(error){
       console.log(error)
     }
+    setloading(false)
   }
   
   const fetchMessage = async(pageNum) => {

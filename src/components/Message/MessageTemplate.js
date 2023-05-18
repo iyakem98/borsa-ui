@@ -38,14 +38,16 @@ const MessageTemplate = ({
                     <Text style={{
                         color: m?.sender?._id === user?._id ? "#fff" : "#404040",
                         fontSize: 12,
+                        marginRight: m?.sender?._id === user?._id && m?.receiver ? 10 : 10,
+                        marginTop: m?.sender?._id === user?._id && m?.receiver ? 0 : 3,
                     }}>{formatted_date}</Text>
-                    {m?.sender?._id === user?._id  && m.receiver != null && m?.marked ? (
-                        <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
-                    ) : m?.sender?._id === user?._id  && m?.receiver != null && !m?.marked ? (
-                        <Ionicons name="checkmark-outline" size={20} color="white" style={{marginLeft:10}} />
-                    ) : (
-                        <ActivityIndicator size={20} color="#fff" style={{marginLeft:10}} />
-                    )}
+                    {m?.sender?._id === user?._id && m.receiver != null && m?.marked ? (
+                        <Ionicons name="checkmark-done" size={20} color="white" />
+                    ) : m?.sender?._id === user?._id && m?.receiver != null && !m?.marked ? (
+                        <Ionicons name="checkmark-outline" size={20} color="white" />
+                    ) : m?.sender?._id === user?._id && !m?.marked ? (
+                        <ActivityIndicator size={20} color="#fff" />
+                    ) : null}
                 </View>
             </View>
             {/* {d !== dataDiff && i !== 0 ? (
