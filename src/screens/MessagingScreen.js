@@ -1,6 +1,6 @@
-import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView, ActivityIndicator, Dimensions} from 'react-native';
+import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView, ActivityIndicator, Dimensions, FlatList, RefreshControl} from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
-import {AntDesign, MaterialIcons, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons'
+import {AntDesign, MaterialIcons, FontAwesome, MaterialCommunityIcons, Ionicons} from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import axios from 'axios';
@@ -10,8 +10,13 @@ import { ChatState } from '../context/ChatProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native'
 import { API_BASE_URL, API_BASE_URL_Socket } from '../utils/config';
+import { isSameSender, isLastMessage, isSameSenderMargin, isSameUser, getSender } from '../ChatConfig/ChatLogics'
+import moment from 'moment';
+
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
+
+
 
 const MessagingScreen = ({navigation}) => {
   const { 
@@ -125,6 +130,19 @@ const MessagingScreen = ({navigation}) => {
     setactiveToday(true)
     setNewwMessage(true)
     setNewMessage('')
+
+    let ms = []
+    ms.push(
+      {
+        content: newmessage,
+        createdAt: moment(),
+        sender: {
+          _id: user._id
+        }
+      }
+    )
+
+    setMessages([...ms, ...messages])
     try{
       const {data} = await axios.post(`${API_BASE_URL}message/`, {
         content : newmessage,
@@ -138,7 +156,7 @@ const MessagingScreen = ({navigation}) => {
       })
       socket.current.emit("new message", data)
       // console.log("=-=0=0=", data)
-      setMessages([...messages, data])
+      setMessages([data, ...messages])
       // await AsyncStorage.removeItem('messages')
       // await AsyncStorage.setItem('messages', JSON.stringify(messages))
       setNewwMessage(false)
@@ -146,12 +164,19 @@ const MessagingScreen = ({navigation}) => {
       setfetchAgain(true)
       setfetchAgain(false)
       setNewMessage('')
+      // setInvert(false)
+      // scrollViewRef.current.scrollToEnd()
+      // setInvert(true)
       return data
     }
     catch(error){
       console.log(error)
     }
   }
+
+  const [chatCount, setChatCount] = useState(10)
+  const [updatingChat, setUpdatingChat] = useState(false)
+  const [invert, setInvert] = useState(true)
   
   const fetchMessage = async() => {
     console.log('fetching messages')
@@ -161,32 +186,34 @@ const MessagingScreen = ({navigation}) => {
           Authorization: `Bearer ${user.token}`
         }
       }
-      const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
+      const {data} = await axios.get(`${API_BASE_URL}message/${chattId}?page=1&limit=${chatCount}`,
       config)
+      console.log(`found ${data.data.length} chats`)
       // console.log("=======", data)
       // if(data == undefined || data == [] || data == null){
       //   // setloading(false)
       //   setMessages([])
       // }
       // await AsyncStorage.removeItem(`me&${chattId}`)
-      let yess = AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data?.data))
+      let yess = AsyncStorage.setItem(`${user._id}&${chattId}`, JSON.stringify(data?.data))
       console.log("stored in local")
       
       setloading(false)
 
-      setMessages(data.data?.reverse())
+      setMessages(data.data)
       setNewwMessage(false)
       
       // setMessages((state) => {
       //   return state
       // })
+      setUpdatingChat(false)
       
       socket.current.emit("join chat", chattId)
       return data;
    
     } catch(error){
       console.log(error)
-       let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
+       let msgs =  await AsyncStorage.getItem(`${user._id}&${chattId}`)
         if(msgs){
           setMessages(JSON.parse(msgs))
           setloading(false)
@@ -309,7 +336,68 @@ const MessagingScreen = ({navigation}) => {
             </Pressable> */}
           </View>
         </View>
-        <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
+        {/* <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} /> */}
+
+        {/* <FlatList
+              data={messages}
+              contentContainerStyle={{
+                paddingBottom: 100
+              }}
+              maxToRenderPerBatch={10}
+              renderItem={({item}) => {
+                // console.log("first", item)
+               
+              }}
+
+            
+            /> */}
+            {
+              updatingChat && 
+              <ActivityIndicator />
+            }
+           
+
+<FlatList
+        data={messages}
+        keyExtractor={item => item.id}
+        ListFooterComponent={<View style={{height: 20}}/>}
+        ref={scrollViewRef}
+        inverted={invert}
+        onEndReached={() => {
+            setChatCount(chatCount+10)
+            setUpdatingChat(true)
+            fetchMessage()
+        }}
+      renderItem={({ item }) =>  (
+          <View style={{marginTop:10, flex:1}}>
+            <View key={item._id} style = {[styles.container, {
+              backgroundColor: item?.sender?._id === user._id ? "#593196" : "#E8E8E8",
+              alignSelf: item?.sender?._id === user._id ? "flex-end" : "flex-start",
+             borderRadius:10,
+             padding:8
+            }]}>
+              <Text key={item._id} style={{
+                color: item.sender._id === user._id ? "white" : "black",
+              }}>
+                {item.content}
+              </Text>
+              <View style={{flexDirection:"row", marginTop:3, marginLeft:5}}>
+                <Text style={{
+                  color: item.sender._id === user._id ? "#fff" : "#404040",
+                  fontSize: 12,
+                  marginTop: 2
+                }}>{moment(item.createdAt).format("LT")}</Text>
+                {item.sender._id === user._id  && item.receiver != null && item.marked ? (
+                  <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
+                ) : item.sender._id === user._id  && item.receiver != null && !item.marked ? (
+                  <Ionicons name="checkmark-outline" size={17} color="white" />
+                ) : null}
+              </View>
+            </View>
+          </View>
+        ) }
+      />
+
         <View
           style={{
             paddingTop: 5,
@@ -342,7 +430,7 @@ const MessagingScreen = ({navigation}) => {
               }}
               style = {styles.input} 
               multiline
-              placeholder='type your message...'
+              placeholder='Type your message...'
               onFocus={()=>{
                 if(newmessage.length > 0) {
                   socket.current.emit('typing', chattId);
@@ -368,7 +456,7 @@ const MessagingScreen = ({navigation}) => {
               } else {
                 sendMessage()
                 // setcheckContent(true)
-                scrollViewRef.current.scrollToEnd()
+               
               }
             }}>
               <FontAwesome name="send-o" size={22} color="#fff" />

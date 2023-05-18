@@ -222,6 +222,10 @@ const ConnectScreen = () => {
                   }} />
                 )
               }}
+
+              onScrollBeginDrag={()=>{
+                alert("heyyy")
+              }}
               onEndReached={() => {
 
                 if (pageBuyer == pageLimBuyer){
