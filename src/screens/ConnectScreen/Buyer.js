@@ -300,7 +300,7 @@ const BuyerChat = async(buyerData)=> {
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
-                  }}>Excluded Items</Text>
+                  }}>All Items</Text>
                   <View style={{
                     flexDirection: "row",
                     alignItems: "center",
