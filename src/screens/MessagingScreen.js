@@ -72,19 +72,21 @@ const MessagingScreen = ({navigation}) => {
   const myRef = createRef();  
   const cameraRef = useRef()
 
-  useLayoutEffect(() => {
+  useEffect(()=>{
     socket.current=io(API_BASE_URL_Socket)
     socket.current.emit("setup", user);
-    socket.current.emit("active", chattId)
     socket.current.on("connected", () => setsocketConnected(true))
+    socket.current.emit("active", chattId)
+    socket.current.emit("seen", chattId)
     socket.current.on("typing", () => setIsTyping(true))
     socket.current.on("stop typing", () => setIsTyping(false))
     socket.current.on("active", () => setIsActive(true))
     socket.current.on("inActive", () => setIsActive(false))
     return () => {
       socket.current.emit("inActive", chattId)
+      socket.current.emit("stop typing", chattId)
     }
-  }, [])
+  } ,[])
 
   useEffect(()=> {
     fetchMessage()
@@ -344,6 +346,8 @@ const MessagingScreen = ({navigation}) => {
               onFocus={()=>{
                 if(newmessage.length > 0) {
                   socket.current.emit('typing', chattId);
+                } else {
+                  socket.current.emit("stop typing", chattId);
                 }
               }}
               onBlur={()=>{
@@ -367,7 +371,7 @@ const MessagingScreen = ({navigation}) => {
                 scrollViewRef.current.scrollToEnd()
               }
             }}>
-              <FontAwesome name="send-o" size={24} color="#fff" />
+              <FontAwesome name="send-o" size={22} color="#fff" />
             </Pressable>
           </View>
         </View>

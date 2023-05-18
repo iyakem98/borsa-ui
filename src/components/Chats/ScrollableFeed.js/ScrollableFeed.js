@@ -164,16 +164,18 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
         if(d==0){
           // console.log('pushing today messags')
           todaytest = true
-          // console.log(todaytest)
+          console.log("todaytest")
           Tmessages.push(m)
           setactiveToday(false)
 
         } else if(d == 1){
           Ymessages.push(m)
           yesterdaytest = true
+          console.log("yesterdtest")
         } else {
           Omessages.push(m)
           othertest = true
+          console.log("oldddtest")
         }
       }) : null}
       {Omessages && Other && OtherFunc(Omessages)}
