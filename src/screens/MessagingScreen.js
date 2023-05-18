@@ -115,7 +115,7 @@ const MessagingScreen = ({navigation}) => {
 
       }
     })
-    setMessages(data, newMessageReceived)
+    setMessages(data?.data?.reverse(), newMessageReceived)
   }
 
   const sendMessage = async() => {
@@ -172,10 +172,8 @@ const MessagingScreen = ({navigation}) => {
       
       setloading(false)
 
-
-      console.log("-=-e=-=ewgfg", data)
-
-      setMessages(data)
+      setMessages(data.data?.reverse())
+      setNewwMessage(false)
       
       // setMessages((state) => {
       //   return state

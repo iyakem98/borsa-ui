@@ -157,7 +157,7 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
         backgroundColor: "#fff",
         paddingBottom: 30,
       }}>
-      {messages && messages?.data ? messages?.data.map((m, i) => {
+      {messages && messages ? messages.map((m, i) => {
         let msgdate = moment(m?.createdAt, "YYYY-MM-DD")
         let today = moment()
         let d = today.diff(msgdate, 'days')
