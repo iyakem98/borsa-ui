@@ -58,8 +58,6 @@ const fetchChat = async () => {
         Authorization: `Bearer ${user.token}`,
       },
     }
-    
-    console.log('fetchin in chatService')
     // const response = await axios.get(API_URL, config)
     const {data} = await axios.get(API_URL, config)
   

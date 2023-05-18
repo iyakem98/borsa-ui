@@ -144,6 +144,7 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
       </>
     )
   }
+
   // const publicFolder = "http://192.168.100.2:5000/images/"
   const publicFolder = "http://192.168.100.2:5000/images/"
   const now = moment()
@@ -154,7 +155,7 @@ const ScrollableFeed = ({messages, latestMessage, scrollref}) => {
       onContentSizeChange={() =>  scrollref.current.scrollToEnd({animated: false})}
       style = {{
         backgroundColor: "#fff",
-        paddingBottom: 30
+        paddingBottom: 30,
       }}>
       {messages && messages?.data ? messages?.data.map((m, i) => {
         let msgdate = moment(m?.createdAt, "YYYY-MM-DD")

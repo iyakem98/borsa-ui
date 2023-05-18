@@ -116,9 +116,6 @@ const Navigator = ({showOnBoarding}) => {
     
   
 }, [user])
-  useEffect(()=>{
-    console.log("=====================", showOnBoarding)
-  }, [showOnBoarding])
 
   return (
    <NavigationContainer>

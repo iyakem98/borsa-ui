@@ -38,7 +38,7 @@ const MessagingScreen = ({navigation}) => {
   } = ChatState();
   const { user } = useSelector((state) => state.auth)
   const [newerMessages, setNewerMessages] = useState([])
-  const [newmessage, setNewMessage] = useState(null);
+  const [newmessage, setNewMessage] = useState("");
   const route = useRoute()
   const dispatch = useDispatch()
   const {chatId} = route.params;
@@ -73,14 +73,19 @@ const MessagingScreen = ({navigation}) => {
   const cameraRef = useRef()
 
   useLayoutEffect(() => {
-    socket.current =io(API_BASE_URL_Socket)
+    socket.current=io(API_BASE_URL_Socket)
     socket.current.emit("setup", user);
-    socket.current.on("connected", () => setsocketConnected(true) )
+    socket.current.emit("active", chattId)
+    socket.current.on("connected", () => setsocketConnected(true))
     socket.current.on("typing", () => setIsTyping(true))
     socket.current.on("stop typing", () => setIsTyping(false))
-    // socket.current.on("active", () => setIsActive(true) )
-    // socket.current.on("inActive", () => setIsActive(false) )
+    socket.current.on("active", () => setIsActive(true))
+    socket.current.on("inActive", () => setIsActive(false))
+    return () => {
+      socket.current.emit("inActive", chattId)
+    }
   }, [])
+
   useEffect(()=> {
     fetchMessage()
   }, [chattId])
@@ -98,6 +103,10 @@ const MessagingScreen = ({navigation}) => {
       testNewMessages(newMessageReceived)
     })
   }, [])
+
+  useEffect(()=>{
+    console.log("=asd-f=-sdf", selectedChat._id)
+  }, [selectedChat])
 
   const testNewMessages = async(newMessageReceived) => {
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`, {
@@ -126,6 +135,7 @@ const MessagingScreen = ({navigation}) => {
         }
       })
       socket.current.emit("new message", data)
+      // console.log("=-=0=0=", data)
       setMessages([...messages, data])
       // await AsyncStorage.removeItem('messages')
       // await AsyncStorage.setItem('messages', JSON.stringify(messages))
@@ -133,6 +143,7 @@ const MessagingScreen = ({navigation}) => {
       setmessageSentOrReceived(false)
       setfetchAgain(true)
       setfetchAgain(false)
+      setNewMessage('')
       return data
     }
     catch(error){
@@ -155,16 +166,20 @@ const MessagingScreen = ({navigation}) => {
       //   // setloading(false)
       //   setMessages([])
       // }
-      let yess = AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data))
+      // await AsyncStorage.removeItem(`me&${chattId}`)
+      let yess = AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data?.data))
       console.log("stored in local")
       
       setloading(false)
 
+
+      console.log("-=-e=-=ewgfg", data)
+
       setMessages(data)
       
-      setMessages((state) => {
-        return state
-      })
+      // setMessages((state) => {
+      //   return state
+      // })
       
       socket.current.emit("join chat", chattId)
       return data;
@@ -227,7 +242,7 @@ const MessagingScreen = ({navigation}) => {
       backgroundColor: "#fff",
       height: height
     }}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''} style={{
         position: "relative",
         flex: 1,
         // backgroundColor: "#eee",
@@ -272,16 +287,17 @@ const MessagingScreen = ({navigation}) => {
               />
               <View style={{marginLeft: 10}}>
                 <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text>
-                <View>
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center"
+                }}>
                   {isActive && !isTyping ? (
                     <View style={{
                       backgroundColor: 'green',
                       height: 10,
                       width: 10,
                       borderRadius: 10,
-                      position: "absolute",
-                      bottom: 14,
-                      right: 14
+                      marginRight: 5
                     }} />
                   ) : null}
                   <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>{isTyping ? "Typing..." : isActive ? "Active" : "Offline"}</Text>
@@ -328,7 +344,9 @@ const MessagingScreen = ({navigation}) => {
               multiline
               placeholder='type your message...'
               onFocus={()=>{
-                socket.current.emit('typing', chattId);
+                if(newmessage.length > 0) {
+                  socket.current.emit('typing', chattId);
+                }
               }}
               onBlur={()=>{
                 socket.current.emit("stop typing", chattId);
@@ -464,7 +482,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: "#f0f0f0",
-    paddingTop: 15,
+    paddingTop: Platform.OS === 'ios' ? 15 : 0,
     fontSize: 16,
     paddingHorizontal: 10,
     borderRadius: 8,

@@ -31,8 +31,8 @@ const ChatItem = ({
 
   useLayoutEffect(() => {
     socket.current=io(API_BASE_URL_Socket)
-    // socket.current.on("active", () => setIsActive(true))
-    // socket.current.on("inActive", () => setIsActive(false))
+    socket.current.on("active", () => setIsActive(true))
+    socket.current.on("inActive", () => setIsActive(false))
     socket.current.on("typing", () => setIsTyping(true))
     socket.current.on("stop typing", () => setIsTyping(false))
   }, [])

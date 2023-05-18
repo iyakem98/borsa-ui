@@ -49,7 +49,6 @@ const MainTabNavigator = () => {
         for (let index = 0; index < chattts.length; index++) {
             const isMarked = chattts[index]?.latestMessage?.marked;
             if(!isMarked) {
-                console.log("-=====----=-===----", isMarked)
                 setNotifFlag(true)
                 break;
             }

@@ -40,10 +40,6 @@ const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((sta
 const dispatch = useDispatch();
 const navigation = useNavigation();
 
-useEffect(()=>{
-  console.log("-=====---", searchFirstName && chattts && chattts.length > 0)
-},[chattts])
-
 // useLayoutEffect(() =>{
 //   dispatch(fetchChat())
 // }, [])
