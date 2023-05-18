@@ -8,7 +8,8 @@ const HeaderChat = ({
     isActive,
     user,
     selectedChat,
-    isTyping
+    isTyping,
+    loading
 }) => {
     const navigation = useNavigation()
   return (
@@ -64,7 +65,7 @@ const HeaderChat = ({
                     marginRight: 5
                   }} />
                 ) : null}
-                <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>{isTyping ? "Typing..." : isActive ? "Active" : "Offline"}</Text>
+                <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>{loading ? "Loading..." : isTyping ? "Typing..." : isActive ? "Active" : "Offline"}</Text>
               </View>
             </View>
           </View>

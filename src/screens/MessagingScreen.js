@@ -199,23 +199,6 @@ const MessagingScreen = ({navigation}) => {
     } catch(error){
     }
   }
-
-  if(loading){
-    return (
-      <View style = {{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        justifyItems: 'center',
-        alignContent: 'center',
-        backgroundColor: 'white',
-        paddingBottom: 100,
-        height: '100%'
-      }}>
-        <ActivityIndicator size="large" color="#000" style = {{marginRight: 0}} />
-      </View>
-    )
-  }
   return (
     <SafeAreaView style={{
       flex: 1,
@@ -231,7 +214,8 @@ const MessagingScreen = ({navigation}) => {
           isActive={isActive}
           user={user}
           selectedChat={selectedChat}
-          isTyping={isTyping} 
+          isTyping={isTyping}
+          loading={loading}
         />
         <FlatList
           data={messages}
