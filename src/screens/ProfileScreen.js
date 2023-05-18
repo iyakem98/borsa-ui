@@ -224,6 +224,7 @@ const ProfileScreen = ({navigation}) => {
     
                         <Text style = {{
                             fontSize: 17,
+                            fontFamily: "Poppins_400Regular"
                         }}>
                             My Cards
                             </Text>  
@@ -239,13 +240,14 @@ const ProfileScreen = ({navigation}) => {
                             backgroundColor: 'orange',
                             padding: 8,
                             borderRadius: 50,
-                            marginRight: 20,
+                            marginRight: 10,
                         }}>
                             <MaterialIcons name="account-circle" size={24} color="white" /> 
                         </View>
                        
                         <Text style = {{
                             fontSize: 17,
+                            fontFamily: "Poppins_400Regular"
                         }}>
                             Account
                             </Text>
@@ -327,13 +329,14 @@ const ProfileScreen = ({navigation}) => {
                                 backgroundColor: 'black',
                                 padding: 8,
                                 borderRadius: 50,
-                                marginRight: 20,
+                                marginRight: 10,
                             }}>
                                 <MaterialIcons name="logout" size={24} color="white" />
                             </View>
                         
                             <Text style = {{
                                 fontSize: 17,
+                                fontFamily: "Poppins_400Regular"
                             }}>
                                 Log out
                                 </Text>
@@ -351,14 +354,14 @@ const ProfileScreen = ({navigation}) => {
             backgroundColor: 'red',
             padding: 8,
             borderRadius: 50,
-            marginRight: 20,
+            marginRight: 10,
         }}>
         <AntDesign name="deleteuser" size={24} color="white" />
         </View>
     
         <Text style = {{
             fontSize: 17,
-            whiteSpace:"nowrap"
+            fontFamily: "Poppins_400Regular"
         }}>
             Delete Account
             </Text>
