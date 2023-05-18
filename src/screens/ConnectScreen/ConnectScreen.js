@@ -79,15 +79,18 @@ const ConnectScreen = () => {
     }, [pageBuyer, pageTraveler])
  
     const changeBuyerPage = () => {
+      setLoadingBuyer(true)
       setPageBuyer(pageBuyer+1)
       //setLoadingBuyer(true)
     }
 
     const changeTravelerPage = () => {
+      setLoadingTraveler(true)
       setPageTraveler(pageTraveler+1)
       
     }
 
+    
 
 
     const getUsers = async () => {
@@ -105,6 +108,7 @@ const ConnectScreen = () => {
          setTravelerTotal([...travelerTotal, ...data.data.data])
          setTotTraveler(data.data.total)
          setPageLimTraveler(Math.ceil(data.data.total/10))
+         //setLoadingBuyer(true)
          })
         .catch((err) => {
          setT(null)
@@ -124,8 +128,11 @@ const ConnectScreen = () => {
         });
 
 
+        setLoadingBuyer(false)
+        setLoadingTraveler(false)
         setloading(false)
     }
+
         
   return (
 
@@ -136,6 +143,14 @@ const ConnectScreen = () => {
       alignItems: "center",
       paddingBottom: 15
     }}>
+    {/*   {loadingBuyer &&  
+              <View style={{
+                //height: 20000,
+                backgroundColor: 'yellow'
+            }}>
+              <ActivityIndicator size="large" color="#777" />
+            </View>
+            } */}
       
       <View style={{
         flexDirection: "row",
@@ -210,7 +225,7 @@ const ConnectScreen = () => {
               onEndReached={() => {
 
                 if (pageBuyer == pageLimBuyer){
-                  alert('end of list')
+                  return
                 }
 
                 else {
@@ -221,14 +236,16 @@ const ConnectScreen = () => {
                
               }}
             />
-            {loadingBuyer &&  
-              <View style={{
-                height: 20000,
-                backgroundColor: 'yellow'
-            }}>
-              <ActivityIndicator size="large" color="#777" />
-            </View>
-            }
+
+{loadingBuyer && <View style = {{
+              top: "30%",
+              left: '50%',
+              zIndex: 100000,
+              position: "absolute",
+            }}> 
+             <ActivityIndicator size="large" color="#777" />
+            </View>}
+            
           </View> 
         ) : (
           <View style = {{
@@ -250,7 +267,7 @@ const ConnectScreen = () => {
               onEndReached={() => {
                 
                 if (pageTraveler == pageLimTraveler){
-                  alert('end of list')
+                  return
                 }
 
                 else {
@@ -260,6 +277,14 @@ const ConnectScreen = () => {
                
               }}
             />
+            {loadingTraveler && <View style = {{
+              top: "30%",
+              left: '50%',
+              zIndex: 100000,
+              position: "absolute",
+            }}> 
+             <ActivityIndicator size="large" color="#777" />
+            </View>}
             
           </View>
         )}
