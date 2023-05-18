@@ -136,9 +136,7 @@ const ConnectScreen = () => {
       alignItems: "center",
       paddingBottom: 15
     }}>
-      <Text>
-        {pageLimTraveler}
-      </Text>
+      
       <View style={{
         flexDirection: "row",
         alignItems: 'center',
