@@ -1,6 +1,6 @@
-import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView, ActivityIndicator, Dimensions} from 'react-native';
+import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Button, Pressable, Text, Image, Platform, Keyboard, ScrollView, ActivityIndicator, Dimensions, FlatList} from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
-import {AntDesign, MaterialIcons, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons'
+import {AntDesign, MaterialIcons, FontAwesome, MaterialCommunityIcons, Ionicons} from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import axios from 'axios';
@@ -10,6 +10,10 @@ import { ChatState } from '../context/ChatProvider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native'
 import { API_BASE_URL, API_BASE_URL_Socket } from '../utils/config';
+import moment from 'moment';
+import { isSameUser } from '../ChatConfig/ChatLogics';
+import HeaderChat from '../components/Shared/HeaderChat';
+import ChatInput from '../components/Chats/ChatInput';
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
@@ -54,6 +58,7 @@ const MessagingScreen = ({navigation}) => {
   const [cameraOnOff, setcameraOnOff] = useState(true)
   const [cameratest, setcameratest] = useState(false)
   const [refresh, setRefresh] = useState(false)
+  const [pageNum, setPageNum] = useState(1)
   const [expoPushToken, setExpoPushToken] = useState('');
   const [pushnotification, setpushNotification] = useState(false);
   const [latestMess, setlatestMess] = useState();
@@ -88,6 +93,8 @@ const MessagingScreen = ({navigation}) => {
     }
   } ,[])
 
+  useEffect(()=>{}, [])
+
   useEffect(()=> {
     fetchMessage()
   }, [chattId])
@@ -106,18 +113,13 @@ const MessagingScreen = ({navigation}) => {
     })
   }, [])
 
-  useEffect(()=>{
-    console.log("=asd-f=-sdf", selectedChat._id)
-  }, [selectedChat])
-
   const testNewMessages = async(newMessageReceived) => {
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`, {
       headers: {
           Authorization: `Bearer ${user.token}`
-
       }
     })
-    setMessages(data?.data?.reverse(), newMessageReceived)
+    setMessages(data?.data, newMessageReceived)
   }
 
   const sendMessage = async() => {
@@ -137,10 +139,7 @@ const MessagingScreen = ({navigation}) => {
         }
       })
       socket.current.emit("new message", data)
-      // console.log("=-=0=0=", data)
-      setMessages([...messages, data])
-      // await AsyncStorage.removeItem('messages')
-      // await AsyncStorage.setItem('messages', JSON.stringify(messages))
+      setMessages([data, ...messages])
       setNewwMessage(false)
       setmessageSentOrReceived(false)
       setfetchAgain(true)
@@ -153,7 +152,7 @@ const MessagingScreen = ({navigation}) => {
     }
   }
   
-  const fetchMessage = async() => {
+  const fetchMessage = async(pageNum) => {
     console.log('fetching messages')
     try{
       const config = {
@@ -163,61 +162,42 @@ const MessagingScreen = ({navigation}) => {
       }
       const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
       config)
-      // console.log("=======", data)
-      // if(data == undefined || data == [] || data == null){
-      //   // setloading(false)
-      //   setMessages([])
-      // }
-      // await AsyncStorage.removeItem(`me&${chattId}`)
-      let yess = AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data?.data))
-      console.log("stored in local")
+      await AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data?.data))
       
       setloading(false)
 
-      setMessages(data.data?.reverse())
+      setMessages(data?.data)
       setNewwMessage(false)
-      
-      // setMessages((state) => {
-      //   return state
-      // })
-      
-      socket.current.emit("join chat", chattId)
       return data;
    
     } catch(error){
       console.log(error)
-       let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
-        if(msgs){
-          setMessages(JSON.parse(msgs))
-          setloading(false)
-        } else {
-          setMessages([])
-          setloading(false)
-        }
+      let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
+      if(msgs){
+        setMessages(JSON.parse(msgs))
+        setloading(false)
+      } else {
+        setMessages([])
+        setloading(false)
       }
     }
+  }
   
-  const typingHandler = (e) => {
-    setNewMessage(e)
-     
-    if(!socketConnected) return
+  const fetchWithPageMessage = async(pageNum) => {
+    try{
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      }
+      const {data} = await axios.get(`${API_BASE_URL}message/${chattId}?page=${pageNum}`,
+      config)
 
-    if(!typing) {
-     setTyping(true)
-     socket.current.emit('typing', chattId);
+      setMessages((prev)=>[...prev, ...data.data])
+      socket.current.emit("join chat", chattId)
+      return data;
+    } catch(error){
     }
-
-    let lastTypingTime = new Date().getTime()
-    var timerLength = 3000
-    setTimeout(() => {
-     var timeNow = new Date().getTime();
-     var timeDiff = timeNow - lastTypingTime;
-
-     if(timeDiff >= timerLength && typing) {
-         socket.current.emit("stop typing", chattId)
-         setTyping(false)
-     }
-    }, timerLength);
   }
 
   if(loading){
@@ -245,181 +225,61 @@ const MessagingScreen = ({navigation}) => {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''} style={{
         position: "relative",
         flex: 1,
-        // backgroundColor: "#eee",
         height: height - 200
       }}>
-        <View style={{
-          overflow: 'hidden',
-          paddingBottom: 5,
-          backgroundColor: "transparent"
-        }}>
-          <View style={{
-            height: 70,
-            paddingHorizontal: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            backgroundColor: '#fff',
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.22,
-            shadowRadius: 2.22,
-
-            elevation: 3,
-          }}>
-            <View style={{
-              flexDirection: "row",
-              alignItems: "center"
-            }}>
-              <Pressable onPress={()=>navigation.goBack()} style={{marginRight: 10}}>
-                <MaterialIcons name="keyboard-backspace" size={25} color="#514590" />
-              </Pressable>
-              <Image
-                source={{uri: user?.profilePic}}
-                style={{
-                  height: 50,
-                  width: 50,
-                  borderRadius: 8
-                }}
-              />
-              <View style={{marginLeft: 10}}>
-                <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text>
-                <View style={{
-                  flexDirection: "row",
-                  alignItems: "center"
-                }}>
-                  {isActive && !isTyping ? (
-                    <View style={{
-                      backgroundColor: 'green',
-                      height: 10,
-                      width: 10,
-                      borderRadius: 10,
-                      marginRight: 5
-                    }} />
+        <HeaderChat
+          isActive={isActive}
+          user={user}
+          selectedChat={selectedChat}
+          isTyping={isTyping} 
+        />
+        <FlatList
+          data={messages}
+          contentContainerStyle={{
+            paddingBottom: 100
+          }}
+          inverted
+          maxToRenderPerBatch={2}
+          renderItem={(item, i) => {
+            let m = item?.item;
+            const formatted_date =  moment(m.createdAt).format("LT");
+            return (
+              <View style = {[styles.container, {
+                backgroundColor: m.sender._id === user._id ? "#593196" : "#E8E8E8",
+                alignSelf: m.sender._id === user._id ? "flex-end" : "flex-start",
+                marginTop: isSameUser(messages, m , i , user._id) ? 5 : 10, 
+                borderBottomRightRadius: m?.sender?._id === user?._id ? 0 : 8,
+                borderBottomLeftRadius: m?.sender?._id === user?._id ? 8 : 0,
+              }]}>
+                <Text key={m._id} style={{color: m.sender._id === user._id ? "white" : "black"}}>
+                  {m.content}
+                </Text>
+                <View style={{flexDirection:"row", marginTop: 2, alignItems: "center"}}>
+                  <Text style={{
+                    color: m.sender._id === user._id ? "#fff" : "#404040",
+                    fontSize: 12,
+                  }}>{formatted_date}</Text>
+                  {m.sender._id === user._id  && m.receiver != null && m.marked ? (
+                    <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
+                  ) : m.sender._id === user._id  && m.receiver != null && !m.marked ? (
+                    <Ionicons name="checkmark-outline" size={17} color="white" />
                   ) : null}
-                  <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>{isTyping ? "Typing..." : isActive ? "Active" : "Offline"}</Text>
                 </View>
               </View>
-            </View>
-            {/* <Pressable>
-              <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
-            </Pressable> */}
-          </View>
-        </View>
-        <ScrollableFeed messages={messages} latestMessage={latestMess} scrollref={scrollViewRef} />
-        <View
-          style={{
-            paddingTop: 5,
-            width: '100%',
-            overflow: "hidden",
+            )
           }}
-        >
-          <View style={{
-            backgroundColor: '#fff',
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            shadowOpacity: 0.22,
-            shadowRadius: 2.22,
-
-            elevation: 3,
-            height: 60,
-            paddingVertical: 5,
-            paddingHorizontal: 15
-          }}>
-            <TextInput 
-              value={newmessage}
-              onChangeText={(text)=>{
-                setNewMessage(text)
-              }}
-              style = {styles.input} 
-              multiline
-              placeholder='type your message...'
-              onFocus={()=>{
-                if(newmessage.length > 0) {
-                  socket.current.emit('typing', chattId);
-                } else {
-                  socket.current.emit("stop typing", chattId);
-                }
-              }}
-              onBlur={()=>{
-                socket.current.emit("stop typing", chattId);
-              }}
-            />
-            <Pressable style={{
-              backgroundColor: "#593196",
-              height: 50,
-              width: 50,
-              borderRadius: 8,
-              alignItems: "center",
-              justifyContent: "center"
-            }} onPress={() => {
-              // console.log("new message" + newmessage)
-              if(newmessage == null || newmessage == undefined || newmessage == ""){
-                console.log('undefined')
-              } else {
-                sendMessage()
-                // setcheckContent(true)
-                scrollViewRef.current.scrollToEnd()
-              }
-            }}>
-              <FontAwesome name="send-o" size={22} color="#fff" />
-            </Pressable>
-          </View>
-        </View>
-        {/* {!loading && (
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-            keyboardVerticalOffset={
-              Platform.select({
-                ios: () => 76,
-                android: () => 110
-              })()
-            }
-          >
-            <SafeAreaView edges={["bottom"]} style={styles.TextSendingcontainer}>
-              {isTyping ? (
-                <View>
-                  <Text> isTyping... </Text>
-                </View>
-              ) : null}
-              <TextInput 
-                value={newmessage}
-                onChangeText={setNewMessage}
-                style = {styles.input} 
-                multiline
-                placeholder='type your message...'
-              />
-              <Pressable 
-                style = {{
-                  backgroundColor: '#13b955',
-                  padding: 8,
-                  borderRadius: 50,
-                }}
-                onPress={() => {
-                  console.log("new message" + newmessage)
-                  if(newmessage == null || newmessage == undefined || newmessage == ""){
-                    console.log('undefined')
-                  } else {
-                    sendMessage()
-                    // setcheckContent(true)
-                    scrollViewRef.current.scrollToEnd()
-                  }
-                }}
-              >
-                <FontAwesome name="send" size={18} color="#fff" style={{paddingTop: 5, paddingRight: 3}} />
-              </Pressable>
-            </SafeAreaView>
-          </KeyboardAvoidingView>
-        )} */}
+          onEndReached={() => {
+            fetchWithPageMessage(pageNum+1)
+            setPageNum((prev) => prev+1)
+          }}
+        />
+        <ChatInput
+          sendMessage={sendMessage}
+          newmessage={newmessage}
+          setNewMessage={setNewMessage}
+          chattId={chattId}
+          socket={socket}
+        />
       </KeyboardAvoidingView>
     </SafeAreaView>
   )
@@ -456,14 +316,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "40%"
   },
-  // input: {
-  //   backgroundColor: "#fff",
-  //   paddingVertical: 50,
-  //   paddingHorizontal: 10,
-  //   width: width - 40,
-  //   textAlignVertical: "center",
-  //   borderRadius: 8,
-  // },
   minicamera: {
     height: 100
   },
@@ -508,5 +360,53 @@ const styles = StyleSheet.create({
   preview: {
     alignSelf: 'stretch',
     flex: 1
+  },
+  container: {
+    //backgroundColor: "#E8E8E8",
+    backgroundColor: '#fff',
+    marginHorizontal: 10,
+    padding: 10,
+    borderRadius: 8,
+    maxWidth: '80%',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    
+    shadowOpacity: 0.10,
+    shadowRadius: 1.0,
+
+    elevation: 1,
+  },
+  container2: {
+    //backgroundColor: "#E8E8E8",
+    backgroundColor: '#fff',
+    marginHorizontal: 10,
+    // padding: 10,
+    borderRadius: 10,
+    // maxWidth: '80%',
+    width: "80%",
+    // height: 200,
+
+    shadowColor: '#000',
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    
+    shadowOpacity: 0.10,
+    shadowRadius: 1.0,
+
+    elevation: 1,
+  },
+  img : {
+    height: 100,
+    width: 100,
+    marginTop: 10
+  },
+  time: {
+    alignSelf: "flex-end"
   }
 });
