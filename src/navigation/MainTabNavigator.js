@@ -135,7 +135,7 @@ const MainTabNavigator = () => {
                 position: "relative"
             }}>
                 <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
-                {newMessage || notifFlag ? (
+                {/* {newMessage || notifFlag ? (
                     <View style={{
                         backgroundColor: "#514590",
                         height: 15,
@@ -145,7 +145,7 @@ const MainTabNavigator = () => {
                         right: -5,
                         top: -5
                     }} />
-                ) : null}
+                ) : null} */}
             </View>
         ),
         headerShown: true,

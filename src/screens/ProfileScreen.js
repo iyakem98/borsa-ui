@@ -91,7 +91,8 @@ const ProfileScreen = ({navigation}) => {
                         <Text style = {{
                             fontSize: 25,
                             marginTop: 20,
-                            marginBottom: 5
+                            // marginBottom: 2,
+                            fontFamily: "Poppins_400Regular"
                         }}>
                             {user?.firstName + ' ' + user?.lastName}
                         </Text>
@@ -103,6 +104,7 @@ const ProfileScreen = ({navigation}) => {
                         }}>
                             <Text style = {{
                                 //color: '#fff'
+                            fontFamily: "Poppins_400Regular"
                             }}>
                               {user?.email}
                             </Text>
@@ -192,12 +194,12 @@ const ProfileScreen = ({navigation}) => {
             <ScrollView style = {styles.v2b}>
                 <View style = {{
                      paddingVertical: 40,
-                     paddingHorizontal: 15,
+                     paddingHorizontal: 20,
                 }}>
                 <Text style = {{
                     fontSize: 15,
                     color: 'gray',
-                    fontWeight: 'bold'
+                    fontFamily: "Poppins_500Medium"
                 }}> 
                     PROFILE AND SETTINGS
                 </Text> 
@@ -215,7 +217,7 @@ const ProfileScreen = ({navigation}) => {
                             backgroundColor: "#593196",
                             padding: 8,
                             borderRadius: 50,
-                            marginRight: 20,
+                            marginRight: 10,
                         }}>
                         <MaterialCommunityIcons name="cards" size={24} color="white" />
                         </View>
@@ -552,9 +554,9 @@ const ProfileScreen = ({navigation}) => {
                 </Text>
             </View> */}
     <View style={{
-        position: "absolute",
+        // position: "absolute",
         alignItems: "center",
-        bottom: -40,
+        // bottom: -40,
         width: "100%"
     }}>
         <Text style={{
@@ -700,7 +702,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         marginVertical: 15,
-        paddingHorizontal: 20,
+        // paddingHorizontal: 10,
         paddingVertical: 100,
         //height: 60,
         marginBottom: 8,

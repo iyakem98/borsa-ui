@@ -60,6 +60,7 @@ const MessagingScreen = ({navigation}) => {
   const [cameratest, setcameratest] = useState(false)
   const [refresh, setRefresh] = useState(false)
   const [pageNum, setPageNum] = useState(1)
+  let prevDate = 0
   const [messagesLength, setMessagesLength] = useState(false)
   const [expoPushToken, setExpoPushToken] = useState('');
   const [pushnotification, setpushNotification] = useState(false);
@@ -75,20 +76,24 @@ const MessagingScreen = ({navigation}) => {
   var chatRouteCompare = null;
 
   let todayDateLabel = false;
-  let yesterdayDateLabel = false
-  let olderDateLabel = false
+  let yesterdayDateLabel = false;
+  let olderDateLabel = false;
+  let dateDiff;
+  let todayDate = false;
+  let yesterdayDate = false
+  let olderDate = false
 
   var socket = useRef(null);
   const scrollViewRef = useRef();
   const myRef = createRef();  
   const cameraRef = useRef()
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     socket.current=io(API_BASE_URL_Socket)
     socket.current.emit("setup", user);
     socket.current.on("connected", () => setsocketConnected(true))
     socket.current.emit("active", chattId)
-    socket.current.emit("seen", chattId)
+    // socket.current.emit("seen", chattId)
     socket.current.on("typing", () => setIsTyping(true))
     socket.current.on("stop typing", () => setIsTyping(false))
     socket.current.on("active", () => setIsActive(true))
@@ -112,7 +117,6 @@ const MessagingScreen = ({navigation}) => {
   }, [selectedChat])
   useEffect(() =>{
     chatRouteCompare = chatRoute
-    console.log("asdsafdsd", userSelected)
   }, [])
 
  
@@ -136,6 +140,16 @@ const MessagingScreen = ({navigation}) => {
     setactiveToday(true)
     setNewwMessage(true)
     setNewMessage('')
+    let now = moment()
+    setMessages([{
+      content: newmessage,
+      createdAt: now,
+      isLoading: true,
+      _id: 60,
+      sender: {
+        _id: user._id
+      }
+    }, ...messages])
     try{
       const {data} = await axios.post(`${API_BASE_URL}message/`, {
         content : newmessage,
@@ -193,6 +207,7 @@ const MessagingScreen = ({navigation}) => {
   }
   
   const fetchWithPageMessage = async(pageNum) => {
+    setloading(true)
     try{
       const config = {
         headers: {
@@ -207,6 +222,7 @@ const MessagingScreen = ({navigation}) => {
       return data;
     } catch(error){
     }
+    setloading(false)
   }
   return (
     <SafeAreaView style={{
@@ -234,25 +250,37 @@ const MessagingScreen = ({navigation}) => {
           }}
           inverted
           maxToRenderPerBatch={2}
-          renderItem={(item, i) => {
+          renderItem={(item) => {
+            let today = moment();
             let m = item?.item;
-            if(!todayDateLabel) {
-              todayDateLabel = true
-            } else if(!yesterdayDateLabel) {
-              yesterdayDateLabel = true
-            } else if(!olderDateLabel) {
-              olderDateLabel = true
-            }
-            // console.log("sadfasdf", messages[messagesLength - 1]?.createdAt)
+            let i = item?.index;
+            let d = m?.createdAt ? today.diff(m?.createdAt, 'days') : null;
+            // if(i === 0) {
+            //   dateDiff = d
+            //   console.log("==-=sdafs", dateDiff)
+            // } else if(dateDiff !== d && d === 0 && !todayDateLabel) {
+            //   todayDateLabel = true
+            //   console.log("==-=tyht", dateDiff)
+            // } else if(dateDiff !== d && d === 1 && !yesterdayDateLabel) {
+            //   yesterdayDateLabel = true
+            //   console.log("==-=qw", dateDiff)
+            // } else if(dateDiff !== d && d > 1 && !olderDateLabel) {
+            //   olderDateLabel = true
+            //   console.log("==-=vtrw", dateDiff)
+            // }
             return (
               <MessageTemplate
                 m={m}
                 user={user}
                 i={i}
-                messages={messages}
                 todayDateLabel={todayDateLabel}
                 yesterdayDateLabel={yesterdayDateLabel}
                 olderDateLabel={olderDateLabel}
+                todayDate={todayDate}
+                yesterdayDate={yesterdayDate}
+                olderDate={olderDate}
+                prevDate={prevDate}
+                d={d}
               />
             )
           }}

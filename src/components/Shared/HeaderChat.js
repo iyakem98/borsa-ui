@@ -57,7 +57,7 @@ const HeaderChat = ({
                 flexDirection: "row",
                 alignItems: "center"
               }}>
-                {isActive && !isTyping ? (
+                {isActive && !isTyping && !loading ? (
                   <View style={{
                     backgroundColor: 'green',
                     height: 10,
