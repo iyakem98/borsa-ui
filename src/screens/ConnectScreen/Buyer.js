@@ -51,9 +51,7 @@ const BuyerChat = async(buyerData)=> {
     
             }
         }
-        navigation.navigate('Messaging', {userSelected:
-                            
-            buyerData})
+        navigation.navigate('Messaging', {userSelected: buyerData})
             
         // // // console.log("loading" + loading)
          setloading(true)

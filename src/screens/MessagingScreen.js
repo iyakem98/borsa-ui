@@ -14,6 +14,7 @@ import moment from 'moment';
 import { isSameUser } from '../ChatConfig/ChatLogics';
 import HeaderChat from '../components/Shared/HeaderChat';
 import ChatInput from '../components/Chats/ChatInput';
+import MessageTemplate from '../components/Message/MessageTemplate';
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
@@ -59,6 +60,7 @@ const MessagingScreen = ({navigation}) => {
   const [cameratest, setcameratest] = useState(false)
   const [refresh, setRefresh] = useState(false)
   const [pageNum, setPageNum] = useState(1)
+  const [messagesLength, setMessagesLength] = useState(false)
   const [expoPushToken, setExpoPushToken] = useState('');
   const [pushnotification, setpushNotification] = useState(false);
   const [latestMess, setlatestMess] = useState();
@@ -71,6 +73,10 @@ const MessagingScreen = ({navigation}) => {
 
   var selectedChatCompare = null;
   var chatRouteCompare = null;
+
+  let todayDateLabel = false;
+  let yesterdayDateLabel = false
+  let olderDateLabel = false
 
   var socket = useRef(null);
   const scrollViewRef = useRef();
@@ -93,7 +99,9 @@ const MessagingScreen = ({navigation}) => {
     }
   } ,[])
 
-  useEffect(()=>{}, [])
+  useEffect(()=>{
+    setMessagesLength(messages.length)
+  }, [messages])
 
   useEffect(()=> {
     fetchMessage()
@@ -104,6 +112,7 @@ const MessagingScreen = ({navigation}) => {
   }, [selectedChat])
   useEffect(() =>{
     chatRouteCompare = chatRoute
+    console.log("asdsafdsd", userSelected)
   }, [])
 
  
@@ -214,6 +223,7 @@ const MessagingScreen = ({navigation}) => {
           isActive={isActive}
           user={user}
           selectedChat={selectedChat}
+          userSelectedFromConnectCard={userSelected ? userSelected : null}
           isTyping={isTyping}
           loading={loading}
         />
@@ -226,30 +236,24 @@ const MessagingScreen = ({navigation}) => {
           maxToRenderPerBatch={2}
           renderItem={(item, i) => {
             let m = item?.item;
-            const formatted_date =  moment(m.createdAt).format("LT");
+            if(!todayDateLabel) {
+              todayDateLabel = true
+            } else if(!yesterdayDateLabel) {
+              yesterdayDateLabel = true
+            } else if(!olderDateLabel) {
+              olderDateLabel = true
+            }
+            // console.log("sadfasdf", messages[messagesLength - 1]?.createdAt)
             return (
-              <View style = {[styles.container, {
-                backgroundColor: m.sender._id === user._id ? "#593196" : "#E8E8E8",
-                alignSelf: m.sender._id === user._id ? "flex-end" : "flex-start",
-                marginTop: isSameUser(messages, m , i , user._id) ? 5 : 10, 
-                borderBottomRightRadius: m?.sender?._id === user?._id ? 0 : 8,
-                borderBottomLeftRadius: m?.sender?._id === user?._id ? 8 : 0,
-              }]}>
-                <Text key={m._id} style={{color: m.sender._id === user._id ? "white" : "black"}}>
-                  {m.content}
-                </Text>
-                <View style={{flexDirection:"row", marginTop: 2, alignItems: "center"}}>
-                  <Text style={{
-                    color: m.sender._id === user._id ? "#fff" : "#404040",
-                    fontSize: 12,
-                  }}>{formatted_date}</Text>
-                  {m.sender._id === user._id  && m.receiver != null && m.marked ? (
-                    <Ionicons name="checkmark-done" size={20} color="white" style={{marginLeft:10}} />
-                  ) : m.sender._id === user._id  && m.receiver != null && !m.marked ? (
-                    <Ionicons name="checkmark-outline" size={17} color="white" />
-                  ) : null}
-                </View>
-              </View>
+              <MessageTemplate
+                m={m}
+                user={user}
+                i={i}
+                messages={messages}
+                todayDateLabel={todayDateLabel}
+                yesterdayDateLabel={yesterdayDateLabel}
+                olderDateLabel={olderDateLabel}
+              />
             )
           }}
           onEndReached={() => {

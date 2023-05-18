@@ -9,7 +9,8 @@ const HeaderChat = ({
     user,
     selectedChat,
     isTyping,
-    loading
+    loading,
+    userSelectedFromConnectCard
 }) => {
     const navigation = useNavigation()
   return (
@@ -51,7 +52,7 @@ const HeaderChat = ({
               }}
             />
             <View style={{marginLeft: 10}}>
-              <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text>
+              <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{userSelectedFromConnectCard && userSelectedFromConnectCard.firstName ? userSelectedFromConnectCard?.firstName : selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {userSelectedFromConnectCard && userSelectedFromConnectCard.lastName ? userSelectedFromConnectCard?.lastName : selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text>
               <View style={{
                 flexDirection: "row",
                 alignItems: "center"
