@@ -58,6 +58,8 @@ const ChatInput = ({
         />
         <Pressable style={{
             backgroundColor: "#593196",
+            backgroundColor: "#13b955",
+            backgroundColor: '#a991d4',
             height: 50,
             width: 50,
             borderRadius: 8,

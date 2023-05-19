@@ -174,8 +174,7 @@ const Navigator = ({showOnBoarding}) => {
           headerBackTitleVisible: false,
           headerBackVisible: false,
           headerMode: null,
-          headerLeft: () => <>
-          </>
+         headerShown: false
         }}
       />
       <Stack.Screen name = "Edit UserName" component={EditUserName} />

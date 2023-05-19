@@ -100,7 +100,7 @@ const AddPost = ({navigation}) => {
                                 } : {}]} />
                             ) : null}
                         </View>
-                        <Text style={styles.compTxt}>Buying</Text>
+                        <Text style={styles.compTxt}>Shipping</Text>
                     </Pressable>
                 </View>
 

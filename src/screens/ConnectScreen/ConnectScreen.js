@@ -189,7 +189,7 @@ const ConnectScreen = () => {
             <Text style={{
                 fontFamily: "Poppins_500Medium",
                 fontSize: 14
-            }}>Buyer</Text>
+            }}>Shipper</Text>
         </Pressable>
       </View>
     </View>

@@ -226,9 +226,14 @@ const ConnectScreen = () => {
   // <ScrollView>
   <SafeAreaView style={styles.container}>
     {/* <Header title="Buyer" backBtn /> */}
+    <View style = {{
+      flexDirection: 'row',
+      alignItems: 'center',
+    }}>
+
     <Pressable onPress={()=>navigation.popToTop()}
       style = {{
-        backgroundColor: '#593196',
+        //backgroundColor: '#593196',
         flexDirection: 'row',
         paddingVertical: 2,
         paddingHorizontal: 4,
@@ -236,12 +241,30 @@ const ConnectScreen = () => {
         marginVertical: 10,
         marginLeft: 10,
         borderRadius: 20,
+        alignItems: 'center',
     }}>
-       <Text style={{fontSize:29, marginTop:-3, marginLeft:3, color: 'white'}}>&larr;</Text>
-       <Text style={{fontSize:20, marginTop:2, marginLeft:4, color: 'white'}}>
-        Back
+    <Feather name="chevron-left" size={34} color="black" />
+       {/*<Text style={{fontSize:29, marginTop:-3, marginLeft:3, color: 'black'}}>&larr;</Text> */}
+       <Text style={{fontSize:18, color: 'black'}}>
+        Profile
        </Text>
+
+       
     </Pressable>
+
+    <View style = {{
+      marginLeft: "15%"
+    }}>
+      <Text style = {{
+         fontSize: 18,
+         fontWeight: 600
+         //fontFamily: "Poppins_400Regular"
+      }}>
+        My Cards
+      </Text>
+    </View>
+    </View>
+    
    
   <View style={{
     backgroundColor: "#fff",
@@ -328,7 +351,7 @@ const ConnectScreen = () => {
               marginRight: 5,
               marginLeft:20,
             }}>
-              My Traveler Cards
+              My Traveling Card
             </Text>
 
             <Pressable style={{
@@ -573,7 +596,7 @@ const ConnectScreen = () => {
               marginRight: 5,
               marginLeft:20,
             }}>
-              My Buyer Cards
+              My Shipping Cards
             </Text>
 
             <Pressable style={{
