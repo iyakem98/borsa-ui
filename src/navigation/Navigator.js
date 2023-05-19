@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, AppState } from "react-native"
+import { View, Text, StyleSheet, AppState , Button} from "react-native"
 import {NavigationContainer} from '@react-navigation/native'
-import { createStackNavigator } from "@react-navigation/stack"
+import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack"
 import MessagingScreen from "../screens/MessagingScreen"
 import ChatScreen from "../screens/ChatScreen"
 import LoginScreen from "../screens/AuthScreens/LoginScreen"
@@ -25,7 +25,7 @@ import EditSpace from "../screens/MyCardsEditScreen/EditSpace"
 import MainTabNavigator from "./MainTabNavigator"
 import HomeScreen from "../screens/AuthScreens/HomeScreen"
 import OtherProfile from "../components/Connect/OtherProfile"
-import ConnectScreen from "../screens/ConnectScreen"
+import ConnectScreen from "../screens/ConnectScreen/ConnectScreen"
 import { useDispatch, useSelector } from "react-redux"
 import Test from "../screens/Test"
 import Test2 from "../screens/Test2"
@@ -38,9 +38,16 @@ import { useEffect } from "react"
 import UserTest from "../screens/UserTest"
 import PushScreen from "../screens/PushScreen"
 import { login } from "../features/auth/authSlice"
+import PostIndex from "../screens/AddPost/index"
 import FromTo from "../screens/AddPost/FromTo"
 import Description from "../screens/AddPost/Description"
 import PostAdditional from "../screens/AddPost/PostAdditional"
+import VerifyUser from "../screens/AuthScreens/VerifyUser"
+import Chattest from "../screens/chattest"
+import SearchScreen from "../screens/SearchScreen"
+import SearchBar from "../components/Chats/ChatListItem/SearchBar"
+import { fetchChat } from "../features/chat/chatSlice"
+
 
 
 const Stack = createStackNavigator();
@@ -49,6 +56,7 @@ const Navigator = ({showOnBoarding}) => {
   // const appState = useRef(AppState.currentState);
   const { user } = useSelector((state) => state.auth)
   const {messageHeader, setmessageHeader} = ChatState()
+  const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
   // useEffect(() =>{
 
   //   const subscription = AppState.addEventListener('change', nextAppState => {
@@ -101,20 +109,33 @@ const Navigator = ({showOnBoarding}) => {
   useEffect(()=>{
     checkUserData()
   }, [])
+  useEffect(() =>{
 
-  useEffect(()=>{
-    console.log("=====================", showOnBoarding)
-  }, [showOnBoarding])
+    dispatch(fetchChat())
+    // console.log(chattts[1])
+    
+  
+}, [user])
 
   return (
    <NavigationContainer>
-   {user !== null  ? (
+   {user !== null || user != undefined  ? (
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
+    
     <Stack.Navigator>
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
       <Stack.Screen name="Chats" component={ChatScreen} />
+      {/* <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} /> */}
+      <Stack.Screen name="Search" component={SearchScreen}  options={({ route }) => ({
+          
+          // title: <SearchBar chats={chattts}/>,
+          // title: <SearchBar/>,
+        
+          headerShown: false
+        })}/>
       <Stack.Screen name="Connect" component={ConnectScreen} />
       <Stack.Screen name="User Details" component={OtherProfile} />
+      <Stack.Screen name="New Post" component={PostIndex} />
       <Stack.Screen name="FromTo" component={FromTo} options={{headerShown: false}} />
       <Stack.Screen name="PostDescription" component={Description} options={{headerShown: false}} />
       <Stack.Screen name="PostAdditional" component={PostAdditional} options={{headerShown: false}} />
@@ -129,7 +150,7 @@ const Navigator = ({showOnBoarding}) => {
           // title: route.params.userSelected,
           title: <UserRecently  userData={route.params.userSelected}/>,
           //  title: <UserRecently data={route.params.chatId} userData={route.params.userSelected}/>,
-          headerShown: true
+          headerShown: false
         })}/>
       )}
       <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>
@@ -144,7 +165,18 @@ const Navigator = ({showOnBoarding}) => {
           
           headerTintColor: "#fff"
         }}/>
-      <Stack.Screen name = "My Cards" component={MyCards} />
+      {/* <Stack.Screen name = "My Cards" component={MyCards} options={{headerShown: false}}/>
+      */}
+    <Stack.Screen
+        name="My Cards"
+        component={MyCards}
+        options={{
+          headerBackTitleVisible: false,
+          headerBackVisible: false,
+          headerMode: null,
+         headerShown: false
+        }}
+      />
       <Stack.Screen name = "Edit UserName" component={EditUserName} />
       <Stack.Screen name = "Edit Name" component={EditName} />
       <Stack.Screen name = "Edit Email" component={EditEmail} />
@@ -166,6 +198,7 @@ const Navigator = ({showOnBoarding}) => {
       {/* <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false, headerTintColor: '#593196'}} /> */}
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown: false}}/>
+      <Stack.Screen name="VerifyUser" component={VerifyUser} options={{headerShown: false}}/>
       <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
     </Stack.Navigator>
    )}     

@@ -48,7 +48,8 @@ const tryChat = async(chatData, token) => {
 }
 
 const fetchChat = async () => {
-  const user1 = await  AsyncStorage.getItem("user")
+  // const user1 = await  AsyncStorage.getItem("user")
+  const user1 = await  AsyncStorage.getItem("@user_data")
   const user = JSON.parse(user1)
   
 
@@ -57,8 +58,6 @@ const fetchChat = async () => {
         Authorization: `Bearer ${user.token}`,
       },
     }
-    
-    console.log('fetchin in chatService')
     // const response = await axios.get(API_URL, config)
     const {data} = await axios.get(API_URL, config)
   

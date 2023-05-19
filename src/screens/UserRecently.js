@@ -12,11 +12,11 @@ function UserRecently({userData}) {
   // console.log(userData)
   const [selectedUserData, setselectedUserData] = useState([])
   const { user } = useSelector((state) => state.auth)
-  const userId = userData._id
+  const userId = userData?._id
   // const [status, setStatus] = useState(data.status)
   // const formatted_date = data.lastSeen
   // const [userName, setUsername] = useState(userData.firstName)
-  const [firstName, setFirstName] = useState(userData.firstName)
+  const [firstName, setFirstName] = useState(userData?.firstName)
   // const [lastSeen, setlastSeen] = useState(moment(formatted_date).format("MMMM Do LT"))
   // const [status, setStatus] = useState(data.status)
 
@@ -84,7 +84,9 @@ function UserRecently({userData}) {
         </Pressable> */}
         {/* {singleChat()} */}
            {/* {displaySelectedUserDetails()} */}
-        <Text>{firstName}</Text>
+           <Text style = {{
+          fontSize: 18
+        }}>{firstName}</Text>
         {/* <Text>{lastSeen}</Text> */}
        {/* { status === "online" ?  <Text>Online</Text> : null}
        { status === "away" ?  <Text>last seen at {lastSeen} </Text>  : null} */}

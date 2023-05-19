@@ -10,6 +10,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { API_BASE_URL } from '../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ProfileScreen = ({navigation}) => {
     const { user } = useSelector((state) => state.auth)
@@ -64,9 +66,55 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     
-    <View>
+    <SafeAreaView style = {{
+        paddingVertical: 30,
+        backgroundColor: "white"
+    }}>
          <View>
-        <ImageBackground
+            <View style  = {styles.profileTop}>
+                <View style = {{
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                }}>
+                 <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211" }} style={{ 
+                    width: 130,
+                    height: 130,
+                    marginTop:0,
+                    // borderRadius: "100%",
+                    borderRadius: 100,
+                    alignItems: 'flex-end',
+                    justifyContent: 'flex-end',
+                    }} />
+                    <View style = {{
+                         marginLeft: 6
+                    }}>
+                        <Text style = {{
+                            fontSize: 25,
+                            marginTop: 20,
+                            // marginBottom: 2,
+                            fontFamily: "Poppins_400Regular"
+                        }}>
+                            {user?.firstName + ' ' + user?.lastName}
+                        </Text>
+                        <View style = {{
+                            //backgroundColor: '#593196',
+                            paddingHorizontal: 5,
+                            paddingVertical: 2,
+                            borderRadius: 20
+                        }}>
+                            <Text style = {{
+                                //color: '#fff'
+                            fontFamily: "Poppins_400Regular"
+                            }}>
+                              {user?.email}
+                            </Text>
+                        </View>
+                        
+                    </View>
+                    
+                </View>
+            </View>
+      {/*  <ImageBackground
                 source={{
                 uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211",
                 }}
@@ -97,9 +145,9 @@ const ProfileScreen = ({navigation}) => {
                         marginBottom: 0
                     }}>
                     🇨🇦
-                    </Text> */}
+                    </Text> 
                 </View>
-                <View style = {{
+               {/* <View style = {{
                     flexDirection: 'row',
                 }}>
                     {user && user.isTraveler && 
@@ -137,49 +185,77 @@ const ProfileScreen = ({navigation}) => {
                             Buyer
                         </Text>
                     </Pressable>
-                </View>
+                    </View> 
             </View>
             
 
-        </ImageBackground>
+                </ImageBackground> */}
         <View>
             <ScrollView style = {styles.v2b}>
                 <View style = {{
-                     paddingVertical: 30,
-                     paddingHorizontal: 15,
+                     paddingVertical: 40,
+                     paddingHorizontal: 20,
                 }}>
                 <Text style = {{
                     fontSize: 15,
                     color: 'gray',
-                    fontWeight: 'bold'
+                    fontFamily: "Poppins_500Medium"
                 }}> 
-                    PROFILE
+                    PROFILE AND SETTINGS
                 </Text> 
 
                 <View style = {{
                     marginTop: 15,
                 }}>
-                    <View style = {styles.grid}>
+                    <View style = {styles.myRow}>
 
-                    <Pressable onPress={() => navigation.navigate('Account')}
+                    <TouchableOpacity onPress={() => navigation.navigate('My Cards')}
+                    style = {styles.press}>
+                        <View style = {styles.pressView1}>
+                            <View style = {{
+                            backgroundColor: '#a991d4',
+                            backgroundColor: "#593196",
+                            padding: 8,
+                            borderRadius: 50,
+                            marginRight: 10,
+                        }}>
+                        <MaterialCommunityIcons name="cards" size={24} color="white" />
+                        </View>
+    
+                        <Text style = {{
+                            fontSize: 17,
+                            fontFamily: "Poppins_400Regular"
+                        }}>
+                            My Cards
+                            </Text>  
+                            </View>
+                            <AntDesign name="caretright" size={22} color="lightgray" />
+                </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('Account')}
                         style = {styles.press}>
+                        <View style = {styles.pressView1}>
                         <View style = {{
                             backgroundColor: '#a991d4',
                             backgroundColor: 'orange',
                             padding: 8,
                             borderRadius: 50,
-                            marginRight: 20,
+                            marginRight: 10,
                         }}>
                             <MaterialIcons name="account-circle" size={24} color="white" /> 
                         </View>
                        
                         <Text style = {{
                             fontSize: 17,
+                            fontFamily: "Poppins_400Regular"
                         }}>
                             Account
                             </Text>
-                    </Pressable>
-                    <Pressable onPress={() => navigation.navigate('Security')}
+                        </View>
+                        
+                            <AntDesign name="caretright" size={22} color="lightgray" />
+                    </TouchableOpacity>
+                   {/* <Pressable onPress={() => navigation.navigate('Security')}
                         style = {styles.press}>
                         <View style = {{
                             backgroundColor: '#a991d4',
@@ -196,12 +272,12 @@ const ProfileScreen = ({navigation}) => {
                         }}>
                             Security
                             </Text>
-                    </Pressable>
+                    </Pressable> */}
                     </View>
 
-                    <View style = {styles.grid}>
+                   <View style = {styles.myRow}>
                         
-                    <Pressable onPress={() => navigation.navigate('Settings')}
+                   {/* <Pressable onPress={() => navigation.navigate('Settings')}
                         style = {styles.press}>
                         <View style = {{
                             backgroundColor: '#a991d4',
@@ -218,88 +294,102 @@ const ProfileScreen = ({navigation}) => {
                         }}>
                             Settings
                             </Text>
-                    </Pressable>
-                    <Pressable onPress={() => navigation.navigate('Contact Us')}
+                    </Pressable> */}
+                    {/* <Pressable onPress={() => navigation.navigate('Contact Us')}
                         style = {styles.press}>
-                        <View style = {{
-                            backgroundColor: '#a991d4',
-                            backgroundColor: 'lightgreen',
-                            padding: 8,
-                            borderRadius: 50,
-                            marginRight: 20,
-                        }}>
-                            <AntDesign name="phone" size={24} color="white" />
-                        </View>
-                       
-                        <Text style = {{
-                            fontSize: 17,
-                        }}>
-                            Contact Us
-                            </Text>
-                    </Pressable>
+                            <View style = {styles.pressView1}> 
+                                <View style = {{
+                                backgroundColor: '#a991d4',
+                                backgroundColor: 'lightgreen',
+                                padding: 8,
+                                borderRadius: 50,
+                                marginRight: 20,
+                            }}>
+                                <AntDesign name="phone" size={24} color="white" />
+                            </View>
+                        
+                            <Text style = {{
+                                fontSize: 17,
+                            }}>
+                                Contact Us
+                                </Text>
+                                </View>
+                                <AntDesign name="caretright" size={22} color="lightgray" />
+                    </Pressable> */}
                     </View>
 
-                    <View style = {styles.grid}>
+                    <View style = {styles.myRow}>
 
-                    <Pressable onPress={() => navigation.navigate('My Cards')}
-    style = {styles.press}>
-    <View style = {{
-         backgroundColor: '#a991d4',
-         backgroundColor: "#593196",
-        padding: 8,
-        borderRadius: 50,
-        marginRight: 20,
-    }}>
-       <MaterialCommunityIcons name="cards" size={24} color="white" />
-    </View>
-   
-    <Text style = {{
-        fontSize: 17,
-    }}>
-        My Cards
-        </Text>
-</Pressable>
+                    
+                <TouchableOpacity onPress={() => handleLogout()}
+                        style = {styles.press}>
+                            <View style = {styles.pressView1}> 
+                                <View style = {{
+                                backgroundColor: '#a991d4',
+                                backgroundColor: 'black',
+                                padding: 8,
+                                borderRadius: 50,
+                                marginRight: 10,
+                            }}>
+                                <MaterialIcons name="logout" size={24} color="white" />
+                            </View>
+                        
+                            <Text style = {{
+                                fontSize: 17,
+                                fontFamily: "Poppins_400Regular"
+                            }}>
+                                Log out
+                                </Text>
+                                </View>
+                    </TouchableOpacity>
+                
 <TouchableOpacity onPress={() => {
     setModalVisible(true)
 }}
     style = {styles.press}>
-    <View style = {{
-        backgroundColor: '#a991d4',
-        backgroundColor: 'lightblue',
-        padding: 8,
-        borderRadius: 50,
-        marginRight: 20,
-    }}>
-        <MaterialIcons name="security" size={24} color="white" /> 
-    </View>
-   
-    <Text style = {{
-        fontSize: 17,
-        whiteSpace:"nowrap"
-    }}>
-        Delete Acc
-        </Text>
+        <View style = {styles.pressView1}>
+            <View style = {{
+            backgroundColor: '#a991d4',
+            backgroundColor: 'lightblue',
+            backgroundColor: 'red',
+            padding: 8,
+            borderRadius: 50,
+            marginRight: 10,
+        }}>
+        <AntDesign name="deleteuser" size={24} color="white" />
+        </View>
+    
+        <Text style = {{
+            fontSize: 17,
+            fontFamily: "Poppins_400Regular"
+        }}>
+            Delete Account
+            </Text>
+        </View>
+    
 </TouchableOpacity>
 </View>
 
 
-                    <View style = {{
+                {/*    <View style = {{
                         width: "100%",
-                        //paddingTop: 20,
+                        marginTop: 30,
                         flexDirection: 'row',
-                        //justifyContent: 'space-around',
+                        justifyContent: 'center',
                         textAlign: 'center',
                         textAlignVertical: 'center',
+                        
                     }}>
                         <Pressable onPress={() => handleLogout()}
-                            style = {styles.press}>
-                        <Text>Logout</Text>
+                            >
+                        <Text style={{textAlign:"center", fontSize:18}}>Logout</Text>
+       
                         
                         </Pressable>
 
                         
                         
-                    </View>
+                </View> */}
 
                    
 
@@ -466,6 +556,27 @@ const ProfileScreen = ({navigation}) => {
                     4.5/5
                 </Text>
             </View> */}
+    <View style={{
+        // position: "absolute",
+        alignItems: "center",
+        // bottom: -40,
+        width: "100%"
+    }}>
+        <Text style={{
+            fontFamily: "Poppins_400Regular",
+            fontSize: 14
+        }}>Need support?</Text>
+        <Text style={{
+            color: "#777",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 12
+        }}>Email: admin@borsa.world</Text>
+        <Text style={{
+            color: "#777",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 12
+        }}>+1(310)351-5957</Text>
+    </View>
               
             </ScrollView>
         </View>
@@ -483,32 +594,61 @@ const ProfileScreen = ({navigation}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure to delete your account? This action can not be reversed.</Text>
+            <View>
+            <Text style={{
+                fontWeight: 'bold',
+                marginBottom: 10,
+                fontSize: 22
+            }}>Are you sure you want to delete your account?</Text> 
+            <Text style = {{
+                //fontWeight: 'bold',
+                marginBottom: 4,
+                fontSize: 15
+            }}>This action cannot be reversed</Text>
             
+            </View>
+
+            <View style = {{
+                flexDirection: 'row',
+                marginLeft: "40%"
+            }}>
+            
+            <Pressable
+              style={[styles.button, styles.buttonCloseNo]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={{
+               // fontWeight: 'bold',
+                textAlign: 'center',
+              }}>No</Text>
+            </Pressable>
+
             <Pressable
               style={[styles.button, styles.buttonCloseYes]}
               onPress={() => deleteAcc()}>
               <Text style={styles.textStyle}>Yes</Text>
             </Pressable>
 
-            <Pressable
-              style={[styles.button, styles.buttonCloseNo]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>No</Text>
-            </Pressable>
+            </View>
+            
+          
           </View>
         </View>
       </Modal>
      
     </View>
             
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
     container : {
 
+    },
+
+    profileTop: {
+        paddingHorizontal: 30,
+        backgroundColor: 'white'
     },
 
     imagebk: {
@@ -554,7 +694,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         height: 700,
-        position: 'absolute',
+        // position: 'absolute',
        // marginTop: 70,
        // borderTopRightRadius: 15,
        // borderTopLeftRadius: 15,
@@ -563,20 +703,22 @@ const styles = StyleSheet.create({
 
     press: {
         flexDirection: 'row',
-        width: '47%',
+        width: '100%',
         marginVertical: 15,
-        paddingHorizontal: 10,
-        height: 60,
+        // paddingHorizontal: 10,
+        paddingVertical: 100,
+        //height: 60,
         marginBottom: 8,
         borderStyle: 'solid',
         //borderBottomWidth: 0.7,
         //borderRightWidth: 0.7,
         backgroundColor: '#fff',
-        borderRadius: 30,
+        //borderRadius: 30,
         borderColor: '#c8c8c8',
         paddingVertical: 5,
         alignItems: 'center',
-        shadowColor: "#000",
+        justifyContent: 'space-between',
+        /*shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 1,
@@ -584,7 +726,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.18,
         shadowRadius: 2.00,
     
-        elevation: 1, 
+        elevation: 1, */
        
         
     },
@@ -597,6 +739,14 @@ const styles = StyleSheet.create({
         
     },
 
+    myRow: {
+    },
+
+    pressView1: {
+        flexDirection: 'row', 
+        alignItems: 'center'
+    },
+
     centeredView: {
         flex: 1,
         justifyContent: 'center',
@@ -606,8 +756,8 @@ const styles = StyleSheet.create({
       modalView: {
         margin: 20,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
+        borderRadius: 10,
+        padding: 20,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
@@ -619,8 +769,10 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
       button: {
-        borderRadius: 20,
-        padding: 10,
+        borderRadius: 5,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        marginHorizontal: 4,
         elevation: 2,
       },
       buttonOpen: {
@@ -629,22 +781,26 @@ const styles = StyleSheet.create({
       buttonCloseYes: {
         backgroundColor: 'red',
         marginTop:10,
-        width:200
+        //width:200
       },
       buttonCloseNo: {
         backgroundColor: 'green',
+        backgroundColor: '#13b955',
+        backgroundColor: '#e8e8e8',
         marginTop:10,
-        width:200,
+        //width:200,
         color:"black"
       },
       textStyle: {
         color: 'white',
-        fontWeight: 'bold',
+        //fontWeight: 'bold',
         textAlign: 'center',
       },
       modalText: {
-        marginBottom: 18,
+        marginBottom: 9,
         textAlign: 'center',
+        fontSize: 16,
+        
       },
     
 

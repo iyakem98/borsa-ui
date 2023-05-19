@@ -1,7 +1,7 @@
 import {View, Text, Pressable, StyleSheet} from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ChatsScreen from '../screens/ChatScreen';
-import ConnectScreen from "../screens/ConnectScreen"
+import ConnectScreen from "../screens/ConnectScreen/ConnectScreen"
 import TravelerScreen from '../screens/TravelerScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import NotImplementedScreen from '../screens/NotImplementedScreen';
@@ -9,11 +9,11 @@ import { Entypo, AntDesign, MaterialIcons, FontAwesome, Feather, Ionicons, Mater
 import LoginScreen from '../../src/screens/AuthScreens/LoginScreen';
 import { Badge, Icon, withBadge } from '@rneui/themed';
 import RegisterScreen from '../../src/screens/AuthScreens/RegisterScreen';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 import { getSenderFull } from '../ChatConfig/ChatLogics';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Test from '../screens/Test';
 import ChatScreen from '../screens/ChatScreen';
 import AddPost from '../screens/AddPost';
@@ -23,18 +23,46 @@ import TestImg from '../screens/TestImg';
 import RecentlyTest from '../screens/RecentlyTest';
 import UserTest from '../screens/UserTest';
 import PushScreen from '../screens/PushScreen';
+import Saved from '../screens/Saved';
+import Search from '../components/Chats/ChatListItem/Search';
+import { io } from 'socket.io-client';
+import { API_BASE_URL_Socket } from '../utils/config';
+import { fetchChat } from '../features/chat/chatSlice';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
-   
+    const dispatch = useDispatch()
     const [storedNotifications, setstoredNotifications] = useState([])
+    const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
     const [notifChat, setnotifChat] = useState()
     const [visible, setVisible] = useState(false);
+    const [newMessage, setNewMessage] = useState(false)
     const navigate = useNavigation()
     const hideMenu = () => setVisible(false);
+    const [notifFlag, setNotifFlag] = useState(false)
 
     const showMenu = () => setVisible(true);
+    var socket = useRef(null)
     const { user } = useSelector((state) => state.auth)
+
+    const checkIsMarked = () => {
+        for (let index = 0; index < chattts.length; index++) {
+            const isMarked = chattts[index]?.latestMessage?.marked;
+            if(!isMarked) {
+                setNotifFlag(true)
+                break;
+            }
+        }
+    }
+
+    useEffect(() =>{
+        dispatch(fetchChat())
+    }, [user])
+
+    useEffect(() =>{
+        checkIsMarked()
+    }, [user, chattts])
+    
     useEffect(() =>{
        getNotif()
     //    {storedNotifications  && console.log(storedNotifications[0].chatUsers)}
@@ -42,6 +70,22 @@ const MainTabNavigator = () => {
     //     console.log(notificationstored)
       
       }, [])
+
+      useEffect(() => {
+        socket.current = io(API_BASE_URL_Socket)
+        socket.current.emit("setup", user);
+        socket.current.on("connected", () => {
+            // setsocketConnected(true)
+        })
+        socket.current.on("message recieved", (newMessageReceived) => {
+          console.log(newMessageReceived)
+        //   storeNotif(newMessageReceived)
+            if(newMessageReceived) {
+                setNewMessage(true)
+            }
+        });
+      },[])
+
       const getNotif = async() =>{
         const notif  = await AsyncStorage.getItem('notification')
         const notifChat =  await AsyncStorage.getItem('notifChat')
@@ -69,7 +113,8 @@ const MainTabNavigator = () => {
         <Tab.Screen name="Connect" component={ConnectScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <SimpleLineIcons name="people" size={size} color={color} />
-            )
+            ),
+            headerShown: false
         }} />
 
         {/* <Tab.Screen name="Login" component={LoginScreen} options={{
@@ -79,11 +124,37 @@ const MainTabNavigator = () => {
             headerShown: false
         }} /> */}
         
-        <Tab.Screen name="Chats" component={ChatScreen} options={{
+        {/* <Tab.Screen name="Chats" component={ChatScreen} options={{
            tabBarIcon: ({color, size}) => (
             <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
             
+        ), */}
+        <Tab.Screen name="Chats" component={ChatScreen} options={{
+           tabBarIcon: ({color, size}) => (
+            <View style={{
+                position: "relative"
+            }}>
+                <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
+                {/* {newMessage || notifFlag ? (
+                    <View style={{
+                        backgroundColor: "#514590",
+                        height: 15,
+                        width: 15,
+                        borderRadius: 15,
+                        position: "absolute",
+                        right: -5,
+                        top: -5
+                    }} />
+                ) : null} */}
+            </View>
         ),
+        headerShown: true,
+        headerRight: () => (
+          
+           <Search/>
+          
+           
+        )
         // headerRight: () => (
         //     <>
         //     <Pressable style={styles.notificationBell} onPress={() => showMenu()}>
@@ -123,10 +194,11 @@ const MainTabNavigator = () => {
             ),
             headerShown: false
         }} />
-        <Tab.Screen name="Saved" component={ConnectScreen} options={{
+        <Tab.Screen name="Saved" component={Saved} options={{
             tabBarIcon: ({color, size}) => (
                 <Ionicons name="heart-outline" size={size} color={color} />
-            )
+            ),
+            headerShown: false
         }} />
 
         <Tab.Screen name="More" component={ProfileScreen} options={{

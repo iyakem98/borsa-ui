@@ -47,8 +47,6 @@ const initialState = {
     async (chatId, thunkAPI) => {
       try {
         // const token = thunkAPI.getState().auth.user.token
-  
-        console.log('fetching in chatSlice')
         return await chatService.singleChat(chatId)
       } catch (error) {
         const message =
@@ -66,8 +64,6 @@ const initialState = {
     async (_, thunkAPI) => {
       try {
         const token = thunkAPI.getState().auth.user.token
-  
-        console.log('fetching in chatSlice')
         return await chatService.fetchChat(token)
       } catch (error) {
         const message =

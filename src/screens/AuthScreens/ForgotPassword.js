@@ -5,6 +5,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../components/Shared/Header';
 import { TextInput } from 'react-native-paper';
+import { showMessage } from 'react-native-flash-message';
 
 
 const LoginScreen = ({navigation}) => {
@@ -32,19 +33,26 @@ const LoginScreen = ({navigation}) => {
   const handleLogin = async() => {
     setIsLoading(true)
     try {
-      const res = await axios.post('http://143.198.168.244/api/users/login', {
-        email: userEmail,
-        password: userPassword
+      const res = await axios.post('http://143.198.168.244/api/users/forgot-password', {
+        email: userEmail
       });
       console.log(res.data);
-      await handleUserData();
+      await navigation.navigate('VerifyUser', res.data)
     } catch(e) {
-      console.log("------------", e)
-      if(e === "password error") {
-
-      } else if(e === "username error") {
-
-      } else if(e === "password error") {}
+      console.log("------------", e.response.data)
+      if(e?.response?.data?.message === "Invalid Email") {
+        showMessage({
+            message: "Invalid Email",
+            description: `Please make sure you have a registered email`,
+            type: "warning",
+        });
+      } else {
+        showMessage({
+            message: "Something went wrong",
+            description: `Please check your email or connection`,
+            type: "warning",
+        });
+      }
     }
     setIsLoading(false)
   }

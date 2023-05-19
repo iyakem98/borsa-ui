@@ -23,7 +23,7 @@ const RegisterScreen = ({navigation}) => {
   const [userFullName, setUserFullName] = useState("")
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(true)
   const [userEmailError, setUserEmailError] = useState("");
   const [userPasswordError, setUserPasswordError] = useState("");
 
@@ -243,13 +243,18 @@ const handleVerify = async () => {
         paddingHorizontal: 15,
         paddingTop: 60,
         flexGrow: 1,
-        height: windowHeight
       }}>
         <Text style={{
           fontFamily: "Poppins_600SemiBold",
           fontSize: 30
         }}>
           Create an Account
+        </Text>
+        <Text style={{
+          fontFamily: "Poppins_400Regular",
+          fontSize: 14,
+        }}>
+          Create an account to become a member
         </Text>
         <TextInput
           label="Full name"
@@ -284,9 +289,11 @@ const handleVerify = async () => {
         />
         <TextInput
           label="Password"
+          secureTextEntry={true}
           value={userPassword}
           onChangeText={text => setUserPassword(text)}
           mode="outlined"
+          secureTextEntry={true}
           style={{
             // paddingVertical: 5
           }}
@@ -319,7 +326,8 @@ const handleVerify = async () => {
             }}
             color="#514590"
             style={{
-              width: 80
+              width: 80,
+              backgroundColor: "#eee"
             }}
           />
           <View style={{
@@ -330,22 +338,22 @@ const handleVerify = async () => {
               fontFamily: "Poppins_400Regular",
               fontSize: 13
             }}>
-              By submitting this form, you accept Borsa's {" "}
+              By submitting this form, you accept that you will become a {" "}
               <Text style={{
                 color: "#514590",
                 fontFamily: "Poppins_500Medium",
-                textDecorationLine: "underline"
+                //textDecorationLine: "underline"
               }} onPress={()=>{
                 console.log("========")
-              }}>Terms and Conditions</Text>
-              {" "}and{" "}
+              }}>Borsa</Text>
+              {" "}user and will {" "}
               <Text style={{
                 color: "#514590",
                 fontFamily: "Poppins_500Medium",
-                textDecorationLine: "underline"
+                //textDecorationLine: "underline"
               }} onPress={()=>{
                 console.log("========")
-              }}>Privacy Policy.</Text>
+              }}>interact with other users appropriatelt.</Text>
             </Text>
           </View>
         </View>

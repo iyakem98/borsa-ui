@@ -231,12 +231,14 @@ const LoginScreen = ({navigation}) => {
         />
         <TextInput
           label="Password"
+          secureTextEntry={true}
           value={userPassword}
           onChangeText={text => setUserPassword(text)}
           mode="outlined"
           style={{
             // paddingVertical: 5
           }}
+          secureTextEntry={true}
           error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",

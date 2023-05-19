@@ -1,41 +1,92 @@
-import { Dimensions, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import { Dimensions, ActivityIndicator, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { API_BASE_URL } from '../../utils/config'
 
 const width = Dimensions.get("screen").width
 
 const AddPost = ({navigation}) => {
     const [selected, setSelected] = useState(1)
+
+    const [isAlreadyTraveler, setIsAlreadyTraveler] = useState(false)
+
+    const { user} = useSelector(
+        (state) => state.auth
+      )
+
+      const [spinner, setSpinner] = useState(false)
+
+    const checkTraveler = async () => {
+        setSpinner(true)
+        let config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+              }}
+        
+        let {data} =   await axios.get(`http://143.198.168.244/api/travels/my`,
+        config)
+        console.log("=======", data.data)
+        if(data.data.length>0){
+            Alert.alert('Already a Traveler', 'Do you want to delete your previous traveler card and add a new one?', [
+                
+                {text: 'OK', onPress: async () => {
+                    navigation.navigate("My Cards")
+                }},
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+              ]);
+        }else{
+
+        navigation.navigate("FromTo", {
+            cardType: selected,
+          })
+        }
+
+
+       setSpinner(false)
+  
+      }
+
+   
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={"Add Post"} shadow />
+            <Header title={"Add Post"} />
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={{
                     marginTop: 20,
-                    fontFamily: "Poppins_400Regular"
+                    fontFamily: "Poppins_400Regular",
+                    fontSize: 18,
+                    marginBottom: 10,
                 }}>
-                    Do you want to be a buyer or seller?
+                    Are you a traveling or getting items?
                 </Text>
                 <View style={styles.horizontal}>
                     <Pressable style={[styles.component, selected === 1 ? {
                         borderColor: "#514590",
+                        borderColor: "#13b955",
                         borderWidth: 2
                     } : {
                         borderColor: "#f7f7f7",
                     }]} onPress={()=>setSelected(1)}>
-                        <View style={[styles.radioWrapper, selected !== 1 ? {
+                        <View style={[styles.radioWrapperTr, selected !== 1 ? {
                             borderColor: "#ccc"
                         } : {}]}>
                             {selected === 1 ? (
-                                <View style={[styles.radio, selected !== 1 ? {
+                                <View style={[styles.radioTr, selected !== 1 ? {
                                     backgroundColor: "#ccc"
                                 } : {}]} />
                             ) : null}
                         </View>
-                        <Text style={styles.compTxt}>Seller</Text>
+                        <Text style={styles.compTxt}>Traveling</Text>
                     </Pressable>
                     <Pressable style={[styles.component, selected === 2 ? {
                         borderColor: "#514590",
+                        //borderColor: '#13b955',
                         borderWidth: 2
                     } : {
                         borderColor: "#f7f7f7",
@@ -49,11 +100,26 @@ const AddPost = ({navigation}) => {
                                 } : {}]} />
                             ) : null}
                         </View>
-                        <Text style={styles.compTxt}>Buyers</Text>
+                        <Text style={styles.compTxt}>Shipping</Text>
                     </Pressable>
                 </View>
+
+
+                {
+    spinner && 
+    <View style={{
+      position:"fixed",
+      top:"40%",
+      left:"0%",
+      zIndex: 200
+  }}>
+    <ActivityIndicator size="large" color="black" />
+  </View>
+  }
+
+
                 <Pressable style={{
-                    backgroundColor: "#514590",
+                    backgroundColor: `${selected == 1 ? '#514590' : '#514590'}`,
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,
@@ -61,7 +127,24 @@ const AddPost = ({navigation}) => {
                     position: "absolute",
                     bottom: 0,
                     left: 15
-                }} onPress={()=>navigation.navigate("FromTo")}>
+                }} 
+                //onPress={()=>navigation.navigate("FromTo")}
+                onPress={()=>{
+                //     navigation.navigate("FromTo", {
+                //     cardType: selected,
+                 
+                //   })
+                  if(selected==1){
+                    checkTraveler()
+                }
+                else{
+                    navigation.navigate("FromTo", {
+                        cardType: selected,
+                      })
+                }
+            }
+                }
+                >
                     <Text style={{
                         color: "#fff",
                         fontFamily: "Poppins_400Regular",
@@ -69,6 +152,9 @@ const AddPost = ({navigation}) => {
                         textAlign: "center"
                     }}>{"Next"}</Text>
                 </Pressable>
+
+
+
             </ScrollView>
         </SafeAreaView>
     )
@@ -128,8 +214,29 @@ const styles = StyleSheet.create({
         top: 15,
         right: 15
     },
+    radioWrapperTr: {
+        // backgroundColor: "#aaa",
+        height: 21,
+        width: 21,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 2,
+        borderStyle: "solid",
+        borderColor: "#13b955",
+        position: "absolute",
+        top: 15,
+        right: 15
+    },
     radio: {
         backgroundColor: "#514590",
+        height: 14,
+        width: 14,
+        borderRadius: 10
+    },
+
+    radioTr: {
+        backgroundColor: '#13b955',
         height: 14,
         width: 14,
         borderRadius: 10

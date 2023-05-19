@@ -6,17 +6,48 @@ import { ChatState } from '../../../context/ChatProvider';
 import { getSenderFull } from '../../../ChatConfig/ChatLogics';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
+import moment from 'moment';
 
 
-const ChatListHeader = ({chatArr}) => {
+// const ChatListHeader = ( {YchatArr, TchatArr, OchatArr} ) => {
+const ChatListHeader = ( {chatArr} ) => {
+    // console.log("todays chats " + TchatArr.length)
+    // if(chatArr != undefined)
+    // console.log("All chatsss " + chatArr)
+    // else{
+    //     console.log(false)
+    // }
+    // if(TchatArr != undefined)
+    // console.log("Todays chatsss " + TchatArr)
+    // if(OchatArr != undefined)
+    // console.log("others chatsss " + OchatArr)
+    // else{
+    //     console.log(false)
+    // }
+    // console.log("other chats " + OTchatArr.length)
+    // console.log("Testing")
     // console.log("here is the chat arrray " +chatArr[0]._id)
     const { user } = useSelector((state) => state.auth)
-    const {triggerChange, settriggerChange} = ChatState();
+    const {triggerChange, settriggerChange,
+        selectedChat, setSelectedChat, 
+        chattId, setchattId,
+        loading,  setloading,
+        TtriggerChange, setTtriggerChange,
+      YtriggerChange, setYtriggerChange,
+      OtriggerChange, setOtriggerChange,
+    } = ChatState();
+
     const [triggerChange2, settriggerChange2] = useState(false);
     const navigation = useNavigation()
     
     const [query, setQuery] = useState("")
+    var formatted_date = null
+    // console.log('query' + query)
+   
     useEffect(()=> {
+      settriggerChange(true)
+      settriggerChange2(true)
+        // setYtriggerChange(false)
         // console.log(chatArr[0])
         // console.log(chatArr.splice(0, 2))
         // console.log(triggerChange)
@@ -34,23 +65,27 @@ const ChatListHeader = ({chatArr}) => {
                  fontSize: 17,
                  //color: '#593196'
     }} 
-            placeholder='search'
+            placeholder='search for users'
             placeholderTextColor="gray" 
             onFocus={()=> {
-                settriggerChange(false)
+                settriggerChange(true)
                 settriggerChange2(true)
 
             }}
             onChangeText={(e) => {
                 setQuery(e)
-                   if(e == ""){
-                    settriggerChange(true)
+                   if(e == ""|| e == undefined ){
+                    settriggerChange(false)
                     settriggerChange2(false)
+                    // setYtriggerChange(false)
+                    // setTtriggerChange(false)
                    
                    }
                    else{
-                    settriggerChange(false)
+                    settriggerChange(true)
                     settriggerChange2(true)
+                    // setYtriggerChange(true)
+                    // setTtriggerChange(true)
                     
                    
                    }         
@@ -59,123 +94,220 @@ const ChatListHeader = ({chatArr}) => {
 
 
             />
-            {/* add triggerchange2 event */}
+            
         </View>
         <View>
-            {chatArr &&    chatArr.map(chat => {
-                if( chat != null &&  chat.latestMessage != null){
-                    // if(chat.users && (chat.users[1].firstName.toLowerCase().includes(query) || chat.users[1].lastName.toLowerCase().includes(query) || chat.users[1].userName.toLowerCase().includes(query) || chat.users[0].firstName.toLowerCase().includes(query) ) && chat.latestMessage != null )
-                    if(chat.users && chat.users[1].firstName.toLowerCase().includes(query) && chat.latestMessage != null )
-                    {
-                        return  <View key={chat._id}> 
-                
-                        {/* {chat.users && (chat.users[1].firstName.toLowerCase().includes(query) || chat.users[1].lastName.toLowerCase().includes(query) || chat.users[1].userName.toLowerCase().includes(query) ) && <Text>{chat.users[1].firstName}</Text> } */}
-                        {/* if(chat.users && (chat.users[1].firstName.toLowerCase().includes(query) || chat.users[1].lastName.toLowerCase().includes(query) || chat.users[1].userName.toLowerCase().includes(query) ) && chat.latestMessage != null && 
-                            chat.users[0].firstName != user.firstName)
-                            {
-                                console.log(chat.users[0].firstName )
-                            } */}
-                        
-                        
-                        
-                        
-                       {triggerChange2 && <Pressable key={chat._id} onPress={()=> {
-                            navigation.navigate('Messaging', {chatId: chat._id, userSelected:
-                        
-                                user != null ? getSenderFull(user, chat.users).userName : null })}}
-                                style={styles.box}
-                        >
-                            <View>
-                            <Image 
-                              source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
-                              style = {styles.image}
-                           />
-                            </View>
-                            <View style = {styles.content}>
-                                    <View style = {styles.row}>
-                                        <Text style = {styles.name}>
-                                            {user != null ? getSenderFull(user, chat.users).firstName : null}
-                                        </Text> 
-                                        <Text style = {styles.subTitle}>
-                                            {dayjs(chat.latestMessage).fromNow(true)}
-                                        </Text>   
-                                    </View>
-                                    {chat.latestMessage && chat.latestMessage.content ?
-                                        <View style = {{
-                                        flexDirection: 'row'
-                                        }}>
-                    
-                                        
-                                        {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
-                                        
-                                        <Text  numberOfLines={2} style = {styles.subTitle}>
-                                            {chat.latestMessage.content}
-                                        </Text>
-                                        </View>
-                            
-                               : "" }    
-    
-                            </View>
-    
-                        </Pressable>
-                    
-                                    }
-    
-                       
-                        
-                        
-                            {/* {chat.users && } */}
-                        </View>
-                    } 
-                    // else if(chat.users[0].firstName.toLowerCase().includes(query) &&  ){
-                    //     {triggerChange2 && <Pressable key={chat._id} onPress={()=> {
-                    //         navigation.navigate('Messaging', {chatId: chat._id, userSelected:
-                        
-                    //             user != null ? getSenderFull(user, chat.users).userName : null })}}
-                    //             style={styles.box}
-                    //     >
-                    //         <View>
-                    //         <Image 
-                    //           source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
-                    //           style = {styles.image}
-                    //        />
-                    //         </View>
-                    //         <View style = {styles.content}>
-                    //                 <View style = {styles.row}>
-                    //                     <Text style = {styles.name}>
-                    //                         {user != null ? getSenderFull(user, chat.users).firstName : null}
-                    //                     </Text> 
-                    //                     <Text style = {styles.subTitle}>
-                    //                         {dayjs(chat.latestMessage).fromNow(true)}
-                    //                     </Text>   
-                    //                 </View>
-                    //                 {chat.latestMessage && chat.latestMessage.content ?
-                    //                     <View style = {{
-                    //                     flexDirection: 'row'
-                    //                     }}>
-                    
-                                        
-                    //                     {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
-                                        
-                    //                     <Text  numberOfLines={2} style = {styles.subTitle}>
-                    //                         {chat.latestMessage.content}
-                    //                     </Text>
-                    //                     </View>
-                            
-                    //            : "" }    
-    
-                    //         </View>
-    
-                    //     </Pressable>
-                    
-                    //                 }
+        {chatArr &&    chatArr.map(chat => {
+  
+  if( chat != null &&  chat.latestMessage != null){
+      formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+      
+      if(chat?.users && chat?.users[1]?.firstName && (chat?.users[1]?.firstName.toLowerCase().includes(query)) && chat?.latestMessage != null ){
+        if(chat !== null || chat !== undefined){
+          console.log(chat.lastestMessage)
 
-                    // }
+            // if(chat.lastestMessage !== undefined || chat.lastestMessage !== null  ){
+            if(chat.lastestMessage == undefined || chat.lastestMessage == null  ){
+              // console.log('undefined chat(s)')
+            
+             
+            }
+            if(chat.latestMessage){
+              // reserved for displaying a single chat box for no messages rather than multiple
+              // console.log('chat exists')
+              // chatArr2.push(chat)
+              // setSelectedChat(chat)
+              let msgdate = null
+              msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD")
+              let today = moment()
+              let d = today.diff(msgdate, 'days')
+              if(d==0){
+                var formatted_date = null 
+if(chat.lastestMessage !== undefined || chat.lastestMessage !== null){
+
+ formatted_date = moment(chat.latestMessage.createdAt).format("LT")
+
+}
+      return <>
+              
+{triggerChange2 && <Pressable key={chat._id} onPress={()=> {
+  // setYtriggerChange(true)
+  setSelectedChat(chat)
+  setchattId(chat._id)
+setloading(true)
+      navigation.navigate('Messaging', {chatId: chat._id, userSelected:
+  
+          user != null ? getSenderFull(user, chat.users) : null })}}
+          style={styles.box}
+  >
+      <View>
+      <Image 
+        source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+        style = {styles.image}
+     />
+      </View>
+      <View style = {styles.content}>
+              <View style = {styles.row}>
+                  <Text style = {styles.name}>
+                      {user != null ? getSenderFull(user, chat.users).firstName : null}
+                  </Text> 
+                  <Text style = {styles.subTitle}>
+                      {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                      {formatted_date}
+                      {/* Yesterday */}
+                  </Text>   
+              </View>
+              {chat.latestMessage && chat.latestMessage.content ?
+                  <View style = {{
+                  flexDirection: 'row'
+                  }}>
+
+                  
+                  {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
+                  
+                  <Text  numberOfLines={2} style = {styles.subTitle}>
+                      {chat.latestMessage.content}
+                  </Text>
+                  </View>
+      
+         : "" }    
+
+      </View>
+
+  </Pressable>
+
+              }
+          </>      
+                
+              }
+              else if(d == 1){
+                return <>
+              
+                {triggerChange2 && <Pressable key={chat._id} onPress={()=> {
+                  // setYtriggerChange(true)
+                  setSelectedChat(chat)
+                  setchattId(chat._id)
+                setloading(true)
+                      navigation.navigate('Messaging', {chatId: chat._id, userSelected:
+                  
+                          user != null ? getSenderFull(user, chat.users) : null })}}
+                          style={styles.box}
+                  >
+                      <View>
+                      <Image 
+                        source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+                        style = {styles.image}
+                     />
+                      </View>
+                      <View style = {styles.content}>
+                              <View style = {styles.row}>
+                                  <Text style = {styles.name}>
+                                      {user != null ? getSenderFull(user, chat.users).firstName : null}
+                                  </Text> 
+                                  <Text style = {styles.subTitle}>
+                                      {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                                      {/* {formatted_date} */}
+                                      Yesterday
+                                  </Text>   
+                              </View>
+                              {chat.latestMessage && chat.latestMessage.content ?
+                                  <View style = {{
+                                  flexDirection: 'row'
+                                  }}>
+                
+                                  
+                                  {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
+                                  
+                                  <Text  numberOfLines={2} style = {styles.subTitle}>
+                                      {chat.latestMessage.content}
+                                  </Text>
+                                  </View>
+                      
+                         : "" }    
+                
+                      </View>
+                
+                  </Pressable>
+                
+                              }
+                          </>  
                
-                }
-                })}
+              }
+              else {
+              var formatted_date = null 
+if(chat.lastestMessage !== undefined || chat.lastestMessage !== null){
+
+ formatted_date = moment(chat.latestMessage.createdAt).format("DD/MM/YY")
+}
+
+return <>
+              
+{triggerChange2 && <Pressable key={chat._id} onPress={()=> {
+  // setYtriggerChange(true)
+  setSelectedChat(chat)
+  setchattId(chat._id)
+setloading(true)
+      navigation.navigate('Messaging', {chatId: chat._id, userSelected:
+  
+          user != null ? getSenderFull(user, chat.users) : null })}}
+          style={styles.box}
+  >
+      <View>
+      <Image 
+        source={{uri: user != null ? getSenderFull(user, chat.users).profilePic : null}}  
+        style = {styles.image}
+     />
+      </View>
+      <View style = {styles.content}>
+              <View style = {styles.row}>
+                  <Text style = {styles.name}>
+                      {user != null ? getSenderFull(user, chat.users).firstName : null}
+                  </Text> 
+                  <Text style = {styles.subTitle}>
+                      {/* {dayjs(chat.latestMessage).fromNow(true)} */}
+                      {formatted_date}
+                      {/* Yesterday */}
+                  </Text>   
+              </View>
+              {chat.latestMessage && chat.latestMessage.content ?
+                  <View style = {{
+                  flexDirection: 'row'
+                  }}>
+
+                  
+                  {/* <Ionicons name="checkmark-outline" size={20} color="#593196" /> */}
+                  
+                  <Text  numberOfLines={2} style = {styles.subTitle}>
+                      {chat.latestMessage.content}
+                  </Text>
+                  </View>
+      
+         : "" }    
+
+      </View>
+
+  </Pressable>
+
+              }
+          </>      
+                
+              }
+              
+            }
+            
+
+          
+        }
+
+      
+    }
+    
+ 
+  }
+  })}
+         
         </View>
-    {/* <Ionicons name="filter-sharp" size={24} color="#593196" /> */}
+            
 </View>
   )
 }
@@ -202,6 +334,7 @@ const styles = StyleSheet.create ({
         paddingLeft: 10,
         alignItems: 'center',
         marginLeft: 40,
+        marginBottom: 20,
         
     },
     image: {

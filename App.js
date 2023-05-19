@@ -1,5 +1,5 @@
 // import { StatusBar } from 'expo-status-bar';
-import {AppState, StatusBar, StyleSheet, Text, View } from 'react-native';
+import {AppState, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 import ChatListItem from './src/components/Chats/ChatListItem';
 import ChatScreen from './src/screens/ChatScreen';
 import MessagingScreen from './src/screens/MessagingScreen';
@@ -14,6 +14,8 @@ import { useRef } from 'react';
 import AppContainer from './AppContainer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
+import FlashMessage from "react-native-flash-message";
+import {SheetProvider} from 'react-native-actions-sheet';
 import {
   useFonts,
   Poppins_300Light,
@@ -58,17 +60,20 @@ export default function App() {
   }
 
   const checktracking = async()=>{
-    try {
-      const granted = await getTrackingPermissionsAsync()
-      if (granted) {
-        // Your app is authorized to track the user or their device
-        console.log("GRANTED")
-      } else {
-        console.log("NOT GRANTED")
-        await requestTrackingPermissionsAsync();
+    if(Platform.OS == 'ios') {
+      try {
+        const granted = await getTrackingPermissionsAsync()
+        if (granted) {
+          // Your app is authorized to track the user or their device
+          console.log("GRANTED")
+          await requestTrackingPermissionsAsync();
+        } else {
+          console.log("NOT GRANTED")
+          await requestTrackingPermissionsAsync();
+        }
+      } catch(e) {
+        console.log("ERROR ON TRACKING")
       }
-    } catch(e) {
-      console.log("ERROR ON TRACKING")
     }
   }
 
@@ -98,15 +103,19 @@ export default function App() {
             hidden={false}
           />
           <SafeAreaProvider style={{
-            backgroundColor: "#fff"
+            backgroundColor: "#000",
+            flex: 1
           }}>
             <ChatProvider>
               <PersistGate loading={null} persistor={persistor}>
-                <AppContainer showOnBoarding={showOnBoarding} />
+                <SheetProvider>
+                  <AppContainer showOnBoarding={showOnBoarding} />
+                </SheetProvider>
               </PersistGate>
             </ChatProvider>
           </SafeAreaProvider>
         </PaperProvider>
+        <FlashMessage position="top" />
       </Provider>
     );
   } else {

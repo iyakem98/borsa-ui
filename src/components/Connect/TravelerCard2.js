@@ -2,20 +2,21 @@ import {View, Image, Modal, Text, StyleSheet, ImageBackground, Pressable} from '
 // import { Entypo, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChatState } from '../../context/ChatProvider';
 import { getSenderFull } from '../../ChatConfig/ChatLogics';
 import axios from 'axios';
 import { API_BASE_URL } from '../../utils/config';
 import { Entypo, MaterialIcons, Octicons, Ionicons, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
+import { fetchChat } from '../../features/chat/chatSlice';
 
 
 const TravelerCard = ({traveler}) => {
     
     // console.log(traveler.user._id)
     const { user } = useSelector((state) => state.auth)
-    // const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading } = ChatState(); 
+    const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading, fetchAgain, setfetchAgain, } = ChatState(); 
     const dispatch = useDispatch()
     const navigation = useNavigation();
     var travelerId = useRef(null)
@@ -28,6 +29,21 @@ const TravelerCard = ({traveler}) => {
     const [showModal, setshowModal] = useState(false)
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
+
+  useEffect(() =>{
+
+    dispatch(fetchChat())
+    // console.log(chattts[1])
+    
+  
+}, [user])
+  useEffect(() =>{
+
+    dispatch(fetchChat())
+    // console.log(chattts[1])
+    
+  
+}, [fetchAgain])
 
     
     const TravelerChat = async(travData) => {
@@ -43,14 +59,84 @@ const TravelerCard = ({traveler}) => {
         
               }
           }
-        //   setloading(true)
-          navigation.navigate('Messaging', {userSelected:
-            
-            travData})
+        // if(chattts.length > 0){
+        //     chattts.map((chat) => {
+        //         console.log(chat.users[1].firstName)
+        //         console.log(userId)
+        //     })
+        // }
+        //   console.log(userId)
+        //   console.log(chattts[1].users[1]._id)
+        // ---
+        if(chattts.length > 0){
+            chattts.map(async(chat) => {
+                if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+                    // setfetchAgain(true)
+                    // setfetchAgain(false)
+                    navigation.navigate('Messaging', {userSelected:
+                
+                        travData})
+                    setloading(true)
+                    setchatSelected(true)
+                    setchattId(chat._id)
+                }
+                // ------------------------
+            //     else{
+            //         // setfetchAgain(true)
+            //         // setfetchAgain(false)
+            // navigation.navigate('Messaging', {userSelected:
+        
+            //     travData})
+            //     setloading(false)
+            // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+            // setchatSelected(true)
+            // setchattId(data._id)
+            //     }
+            // ------------------------------------------
+            //     else if (chat){
+            //         setloading(false)
+            //         navigation.navigate('Messaging', {userSelected:
+                
+            //             travData})
+            //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+            //         setchatSelected(true)
+            //         setchattId(data._id)
+    
+    
+            //     }
+    
+              })
+
+        }
+        else{
+           
+            navigation.navigate('Messaging', {userSelected:
+        
+                travData})
+                setloading(false)
             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            // console.log(data._id)
             setchatSelected(true)
             setchattId(data._id)
+        }
+        //   ---
+        //   for(var i = 0; i < chattts.length ; i++){
+        //     if(chattts[i].users[0]._id == userId || chattts[i].users[1]._id == userId){
+        //         navigation.navigate('Messaging', {userSelected:
+            
+        //                 travData})
+        //         setloading(true)
+        //         setchatSelected(true)
+        //         setchattId(chattts[i]._id)
+        //     }
+        //   }
+        //   setloading(true)
+        //   navigation.navigate('Messaging', {userSelected:
+            
+        //     travData})
+        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+        //     // console.log(data._id)
+        //     setchatSelected(true)
+        //     setchattId(data._id)
             // console.log(data._id)
             // setchatSelected(true)
         
@@ -334,7 +420,7 @@ const TravelerCard = ({traveler}) => {
             </Pressable>
           </View>
         </View>
-      </Modal>
+        </Modal>
 
     </View>
     </Pressable>
