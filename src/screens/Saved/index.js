@@ -139,7 +139,7 @@ const Saved = () => {
                     fontSize: 20,
                     fontWeight: 'bold'
                 }}>
-                    Press on the cards to chat
+                    Tap on the cards to chat
                 </Text>
             </View>
             <ScrollView contentContainerStyle={{
