@@ -126,6 +126,8 @@ const MessagingScreen = ({navigation}) => {
     })
   }, [])
 
+  const [datesShown, setDatesShown] = useState([])
+
   const testNewMessages = async(newMessageReceived) => {
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`, {
       headers: {
@@ -256,20 +258,38 @@ const MessagingScreen = ({navigation}) => {
             let m = item?.item;
             let i = item?.index;
             let d = m?.createdAt ? today.diff(m?.createdAt, 'days') : null;
-            // if(i === 0) {
-            //   dateDiff = d
-            //   console.log("==-=sdafs", dateDiff)
-            // } else if(dateDiff !== d && d === 0 && !todayDateLabel) {
-            //   todayDateLabel = true
-            //   console.log("==-=tyht", dateDiff)
-            // } else if(dateDiff !== d && d === 1 && !yesterdayDateLabel) {
-            //   yesterdayDateLabel = true
-            //   console.log("==-=qw", dateDiff)
-            // } else if(dateDiff !== d && d > 1 && !olderDateLabel) {
-            //   olderDateLabel = true
-            //   console.log("==-=vtrw", dateDiff)
-            // }
+
+            let dateVisible = false
+
+            let sameDate = messages.filter(
+              (mes) =>
+              today.diff(mes?.createdAt, 'days') == d
+            );
+
+            if(sameDate.indexOf(m)== sameDate.length-1){
+              dateVisible = true
+              if(d==0){
+                d = "Today"
+              }
+              else if(d==1){
+                d = "Yesterday"
+              }
+              else if(d>1 && d<=7){
+                d = moment(m?.createdAt).format("MMM, DD ddd")
+              }
+              else if(d>7 && d<365){
+                d = moment(m?.createdAt).format("MMM D")
+              }
+              else{
+                d = moment(m?.createdAt).format("MMM D YYYY")
+              }
+            }
+
+            console.log("chats are", dateVisible)
+
             return (
+              <>
+              
               <MessageTemplate
                 m={m}
                 user={user}
@@ -281,8 +301,15 @@ const MessagingScreen = ({navigation}) => {
                 yesterdayDate={yesterdayDate}
                 olderDate={olderDate}
                 prevDate={prevDate}
-                d={d}
+                // d={d}
               />
+
+              {
+                dateVisible &&
+              <Text style={{alignSelf:"center", marginTop:4, marginBottom:4}}>{d}</Text>
+              }
+            </>
+
             )
           }}
           onEndReached={() => {

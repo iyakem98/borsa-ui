@@ -44,7 +44,7 @@ const ChatInput = ({
             }}
             style = {styles.input} 
             multiline
-            placeholder='type your message...'
+            placeholder='Type your message...'
             onFocus={()=>{
             if(newmessage.length > 0) {
                 socket.current.emit('typing', chattId);
