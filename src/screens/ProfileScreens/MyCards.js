@@ -647,7 +647,7 @@ const ConnectScreen = () => {
                   fontSize: 18,
                   marginBottom: 20,
                 }}>
-                  You have not posted any buyer card yet.
+                  You have not posted any shipping card yet.
                 </Text>
                 <Pressable 
                   onPress={()=>{
