@@ -246,7 +246,7 @@ const ConnectScreen = () => {
     <Feather name="chevron-left" size={34} color="black" />
        {/*<Text style={{fontSize:29, marginTop:-3, marginLeft:3, color: 'black'}}>&larr;</Text> */}
        <Text style={{fontSize:18, color: 'black'}}>
-        Profile
+        Back
        </Text>
 
        
@@ -309,7 +309,7 @@ const ConnectScreen = () => {
           <Text style={{
               fontFamily: "Poppins_500Medium",
               fontSize: 14
-          }}>Buyer</Text>
+          }}>Shipper</Text>
       </Pressable>
     </View>
   </View>

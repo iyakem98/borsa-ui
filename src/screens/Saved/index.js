@@ -131,6 +131,17 @@ const Saved = () => {
                     </Pressable>
                 </View>
             </View>
+            <View style = {{
+                width: "100%",
+                alignItems: 'center',
+            }}>
+                <Text style = {{
+                    fontSize: 20,
+                    fontWeight: 'bold'
+                }}>
+                    Press on the cards to chat
+                </Text>
+            </View>
             <ScrollView contentContainerStyle={{
                 backgroundColor: "#fff",
                 flexGrow: 1,
