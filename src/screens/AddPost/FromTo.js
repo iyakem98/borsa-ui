@@ -84,7 +84,7 @@ const FromTo = ({navigation}) => {
     
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={route.params.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
+            <Header title={route.params?.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
             {route.params.cardType == 2 && 
             <>
                 <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
@@ -130,8 +130,9 @@ const FromTo = ({navigation}) => {
                             // backgroundColor: 'grey',
                           },
                           textInput: {
-                            //height: 50,
-                            border:"1px solid black",
+                            borderWidth: 1,
+                            borderStyle: "solid",
+                            borderColor: "#000",
                             width:300,
                             color: '#5d5d5d',
                             fontSize: 16,
@@ -155,7 +156,6 @@ const FromTo = ({navigation}) => {
                 </Text>
                 <View style={{
                     borderWidth: 1,
-                    borderColor: "gray",
                     borderWidth: 0,
                     borderBottomWidth: 1,
                     borderColor: 'lightgray',

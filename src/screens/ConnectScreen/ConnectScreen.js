@@ -9,7 +9,7 @@ import { getConsumers, getTravelers } from '../../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { ChatState } from '../../context/ChatProvider'
-import { Feather } from '@expo/vector-icons'
+import { Feather, Ionicons } from '@expo/vector-icons'
 import Buyer from './Buyer'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw'
 import ErrorUnDraw from '../../assets/svg/errorUnDraw'
@@ -314,6 +314,19 @@ const ConnectScreen = () => {
           textAlign: "center",
           fontSize: 16
         }}>Something went wrong</Text>
+        <Pressable onPress={()=>{
+          getUsers()
+        }} style={{
+          backgroundColor: "#eee",
+          borderRadius: 30,
+          height: 50,
+          width: 50,
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 40
+        }}>
+          <Ionicons name="md-reload-outline" size={30} color="#999" />
+        </Pressable>
       </View>
     )}
   </SafeAreaView>

@@ -72,7 +72,11 @@ const AddPost = ({navigation}) => {
                         borderWidth: 2
                     } : {
                         borderColor: "#f7f7f7",
-                    }]} onPress={()=>setSelected(1)}>
+                    }]} onPress={()=>{
+                        if(!spinner) {
+                            setSelected(1)
+                        }
+                    }}>
                         <View style={[styles.radioWrapperTr, selected !== 1 ? {
                             borderColor: "#ccc"
                         } : {}]}>
@@ -90,7 +94,11 @@ const AddPost = ({navigation}) => {
                         borderWidth: 2
                     } : {
                         borderColor: "#f7f7f7",
-                    }]} onPress={()=>setSelected(2)}>
+                    }]} onPress={()=>{
+                        if(!spinner) {
+                            setSelected(2)
+                        }
+                    }}>
                         <View style={[styles.radioWrapper, selected !== 2 ? {
                             borderColor: "#ccc"
                         } : {}]}>
@@ -103,21 +111,6 @@ const AddPost = ({navigation}) => {
                         <Text style={styles.compTxt}>Shipping</Text>
                     </Pressable>
                 </View>
-
-
-                {
-    spinner && 
-    <View style={{
-      position:"fixed",
-      top:"40%",
-      left:"0%",
-      zIndex: 200
-  }}>
-    <ActivityIndicator size="large" color="black" />
-  </View>
-  }
-
-
                 <Pressable style={{
                     backgroundColor: `${selected == 1 ? '#514590' : '#514590'}`,
                     paddingVertical: 15,
@@ -150,7 +143,7 @@ const AddPost = ({navigation}) => {
                         fontFamily: "Poppins_400Regular",
                         fontSize: 14,
                         textAlign: "center"
-                    }}>{"Next"}</Text>
+                    }}>{spinner ? "Loading" : "Next"}</Text>
                 </Pressable>
 
 
