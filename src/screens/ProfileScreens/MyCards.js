@@ -279,10 +279,13 @@ const ConnectScreen = () => {
   {
     spinner && 
     <View style={{
-      position:"fixed",
+      position:"absolute",
       top:"40%",
       left:"0%",
-      zIndex: 200
+      zIndex: 200,
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%"
   }}>
     <ActivityIndicator size="large" color="black" />
   </View>

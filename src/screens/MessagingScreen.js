@@ -207,6 +207,7 @@ const MessagingScreen = ({navigation}) => {
         setloading(false)
       }
     }
+    setloading(false)
   }
   
   const fetchWithPageMessage = async(pageNum) => {
