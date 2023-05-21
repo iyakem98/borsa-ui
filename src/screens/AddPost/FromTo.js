@@ -184,8 +184,9 @@ const FromTo = ({navigation}) => {
                             // backgroundColor: 'grey',
                           },
                           textInput: {
-                            //height: 50,
-                            border:"1px solid black",
+                            borderColor: "#000",
+                            borderWidth: 1,
+                            borderStyle: "solid",
                             width:300,
                             color: '#5d5d5d',
                             fontSize: 16,
@@ -382,8 +383,9 @@ const FromTo = ({navigation}) => {
                             // backgroundColor: 'grey',
                           },
                           textInput: {
-                            //height: 50,
-                            border:"1px solid black",
+                            borderStyle: "solid",
+                            borderColor: "#000",
+                            borderWidth: 1,
                             width:300,
                             color: '#5d5d5d',
                             fontSize: 16,

@@ -20,6 +20,7 @@ const Description = ({navigation}) => {
     const [showMultiSelectDropDown, setShowMultiSelectDropDown] = useState(false)
     const [selectectedItems, setSelectectedItems] = useState()
     const [showModal, setShowModal] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [kilo, setKilo] = useState()
     const [itmName, setItmName] = useState()
     const [itmDesc, setItmDesc] = useState()
@@ -139,8 +140,6 @@ const Description = ({navigation}) => {
                 </Text>
                 
                 <View style={{
-                    //flexDirection: "row",
-                    alignItems: "left",
                     justifyContent: "space-between",
                     marginTop: 2,
                 }}>
@@ -170,8 +169,6 @@ const Description = ({navigation}) => {
 
               
                 <View style={{
-                    //flexDirection: "row",
-                    alignItems: "left",
                     justifyContent: "space-between",
                     marginTop: 7,
                 }}>
@@ -202,8 +199,6 @@ const Description = ({navigation}) => {
                 </View>
 
                 <View style={{
-                    //flexDirection: "row",
-                    alignItems: "left",
                     justifyContent: "space-between",
                     marginTop: 10,
                 }}>
@@ -245,13 +240,21 @@ const Description = ({navigation}) => {
                     position: "absolute",
                     bottom: 0,
                     left: 15
-                }} onPress={()=>postBuyer()}>
+                }} onPress={async()=>{
+                    setIsLoading(true)
+                    try {
+                        await postBuyer()
+                    }catch(e) {
+                        console.log("ADD POST ERROR: ", e)
+                    }
+                    setIsLoading(false)
+                }}>
                     <Text style={{
                         color: "#fff",
                         fontFamily: "Poppins_400Regular",
                         fontSize: 14,
                         textAlign: "center"
-                    }}>{"Next"}</Text>
+                    }}>{isLoading ? "Loading..." : "Next"}</Text>
                 </Pressable>
             </ScrollView>
               </>  
@@ -270,8 +273,6 @@ const Description = ({navigation}) => {
                 </Text>
                 
                 <View style={{
-                    //flexDirection: "row",
-                    alignItems: "left",
                     justifyContent: "space-between",
                     marginTop: 2,
                 }}>
@@ -301,8 +302,6 @@ const Description = ({navigation}) => {
                 </View>
 
                 <View style={{
-                    //flexDirection: "row",
-                    alignItems: "left",
                     justifyContent: "space-between",
                     marginTop: 10,
                 }}>
