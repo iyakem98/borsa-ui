@@ -12,6 +12,7 @@ import { API_BASE_URL } from '../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ProfileScreen = ({navigation}) => {
     const { user } = useSelector((state) => state.auth)
@@ -65,20 +66,30 @@ const ProfileScreen = ({navigation}) => {
       };
 
   return (
-    
-    <SafeAreaView style = {{
-        paddingVertical: 30,
+
+    <View style = {{
+        //paddingVertical: 30,
         backgroundColor: "white"
     }}>
          <View>
-            <View style  = {styles.profileTop}>
+                <LinearGradient 
+                    colors={['#554cad','#7267e7']}
+                    style = {{
+                        //height: "100%",
+                        //alignItems: 'center',
+                        paddingTop: 120,
+                        paddingHorizontal: 20,
+                        paddingBottom: 50,
+                        //justifyContent: 'center'
+            }}>
+            
                 <View style = {{
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
                  <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211" }} style={{ 
-                    width: 130,
-                    height: 130,
+                    width: 100,
+                    height: 100,
                     marginTop:0,
                     // borderRadius: "100%",
                     borderRadius: 100,
@@ -91,8 +102,9 @@ const ProfileScreen = ({navigation}) => {
                         <Text style = {{
                             fontSize: 25,
                             marginTop: 20,
+                            color: 'white',
                             // marginBottom: 2,
-                            fontFamily: "Poppins_400Regular"
+                            fontFamily: "Poppins_400Regular",
                         }}>
                             {user?.firstName + ' ' + user?.lastName}
                         </Text>
@@ -104,7 +116,8 @@ const ProfileScreen = ({navigation}) => {
                         }}>
                             <Text style = {{
                                 //color: '#fff'
-                            fontFamily: "Poppins_400Regular"
+                            fontFamily: "Poppins_400Regular",
+                            color: 'whitesmoke'
                             }}>
                               {user?.email}
                             </Text>
@@ -113,7 +126,7 @@ const ProfileScreen = ({navigation}) => {
                     </View>
                     
                 </View>
-            </View>
+            </LinearGradient>
       {/*  <ImageBackground
                 source={{
                 uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211",
@@ -214,7 +227,7 @@ const ProfileScreen = ({navigation}) => {
                         <View style = {styles.pressView1}>
                             <View style = {{
                             backgroundColor: '#a991d4',
-                            backgroundColor: "#593196",
+                            backgroundColor: "#7267e7",
                             padding: 8,
                             borderRadius: 50,
                             marginRight: 10,
@@ -238,6 +251,7 @@ const ProfileScreen = ({navigation}) => {
                         <View style = {{
                             backgroundColor: '#a991d4',
                             backgroundColor: 'orange',
+                            backgroundColor: '#7267e7',
                             padding: 8,
                             borderRadius: 50,
                             marginRight: 10,
@@ -327,6 +341,7 @@ const ProfileScreen = ({navigation}) => {
                                 <View style = {{
                                 backgroundColor: '#a991d4',
                                 backgroundColor: 'black',
+                                backgroundColor: '#7267e7',
                                 padding: 8,
                                 borderRadius: 50,
                                 marginRight: 10,
@@ -352,6 +367,8 @@ const ProfileScreen = ({navigation}) => {
             backgroundColor: '#a991d4',
             backgroundColor: 'lightblue',
             backgroundColor: 'red',
+            backgroundColor: '#593196',
+            backgroundColor: '#7267e7',
             padding: 8,
             borderRadius: 50,
             marginRight: 10,
@@ -637,7 +654,7 @@ const ProfileScreen = ({navigation}) => {
      
     </View>
             
-    </SafeAreaView>
+    </View>
   )
 }
 

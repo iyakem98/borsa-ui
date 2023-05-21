@@ -47,6 +47,7 @@ import Chattest from "../screens/chattest"
 import SearchScreen from "../screens/SearchScreen"
 import SearchBar from "../components/Chats/ChatListItem/SearchBar"
 import { fetchChat } from "../features/chat/chatSlice"
+import Welcome2 from "../screens/AuthScreens/Welcome2"
 
 
 
@@ -186,6 +187,7 @@ const Navigator = ({showOnBoarding}) => {
       <Stack.Screen name = "Edit Buyer Details" component={EditBuyerDetails} />
       <Stack.Screen name = "Edit Traveler Details" component={EditTravelerDetails} />
       <Stack.Screen name = "Edit Space Available" component={EditSpace} />
+      <Stack.Screen name="Welcome2" component={Welcome2} options={{headerShown: false}} />
       {/* <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
       <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false}}/>
       <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerShown: false}}/> */}

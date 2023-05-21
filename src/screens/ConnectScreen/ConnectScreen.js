@@ -200,7 +200,12 @@ const ConnectScreen = () => {
         <ActivityIndicator size="large" color="#777" />
       </View>
     ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
-      <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
+      <View style = {{backgroundColor: "white", paddingVertical: 0}}> 
+      <View style = {{
+        height: 100,
+        backgroundColor: 'yellow',
+      }}>
+        </View>        
         {isBuyer ? (
           <View style={{
             paddingHorizontal: 10,
