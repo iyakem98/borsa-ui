@@ -16,11 +16,25 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 
 const AccountScreen = () => {
-
+  const { user } = useSelector((state) => state.auth)
   const navigation = useNavigation()
-
+  const dispatch = useDispatch()
   const [def, setDef] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211")
   const [image, setImage] = useState(def);
+  const [userName, setUserName] = useState(user.userName)
+  const [firstName, setFirstName] = useState(user.firstName)
+  const [lastName, setLastName] = useState(user.lastName)
+  const [email, setEmail] = useState(user.email)
+  const [city, setCity] = useState(user.city)
+  const [address, setAddress] = useState(user.address)
+  const [suggestions, setSuggestions] = useState(false)
+  const [myUser, setMyUser] = useState(user)
+  const [isEditing, setIsEditing] = useState(false)
+  const [placeResult, setPlaceResult] = useState([])
+  const [userPreview, setUserPriview] = useState("")
+
+  const [isTraveler, setIsTraveler] = useState(user.isTraveler)
+  const [isBuyer, setIsBuyer] = useState(user.isBuyer)
 
 
   {/*const pickImage = async () => {
@@ -39,37 +53,17 @@ const AccountScreen = () => {
     }
   }; */}
 
-  const navigate = useNavigation()
-
-  const dispatch = useDispatch()
   // const user = {
   //   firstName : "walid"
   // }
-  const { user } = useSelector((state) => state.auth)
 
 
-  const [userName, setUserName] = useState(user.userName)
-  const [firstName, setFirstName] = useState(user.firstName)
-  const [lastName, setLastName] = useState(user.lastName)
-  const [email, setEmail] = useState(user.email)
-  const [city, setCity] = useState(user.city)
-  const [address, setAddress] = useState(user.address)
 
-  const [isTraveler, setIsTraveler] = useState(user.isTraveler)
-  const [isBuyer, setIsBuyer] = useState(user.isBuyer)
-
-  const [suggestions, setSuggestions] = useState(false)
- 
-  const [myUser, setMyUser] = useState(user)
-  const [isEditing, setIsEditing] = useState(false)
-
-  const [placeResult, setPlaceResult] = useState([])
 
   const ENDPOINT = "http://192.168.100.2:5000"
   // var socket = io(ENDPOINT)
   var socket = io(API_BASE_URL)
 
-  const [userPreview, setUserPriview] = useState("")
 
   const handleLogout = () => {
     // {user && socket.emit("userLogout", {userID: user._id}) }
@@ -87,34 +81,31 @@ const AccountScreen = () => {
     setIsEditing(!isEditing)
 
     let userData = {
-  //id: user._id,
-  "firstName": firstName,
-  "lastName": lastName,
-  "userName": userName,
-  "email": email,
-  "isTraveler": true,
-  "isBuyer": true,
-  "address": address,
-  "profilePic": image,
-  "hideTravelerCard": false,
-  "hideBuyerCard": false
+      //id: user._id,
+      "firstName": firstName,
+      "lastName": lastName,
+      "userName": userName,
+      "email": email,
+      "isTraveler": true,
+      "isBuyer": true,
+      "address": address,
+      "profilePic": image,
+      "hideTravelerCard": false,
+      "hideBuyerCard": false
     }
 
     axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
-    { headers: {
-      'Content-Type': 'application/json',
-  }})
-        .then((data) => {
-         alert('profile updated')
-          // handleLogout()
-          dispatch(getUserDetails(user._id))
-          navigation.navigate('More')
-         })
-        .catch((err) => {dea
-         alert("try again pls.")
-         console.log("errorr", err)
-        });
-        
+      { headers: {
+        'Content-Type': 'application/json',
+    }}).then((data) => {
+      alert('profile updated')
+      // handleLogout()
+      dispatch(getUserDetails(user._id))
+      navigation.navigate('More')
+    }).catch((err) => {dea
+      alert("try again pls.")
+      console.log("errorr", err)
+    }); 
   }
 
   const findPlaces = (newText) => {
@@ -150,38 +141,31 @@ const AccountScreen = () => {
         });
   }
 
-  const handleUserAddress = (data) => {
-        
+  const handleUserAddress = (data) => {  
     let Country = ""
     let City = ""
 
- if(place.address_components){
-    for(let i=0; i<place.address_components.length; i++){
-     let types = place.address_components[i].types
-     if(types.indexOf("country") != -1 && Country==""){
-       Country = place.address_components[i].long_name
-     }
+    if(place.address_components){
+      for(let i=0; i<place.address_components.length; i++){
+        let types = place.address_components[i].types
+        if(types.indexOf("country") != -1 && Country==""){
+          Country = place.address_components[i].long_name
+        }
 
-      if(types.indexOf("locality") != -1 && City==""){
-        City = place.address_components[i].long_name
-     }
-
-   }
- }
-  
-       console.log("Country:", Country)
-       console.log("State:", State)
-
-       setAddress(`${City}, ${Country}`)
-
-}
+        if(types.indexOf("locality") != -1 && City==""){
+          City = place.address_components[i].long_name
+        }
+      }
+    }
+    setAddress(`${City}, ${Country}`)
+  }
 
   useEffect(() => { 
     if(user==null){
-      navigate.navigate("Home")
+      navigation.navigate("Home")
     } 
     console.log("user id issssssss:", user._id)
- }, [user])
+  }, [user])
 
 
   return (
@@ -365,9 +349,7 @@ style={{
             First Name
           </Text>
         <TextInput style = {{
-          color: `${
-            isEditing? "#000" : "gray"
-          }`,
+          color: `${isEditing ? "#000" : "gray"}`,
            marginVertical: 15,
            //height: 50,
            borderRadius:0,
@@ -377,15 +359,10 @@ style={{
            paddingHorizontal: 5,
            paddingVertical:10,
            borderColor: 'black',
-           borderWidth: StyleSheet.hairlineWidth,
-           borderWidth: `${
-            isEditing? 0 : StyleSheet.hairlineWidth
-          }`,
-          borderBottomWidth: `${
-            isEditing? StyleSheet.hairlineWidth : StyleSheet.hairlineWidth
-          }`,
-          //  opacity:`${isEditing? 1 : 0.5}`
-          opacity: 1
+           borderWidth: isEditing? 0 : StyleSheet.hairlineWidth,
+            borderBottomWidth: StyleSheet.hairlineWidth,
+            //  opacity:`${isEditing? 1 : 0.5}`
+            opacity: 1
         }}
                underlineColorAndroid = "transparent"
                placeholder = "First Name"
@@ -417,12 +394,8 @@ style={{
           paddingHorizontal: 5,
           paddingVertical:10,
            borderColor: 'black',
-           borderWidth: `${
-            isEditing? 0 : StyleSheet.hairlineWidth
-          }`,
-          borderBottomWidth: `${
-            isEditing? StyleSheet.hairlineWidth : StyleSheet.hairlineWidth
-          }`,
+           borderWidth: isEditing? 0 : StyleSheet.hairlineWidth,
+          borderBottomWidth: StyleSheet.hairlineWidth,
           //  opacity:`${isEditing? 1 : 0.5}`,
           opacity: 1
         }}
@@ -456,12 +429,8 @@ style={{
            paddingHorizontal: 5,
            paddingVertical:10,
            borderColor: 'black',
-           borderWidth: `${
-            isEditing? 0 : StyleSheet.hairlineWidth
-          }`,
-          borderBottomWidth: `${
-            isEditing? StyleSheet.hairlineWidth : StyleSheet.hairlineWidth
-          }`,
+           borderWidth: isEditing? 0 : StyleSheet.hairlineWidth,
+          borderBottomWidth: StyleSheet.hairlineWidth,
           //  opacity:`${isEditing? 1 : 0.5}`
           opacity: 1
         }}

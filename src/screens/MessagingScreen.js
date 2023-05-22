@@ -238,6 +238,7 @@ const socketCall = () =>{
         setloading(false)
       }
     }
+    setloading(false)
   }
   
   const fetchWithPageMessage = async(pageNum) => {

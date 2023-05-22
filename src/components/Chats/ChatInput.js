@@ -1,6 +1,6 @@
 import { Dimensions, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useEffect, useRef } from 'react'
-import { FontAwesome } from '@expo/vector-icons'
+import React, { useRef } from 'react'
+import { FontAwesome, AntDesign } from '@expo/vector-icons'
 
 const width = Dimensions.get('screen').width
 
@@ -44,7 +44,7 @@ const ChatInput = ({
             shadowRadius: 2.22,
 
             elevation: 3,
-            height: 60,
+            height: 45,
             paddingVertical: 5,
             paddingHorizontal: 15
         }}>
@@ -76,12 +76,15 @@ const ChatInput = ({
             }}
         />
         <Pressable style={{
-            backgroundColor: "#593196",
+            
             backgroundColor: "#13b955",
-            backgroundColor: '#a991d4',
-            height: 50,
-            width: 50,
-            borderRadius: 8,
+            //backgroundColor: '#a991d4',
+            //backgroundColor: 'black',
+            //backgroundColor: '#009cdc',
+           //backgroundColor: "#593196",
+            height: 35,
+            width: 35,
+            borderRadius: 20,
             alignItems: "center",
             justifyContent: "center"
         }} onPress={() => {
@@ -91,7 +94,8 @@ const ChatInput = ({
             sendMessage()
             }
         }}>
-            <FontAwesome name="send-o" size={22} color="#fff" />
+            
+            <AntDesign name="arrowup" size={22} color="#fff" />
         </Pressable>
         </View>
     </View>
@@ -104,11 +108,11 @@ export default ChatInput
 const styles = StyleSheet.create({
     input: {
       backgroundColor: "#f0f0f0",
-      paddingTop: Platform.OS === 'ios' ? 15 : 0,
+      paddingTop: Platform.OS === 'ios' ? 8 : 0,
       fontSize: 16,
       paddingHorizontal: 10,
       borderRadius: 8,
       height: "100%",
-      width: width - 90
+      width: width - 75
     },
 })

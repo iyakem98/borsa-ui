@@ -21,118 +21,88 @@ const width = Dimensions.get("screen").width
 
 
 const ConnectScreen = () => {
-  registerSheet('example-two', <BottomSheet />);
-
+  const dispatch = useDispatch()
   const route = useRoute()
-
+  const navigation = useNavigation();
+  const [spinner, setSpinner] = useState(false)
   const [bottomSheetData, setBottomSheetData] = useState(null)
   const [selectedTab, setSelectedTab] = useState(1)
-  const { consumers } = useSelector(
-    (state) => state.auth
-  )
-  const snapPoints = useMemo(() => ['80%', '80%'], []);
-  const { travelers} = useSelector(
-    (state) => state.auth
-  )
+  const [isBuyer, setIsBuyer] = useState(false)
+  const [isTraveler, setIsTraveler] = useState(false)
+  const { consumers } = useSelector((state) => state.auth)
+  const { travelers} = useSelector((state) => state.auth)
+  const { user} = useSelector((state) => state.auth)
+  const { fetchAgain, setfetchAgain, chatSelected, setchatSelected, } = ChatState()
+  registerSheet('example-two', <BottomSheet />);
+
   
-  const { user} = useSelector(
-    (state) => state.auth
-  )
-  const { fetchAgain, setfetchAgain,
-    chatSelected, setchatSelected, } = ChatState()
-  
-    const dispatch = useDispatch()
-    const [isBuyer, setIsBuyer] = useState(false)
-    const [isTraveler, setIsTraveler] = useState(false)
-    const navigation = useNavigation();
-    function tweakBuyer() {
-        setIsBuyer(false)
-        // console.log(isBuyer)
+  function tweakBuyer() {
+    setIsBuyer(false)
+  }
+
+  function tweakBuyer2() {
+    setIsBuyer(true)
+  }
+
+  const deleteTraveler = async (id) => {
+    console.log("card to be deleted is:", id)
+    let config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
     }
-
-    function tweakBuyer2() {
-        setIsBuyer(true)
-        // console.log(isBuyer)
-    }
-
-    const deleteTraveler = async (id) => {
-        console.log("card to be deleted is:", id)
-       
-        let config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`
-              }}
-
-              Alert.alert('Deleting your card', 'Are you sure to delete?', [
-                
-                {text: 'OK', onPress: async () => {
-                  setSpinner(true)
+    Alert.alert('Deleting your card', 'Are you sure to delete?', [
+      {text: 'OK', onPress: async () => {
+        setSpinner(true)
         await axios.delete(`http://143.198.168.244/api/travels/${id}`, config)
         .then((res) => {
-          
-           console.log("delllll:", res)
-            getCards()
-            setSelectedTab(1)
-            
-         })
-        .catch((err) => {
-         console.log("error:", err)
-         
+          getCards()
+          setSelectedTab(1)
+        }).catch((err) => {
+          console.log("error:", err)
         });
         setSpinner(false)
-                }},
-                {
-                    text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel',
-                  },
-              ]);
+      }},
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+    ]);
+  }
 
-
-
-    }
-
-    const deleteBuyer = async (id) => {
-        console.log("card to be deleted is:", id)
-        
-        let config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`
-              }}
-
-              Alert.alert('Deleting your card', 'Are you sure to delete?', [
-                
-                {text: 'OK', onPress: async () => {
-                  setSpinner(true)
-
+  const deleteBuyer = async (id) => {
+    console.log("card to be deleted is:", id)
+    let config = {
+    headers: {
+      Authorization: `Bearer ${user.token}`
+    }}
+    Alert.alert('Deleting your card', 'Are you sure to delete?', [
+      {text: 'OK', onPress: async () => {
+        setSpinner(true)
         await axios.delete(`http://143.198.168.244/api/buyers/${id}`, config)
-        .then((res) => {
-          
-           console.log("delllll:", res)
+          .then((res) => {
             getCards()
             setSelectedTab(2)
-          
          })
-        .catch((err) => {
-         console.log("error:", err)
-         
-        });
+          .catch((err) => {
+            console.log("error:", err)
+          });
         setSpinner(false)
-                }},
-                {
-                    text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel',
-                  },
-              ]);
-
-    }
-    useEffect(() => {
-      navigation.addListener('focus', getCards)
-      // UpdateUserRoute()
-     //  console.log(route.name)
-       // setImage(null)
-      },[t, b])
+      }},
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+    ]);
+  }
+  useEffect(() => {
+    navigation.addListener('focus', getCards)
+    // UpdateUserRoute()
+    //  console.log(route.name)
+    // setImage(null)
+  },[t, b])
   
     // const getConsumers = async () => {
     //   try{
@@ -151,56 +121,48 @@ const ConnectScreen = () => {
     //   }
          
     //     }
-    const [t, setT] = useState([])
-    const [b, setB] = useState([])
+  const [t, setT] = useState([])
+  const [b, setB] = useState([])
 
-    const [loading, setloading] = useState(true)
+  const [loading, setloading] = useState(true)
 
-    const getCards = async () => {
-      setSpinner(true)
-
-      if(route?.params?.selectedTab){
-        setSelectedTab(route.params.selectedTab)
-      }
-
-      const config = {
+  const getCards = async () => {
+    setSpinner(true)
+    if(route?.params?.selectedTab){
+      setSelectedTab(route.params.selectedTab)
+    }
+    const config = {
       headers: {
-          Authorization: `Bearer ${user.token}`
-        }}
-
-        await axios.get(`http://143.198.168.244/api/travels/my`, config)
-        .then((data) => {
-          
+        Authorization: `Bearer ${user.token}`
+      }
+    }
+    await axios.get(`http://143.198.168.244/api/travels/my`, config)
+      .then((data) => { 
         console.log("tttttttttttttttt:", data.data.data)
         if(data.data.data.length>0){
           setT(data.data.data.reverse())
         }else{
           setT(data.data.data)
         }
-         
-         })
-        .catch((err) => {
-         setT(null)
-        });
+      }).catch((err) => {
+        setT(null)
+      });
      
-        await axios.get(`http://143.198.168.244/api/buyers/my`, config)
-        .then((data) => {
-          // console.log("bbbbbbbbbbbbb:", b)
-          if(data.data.data.length>0){
-            setB(data.data.data.reverse())
-          }else{
-            setB(data.data.data)
-          }
-         })
-        .catch((err) => {
-          setB(null)
-        });
+    await axios.get(`http://143.198.168.244/api/buyers/my`, config)
+      .then((data) => {
+        // console.log("bbbbbbbbbbbbb:", b)
+        if(data.data.data.length>0){
+          setB(data.data.data.reverse())
+        }else{
+          setB(data.data.data)
+        }
+    }).catch((err) => {
+      setB(null)
+    }); 
+    setloading(false)
+    setSpinner(false)
+  }
 
-        setloading(false)
-        setSpinner(false)
-    }
-
-    const [spinner, setSpinner] = useState(false)
         // useEffect(() => {
         //   //  dispatch(getTravelers())
         //   //  console.log(travelers)
@@ -317,10 +279,13 @@ const ConnectScreen = () => {
   {
     spinner && 
     <View style={{
-      position:"fixed",
+      position:"absolute",
       top:"40%",
       left:"0%",
-      zIndex: 200
+      zIndex: 200,
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%"
   }}>
     <ActivityIndicator size="large" color="black" />
   </View>
