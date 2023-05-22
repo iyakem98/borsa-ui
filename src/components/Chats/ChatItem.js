@@ -184,9 +184,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 10,
     bottom: 20,
-    backgroundColor: "#514590",
-    width: 19,
-    height: 19,
+    //backgroundColor: "#514590",
+    backgroundColor: "#7267e7",
+    width: 12,
+    height: 12,
     borderRadius: 15
   },
   notifTxt: {
