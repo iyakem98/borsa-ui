@@ -286,7 +286,7 @@ const socketCall = () =>{
     // socket.current.emit("connected");
     // console.log(socket.current.emit('inActive', chattId))
     // console.log('is active value after inactivity', socket.current.active )
-    var timerLength = 3000
+    var timerLength = 1000
    
     socket.current.emit('active', chattId)
     // setActiveHandler()
