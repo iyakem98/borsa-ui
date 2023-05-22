@@ -1,18 +1,32 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Image } from 'react-native'
 
 const HeaderChat = ({
     isActive,
+    isActive2,
+    active,
+    activeHandler,
     user,
     selectedChat,
     isTyping,
     loading,
     userSelectedFromConnectCard
 }) => {
-    const navigation = useNavigation()
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    isActive()
+   console.log('is acitve 2', isActive2)
+    
+  }, [])
+  // console.log('active in header', isActive)
+  // console.log("is active", active)
+  // console.log("is active", isActive)
+  // console.log("is typing", isTyping)
+   
   return (
     <View style={{
         overflow: 'hidden',
@@ -57,7 +71,16 @@ const HeaderChat = ({
                 flexDirection: "row",
                 alignItems: "center"
               }}>
-                {isActive && !isTyping && !loading ? (
+                {/* {isActive && !isTyping && !loading ? (
+                  <View style={{
+                    backgroundColor: 'green',
+                    height: 10,
+                    width: 10,
+                    borderRadius: 10,
+                    marginRight: 5
+                  }} />
+                ) : null} */}
+                {isActive2 ? (
                   <View style={{
                     backgroundColor: 'green',
                     height: 10,
@@ -66,7 +89,9 @@ const HeaderChat = ({
                     marginRight: 5
                   }} />
                 ) : null}
-                <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>{loading ? "Loading..." : isTyping ? "Typing..." : isActive ? "Active" : "Offline"}</Text>
+                <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>{loading ? "Loading..." : isTyping ? "Typing..." : isActive2 ? "Active" : "Offline"}</Text>
+                {/* {isActive2 &&<Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>Active</Text>} */}
+                {/* {isTyping &&<Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>Typing ...</Text>} */}
               </View>
             </View>
           </View>
