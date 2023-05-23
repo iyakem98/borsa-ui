@@ -382,12 +382,13 @@ const ProfileScreen = ({navigation}) => {
             borderRadius: 50,
             marginRight: 10,
         }}>
-        <AntDesign name="deleteuser" size={24} color="#593196" />
+        <AntDesign name="deleteuser" size={24} color="red" />
         </View>
     
         <Text style = {{
             fontSize: 17,
-            fontFamily: "Poppins_400Regular"
+            fontFamily: "Poppins_400Regular",
+            color: 'red',
         }}>
             Delete Account
             </Text>

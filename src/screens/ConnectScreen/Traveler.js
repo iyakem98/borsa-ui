@@ -387,9 +387,9 @@ useEffect(() => {
                     alignItems: 'center'
                 }}>
 
-            <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211" }} style={{ 
-                    width: 30,
-                    height: 30,
+            <Image source={{ uri: item?.user?.profilePic }} style={{ 
+                    width: 40,
+                    height: 40,
                     marginTop:0,
                     marginRight: 5,
                     // borderRadius: "100%",
