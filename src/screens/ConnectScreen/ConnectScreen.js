@@ -16,6 +16,7 @@ import ErrorUnDraw from '../../assets/svg/errorUnDraw'
 import {registerSheet} from 'react-native-actions-sheet';
 import BottomSheet from '../../components/BottomSheet'
 import SheetManager from 'react-native-actions-sheet';
+import TravelerHeader from '../../components/Connect/TravelerHeader'
 
 const width = Dimensions.get("screen").width
 
@@ -253,6 +254,7 @@ const ConnectScreen = () => {
             backgroundColor: 'white'
           }}>
             <FlatList
+              ListHeaderComponent={TravelerHeader}
               data={t}
               contentContainerStyle={{
                 paddingBottom: 100

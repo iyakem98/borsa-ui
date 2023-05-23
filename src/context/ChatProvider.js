@@ -29,6 +29,10 @@ const ChatProvider = ({ children }) => {
   const [TtriggerChange, setTtriggerChange] = useState(false)
   const [YtriggerChange, setYtriggerChange] = useState(false)
   const [OtriggerChange, setOtriggerChange] = useState(false)
+  const [travelerFilterOn, setTravelerFilterOn] = useState(false)
+  const [travelerFilter, setTravelerFilter] = useState(false)
+  const [buyerFilterOn, setBuyerFilterOn] = useState(false)
+  const [buyerFilter, setBuyerFilter] = useState(false)
  
 
 
@@ -84,7 +88,16 @@ const ChatProvider = ({ children }) => {
         searchTriggerChange,
         setsearchTriggerChange,
         searchFirstName, 
-        setsearchFirstName
+        setsearchFirstName,
+        travelerFilterOn,
+        setTravelerFilterOn,
+        travelerFilter,
+        setTravelerFilter,
+        buyerFilter,
+        setBuyerFilter,
+        buyerFilterOn,
+        setBuyerFilterOn
+
 
 
 
