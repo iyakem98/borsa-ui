@@ -226,12 +226,14 @@ const ProfileScreen = ({navigation}) => {
                             <View style = {{
                             backgroundColor: '#a991d4',
                             backgroundColor: "#593196",
-                            backgroundColor: '#7267e7',
+                            //backgroundColor: '#7267e7',
+                            backgroundColor: '#e8e8e8',
+                            backgroundColor: 'white',
                             padding: 8,
                             borderRadius: 50,
                             marginRight: 10,
                         }}>
-                        <MaterialCommunityIcons name="cards" size={24} color="white" />
+                        <MaterialCommunityIcons name="cards" size={24} color="black" />
                         </View>
     
                         <Text style = {{
@@ -251,11 +253,14 @@ const ProfileScreen = ({navigation}) => {
                             backgroundColor: '#a991d4',
                             backgroundColor: 'orange',
                             backgroundColor: '#7267e7',
+                            backgroundColor: "#593196",
+                            backgroundColor: '#e8e8e8',
+                            backgroundColor: 'white',
                             padding: 8,
                             borderRadius: 50,
                             marginRight: 10,
                         }}>
-                            <MaterialIcons name="account-circle" size={24} color="white" /> 
+                            <MaterialIcons name="account-circle" size={24} color="black" /> 
                         </View>
                        
                         <Text style = {{
@@ -341,11 +346,14 @@ const ProfileScreen = ({navigation}) => {
                                 backgroundColor: '#a991d4',
                                 backgroundColor: 'black',
                                 backgroundColor: '#7267e7',
+                                backgroundColor: "#593196",
+                                backgroundColor: '#e8e8e8',
+                                backgroundColor: 'white',
                                 padding: 8,
                                 borderRadius: 50,
                                 marginRight: 10,
                             }}>
-                                <MaterialIcons name="logout" size={24} color="white" />
+                                <MaterialIcons name="logout" size={24} color="black" />
                             </View>
                         
                             <Text style = {{
@@ -367,11 +375,14 @@ const ProfileScreen = ({navigation}) => {
             backgroundColor: 'lightblue',
             backgroundColor: 'red',
             backgroundColor: '#7267e7',
+            backgroundColor: "#593196",
+            backgroundColor: '#e8e8e8',
+            backgroundColor: 'white',
             padding: 8,
             borderRadius: 50,
             marginRight: 10,
         }}>
-        <AntDesign name="deleteuser" size={24} color="white" />
+        <AntDesign name="deleteuser" size={24} color="#593196" />
         </View>
     
         <Text style = {{
