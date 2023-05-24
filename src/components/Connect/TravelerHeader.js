@@ -194,7 +194,7 @@ const TravelerHeader = () => {
                             paddingHorizontal: 10,
                             paddingVertical: 7,
                             marginHorizontal: 2,
-                        }}>
+                            borderRadius: 5                        }}>
                         <Text style = {{
                             color: 'white'
                         }}>
@@ -207,6 +207,7 @@ const TravelerHeader = () => {
                             paddingHorizontal: 10,
                             paddingVertical: 7,
                             marginHorizontal: 2,
+                            borderRadius: 5,
                         }}>
                         <Text>
                             Discard
