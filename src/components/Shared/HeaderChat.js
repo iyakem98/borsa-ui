@@ -17,8 +17,9 @@ const HeaderChat = ({
     <View style={{
         overflow: 'hidden',
         paddingBottom: 5,
-        backgroundColor: "transparent"
-      }}>
+        backgroundColor: "transparent",
+      }}
+      >
         <View style={{
           height: 70,
           paddingHorizontal: 10,
@@ -43,6 +44,9 @@ const HeaderChat = ({
             <Pressable onPress={()=>navigation.goBack()} style={{marginRight: 10}}>
               <MaterialIcons name="keyboard-backspace" size={25} color="#514590" />
             </Pressable>
+            <Pressable onPress={()=> navigation.navigate("Profile", {
+                    theUser: userSelectedFromConnectCard
+                })}>
             <Image
               source={{uri: user?.profilePic}}
               style={{
@@ -51,8 +55,12 @@ const HeaderChat = ({
                 borderRadius: 8
               }}
             />
+            </Pressable>
             <View style={{marginLeft: 10}}>
-              <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{userSelectedFromConnectCard && userSelectedFromConnectCard.firstName ? userSelectedFromConnectCard?.firstName : selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {userSelectedFromConnectCard && userSelectedFromConnectCard.lastName ? userSelectedFromConnectCard?.lastName : selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text>
+            <Pressable onPress={()=>navigation.navigate("Profile", {
+                    theUser: userSelectedFromConnectCard
+                })}>
+              <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{userSelectedFromConnectCard && userSelectedFromConnectCard.firstName ? userSelectedFromConnectCard?.firstName : selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {userSelectedFromConnectCard && userSelectedFromConnectCard.lastName ? userSelectedFromConnectCard?.lastName : selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text></Pressable>
               <View style={{
                 flexDirection: "row",
                 alignItems: "center"

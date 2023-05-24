@@ -197,9 +197,9 @@ const BuyerChat = async(buyerData)=> {
     return (
         <>
         <Pressable style={styles.container} onPress={() =>{
-            setshowModal(true)
-            setModal(true)
-            onPress()
+            // setshowModal(true)
+            // setModal(true)
+            // onPress()
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>

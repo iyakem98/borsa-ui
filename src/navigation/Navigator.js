@@ -47,6 +47,7 @@ import Chattest from "../screens/chattest"
 import SearchScreen from "../screens/SearchScreen"
 import SearchBar from "../components/Chats/ChatListItem/SearchBar"
 import { fetchChat } from "../features/chat/chatSlice"
+import ProfileScreen from "../screens/ProfileScreens/Profile"
 
 
 
@@ -154,6 +155,7 @@ const Navigator = ({showOnBoarding}) => {
         })}/>
       )}
       <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>
+      <Stack.Screen name="Profile" component={ProfileScreen} options={{headerTintColor: '#000'}}/>
       <Stack.Screen name="Settings" component={SettingsScreen}/>
       <Stack.Screen name="Security" component={SecurityScreen}/>
       <Stack.Screen name="Contact Us" component={ContactScreen} 

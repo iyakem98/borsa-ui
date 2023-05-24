@@ -216,8 +216,8 @@ useEffect(() => {
     return (
         <>
         <Pressable style={styles.container} onPress={() =>{
-            setshowModal(true)
-            setModal(true)
+            // setshowModal(true)
+            // setModal(true)
         }}>
           
             <View style={styles.bottomWrapper}>
