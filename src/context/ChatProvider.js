@@ -33,6 +33,8 @@ const ChatProvider = ({ children }) => {
   const [travelerFilter, setTravelerFilter] = useState(false)
   const [buyerFilterOn, setBuyerFilterOn] = useState(false)
   const [buyerFilter, setBuyerFilter] = useState(false)
+  const [travelerFilterPickup, setTravelerFilterPickup] = useState('') 
+  const [travelerFilterDestination, setTravelerFilterDestination] = useState('')
  
 
 
@@ -96,7 +98,11 @@ const ChatProvider = ({ children }) => {
         buyerFilter,
         setBuyerFilter,
         buyerFilterOn,
-        setBuyerFilterOn
+        setBuyerFilterOn,
+        travelerFilterPickup,
+        setTravelerFilterPickup,
+        travelerFilterDestination,
+        setTravelerFilterDestination
 
 
 

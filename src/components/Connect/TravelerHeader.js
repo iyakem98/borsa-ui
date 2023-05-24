@@ -1,8 +1,9 @@
-import { View, Text, Pressable, ScrollView, StyleSheet} from "react-native"
+import { View, Text, Pressable, ScrollView, StyleSheet, TouchableOpacity, TouchableHighlight} from "react-native"
 import { ChatState } from "../../context/ChatProvider";
 import { Button } from "react-native-paper";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { useState } from "react";
  
 
 const TravelerHeader = () => {
@@ -11,15 +12,50 @@ const TravelerHeader = () => {
         setTravelerFilterOn,
         travelerFilter,
         setTravelerFilter,
-        buyerFilter,
-        setBuyerFilter,
-        buyerFilterOn,
-        setBuyerFilterOn
+        travelerFilterPickup,
+        setTravelerFilterPickup,
+        travelerFilterDestination,
+        setTravelerFilterDestination
       } = ChatState();
+
+      const[travelerPickup, setTravelerPickup] = useState('')
+      const[travelerDestination, setTravelerDestination] = useState('')
 
       const toggleFilter = () => {
         setTravelerFilterOn(!travelerFilterOn)
       }
+
+      const findLocationPickup = (ar) => {
+        let lngth = ar.length
+        let country = ar[lngth-1].value
+        let city = ar[0].value
+        //alert(city)
+        if (lngth > 2) {
+            city += ', ' + ar[1].value
+        }
+        console.log("workeeeeeed", `${city}, ${country}`)
+        setTravelerPickup(`${city}, ${country}`)
+    }
+
+    const findLocationArrival = (ar) => {
+        let lngth = ar.length
+        let country = ar[lngth-1].value
+        let city = ar[0].value
+        if (lngth > 2) {
+            city += ', ' + ar[1].value
+        }
+        console.log("workeeeeeed", `${city}, ${country}`)
+        setTravelerDestination(`${city}, ${country}`)
+    }
+
+    const onApply = () => {
+        setTravelerFilterPickup(travelerPickup)
+        setTravelerFilterDestination(travelerDestination)
+        setTravelerFilterOn(!travelerFilter)
+        setTravelerFilter(!travelerFilter)
+    }
+
+
   return (
     <View style = {{
         paddingBottom: 10,
@@ -49,13 +85,13 @@ const TravelerHeader = () => {
                     fontFamily: "Poppins_400Regular",
                     //fontSize: 18,
                 }}>
-                    Pick Up
+                    Departure 
                 </Text>
                 <View style={{
                     borderWidth: 1,
                     borderColor: "gray",
                     borderWidth: 0,
-                    borderBottomWidth: 1,
+                    //borderBottomWidth: 1,
                     borderColor: 'lightgray',
                     paddingHorizontal: 5,
                     //paddingVertical: 5,
@@ -65,14 +101,11 @@ const TravelerHeader = () => {
                     
                    
                    <View style={styles.container}>
-                      {/*  <GooglePlaces 
-					apiKey="AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4" //required (Get from https://developers.google.com/places/web-service/get-api-key)
-					onAddressSelect={(value)=>findLocationFrom(value.terms)} 
-            /> */}
+
 
                 <GooglePlacesAutocomplete
-                        placeholder='Enter your pickup location'
-                        //onPress={(value)=>findLocationFrom(value.terms)}
+                        placeholder='Enter departure city of traveler'
+                        onPress={(value)=>findLocationPickup(value.terms)}
                         query={{
                             key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
                             language: 'en',
@@ -84,13 +117,14 @@ const TravelerHeader = () => {
                             // backgroundColor: 'grey',
                           },
                           textInput: {
-                            //borderWidth: 1,
+                            borderWidth: 0.4,
                             borderStyle: "solid",
                             borderColor: "#000",
                             width:300,
                             color: '#5d5d5d',
                             //fontSize: 16,
-                            borderRadius:10,
+                            borderRadius:5,
+                            marginTop: 10,
                           },
                           predefinedPlacesDescription: {
                             color: '#1faadb',
@@ -111,7 +145,7 @@ const TravelerHeader = () => {
                 <View style={{
                     borderWidth: 1,
                     borderWidth: 0,
-                    borderBottomWidth: 1,
+                    //borderBottomWidth: 1,
                     borderColor: 'lightgray',
                     paddingHorizontal: 5,
                     //paddingVertical: 5,
@@ -120,14 +154,9 @@ const TravelerHeader = () => {
                 }}>
                     
 
-                {/*<GooglePlaces 
-					apiKey="AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4" //required (Get from https://developers.google.com/places/web-service/get-api-key)
-					onAddressSelect={(value)=>findLocationTo(value.terms)}
-            /> */}
-
                 <GooglePlacesAutocomplete
-                        placeholder='Enter your destination'
-                        //onPress={(value)=>findLocationTo(value.terms)}
+                        placeholder='Enter arrival city of traveler'
+                        onPress={(value)=>findLocationArrival(value.terms)}
                         query={{
                             key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
                             language: 'en',
@@ -139,12 +168,13 @@ const TravelerHeader = () => {
                           },
                           textInput: {
                             borderColor: "#000",
-                            //borderWidth: 1,
+                            borderWidth: 0.4,
                             borderStyle: "solid",
                             width:300,
                             color: '#5d5d5d',
                             //fontSize: 16,
-                            borderRadius:10,
+                            borderRadius:5,
+                            marginTop: 10,
                           },
                           predefinedPlacesDescription: {
                             color: '#1faadb',
@@ -158,28 +188,30 @@ const TravelerHeader = () => {
                     justifyContent: 'center',
                     paddingVertical: 30,
                 }}>
-                    <Pressable style = {{
-                        backgroundColor: '#593196',
-                        paddingHorizontal: 10,
-                        paddingVertical: 7,
-                        marginHorizontal: 2,
-                    }}>
+                    <TouchableOpacity onPress = {onApply}
+                        style = {{
+                            backgroundColor: '#593196',
+                            paddingHorizontal: 10,
+                            paddingVertical: 7,
+                            marginHorizontal: 2,
+                        }}>
                         <Text style = {{
                             color: 'white'
                         }}>
                             Apply 
                         </Text>
-                    </Pressable >
-                    <Pressable style = {{
-                        backgroundColor: '#E8E8E8',
-                        paddingHorizontal: 10,
-                        paddingVertical: 7,
-                        marginHorizontal: 2,
-                    }}>
+                    </TouchableOpacity >
+                    <TouchableOpacity onPress={toggleFilter}
+                        style = {{
+                            backgroundColor: '#E8E8E8',
+                            paddingHorizontal: 10,
+                            paddingVertical: 7,
+                            marginHorizontal: 2,
+                        }}>
                         <Text>
                             Discard
                         </Text>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
         </View>    
             ): (
@@ -189,7 +221,7 @@ const TravelerHeader = () => {
                 alignItems: 'center',
             }}>
                 <View>
-                <Pressable onPress={toggleFilter}
+                <TouchableOpacity onPress={toggleFilter}
                     style = {{
                         backgroundColor: '#e8e8e8',
                         //backgroundColor: '#a991d4',
@@ -209,9 +241,9 @@ const TravelerHeader = () => {
                         marginLeft: 2,
                         //color: 'white'
                     }}>
-                       Filter results
+                      Filter
                     </Text>
-                </Pressable>
+                </TouchableOpacity>
                 </View>
                 
             </View>
