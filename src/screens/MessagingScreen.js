@@ -179,7 +179,13 @@ const MessagingScreen = ({navigation}) => {
   }
   
   const fetchMessage = async(pageNum) => {
-    console.log('fetching messages')
+    setloading(true)
+    let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
+    if(msgs){
+      setMessages(JSON.parse(msgs))
+    } else {
+      setMessages([])
+    }
     try{
       const config = {
         headers: {
@@ -189,8 +195,6 @@ const MessagingScreen = ({navigation}) => {
       const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
       config)
       await AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data?.data))
-      
-      setloading(false)
 
       setMessages(data?.data)
       setNewwMessage(false)
@@ -198,14 +202,6 @@ const MessagingScreen = ({navigation}) => {
    
     } catch(error){
       console.log(error)
-      let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
-      if(msgs){
-        setMessages(JSON.parse(msgs))
-        setloading(false)
-      } else {
-        setMessages([])
-        setloading(false)
-      }
     }
     setloading(false)
   }
