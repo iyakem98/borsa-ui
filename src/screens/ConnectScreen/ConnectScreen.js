@@ -17,6 +17,7 @@ import {registerSheet} from 'react-native-actions-sheet';
 import BottomSheet from '../../components/BottomSheet'
 import SheetManager from 'react-native-actions-sheet';
 import TravelerHeader from '../../components/Connect/TravelerHeader'
+import BuyerHeader from '../../components/Connect/BuyerHeader'
 
 const width = Dimensions.get("screen").width
 
@@ -208,6 +209,7 @@ const ConnectScreen = () => {
             backgroundColor: 'white'
           }}>
             <FlatList
+              ListHeaderComponent={BuyerHeader}
               data={buyerTotal}
               contentContainerStyle={{
                 paddingBottom: 100
