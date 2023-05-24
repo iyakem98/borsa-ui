@@ -15,6 +15,7 @@ import { isSameUser } from '../ChatConfig/ChatLogics';
 import HeaderChat from '../components/Shared/HeaderChat';
 import ChatInput from '../components/Chats/ChatInput';
 import MessageTemplate from '../components/Message/MessageTemplate';
+import NetInfo from "@react-native-community/netinfo";
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
@@ -49,6 +50,8 @@ const MessagingScreen = ({navigation}) => {
   const {chatId} = route.params;
   const {userSelected} = route.params;
   const [messages, setMessages] = useState([]);
+  const [storedMessages, setstoredMessages] = useState([]);
+  const [storedMessages2, setstoredMessages2] = useState([]);
   const [socketConnected, setsocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -60,6 +63,7 @@ const MessagingScreen = ({navigation}) => {
   const [cameratest, setcameratest] = useState(false)
   const [refresh, setRefresh] = useState(false)
   const [pageNum, setPageNum] = useState(1)
+  const [storedPageNum, setstoredPageNum] = useState(0)
   let prevDate = 0
   const [messagesLength, setMessagesLength] = useState(false)
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -68,7 +72,7 @@ const MessagingScreen = ({navigation}) => {
   const [isActive, setIsActive] = useState(false);
   const [active, setIsactive] = useState(false);
   const [activeTrigger, setactiveTrigger] = useState(false);
-
+const [isNetConnected, setisNetConnected] = useState(false)
   const notificationListener = useRef();
   const responseListener = useRef();
   const {messageHeader, setmessageHeader} = ChatState()
@@ -94,7 +98,19 @@ const MessagingScreen = ({navigation}) => {
     socketCall()
     
   } ,[])
- 
+ useEffect(()=>{
+  const unsubscribe = NetInfo.addEventListener(state => {
+    console.log("Connection type", state.type);
+    console.log("Is connected?", state.isConnected);
+    setisNetConnected(state.isConnected)
+  });
+  
+  // Unsubscribe
+  return () => {
+    unsubscribe();
+  };
+  
+ }, [])
   useEffect(()=>{
    
     console.log('check to see if active value', isActive)
@@ -117,15 +133,14 @@ const MessagingScreen = ({navigation}) => {
   // useEffect(() =>{
   //   chatRouteCompare = chatRoute
   // }, [])
- 
- 
-
-
   useEffect(() => {
     socket.current.on("message recieved", (newMessageReceived) => {
       testNewMessages(newMessageReceived)
     })
   }, [])
+  // useEffect(() => {
+  //  fetchStoredMessages()
+  // }, [])
 
   useEffect(() =>{  
     if(socketConnected){
@@ -135,7 +150,14 @@ const MessagingScreen = ({navigation}) => {
      
     }  
   }, [socketConnected, isActive])
- 
+  useEffect(()=>{
+    setstoredPageNum(null)
+     }, [])
+  // useEffect(()=>{
+  //   setChatMap()
+  //  }, [])
+  
+    
   // useEffect(() =>{  
   //   // console.log('is active value in mess', isActive)
   //   console.log('is active value in mess', isActive)
@@ -219,8 +241,39 @@ const socketCall = () =>{
       }
       const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
       config)
-      await AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data?.data))
-      
+      // console.log('chat data', data.data)
+        // await AsyncStorage.removeItem('ChatMap')
+        // console.log('chat data stored',  await AsyncStorage.getItem('ChatMap'))
+      if(await AsyncStorage.getItem('ChatMap') == undefined || await AsyncStorage.getItem('ChatMap') == null){
+        console.log("there is no chat map present at all")
+        let ChatMap = new Map([])
+        ChatMap.set(chattId, data.data)
+        setstoredMessages(data.data)
+        await AsyncStorage.setItem('ChatMap', JSON.stringify(Array.from(ChatMap.entries())))
+      }
+      else{
+        console.log("there is a chat map present ")
+        let ChatMap2 = new Map(JSON.parse(await AsyncStorage.getItem('ChatMap')))
+        if(ChatMap2.has(chattId)){
+          console.log("there is a chat map present with id", chattId)
+          setstoredMessages(ChatMap2.get(chattId))
+        }
+        else{
+          console.log("there is no chat map present with id", chattId)
+          ChatMap2.set(chattId, data.data)
+          setstoredMessages(data.data)
+        await AsyncStorage.setItem('ChatMap', JSON.stringify(Array.from(ChatMap2.entries())))
+        }
+      }
+      // console.log('chat data', data.data[0].chat._id)
+      // await AsyncStorage.removeItem('storedChatID')
+      // await AsyncStorage.removeItem('storedMessages')
+      // console.log('sotred mess',await  AsyncStorage.getItem('storedMessages'))
+
+      // await AsyncStorage.setItem('storedChatID', JSON.stringify(data.data[0].chat._id))
+      // await AsyncStorage.setItem('storedMessages', JSON.stringify(data.data))
+      // var storedmessages = await  AsyncStorage.getItem('storedMessages')
+      // setstoredMessages(JSON.parse(storedmessages))
       setloading(false)
 
       setMessages(data?.data)
@@ -229,18 +282,41 @@ const socketCall = () =>{
    
     } catch(error){
       console.log(error)
-      let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
-      if(msgs){
-        setMessages(JSON.parse(msgs))
-        setloading(false)
-      } else {
-        setMessages([])
-        setloading(false)
+      if(await AsyncStorage.getItem('ChatMap')){
+        let ChatMap = new Map(JSON.parse(await AsyncStorage.getItem('ChatMap')))
+        if(ChatMap.has(chattId)){
+          setstoredMessages([ChatMap.get(chattId)])
+        }
       }
+      else{
+        console.log('setting loading to true')
+      }
+      // let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
+      // if(msgs){
+      //   setMessages(JSON.parse(msgs))
+      //   setloading(false)
+      // } else {
+      //   setMessages([])
+      //   setloading(false)
+      // }
     }
     setloading(false)
   }
-  
+  const setChatMap = async () => {
+   
+    let ChatMap = new Map([])
+    // console.log(chattId)
+    ChatMap.set(chattId, storedMessages)
+    // console.log("chatMap", ChatMap)
+    // await AsyncStorage.removeItem('ChatMap')
+    await AsyncStorage.setItem('ChatMap', JSON.stringify(Array.from(ChatMap.entries())))
+    let ChatMap2 = new Map(JSON.parse(await AsyncStorage.getItem('ChatMap')))
+    // // let testMap2 = await AsyncStorage.getItem('ChatMap')
+    // console.log("ChatMap2",ChatMap)
+    // console.log(ChatMap2.has(chattId))
+    // console.log('stored messages', storedMessages)
+    // console.log('stored messages', storedMessages)
+  }
   const fetchWithPageMessage = async(pageNum) => {
     setloading(true)
     try{
@@ -259,6 +335,15 @@ const socketCall = () =>{
     }
     setloading(false)
   }
+
+
+  const fetchStoredMessages = async(spgNum) =>{
+    console.log('fetching stored messages')
+    console.log('fetching stored messages with page num', spgNum)
+    // setstoredMessages((prev)=>[...prev, ...storedMessages[spgNum]])
+  }
+
+
   const typingHandler = (e) => {
     setNewMessage(e)
      
@@ -356,6 +441,8 @@ const socketCall = () =>{
     
     
   }
+  
+  
   return (
     <SafeAreaView style={{
       flex: 1,
@@ -380,7 +467,7 @@ const socketCall = () =>{
           isTyping={isTyping}
           loading={loading}
         />
-        <FlatList
+        {isNetConnected &&<FlatList
           data={messages}
           contentContainerStyle={{
             paddingBottom: 100
@@ -450,7 +537,82 @@ const socketCall = () =>{
             fetchWithPageMessage(pageNum+1)
             setPageNum((prev) => prev+1)
           }}
-        />
+        />}
+       {!isNetConnected && <FlatList
+          data={storedMessages}
+          // data={storedMessages2}
+          contentContainerStyle={{
+            paddingBottom: 100
+          }}
+          inverted
+          maxToRenderPerBatch={2}
+          renderItem={(item) => {
+            let today = moment();
+            let m = item?.item;
+            let i = item?.index;
+            let d = m?.createdAt ? today.diff(m?.createdAt, 'days') : null;
+
+            let dateVisible = false
+
+            let sameDate = messages.filter(
+              (mes) =>
+              today.diff(mes?.createdAt, 'days') == d
+            );
+
+            if(sameDate.indexOf(m)== sameDate.length-1){
+              dateVisible = true
+              if(d==0){
+                d = "Today"
+              }
+              else if(d==1){
+                d = "Yesterday"
+              }
+              else if(d>1 && d<=7){
+                d = moment(m?.createdAt).format("MMM, DD ddd")
+              }
+              else if(d>7 && d<365){
+                d = moment(m?.createdAt).format("MMM D")
+              }
+              else{
+                d = moment(m?.createdAt).format("MMM D YYYY")
+              }
+            }
+
+            // console.log("chats are", dateVisible)
+
+            return (
+              <>
+              
+              <MessageTemplate
+                m={m}
+                user={user}
+                i={i}
+                todayDateLabel={todayDateLabel}
+                yesterdayDateLabel={yesterdayDateLabel}
+                olderDateLabel={olderDateLabel}
+                todayDate={todayDate}
+                yesterdayDate={yesterdayDate}
+                olderDate={olderDate}
+                prevDate={prevDate}
+                // d={d}
+              />
+
+              {
+                dateVisible &&
+              <Text style={{alignSelf:"center", marginTop:4, marginBottom:4}}>{d}</Text>
+              }
+            </>
+
+            )
+          }}
+          onEndReached={() => {
+            // fetchWithPageMessage(pageNum+1)
+            // setPageNum((prev) => prev+1)
+            // fetchStoredMessages(storedPageNum+1)
+            // setstoredPageNum((prev) => prev+1)
+
+          }}
+        />}
         <ChatInput
           sendMessage={sendMessage}
           newmessage={newmessage}
