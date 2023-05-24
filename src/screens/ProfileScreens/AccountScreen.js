@@ -344,7 +344,7 @@ style={{
               /> */}
         </View>
 
-        <View style={{marginTop:15}}>
+        <View style={{marginTop:25}}>
           <Text>
             First Name
           </Text>
@@ -361,6 +361,7 @@ style={{
            borderColor: 'black',
            borderWidth: isEditing? 0 : StyleSheet.hairlineWidth,
             borderBottomWidth: StyleSheet.hairlineWidth,
+            borderRadius: isEditing? 0: 5,
             //  opacity:`${isEditing? 1 : 0.5}`
             opacity: 1
         }}
@@ -396,6 +397,7 @@ style={{
            borderColor: 'black',
            borderWidth: isEditing? 0 : StyleSheet.hairlineWidth,
           borderBottomWidth: StyleSheet.hairlineWidth,
+          borderRadius: isEditing? 0: 5,
           //  opacity:`${isEditing? 1 : 0.5}`,
           opacity: 1
         }}
@@ -431,6 +433,7 @@ style={{
            borderColor: 'black',
            borderWidth: isEditing? 0 : StyleSheet.hairlineWidth,
           borderBottomWidth: StyleSheet.hairlineWidth,
+          borderRadius: isEditing? 0: 5,
           //  opacity:`${isEditing? 1 : 0.5}`
           opacity: 1
         }}
