@@ -180,13 +180,13 @@ const MessagingScreen = ({navigation}) => {
   
   const fetchMessage = async(pageNum) => {
     setloading(true)
-    let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
-    if(msgs){
-      setMessages(JSON.parse(msgs))
-    } else {
-      setMessages([])
-    }
     try{
+      let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
+      if(msgs){
+        setMessages(JSON.parse(msgs))
+      } else {
+        setMessages([])
+      }
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`
