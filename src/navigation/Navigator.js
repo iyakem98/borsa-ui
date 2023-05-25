@@ -48,6 +48,7 @@ import SearchScreen from "../screens/SearchScreen"
 import SearchBar from "../components/Chats/ChatListItem/SearchBar"
 import { fetchChat } from "../features/chat/chatSlice"
 import ProfileScreen from "../screens/ProfileScreens/Profile"
+import WelcomeAddPost from "../screens/ProfileScreens/WelcomeAddPost"
 
 
 
@@ -125,7 +126,7 @@ const Navigator = ({showOnBoarding}) => {
     
     <Stack.Navigator>
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
-      <Stack.Screen name="Chats" component={ChatScreen} />
+      {/*<Stack.Screen name="Chats" component={ChatScreen} /> */}
       {/* <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} /> */}
       <Stack.Screen name="Search" component={SearchScreen}  options={({ route }) => ({
           
@@ -134,6 +135,7 @@ const Navigator = ({showOnBoarding}) => {
         
           headerShown: false
         })}/>
+        <Stack.Screen name="WelcomePost" component={WelcomeAddPost} options={{headerShown: false}} />
       <Stack.Screen name="Connect" component={ConnectScreen} />
       <Stack.Screen name="User Details" component={OtherProfile} />
       <Stack.Screen name="New Post" component={PostIndex} />

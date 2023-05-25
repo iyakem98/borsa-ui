@@ -79,7 +79,7 @@ const ProfileScreen = ({navigation}) => {
                         flexDirection: 'row',
                         alignItems: 'center'
                     }}>
-                     <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211" }} style={{ 
+                     <Image source={{uri: route.params.theUser?.profilePic}} style={{ 
                         width: 120,
                         height: 120,
                         marginTop:0,
