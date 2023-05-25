@@ -86,7 +86,7 @@ const ProfileScreen = ({navigation}) => {
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
-                 <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211" }} style={{ 
+                 <Image  source={{uri: user?.profilePic}} style={{ 
                     width: 120,
                     height: 120,
                     marginTop:0,
@@ -125,82 +125,6 @@ const ProfileScreen = ({navigation}) => {
                     
                 </View>
             </LinearGradient>
-      {/*  <ImageBackground
-                source={{
-                uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211",
-                }}
-                style= {styles.imagebk}
-        >
-            <View style = {styles.overlay}>
-                <Text style = {{
-                    color: 'white',
-                    fontSize: 30
-                }}> 
-                    {user && user.firstName + ' ' + user.lastName} 
-                </Text>
-                <View style = {{
-                    flexDirection: 'row',
-                    marginBottom: 20,
-                    marginLeft: 10,
-                }}>
-                    <Text style = {{
-                        color: 'white',
-                        marginTop: 5,
-                        fontSize: 14,
-                        marginRight: 5
-                    }}>
-                        {user && user.address}
-                    </Text>
-                    {/* <Text style = {{
-                        fontSize: 20,
-                        marginBottom: 0
-                    }}>
-                    🇨🇦
-                    </Text> 
-                </View>
-               {/* <View style = {{
-                    flexDirection: 'row',
-                }}>
-                    {user && user.isTraveler && 
-                        <Pressable style = {{
-                            backgroundColor: "#13b955",
-                            width: "20%",
-                            height: "45%",
-                            alignItems:'center',
-                            justifyContent: 'center',
-                            marginLeft: 10,
-                            borderRadius: 20,
-                            marginRight: 12
-                        }}>
-                           <Text style = {{
-                            color: 'white',
-                           }}>
-                                Traveler
-                           </Text>
-                        </Pressable>
-                        
-                    }
-                    
-
-                    <Pressable style = {{
-                        backgroundColor: "#593196",
-                        width: "20%",
-                        height: "45%",
-                        alignItems:'center',
-                        justifyContent: 'center',
-                        borderRadius: 20,
-                    }}>
-                        <Text style = {{
-                            color: 'white'
-                        }}>
-                            Buyer
-                        </Text>
-                    </Pressable>
-                    </View> 
-            </View>
-            
-
-                </ImageBackground> */}
         <View>
             <ScrollView style = {styles.v2b}>
                 <View style = {{

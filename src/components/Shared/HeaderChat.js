@@ -48,11 +48,12 @@ const HeaderChat = ({
                     theUser: userSelectedFromConnectCard
                 })}>
             <Image
-              source={{uri: user?.profilePic}}
+              source={{uri: userSelectedFromConnectCard?.profilePic}}
               style={{
                 height: 50,
                 width: 50,
-                borderRadius: 8
+                //borderRadius: 8
+                borderRadius: 50
               }}
             />
             </Pressable>
