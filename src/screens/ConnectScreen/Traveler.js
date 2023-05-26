@@ -382,6 +382,9 @@ useEffect(() => {
                   </View>
                 </View> */}
 
+               <Pressable onPress={()=>navigation.navigate("Profile", {
+                    theUser: item?.user
+                })}>
                 <View style = {{
                     flexDirection: 'row',
                     alignItems: 'center'
@@ -405,6 +408,7 @@ useEffect(() => {
                     </View>
 
                 </View>
+                </Pressable>
 
                
                 <Pressable style={{

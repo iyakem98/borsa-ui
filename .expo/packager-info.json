@@ -2,8 +2,8 @@
   "expoServerPort": 19000,
   "packagerPort": 19000,
   "webpackServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://fq-wkw.daggy22.borsa-ui.exp.direct",
+  "packagerNgrokUrl": "https://fq-wkw.daggy22.borsa-ui.exp.direct",
+  "ngrokPid": 232279,
   "packagerPid": null
 }

@@ -217,11 +217,15 @@ const BuyerChat = async(buyerData)=> {
                             fontSize: 16,
                             fontFamily: "Poppins_500Medium"
                         }}>{item.item[0]}</Text>
+                        <Pressable onPress={()=>navigation.navigate("Profile", {
+                    theUser: item?.user
+                })}>
                         <Text style={{
                             fontSize: 14,
                             fontFamily: "Poppins_500Medium",
                             color: "#777"
                         }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        </Pressable>
                     </View>
                 </View>
                 <View style={styles.horizontal}>
