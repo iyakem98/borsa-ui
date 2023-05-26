@@ -149,25 +149,36 @@ const filterBuyers =  async () => {
       x = x[x.length-1]
       x = x.replace(" ", "")
 
-      if(x===buyerS){
-        console.log("got one here", x, buyerS)
-      }
-    if(buyerS && buyerS==x){
-        filteredBuyers.push(buy[i])
-        console.log("yesss xxx", buy[i])
-      }
-
-      console.log("xxxxx", x, buyerS)
 
       let y = buy[i].destination.split(",")
       y = y[y.length-1]
       y = y.replace(" ", "")
       console.log("yyyyy", y, buyerD)
 
+      // if(x===buyerS){
+      //   console.log("got one here", x, buyerS)
+      // }
+   
+
+      // console.log("xxxxx", x, buyerS)
+
+      if(buyerS && buyerD){
+         if(buyerS && buyerS==x && buyerD && buyerD==y){
+        filteredBuyers.push(buy[i])
+        console.log("yesss xxx", buy[i])
+      }
+      }else{
+         if(buyerS && buyerS==x){
+        filteredBuyers.push(buy[i])
+        console.log("yesss xxx", buy[i])
+      }
+
       if(buyerD && buyerD==y){
         filteredBuyers.push(buy[i])
         console.log("yesss yyy", buy[i])
       }
+      }
+     
     }
     console.log("after filter", filteredBuyers)
    if(filteredBuyers.length>0){
@@ -202,25 +213,34 @@ const filterTravelers =  async () => {
       x = x[x.length-1]
       x = x.replace(" ", "")
 
-      if(x===travelerS){
-        console.log("got one here", x, travelerS)
-      }
-    if(travelerS && travelerS==x){
-        filteredTravels.push(travel[i])
-        console.log("yesss xxx", travel[i])
-      }
-
-      console.log("xxxxx", x, travelerS)
-
-      let y = travel[i].destination.split(",")
+       let y = travel[i].destination.split(",")
       y = y[y.length-1]
       y = y.replace(" ", "")
       console.log("yyyyy", y, travelerD)
+
+      // if(x===travelerS){
+      //   console.log("got one here", x, travelerS)
+      // }
+     if(travelerD && travelerS){
+         if(travelerS && travelerS==x && travelerD && travelerD==y){
+        filteredTravels.push(travel[i])
+        console.log("yesss xxx", travel[i])
+      }
+      }else{
+         if(travelerS && travelerS==x){
+        filteredTravels.push(travel[i])
+        console.log("yesss xxx", travel[i])
+      }
 
       if(travelerD && travelerD==y){
         filteredTravels.push(travel[i])
         console.log("yesss yyy", travel[i])
       }
+      }
+
+      // console.log("xxxxx", x, travelerS)
+  
+     
     }
     console.log("after filter", filteredTravels)
    if(filteredTravels.length>0){
@@ -624,7 +644,7 @@ const filterTravelers =  async () => {
               // ListHeaderComponent={BuyerHeader}
               data={buyerTotal}
               contentContainerStyle={{
-                paddingBottom: 150
+                paddingBottom: 180
               }}
               maxToRenderPerBatch={2}
               renderItem={({item}) => {
@@ -924,7 +944,7 @@ const filterTravelers =  async () => {
               // ListHeaderComponent={TravelerHeader}
               data={t}
               contentContainerStyle={{
-                paddingBottom: 150
+                paddingBottom: 180
               }}
               renderItem={({item}) => {
                 // console.log(item)
