@@ -1,5 +1,5 @@
 
-import {View, Text, ImageBackground, Image, SafeAreaView, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal, Dimensions, ActivityIndicator} from 'react-native'
+import {View, Text, ImageBackground, Image, SafeAreaView, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal, Dimensions} from 'react-native'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
@@ -26,8 +26,6 @@ const RegisterScreen = ({navigation}) => {
   const [checked, setChecked] = useState(true)
   const [userEmailError, setUserEmailError] = useState("");
   const [userPasswordError, setUserPasswordError] = useState("");
-  const [confirmUserPassword, setConfirmUserPassword] = useState("")
-  const [userNameError, setUserNameError] = useState("")
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -48,7 +46,6 @@ const RegisterScreen = ({navigation}) => {
   const [verifyForm, setVerifyForm] = useState("none")
   const [confirm, setConfirm] = useState("")
   const [mailedTo, setMailedTo] = useState("")
-  
   let registerUserData = null
 
   const handleUserData = async (value) => {
@@ -67,12 +64,8 @@ const RegisterScreen = ({navigation}) => {
     const userName = userFullName.split(" ")
     console.log(userName)
     if(userName.length < 2) {
-      setUserNameError("You have to provide your full name")
-    }
-    else if (userPassword != confirmUserPassword) {
-      setUserPasswordError('Passwords do not match')
-    }
-    else if(checked && userName.length > 1) {
+      setUserPasswordError("You have to provide fullname")
+    } else if(checked && userName.length > 1) {
       try {
         const res = await axios.post('http://143.198.168.244/api/users', {
           firstName: userName[0],
@@ -87,7 +80,7 @@ const RegisterScreen = ({navigation}) => {
         if(e?.response?.data?.message === "Invalid email or password") {
           setUserPasswordError("Invalid email or password")
         } else if(e?.response?.data?.message === "User already exists") {
-          setUserEmailError("Email already exists")
+          setUserPasswordError("Email already exists")
         } else if(e?.response?.data?.message === "Username Taken! put in another one") {
           setUserPasswordError("Username already taken")
         } else {
@@ -273,7 +266,7 @@ const handleVerify = async () => {
             marginBottom: 13,
             // paddingVertical: 5
           }}
-          error={userNameError}
+          error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",
           }}
@@ -288,7 +281,7 @@ const handleVerify = async () => {
             marginBottom: 13,
             // paddingVertical: 5
           }}
-          error={userEmailError}
+          error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",
           }}
@@ -302,7 +295,6 @@ const handleVerify = async () => {
           mode="outlined"
           secureTextEntry={true}
           style={{
-            marginBottom: 13,
             // paddingVertical: 5
           }}
           error={userPasswordError}
@@ -310,43 +302,6 @@ const handleVerify = async () => {
             backgroundColor: "#fff",
           }}
         />
-         <TextInput
-          label="Confirm Password"
-          secureTextEntry={true}
-          value={confirmUserPassword}
-          onChangeText={text => setConfirmUserPassword(text)}
-          mode="outlined"
-          secureTextEntry={true}
-          style={{
-            // paddingVertical: 5
-          }}
-          error={userPasswordError}
-          outlineStyle={{
-            backgroundColor: "#fff",
-          }}
-        />
-        {userNameError ? (
-          <Text style={{
-            marginTop: 10,
-            textAlign: "center",
-            color: "red",
-            fontFamily: "Poppins_400Regular",
-            fontSize: 13
-          }}>
-            {userNameError}
-          </Text>
-        ) : (null)}
-        {userEmailError ? (
-          <Text style={{
-            marginTop: 10,
-            textAlign: "center",
-            color: "red",
-            fontFamily: "Poppins_400Regular",
-            fontSize: 13
-          }}>
-            {userEmailError}
-          </Text>
-        ) : (null)}
         {userPasswordError ? (
           <Text style={{
             marginTop: 10,
@@ -415,14 +370,12 @@ const handleVerify = async () => {
             marginBottom: 25,
             width: "100%"
           }} onPress={handleLogin}>
-            {isLoading? (<ActivityIndicator size="small" color="#fff" />
-           ):( <Text style={{
+            <Text style={{
                 color: "#fff",
                 fontFamily: "Poppins_400Regular",
                 fontSize: 14,
                 textAlign: "center"
-            }}>Continue</Text>)}
-           
+            }}>{isLoading ? "Loading ..." : "Continue"}</Text>
           </Pressable>
           <View style={{
             flexDirection: "row",
