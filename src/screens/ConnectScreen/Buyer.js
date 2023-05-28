@@ -229,16 +229,30 @@ const BuyerChat = async(buyerData)=> {
                     </View>
                 </View>
                 <View style={styles.horizontal}>
-                    <Text style={{
-                        fontSize: 15,
-                        fontFamily: "Poppins_600SemiBold",
-                    }}>
-                        {item?.totalWeight}
-                        <Text style={{
-                            fontFamily: "Poppins_400Regular",
-                            fontSize: 13
-                        }}>Kg</Text>
-                    </Text>
+                    {user.isImperial? (
+                         <Text style={{
+                            fontSize: 15,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.totalWeight*2.20462).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 13
+                            }}>lb</Text>
+                        </Text>
+                    ):(
+                         <Text style={{
+                            fontSize: 15,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {item?.totalWeight}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 13
+                            }}>Kg</Text>
+                        </Text>
+                    )}
+                   
                     {/* <Pressable style={styles.dottedButton} onPress={()=>{
                         setModalOpen(true)
                     }}>

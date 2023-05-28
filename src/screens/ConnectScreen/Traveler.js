@@ -304,16 +304,29 @@ useEffect(() => {
                 </View>
                 <View style={styles.horizontal}>
                 <MaterialIcons name="luggage" size={24} color="#593196" />
-                    <Text style={{
-                        fontSize: 18,
-                        fontFamily: "Poppins_600SemiBold",
-                    }}>
-                        {item?.luggageSpace}
-                        <Text style={{
-                            fontFamily: "Poppins_400Regular",
-                            fontSize: 16
-                        }}>kg</Text>
-                    </Text>
+                {user.isImperial? (
+                         <Text style={{
+                            fontSize: 18,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.luggageSpace*2.20462).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 16
+                            }}>lb</Text>
+                        </Text>
+                    ):(
+                         <Text style={{
+                            fontSize: 18,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {item?.totalWeight}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 16
+                            }}>Kg</Text>
+                        </Text>
+                    )}
                     {/* <Pressable style={styles.dottedButton} onPress={()=>{
                         setModalOpen(true)
                     }}>
