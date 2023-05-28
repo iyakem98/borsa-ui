@@ -440,8 +440,8 @@ export default Buyer
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
-        // height: 150,
-        width: '100%',
+        height: 250,
+        width: '98%',
         marginBottom: 15,
         borderWidth: 1,
         borderStyle: "solid",

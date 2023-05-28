@@ -546,10 +546,13 @@ const ConnectScreen = () => {
         style={{
           marginTop:"3%",
         }} 
+        contentContainerStyle={{
+          paddingBottom: 140
+        }}
         >
         <View style = {{
           width: "100%",
-          alignItems: 'center'
+          alignItems: 'center',
         }}>
 
           <View style = {{

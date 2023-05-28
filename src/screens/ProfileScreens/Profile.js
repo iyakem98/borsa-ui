@@ -25,6 +25,8 @@ const ProfileScreen = ({navigation}) => {
     const [b, setB] = useState([])
     const [t, setT] = useState([])
 
+    const [buyerHeight, setBuyerHeight] = useState(500)
+
     const getCards = async (i) => {
        
         const config = {
@@ -46,6 +48,10 @@ const ProfileScreen = ({navigation}) => {
           .then((data) => {
            
               setB(data.data.data)
+              let cards = data.data.data.length
+              // let h = cards*445
+              setBuyerHeight(cards % 2 !==0 ? cards*445 : cards*400)
+                console.log("heightttttt is", h, cards)
         }).catch((err) => {
           console.log("error fetching buyer card", err)
         }); 
@@ -340,29 +346,28 @@ const ProfileScreen = ({navigation}) => {
 
 {
             selectedTab == 3 && 
-           <SafeAreaView>
-           <ScrollView horizontal style={{backgroundColor:"#E8E8E8"}}>
+           <View>
+           <ScrollView 
+           
+          contentContainerStyle={{
+            minHeight: buyerHeight
+          }} 
+           style={{backgroundColor:"#E8E8E8"}}>
             
                 {
                 b && b.map((buyer, index) => (
-                    <View key={index} 
-                    style={{
-                    marginLeft:10, 
-                    // shadowColor: '',
-                    // shadowRadius: 1,
-                    // shadowOpacity: 1
-                    }}>
-                        <Buyer item={buyer} />
-                    </View>
+                    <Buyer key={index} item={buyer} />
                 ))
                 }
 
-                {
+            </ScrollView>
+
+
+            {
                   b.length<1 &&
                   <Text style={{marginTop:30, fontSize:19, textAlign:"center", marginLeft:20}}>No shipping card found.</Text>
                 }
-            </ScrollView>
-            </SafeAreaView>
+            </View>
           }
 
        </View>
