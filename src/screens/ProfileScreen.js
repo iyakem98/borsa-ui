@@ -77,7 +77,7 @@ const ProfileScreen = ({navigation}) => {
                     style = {{
                         //height: "100%",
                         //alignItems: 'center',
-                        paddingTop: 120,
+                        paddingTop: "10%",
                         paddingHorizontal: 20,
                         paddingBottom: 50,
                         //justifyContent: 'center'

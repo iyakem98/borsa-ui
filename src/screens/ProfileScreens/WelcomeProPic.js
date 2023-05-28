@@ -26,7 +26,7 @@ const WelcomeProPic = () => {
             color: 'white',
             fontFamily: "Poppins_400Regular"
         }}>
-            Hello {user.firstName},
+            Hello {user?.firstName},
         </Text>
     </View>
     <View style = {{
