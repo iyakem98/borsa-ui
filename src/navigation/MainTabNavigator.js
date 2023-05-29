@@ -28,6 +28,7 @@ import Search from '../components/Chats/ChatListItem/Search';
 import { io } from 'socket.io-client';
 import { API_BASE_URL_Socket } from '../utils/config';
 import { fetchChat } from '../features/chat/chatSlice';
+import WelcomeProPic from '../screens/ProfileScreens/WelcomeProPic';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -204,6 +205,13 @@ const MainTabNavigator = () => {
         <Tab.Screen name="More" component={ProfileScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <MaterialCommunityIcons name="dots-horizontal" size={size} color={color} />
+            ),
+            headerShown: false
+        }} />
+
+        <Tab.Screen name="Temporary" component={WelcomeProPic} options={{
+            tabBarIcon: ({color, size}) => (
+                <FontAwesome name="random" size={size} color={color} /> 
             ),
             headerShown: false
         }} />

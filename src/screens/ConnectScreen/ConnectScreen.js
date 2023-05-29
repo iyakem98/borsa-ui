@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { ActivityIndicator, Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import BuyerCard from '../../components/Connect/BuyerCard'
 import TravelerCard from './Traveler'
@@ -18,6 +18,7 @@ import BottomSheet from '../../components/BottomSheet'
 import SheetManager from 'react-native-actions-sheet';
 import TravelerHeader from '../../components/Connect/TravelerHeader'
 import BuyerHeader from '../../components/Connect/BuyerHeader'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 const width = Dimensions.get("screen").width
 
@@ -52,6 +53,18 @@ const ConnectScreen = () => {
         setIsBuyer(true)
     }
 
+      const clearFilterBuyer = () => {
+        setFilterBuyer(0)
+        setBuyerD("")
+        setBuyerS("")
+        setBuyersStatus("All")
+      }
+      const clearFilterTraveler = () => {
+        setFilterTraveler(0)
+        setTravelerD("")
+        setTravelerS("")
+        setTravelersStatus("All")
+      }
     
     const [t, setT] = useState([])
     const [b, setB] = useState([])
@@ -72,7 +85,194 @@ const ConnectScreen = () => {
     const [notLoadingBuyer, setNotLoadingBuyer] = useState(false)
     const [loadingTraveler, setLoadingTraveler] = useState(false)
 
+    const [filterTraveler, setFilterTraveler] = useState(0)
+    const [filterBuyer, setFilterBuyer] = useState(0)
+
+    const [buyersStatus, setBuyersStatus] = useState("All")
+    const [travelersStatus, setTravelersStatus] = useState("All")
+
+    const [buyerS, setBuyerS] = useState("")
+    const [buyerD, setBuyerD] = useState("")
+
+    const [travelerS, setTravelerS] = useState("")
+    const [travelerD, setTravelerD] = useState("")
+
+    const findBuyerPickup = (ar) => {
+      let lngth = ar.length
+      let country = ar[lngth-1].value
+      let city = ar[0].value
+      if (lngth > 2) {
+          city += ', ' + ar[1].value
+      }
+      console.log("workeeeeeed", `${country}`)
+      setBuyerS(`${country}`)
+  }
+
+  const findBuyerDestination = (ar) => {
+    let lngth = ar.length
+    let country = ar[lngth-1].value
+    let city = ar[0].value
+    if (lngth > 2) {
+        city += ', ' + ar[1].value
+    }
+    console.log("workeeeeeed", `${country}`)
+    setBuyerD(`${country}`)
+}
+
+const findTravelerPickup = (ar) => {
+  let lngth = ar.length
+  let country = ar[lngth-1].value
+  let city = ar[0].value
+  if (lngth > 2) {
+      city += ', ' + ar[1].value
+  }
+  console.log("workeeeeeed", `${country}`)
+  setTravelerS(`${country}`)
+}
+
+const findTravelerDestination = (ar) => {
+let lngth = ar.length
+let country = ar[lngth-1].value
+let city = ar[0].value
+if (lngth > 2) {
+    city += ', ' + ar[1].value
+}
+console.log("workeeeeeed", `${country}`)
+setTravelerD(`${country}`)
+}
+
+const filterBuyers =  async () => {
+  if(!buyerD && !buyerS){
+    alert("Please enter either source or destination")
+  }else{
+    setLoad(true)
+    let config = {
+      headers: {
+          Authorization: `Bearer ${user.token}`
+        }}
+  
+  let {data} =   await axios.get(`http://143.198.168.244/api/buyers`,
+  config)
+  // console.log("=======", data.data)
+  let buy = data.data
+  let filteredBuyers = []
+  if(buy){
+    for(let i=0; i<buy.length; i++){
+      let x = buy[i].departure.split(",")
+      x = x[x.length-1]
+      x = x.replace(" ", "")
+
+
+      let y = buy[i].destination.split(",")
+      y = y[y.length-1]
+      y = y.replace(" ", "")
+      console.log("yyyyy", y, buyerD)
+
+      // if(x===buyerS){
+      //   console.log("got one here", x, buyerS)
+      // }
    
+
+      // console.log("xxxxx", x, buyerS)
+
+      if(buyerS && buyerD){
+         if(buyerS && buyerS==x && buyerD && buyerD==y){
+        filteredBuyers.push(buy[i])
+        console.log("yesss xxx", buy[i])
+      }
+      }else{
+         if(buyerS && buyerS==x){
+        filteredBuyers.push(buy[i])
+        console.log("yesss xxx", buy[i])
+      }
+
+      if(buyerD && buyerD==y){
+        filteredBuyers.push(buy[i])
+        console.log("yesss yyy", buy[i])
+      }
+      }
+     
+    }
+    console.log("after filter", filteredBuyers)
+   if(filteredBuyers.length>0){
+    setBuyerTotal(filteredBuyers)
+    setFilterBuyer(0)
+    setBuyersStatus("Filtered")
+   }else{
+    alert("No results found.")
+   }
+   setLoad(false)
+  
+  }
+  }
+}
+
+const [load, setLoad] = useState(false)
+
+const filterTravelers =  async () => {
+  if(!travelerD && !travelerS){
+    alert("Please enter either source or destination")
+  }else{
+    setLoad(true)
+    let config = {
+      headers: {
+          Authorization: `Bearer ${user.token}`
+        }}
+  
+  let {data} =   await axios.get(`http://143.198.168.244/api/travels`,
+  config)
+  // console.log("=======", data.data)
+  let travel = data.data
+  let filteredTravels = []
+  if(travel){
+    for(let i=0; i<travel.length; i++){
+      let x = travel[i].departure.split(",")
+      x = x[x.length-1]
+      x = x.replace(" ", "")
+
+       let y = travel[i].destination.split(",")
+      y = y[y.length-1]
+      y = y.replace(" ", "")
+      console.log("yyyyy", y, travelerD)
+
+      // if(x===travelerS){
+      //   console.log("got one here", x, travelerS)
+      // }
+     if(travelerD && travelerS){
+         if(travelerS && travelerS==x && travelerD && travelerD==y){
+        filteredTravels.push(travel[i])
+        console.log("yesss xxx", travel[i])
+      }
+      }else{
+         if(travelerS && travelerS==x){
+        filteredTravels.push(travel[i])
+        console.log("yesss xxx", travel[i])
+      }
+
+      if(travelerD && travelerD==y){
+        filteredTravels.push(travel[i])
+        console.log("yesss yyy", travel[i])
+      }
+      }
+
+      // console.log("xxxxx", x, travelerS)
+  
+     
+    }
+    console.log("after filter", filteredTravels)
+   if(filteredTravels.length>0){
+    setT(filteredTravels)
+    setFilterTraveler(0)
+    setTravelersStatus("Filtered")
+   }else{
+    alert("No results found.")
+   }
+
+   setLoad(false)
+   
+  }
+  }
+}
 
     useEffect(() => {   
       getUsers()
@@ -96,6 +296,7 @@ const ConnectScreen = () => {
 
 
     const getUsers = async () => {
+      setLoad(true)
       const config = {
       headers: {
           Authorization: `Bearer ${user.token}`
@@ -104,7 +305,7 @@ const ConnectScreen = () => {
     await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=${limit}`, config)
         .then((data, total) => {
           
-          // console.log("tttttttttttttttt:", t)
+          console.log("tttttttttttttttt:", data.data.data)
          setT(data.data.data)
          //setPageTraveler(pageTraveler + 1)
          setTravelerTotal([...travelerTotal, ...data.data.data])
@@ -133,207 +334,715 @@ const ConnectScreen = () => {
         setLoadingBuyer(false)
         setLoadingTraveler(false)
         setloading(false)
+        setLoad(false)
     }
 
         
   return (
 
-  <SafeAreaView style={styles.container}>
-    <View style={{
-      backgroundColor: "#fff",
-      justifyContent: "center",
-      alignItems: "center",
-      paddingBottom: 15
-    }}>
-    {/*   {loadingBuyer &&  
-              <View style={{
-                //height: 20000,
-                backgroundColor: 'yellow'
+    <>
+        {
+          load ? 
+          <ActivityIndicator style={{
+            justifyContent:"center",
+            marginTop:"48%",
+          }}
+          size="large"
+          />
+          :
+          <SafeAreaView style={styles.container}>
+          <View style={{
+            backgroundColor: "#fff",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom: 15
+          }}>
+          {/*   {loadingBuyer &&  
+                    <View style={{
+                      //height: 20000,
+                      backgroundColor: 'yellow'
+                  }}>
+                    <ActivityIndicator size="large" color="#777" />
+                  </View>
+                  } */}
+                 
+            <View style={{
+              flexDirection: "row",
+              alignItems: 'center',
+              justifyContent: "space-between",
+              width: width - 30,
+              backgroundColor: "#eee",
+              padding: 10,
+              borderRadius: 10
+            }}>
+              <Pressable style={{
+                  backgroundColor: selectedTab === 1 ? "#fff" : "#eee",
+                  borderRadius: 5,
+                  width: "49%",
+                  paddingVertical: 13,
+                  alignItems: "center"
+              }} onPress={()=>{
+                  isBuyer ? setIsBuyer(false) : null
+                  setSelectedTab(1)
+              }}>
+                  <Text style={{
+                      fontFamily: "Poppins_500Medium",
+                      fontSize: 14
+                  }}>Traveler</Text>
+              </Pressable>
+              <Pressable style={{
+                  backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
+                  borderRadius: 5,
+                  width: "49%",
+                  paddingVertical: 13,
+                  alignItems: "center"
+              }} onPress={()=>{
+                !isBuyer ? setIsBuyer(true) : null
+                setSelectedTab(2)
+              }}>
+                  <Text style={{
+                      fontFamily: "Poppins_500Medium",
+                      fontSize: 14
+                  }}>Shippers</Text>
+              </Pressable>
+            </View>
+          </View>
+          {loading ? (
+            <View style={{
+                paddingTop: 20
             }}>
               <ActivityIndicator size="large" color="#777" />
             </View>
-            } */}
+          ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
+            <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
+              {isBuyer ? (
+                <View style={{
+                  paddingHorizontal: 10,
+                  backgroundColor: 'white'
+                }}>
       
-      <View style={{
-        flexDirection: "row",
-        alignItems: 'center',
-        justifyContent: "space-between",
-        width: width - 30,
-        backgroundColor: "#eee",
-        padding: 10,
-        borderRadius: 10
-      }}>
-        <Pressable style={{
-            backgroundColor: selectedTab === 1 ? "#fff" : "#eee",
-            borderRadius: 5,
-            width: "49%",
-            paddingVertical: 13,
-            alignItems: "center"
-        }} onPress={()=>{
-            isBuyer ? setIsBuyer(false) : null
-            setSelectedTab(1)
-        }}>
-            <Text style={{
-                fontFamily: "Poppins_500Medium",
-                fontSize: 14
-            }}>Traveler</Text>
-        </Pressable>
-        <Pressable style={{
-            backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
-            borderRadius: 5,
-            width: "49%",
-            paddingVertical: 13,
-            alignItems: "center"
-        }} onPress={()=>{
-          !isBuyer ? setIsBuyer(true) : null
-          setSelectedTab(2)
-        }}>
-            <Text style={{
-                fontFamily: "Poppins_500Medium",
-                fontSize: 14
-            }}>Shippers</Text>
-        </Pressable>
-      </View>
-    </View>
-    {loading ? (
-      <View style={{
-          paddingTop: 20
-      }}>
-        <ActivityIndicator size="large" color="#777" />
-      </View>
-    ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
-      <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
-        {isBuyer ? (
-          <View style={{
-            paddingHorizontal: 10,
-            backgroundColor: 'white'
-          }}>
-            <FlatList
-              ListHeaderComponent={BuyerHeader}
-              data={buyerTotal}
-              contentContainerStyle={{
-                paddingBottom: 100
-              }}
-              maxToRenderPerBatch={2}
-              renderItem={({item}) => {
-                // console.log("first", item)
-                return (
-                  // <BuyerCard buyer={item} />
-                  <Buyer item={item} onPress={()=>{
-                    // console.log("first")
-                    // SheetManager.show('example-two');
-                  }} />
-                )
-              }}
-              onEndReached={() => {
-
-                if (pageBuyer == pageLimBuyer){
-                  return
-                }
-
-                else {
-                  changeBuyerPage()
-                }
+                        {
+                          filterBuyer==0 &&
+                         (
+                          buyersStatus=="All" ?
+                          <TouchableOpacity 
+                          onPress={()=>setFilterBuyer(1)}
+                          style = {{
+                              backgroundColor: '#e8e8e8',
+                              //backgroundColor: '#a991d4',
+                              //backgroundColor: 'black',
+                              //backgroundColor: '#009cdc',
+                              //backgroundColor: "#593196",
+                              //backgroundColor: '#7267e7',
+                              width:100,
+                              marginBottom:5,
+                              paddingHorizontal: 12,
+                              paddingVertical: 6,
+                              borderRadius: 10,
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                      }}>
+                          <Ionicons name="filter" size={24} color="black" />
+                          <Text style = {{
+                              fontSize: 18,
+                              marginLeft: 2,
+                              //color: 'white'
+                          }}>
+                            Filter
+                          </Text>
+                      </TouchableOpacity>
+      
+                      :
+      
+                     <>
+                      <Text style = {{
+                          textAlign:"center",
+                          fontSize:18
+                      }}>
+                        Showing results for {buyerS ? buyerS : "-"} to {buyerD ? buyerD : "-"}
+                      </Text>
+                      <TouchableOpacity 
+                      onPress={()=>{
+                        setBuyersStatus("All")
+                        getUsers()
+                      }}
+                      style = {{
+                          backgroundColor: '#e8e8e8',
+                          //backgroundColor: '#a991d4',
+                          //backgroundColor: 'black',
+                          //backgroundColor: '#009cdc',
+                          //backgroundColor: "#593196",
+                          //backgroundColor: '#7267e7',
+                          marginTop:10,
+                          marginBottom:5,
+                          marginLeft:"20%",
+                          width:"60%",
+                          paddingVertical: 6,
+                          borderRadius: 10,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent:"center"
+                  }}>
+                      {/* <Ionicons name="filter" size={24} color="black" /> */}
+                     
+                      
+                      <Text style = {{
+                          fontSize: 18,
+                          marginLeft: 2,
+                          //color: 'white'
+                      }}>
+                        Clear Filters
+                      </Text>
+                  </TouchableOpacity>
+                  </>
+                         )
+                        }
+      
+                        {
+                          filterBuyer==1 &&
+                          <View style = {{
+                            //backgroundColor: 'yellow',
+                            maxHeight: "100%",
+                        }}>
                 
-               
-               
-              }}
-            />
-
-{loadingBuyer && <View style = {{
-              top: "30%",
-              left: '50%',
-              zIndex: 100000,
-              position: "absolute",
-            }}> 
-             <ActivityIndicator size="large" color="#777" />
-            </View>}
-            
-          </View> 
-        ) : (
-          <View style = {{
-            paddingHorizontal: 10,
-            backgroundColor: 'white'
-          }}>
-            <FlatList
-              ListHeaderComponent={TravelerHeader}
-              data={t}
-              contentContainerStyle={{
-                paddingBottom: 100
-              }}
-              renderItem={({item}) => {
-                // console.log(item)
-                return (
-                  // <TravelerCard traveler= {item} />
-                  <TravelerCard item={item} />
-                )
-              }}
-              onEndReached={() => {
+                            <Pressable onPress={()=>{
+                              clearFilterBuyer()
+                            }}
+                                style = {{
+                                    //backgroundColor: '#E8E8E8',
+                                    paddingLeft: 10,
+                                    width: "10%"
                 
-                if (pageTraveler == pageLimTraveler){
-                  return
-                }
-
-                else {
-                  changeTravelerPage()
-                }
-               
-               
-              }}
-            />
-            {loadingTraveler && <View style = {{
-              top: "30%",
-              left: '50%',
-              zIndex: 100000,
-              position: "absolute",
-            }}> 
-             <ActivityIndicator size="large" color="#777" />
-            </View>}
-            
-          </View>
-        )}
-      </View>
-    ) : (selectedTab === 2 && b && b.length === 0) || (selectedTab === 1 && t && t.length === 0) ? (
-      <View style={{
-        alignItems: "center",
-        paddingTop: 60
-      }}>
-        <EmptyUnDraw />
-        <Text style={{
-          fontFamily: "Poppins_500Medium",
-          marginTop: 20,
-          textAlign: "center",
-          fontSize: 16
-        }}>No Ads Found</Text>
-      </View>
-    ) : (
-      <View style={{
-        alignItems: "center",
-        paddingTop: 60
-      }}>
-        <ErrorUnDraw />
-        <Text style={{
-          fontFamily: "Poppins_500Medium",
-          marginTop: 20,
-          textAlign: "center",
-          fontSize: 16
-        }}>Something went wrong</Text>
-        <Pressable onPress={()=>{
-          getUsers()
-        }} style={{
-          backgroundColor: "#eee",
-          borderRadius: 30,
-          height: 50,
-          width: 50,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 40
-        }}>
-          <Ionicons name="md-reload-outline" size={30} color="#999" />
-        </Pressable>
-      </View>
-    )}
-  </SafeAreaView>
+                                }}
+                            >
+                            <Ionicons name="close-circle" size={28} color="black" />
+                            </Pressable>
+                
+                            <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
+                                
+                                <Text style={{
+                                    marginTop: 20,
+                                    marginBottom: 3,
+                                    fontFamily: "Poppins_400Regular",
+                                    //fontSize: 18,
+                                }}>
+                                    Pickup Location
+                                </Text>
+                                <View style={{
+                                    borderWidth: 1,
+                                    borderColor: "gray",
+                                    borderWidth: 0,
+                                    //borderBottomWidth: 1,
+                                    borderColor: 'lightgray',
+                                    paddingHorizontal: 5,
+                                    //paddingVertical: 5,
+                                    borderRadius: 5,
+                                    //width: "95%"
+                                }}>
+                                    
+                                   
+                                   <View style={styles.container}>
+                
+                
+                                <GooglePlacesAutocomplete
+                                        placeholder='Enter pickup location of shipper'
+                                        onPress={(value)=>findBuyerPickup(value.terms)}
+                                        query={{
+                                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
+                                            language: 'en',
+                                            types: '(cities)'
+                                        }}
+                                        //keyboardAppearance= {'dark'}
+                                        styles={{
+                                          textInputContainer: {
+                                            // backgroundColor: 'grey',
+                                          },
+                                          textInput: {
+                                            borderWidth: 0.4,
+                                            borderStyle: "solid",
+                                            borderColor: "#000",
+                                            width:300,
+                                            color: '#5d5d5d',
+                                            //fontSize: 16,
+                                            borderRadius:5,
+                                            marginTop: 10,
+                                          },
+                                          predefinedPlacesDescription: {
+                                            color: '#1faadb',
+                                          },
+                                        }}
+                                        />
+                
+                                </View>
+                                </View>
+                                <Text style={{
+                                    marginTop: 20,
+                                    marginBottom: 3,
+                                    fontFamily: "Poppins_400Regular",
+                                    //fontSize: 18,
+                                }}>
+                                    Delivery Location
+                                </Text>
+                                <View style={{
+                                    borderWidth: 1,
+                                    borderWidth: 0,
+                                    //borderBottomWidth: 1,
+                                    borderColor: 'lightgray',
+                                    paddingHorizontal: 5,
+                                    //paddingVertical: 5,
+                                    borderRadius: 5,
+                                    //width: "95%"
+                                }}>
+                                    
+                
+                                <GooglePlacesAutocomplete
+                                        placeholder='Enter destination location of shipper'
+                                        onPress={(value)=>findBuyerDestination(value.terms)}
+                                        query={{
+                                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
+                                            language: 'en',
+                                            types: '(cities)'
+                                        }}
+                                        styles={{
+                                          textInputContainer: {
+                                            // backgroundColor: 'grey',
+                                          },
+                                          textInput: {
+                                            borderColor: "#000",
+                                            borderWidth: 0.4,
+                                            borderStyle: "solid",
+                                            width:300,
+                                            color: '#5d5d5d',
+                                            //fontSize: 16,
+                                            borderRadius:5,
+                                            marginTop: 10,
+                                          },
+                                          predefinedPlacesDescription: {
+                                            color: '#1faadb',
+                                          },
+                                        }}
+                                        />
+                                </View>
+                                </ScrollView>
+                                <View style = {{
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    paddingVertical: 30,
+                                }}>
+                                   
+                                    <Pressable 
+                                      onPress={()=>{
+                                        clearFilterBuyer()
+                                      }}
+                                        style = {{
+                                            backgroundColor: '#E8E8E8',
+                                            paddingHorizontal: 10,
+                                            paddingVertical: 7,
+                                            marginHorizontal: 30,
+                                            borderRadius: 5,
+                                        }}>
+                                        <Text>
+                                            Discard
+                                        </Text>
+                                    </Pressable>
+      
+                                    <Pressable
+                                    onPress={filterBuyers} 
+                                        style = {{
+                                            backgroundColor: '#593196',
+                                            paddingHorizontal: 30,
+                                            paddingVertical: 7,
+                                            marginHorizontal: 2,
+                                            borderRadius: 5,
+                                        }}>
+                                        <Text style = {{
+                                            color: 'white'
+                                        }}>
+                                            Apply 
+                                        </Text>
+                                    </Pressable >
+                                </View>
+                        </View>  
+                        }
+      
+                  <FlatList
+                    // ListHeaderComponent={BuyerHeader}
+                    data={buyerTotal}
+                    contentContainerStyle={{
+                      paddingBottom: 180
+                    }}
+                    maxToRenderPerBatch={2}
+                    renderItem={({item}) => {
+                      // console.log("first", item)
+                      return (
+                        // <BuyerCard buyer={item} />
+                        <Buyer item={item} onPress={()=>{
+                          // console.log("first")
+                          // SheetManager.show('example-two');
+                        }} />
+                      )
+                    }}
+                    onEndReached={() => {
+      
+                     if(buyersStatus==="All"){
+                      if (pageBuyer == pageLimBuyer){
+                        return
+                      }
+      
+                      else {
+                        changeBuyerPage()
+                      }
+                    }
+                      
+                     
+                     
+                    }}
+                  />
+      
+      {loadingBuyer && <View style = {{
+                    top: "30%",
+                    left: '50%',
+                    zIndex: 100000,
+                    position: "absolute",
+                  }}> 
+                   <ActivityIndicator size="large" color="#777" />
+                  </View>}
+                  
+                </View> 
+              ) : (
+                <View style = {{
+                  paddingHorizontal: 10,
+                  backgroundColor: 'white'
+                }}>
+                  
+                  {
+                          filterTraveler==0 &&
+                         (
+                          travelersStatus=="All" ?
+                          <TouchableOpacity 
+                          onPress={()=>setFilterTraveler(1)}
+                          style = {{
+                              backgroundColor: '#e8e8e8',
+                              //backgroundColor: '#a991d4',
+                              //backgroundColor: 'black',
+                              //backgroundColor: '#009cdc',
+                              //backgroundColor: "#593196",
+                              //backgroundColor: '#7267e7',
+                              width:100,
+                              marginBottom:5,
+                              paddingHorizontal: 12,
+                              paddingVertical: 6,
+                              borderRadius: 10,
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                      }}>
+                          <Ionicons name="filter" size={24} color="black" />
+                          <Text style = {{
+                              fontSize: 18,
+                              marginLeft: 2,
+                              //color: 'white'
+                          }}>
+                            Filter
+                          </Text>
+                      </TouchableOpacity>
+      
+                      :
+      
+                     <>
+                      <Text style = {{
+                          textAlign:"center",
+                          fontSize:18
+                      }}>
+                        Showing results for {travelerS ? travelerS : "-"} to {travelerD ? travelerD : "-"}
+                      </Text>
+                      <TouchableOpacity 
+                      onPress={()=>{
+                        setTravelersStatus("All")
+                        getUsers()
+                      }}
+                      style = {{
+                          backgroundColor: '#e8e8e8',
+                          //backgroundColor: '#a991d4',
+                          //backgroundColor: 'black',
+                          //backgroundColor: '#009cdc',
+                          //backgroundColor: "#593196",
+                          //backgroundColor: '#7267e7',
+                          marginTop:10,
+                          marginBottom:5,
+                          marginLeft:"20%",
+                          width:"60%",
+                          paddingVertical: 6,
+                          borderRadius: 10,
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          justifyContent:"center"
+                  }}>
+                      {/* <Ionicons name="filter" size={24} color="black" /> */}
+                     
+                      
+                      <Text style = {{
+                          fontSize: 18,
+                          marginLeft: 2,
+                          //color: 'white'
+                      }}>
+                        Clear Filters
+                      </Text>
+                  </TouchableOpacity>
+                  </>
+                         )
+                        }
+      
+                        {
+                          filterTraveler==1 &&
+                          <View style = {{
+                            //backgroundColor: 'yellow',
+                            maxHeight: "100%",
+                        }}>
+                
+                            <Pressable onPress={()=>{
+                              clearFilterTraveler()
+                            }}
+                                style = {{
+                                    //backgroundColor: '#E8E8E8',
+                                    paddingLeft: 10,
+                                    width: "10%"
+                
+                                }}
+                            >
+                            <Ionicons name="close-circle" size={28} color="black" />
+                            </Pressable>
+                
+                            <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
+                                
+                                <Text style={{
+                                    marginTop: 20,
+                                    marginBottom: 3,
+                                    fontFamily: "Poppins_400Regular",
+                                    //fontSize: 18,
+                                }}>
+                                    Pickup Location
+                                </Text>
+                                <View style={{
+                                    borderWidth: 1,
+                                    borderColor: "gray",
+                                    borderWidth: 0,
+                                    //borderBottomWidth: 1,
+                                    borderColor: 'lightgray',
+                                    paddingHorizontal: 5,
+                                    //paddingVertical: 5,
+                                    borderRadius: 5,
+                                    //width: "95%"
+                                }}>
+                                    
+                                   
+                                   <View style={styles.container}>
+                
+                
+                                <GooglePlacesAutocomplete
+                                        placeholder='Enter source location of traveler'
+                                        onPress={(value)=>findTravelerPickup(value.terms)}
+                                        query={{
+                                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
+                                            language: 'en',
+                                            types: '(cities)'
+                                        }}
+                                        //keyboardAppearance= {'dark'}
+                                        styles={{
+                                          textInputContainer: {
+                                            // backgroundColor: 'grey',
+                                          },
+                                          textInput: {
+                                            borderWidth: 0.4,
+                                            borderStyle: "solid",
+                                            borderColor: "#000",
+                                            width:300,
+                                            color: '#5d5d5d',
+                                            //fontSize: 16,
+                                            borderRadius:5,
+                                            marginTop: 10,
+                                          },
+                                          predefinedPlacesDescription: {
+                                            color: '#1faadb',
+                                          },
+                                        }}
+                                        />
+                
+                                </View>
+                                </View>
+                                <Text style={{
+                                    marginTop: 20,
+                                    marginBottom: 3,
+                                    fontFamily: "Poppins_400Regular",
+                                    //fontSize: 18,
+                                }}>
+                                    Delivery Location
+                                </Text>
+                                <View style={{
+                                    borderWidth: 1,
+                                    borderWidth: 0,
+                                    //borderBottomWidth: 1,
+                                    borderColor: 'lightgray',
+                                    paddingHorizontal: 5,
+                                    //paddingVertical: 5,
+                                    borderRadius: 5,
+                                    //width: "95%"
+                                }}>
+                                    
+                
+                                <GooglePlacesAutocomplete
+                                        placeholder='Enter destination location of traveler'
+                                        onPress={(value)=>findTravelerDestination(value.terms)}
+                                        query={{
+                                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
+                                            language: 'en',
+                                            types: '(cities)'
+                                        }}
+                                        styles={{
+                                          textInputContainer: {
+                                            // backgroundColor: 'grey',
+                                          },
+                                          textInput: {
+                                            borderColor: "#000",
+                                            borderWidth: 0.4,
+                                            borderStyle: "solid",
+                                            width:300,
+                                            color: '#5d5d5d',
+                                            //fontSize: 16,
+                                            borderRadius:5,
+                                            marginTop: 10,
+                                          },
+                                          predefinedPlacesDescription: {
+                                            color: '#1faadb',
+                                          },
+                                        }}
+                                        />
+                                </View>
+                                </ScrollView>
+                                <View style = {{
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    paddingVertical: 30,
+                                }}>
+                                   
+                                    <Pressable 
+                                      onPress={()=>{
+                                       clearFilterTraveler()
+                                      }}
+                                        style = {{
+                                            backgroundColor: '#E8E8E8',
+                                            paddingHorizontal: 10,
+                                            paddingVertical: 7,
+                                            marginHorizontal: 30,
+                                            borderRadius: 5,
+                                        }}>
+                                        <Text>
+                                            Discard
+                                        </Text>
+                                    </Pressable>
+      
+                                    <Pressable
+                                    onPress={filterTravelers} 
+                                        style = {{
+                                            backgroundColor: '#593196',
+                                            paddingHorizontal: 30,
+                                            paddingVertical: 7,
+                                            marginHorizontal: 2,
+                                            borderRadius: 5,
+                                        }}>
+                                        <Text style = {{
+                                            color: 'white'
+                                        }}>
+                                            Apply 
+                                        </Text>
+                                    </Pressable >
+                                </View>
+                        </View>  
+                        }
+      
+                  <FlatList
+                    // ListHeaderComponent={TravelerHeader}
+                    data={t}
+                    contentContainerStyle={{
+                      paddingBottom: 180
+                    }}
+                    renderItem={({item}) => {
+                      // console.log(item)
+                      return (
+                        // <TravelerCard traveler= {item} />
+                        <TravelerCard item={item} />
+                      )
+                    }}
+                    onEndReached={() => {
+                      
+                      if(travelersStatus=="All"){
+                      if (pageTraveler == pageLimTraveler){
+                        return
+                      }
+      
+                      else {
+                        changeTravelerPage()
+                      }
+                    }
+                     
+                     
+                    }}
+                  />
+                  {loadingTraveler && <View style = {{
+                    top: "30%",
+                    left: '50%',
+                    zIndex: 100000,
+                    position: "absolute",
+                  }}> 
+                   <ActivityIndicator size="large" color="#777" />
+                  </View>}
+                  
+                </View>
+              )}
+            </View>
+          ) : 
+          (selectedTab === 2 && b && b.length === 0) || (selectedTab === 1 && t && t.length === 0) ? (
+            <View style={{
+              alignItems: "center",
+              paddingTop: 60
+            }}>
+              <EmptyUnDraw />
+              <Text style={{
+                fontFamily: "Poppins_500Medium",
+                marginTop: 20,
+                textAlign: "center",
+                fontSize: 16
+              }}>No Ads Found</Text>
+            </View>
+          ) : (
+            <View style={{
+              alignItems: "center",
+              paddingTop: 60
+            }}>
+              <ErrorUnDraw />
+              <Text style={{
+                fontFamily: "Poppins_500Medium",
+                marginTop: 20,
+                textAlign: "center",
+                fontSize: 16
+              }}>Something went wrong</Text>
+              <Pressable onPress={()=>{
+                getUsers()
+              }} style={{
+                backgroundColor: "#eee",
+                borderRadius: 30,
+                height: 50,
+                width: 50,
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: 40
+              }}>
+                <Ionicons name="md-reload-outline" size={30} color="#999" />
+              </Pressable>
+            </View>
+          )}
+        </SafeAreaView>
+        }
+    </>
   )
 }
 

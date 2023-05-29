@@ -217,24 +217,42 @@ const BuyerChat = async(buyerData)=> {
                             fontSize: 16,
                             fontFamily: "Poppins_500Medium"
                         }}>{item.item[0]}</Text>
+                        <Pressable onPress={()=>navigation.navigate("Profile", {
+                    theUser: item?.user
+                })}>
                         <Text style={{
                             fontSize: 14,
                             fontFamily: "Poppins_500Medium",
                             color: "#777"
                         }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        </Pressable>
                     </View>
                 </View>
                 <View style={styles.horizontal}>
-                    <Text style={{
-                        fontSize: 15,
-                        fontFamily: "Poppins_600SemiBold",
-                    }}>
-                        {item?.totalWeight}
-                        <Text style={{
-                            fontFamily: "Poppins_400Regular",
-                            fontSize: 13
-                        }}>Kg</Text>
-                    </Text>
+                    {user.isImperial? (
+                         <Text style={{
+                            fontSize: 15,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.totalWeight*2.20462).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 13
+                            }}>lb</Text>
+                        </Text>
+                    ):(
+                         <Text style={{
+                            fontSize: 15,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {item?.totalWeight}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 13
+                            }}>Kg</Text>
+                        </Text>
+                    )}
+                   
                     {/* <Pressable style={styles.dottedButton} onPress={()=>{
                         setModalOpen(true)
                     }}>
@@ -422,8 +440,8 @@ export default Buyer
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
-        // height: 150,
-        width: '100%',
+        height: 250,
+        width: '98%',
         marginBottom: 15,
         borderWidth: 1,
         borderStyle: "solid",
