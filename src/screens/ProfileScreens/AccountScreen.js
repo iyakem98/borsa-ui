@@ -14,7 +14,31 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { KeyboardAvoidingView } from "react-native";
-
+import { LinearGradient } from "expo-linear-gradient";
+const data = [
+  { id: '0', imageSource: require('../../../assets/images/avatars/blank-avatar.png') },
+  { id: '1', imageSource: require('../../../assets/images/avatars/bottts1.png') },
+  { id: '2', imageSource: require('../../../assets/images/avatars/bottts2.png') },
+  { id: '3', imageSource: require('../../../assets/images/avatars/bottts3.png') },
+  { id: '4', imageSource: require('../../../assets/images/avatars/bottts4.png') },
+  { id: '5', imageSource: require('../../../assets/images/avatars/bottts5.png') },
+  { id: '6', imageSource: require('../../../assets/images/avatars/bottts6.png') },
+  { id: '7', imageSource: require('../../../assets/images/avatars/bottts7.png') },
+  { id: '8', imageSource: require('../../../assets/images/avatars/bottts8.png') },
+  { id: '9', imageSource: require('../../../assets/images/avatars/bottts9.png') },
+  { id: '10', imageSource: require('../../../assets/images/avatars/bottts10.png') },
+  { id: '11', imageSource: require('../../../assets/images/avatars/bottts11.png') },
+  { id: '12', imageSource: require('../../../assets/images/avatars/bottts12.png') },
+  { id: '13', imageSource: require('../../../assets/images/avatars/bottts13.png') },
+  { id: '14', imageSource: require('../../../assets/images/avatars/bottts14.png') },
+  { id: '15', imageSource: require('../../../assets/images/avatars/bottts15.png') },
+  { id: '16', imageSource: require('../../../assets/images/avatars/bottts16.png') },
+  { id: '17', imageSource: require('../../../assets/images/avatars/bottts17.png') },
+  { id: '18', imageSource: require('../../../assets/images/avatars/bottts18.png') },
+  { id: '19', imageSource: require('../../../assets/images/avatars/bottts19.png') },
+  { id: '20', imageSource: require('../../../assets/images/avatars/bottts20.png') },
+  // Add more images as needed
+];
 
 const AccountScreen = () => {
   const { user } = useSelector((state) => state.auth)
@@ -168,6 +192,11 @@ const AccountScreen = () => {
     console.log("user id issssssss:", user._id)
   }, [user])
 
+  const getImageSourceById = (id) => {
+    const item = data.find((item) => item.id === id);
+    return item ? item.imageSource : null;
+  };
+
 
   return (
     <SafeAreaView style={{flex: 1,
@@ -177,7 +206,7 @@ const AccountScreen = () => {
 
         }}>
     <View style = {{
-        paddingTop: 20,
+        //paddingTop: 20,
         backgroundColor: '#fff',
         height: "100%",
         width: "100%",
@@ -186,8 +215,11 @@ const AccountScreen = () => {
 
       {/* <KeyboardAwareScrollView> */}
 
-       
-        <View style={{
+      <LinearGradient  colors={['#593196', "#fff"]} style = {{
+                        width: '100%',
+                        paddingTop: 30,
+            }}>
+           <View style={{
           display:"flex",
           alignItems:"center",
           justifyContent:"center",
@@ -195,51 +227,42 @@ const AccountScreen = () => {
         }}>
           
 
-<Image source={{ uri: image }} style={{ 
-  width: 150,
-  height: 150,
-  marginTop:0,
-  // borderRadius: "100%",
-  borderRadius: 100,
-  alignItems: 'flex-end',
-  justifyContent: 'flex-end',
- }} />
+          <Image source={getImageSourceById(user.profilePic)} style={{ 
+            width: 150,
+            height: 150,
+            marginTop:0,
+            // borderRadius: "100%",
+            borderRadius: 100,
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+          }} />
 
-{/*<Entypo name="edit" size={24} color="red" onPress={()=>{
-  if(isEditing){
-    pickImage()
-  }
-}} 
-style={{
-  padding:2,
-  backgroundColor:"#593196",
-  color:"#fff",
-  marginLeft:90,
-  marginTop:-30,
-  zIndex:100
-}}
-/> */}
+        {/*<Entypo name="edit" size={24} color="red" onPress={()=>{
+          if(isEditing){
+            pickImage()
+          }
+        }} 
+        style={{
+          padding:2,
+          backgroundColor:"#593196",
+          color:"#fff",
+          marginLeft:90,
+          marginTop:-30,
+          zIndex:100
+        }}
+        /> */}
 
 
 
         <Text style={styles.fullname}>
-          {/* {firstName+' '+lastName} */}
           {firstName + ' ' + lastName} 
         </Text>
-
-       {/* <Text style={styles.username}>
-          @{userName}
-</Text> */}
-
-        <View style={styles.divider}>
-              
         </View>
+      </LinearGradient>
 
        
 
-        </View>
-
-        <View style={{marginTop:0, width: '100%', alignItems: 'center'}}>
+        <View style={{marginTop:10, width: '100%', alignItems: 'center'}}>
         {
           !isEditing &&
 

@@ -14,6 +14,31 @@ import moment from 'moment';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 
+const data = [
+    { id: '0', imageSource: require('../../assets/images/avatars/blank-avatar.png') },
+    { id: '1', imageSource: require('../../assets/images/avatars/bottts1.png') },
+    { id: '2', imageSource: require('../../assets/images/avatars/bottts2.png') },
+    { id: '3', imageSource: require('../../assets/images/avatars/bottts3.png') },
+    { id: '4', imageSource: require('../../assets/images/avatars/bottts4.png') },
+    { id: '5', imageSource: require('../../assets/images/avatars/bottts5.png') },
+    { id: '6', imageSource: require('../../assets/images/avatars/bottts6.png') },
+    { id: '7', imageSource: require('../../assets/images/avatars/bottts7.png') },
+    { id: '8', imageSource: require('../../assets/images/avatars/bottts8.png') },
+    { id: '9', imageSource: require('../../assets/images/avatars/bottts9.png') },
+    { id: '10', imageSource: require('../../assets/images/avatars/bottts10.png') },
+    { id: '11', imageSource: require('../../assets/images/avatars/bottts11.png') },
+    { id: '12', imageSource: require('../../assets/images/avatars/bottts12.png') },
+    { id: '13', imageSource: require('../../assets/images/avatars/bottts13.png') },
+    { id: '14', imageSource: require('../../assets/images/avatars/bottts14.png') },
+    { id: '15', imageSource: require('../../assets/images/avatars/bottts15.png') },
+    { id: '16', imageSource: require('../../assets/images/avatars/bottts16.png') },
+    { id: '17', imageSource: require('../../assets/images/avatars/bottts17.png') },
+    { id: '18', imageSource: require('../../assets/images/avatars/bottts18.png') },
+    { id: '19', imageSource: require('../../assets/images/avatars/bottts19.png') },
+    { id: '20', imageSource: require('../../assets/images/avatars/bottts20.png') },
+    // Add more images as needed
+  ];
+
 const ProfileScreen = ({navigation}) => {
     const { user } = useSelector((state) => state.auth)
     const navigate = useNavigation()
@@ -65,6 +90,11 @@ const ProfileScreen = ({navigation}) => {
         alert('ok')
       };
 
+      const getImageSourceById = (id) => {
+        const item = data.find((item) => item.id === id);
+        return item ? item.imageSource : null;
+      };
+
   return (
     
     <View style = {{
@@ -73,11 +103,11 @@ const ProfileScreen = ({navigation}) => {
     }}>
          <View>
          <LinearGradient 
-                    colors={['#705c9d','#593196']}
+                    colors={['#593196', '#705c9d', "#fff"]}
                     style = {{
                         //height: "100%",
                         //alignItems: 'center',
-                        paddingTop: "10%",
+                        paddingTop: "25%",
                         paddingHorizontal: 20,
                         paddingBottom: 50,
                         //justifyContent: 'center'
@@ -86,7 +116,7 @@ const ProfileScreen = ({navigation}) => {
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
-                 <Image  source={{uri: user?.profilePic}} style={{ 
+                 <Image  source={getImageSourceById(user.profilePic)} style={{ 
                     width: 120,
                     height: 120,
                     marginTop:0,
@@ -103,7 +133,7 @@ const ProfileScreen = ({navigation}) => {
                             marginTop: 20,
                             // marginBottom: 2,
                             fontFamily: "Poppins_400Regular",
-                            color: 'white'
+                            //color: 'white'
                         }}>
                             {user?.firstName + ' ' + user?.lastName}
                         </Text>
@@ -114,7 +144,7 @@ const ProfileScreen = ({navigation}) => {
                             borderRadius: 20,
                         }}>
                             <Text style = {{
-                            color: '#fff',
+                            //color: '#fff',
                             fontFamily: "Poppins_400Regular"
                             }}>
                               {user?.email}

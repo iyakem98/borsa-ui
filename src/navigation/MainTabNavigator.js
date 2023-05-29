@@ -29,6 +29,7 @@ import { io } from 'socket.io-client';
 import { API_BASE_URL_Socket } from '../utils/config';
 import { fetchChat } from '../features/chat/chatSlice';
 import WelcomeProPic from '../screens/ProfileScreens/WelcomeProPic';
+import ProfilePicker from '../screens/ProfilePicker';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -217,7 +218,7 @@ const MainTabNavigator = () => {
             headerShown: false
         }} />
 
-        <Tab.Screen name="Temporary" component={WelcomeProPic} options={{
+        <Tab.Screen name="Temporary" component={ProfilePicker} options={{
             tabBarIcon: ({color, size}) => (
                 <FontAwesome name="random" size={size} color={color} /> 
             ),
