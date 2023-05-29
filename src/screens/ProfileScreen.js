@@ -103,7 +103,8 @@ const ProfileScreen = ({navigation}) => {
     }}>
          <View>
          <LinearGradient 
-                    colors={['#593196', '#705c9d', "#fff"]}
+                    //colors={['#593196', '#705c9d', "#fff"]}
+                    colors={['#593196', "#fff"]}
                     style = {{
                         //height: "100%",
                         //alignItems: 'center',
