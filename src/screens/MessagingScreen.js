@@ -192,13 +192,14 @@ const MessagingScreen = ({navigation}) => {
           Authorization: `Bearer ${user.token}`
         }
       }
+      console.log("-=-=--=")
       const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
       config)
       await AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data?.data))
 
       setMessages(data?.data)
       setNewwMessage(false)
-      return data;
+      console.log("-=-=")
    
     } catch(error){
       console.log(error)
@@ -219,7 +220,6 @@ const MessagingScreen = ({navigation}) => {
 
       setMessages((prev)=>[...prev, ...data.data])
       socket.current.emit("join chat", chattId)
-      return data;
     } catch(error){
     }
     setloading(false)
@@ -282,7 +282,7 @@ const MessagingScreen = ({navigation}) => {
               }
             }
 
-            console.log("chats are", dateVisible)
+            // console.log("chats are", dateVisible)
 
             return (
               <>
