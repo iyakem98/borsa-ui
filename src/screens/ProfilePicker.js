@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { getUserDetails } from "../features/auth/authSlice";
 import { API_BASE_URL } from "../utils/config";
 
 
@@ -58,6 +59,7 @@ const ProfilePicker = () => {
             'Content-Type': 'application/json',
         }}).then((data) => {
           alert('profile updated')
+          dispatch(getUserDetails(user._id))
           // handleLogout()
           navigation.navigate('More')
         }).catch((err) => {dea
@@ -76,6 +78,11 @@ const ProfilePicker = () => {
              <Image source={item.imageSource} style={styles.image} />
         </TouchableOpacity>
       );
+    
+    const handleCancel = () => {
+      setTempPic(null)
+      navigation.navigate('More')
+    }
     
   return (
         <View style={styles.container}>
@@ -120,13 +127,14 @@ const ProfilePicker = () => {
                     paddingVertical: 10,
                 }}>
 
-                    <TouchableOpacity style = {{
-                        backgroundColor: '#eee',
-                        paddingHorizontal: 10,
-                        paddingVertical: 6,
-                        borderRadius: 5,
-                        marginHorizontal: 5,
-                    }}>
+                    <TouchableOpacity onPress={handleCancel}
+                      style = {{
+                          backgroundColor: '#eee',
+                          paddingHorizontal: 10,
+                          paddingVertical: 6,
+                          borderRadius: 5,
+                          marginHorizontal: 5,
+                      }}>
                         <Text>
                             Cancel
                         </Text>
