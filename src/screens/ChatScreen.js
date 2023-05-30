@@ -202,7 +202,7 @@ const ChatScreen = () => {
             marginLeft: 2,
             fontSize: 15
           }}>
-            {moment(user.createdAt).format("MMM D, YYYY")}
+            {moment(user?.createdAt).format("MMM D, YYYY")}
           </Text>
         </View>
           <View style = {{
