@@ -89,11 +89,11 @@ export default function App() {
                 <View
             style={{
               flex: 1,
-              maxHeight:25,
+              maxHeight:20,
               backgroundColor: '#292929',
               alignItems: 'center',
               justifyContent: 'center',
-              marginBottom:10
+              marginBottom:2
             }}>
             <StatusBar style="light" />
           </View>

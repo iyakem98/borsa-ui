@@ -233,7 +233,7 @@ const MessagingScreen = ({navigation}) => {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''} style={{
         position: "relative",
         flex: 1,
-        height: height - 220
+        height: height - 200
       }}>
         <HeaderChat
           isActive={isActive}
