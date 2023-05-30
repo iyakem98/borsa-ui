@@ -81,7 +81,7 @@ const Description = ({navigation}) => {
     }
 
     const postTraveler = async () => {
-        if(!luggageSpace || !proofCode){
+        if(!luggageSpace){
             alert("Please fill the required fields.")
         }else{
             console.log("param", route.params)
@@ -126,7 +126,7 @@ const Description = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={route.params.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
+            <Header title={route.params.cardType == 2 ? "Shipping" : "Traveling"} backBtn />
             {
               route.params.cardType == 2 &&
               <>

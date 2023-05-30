@@ -84,7 +84,7 @@ const FromTo = ({navigation}) => {
     
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={route.params?.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
+            <Header title={route.params?.cardType == 2 ? "Shipping" : "Traveling"} backBtn />
             {route.params.cardType == 2 && 
             <>
                 <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
