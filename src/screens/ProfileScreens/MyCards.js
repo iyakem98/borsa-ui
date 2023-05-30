@@ -256,7 +256,7 @@ const ConnectScreen = () => {
           <Text style={{
               fontFamily: "Poppins_500Medium",
               fontSize: 14
-          }}>Traveler</Text>
+          }}>Traveling</Text>
       </Pressable>
       <Pressable style={{
           backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
@@ -271,7 +271,7 @@ const ConnectScreen = () => {
           <Text style={{
               fontFamily: "Poppins_500Medium",
               fontSize: 14
-          }}>Shipper</Text>
+          }}>Shipping</Text>
       </Pressable>
     </View>
   </View>
