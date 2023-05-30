@@ -245,7 +245,7 @@ const BuyerChat = async(buyerData)=> {
                             fontSize: 15,
                             fontFamily: "Poppins_600SemiBold",
                         }}>
-                            {item?.totalWeight}
+                            {(item?.totalWeight).toFixed(1)}
                             <Text style={{
                                 fontFamily: "Poppins_400Regular",
                                 fontSize: 13

@@ -16,6 +16,7 @@ import SheetManager from 'react-native-actions-sheet';
 import moment from 'moment'
 import { useRoute } from '@react-navigation/native'
 import Header from '../../components/Shared/Header'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const width = Dimensions.get("screen").width
 
@@ -368,6 +369,11 @@ const ConnectScreen = () => {
               }}>
                 You have not posted any traveler card yet.
               </Text>
+              <LinearGradient  colors={['#13b955', "#0a863b"]} style = {{
+                        width: '100%',
+                        borderRadius: 5,
+                        //paddingTop: 100,
+            }}>
               <Pressable 
                 onPress={()=>{
                   navigation.navigate("New Post", {
@@ -375,17 +381,20 @@ const ConnectScreen = () => {
                   })
               }}
                 style = {{
-                  backgroundColor: '#13b955',
+                  //backgroundColor: '#eee',
                   padding: 8,
+                  paddingHorizontal: 22,
                   borderRadius: 10
                 }}>
                 <Text style = {{
                   fontSize: 18,
+                  fontFamily: "Poppins_400Medium",
                   color: 'white',
                 }}>
-                  Add a new card
+                  Add a card
                 </Text>
               </Pressable>
+              </LinearGradient>
             </View>
             }
 
@@ -640,6 +649,11 @@ const ConnectScreen = () => {
                 }}>
                   You have not posted any shipping card yet.
                 </Text>
+                <LinearGradient  colors={['#593196', "#3f216c"]} style = {{
+                        width: '100%',
+                        borderRadius: 5
+                        //paddingTop: 30,
+            }}>
                 <Pressable 
                   onPress={()=>{
                     navigation.navigate("New Post", {
@@ -647,8 +661,8 @@ const ConnectScreen = () => {
                     })
                 }}
                   style = {{
-                    backgroundColor: '#13b955',
-                    backgroundColor: '#593196',
+                    //backgroundColor: '#13b955',
+                    //backgroundColor: '#593196',
                     padding: 8,
                     borderRadius: 10
                   }}>
@@ -659,6 +673,7 @@ const ConnectScreen = () => {
                     Add a new card
                   </Text>
                 </Pressable>
+                </LinearGradient>
               </View>
               }
 
