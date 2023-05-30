@@ -388,7 +388,7 @@ const filterTravelers =  async () => {
                   <Text style={{
                       fontFamily: "Poppins_500Medium",
                       fontSize: 14
-                  }}>Traveler</Text>
+                  }}>Traveling</Text>
               </Pressable>
               <Pressable style={{
                   backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
@@ -403,7 +403,7 @@ const filterTravelers =  async () => {
                   <Text style={{
                       fontFamily: "Poppins_500Medium",
                       fontSize: 14
-                  }}>Shippers</Text>
+                  }}>Shipping</Text>
               </Pressable>
             </View>
           </View>
