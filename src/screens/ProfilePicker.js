@@ -5,6 +5,8 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { getUserDetails } from "../features/auth/authSlice";
 import { API_BASE_URL } from "../utils/config";
+import { LinearGradient } from "expo-linear-gradient";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 
 
 const data = [
@@ -81,13 +83,26 @@ const ProfilePicker = () => {
     
     const handleCancel = () => {
       setTempPic(null)
-      navigation.navigate('More')
+      navigation.popToTop()
     }
     
   return (
         <View style={styles.container}>
+          <LinearGradient  colors={['#593196', "#fff"]} style = {{
+                        width: '100%',
+                        paddingTop: 100,
+            }}>
+              <View>
+              <Pressable onPress={()=>navigation.popToTop()}
+                style = {{
+                  paddingLeft: 10,
+                }}>
+              <FontAwesome5 name="chevron-left" size={24} color="black" />
+              </Pressable>
+            </View>
             <View style = {{
                 marginBottom: 20,
+                alignItems: 'center'
             }}>
                 {tempPic? (
                     <Image source={tempPic.imageSource} style={{ 
@@ -112,14 +127,15 @@ const ProfilePicker = () => {
                       
                 )}
             </View>
+            </LinearGradient>
             <View style = {{
                 marginBottom: 10,
             }}>
                 <Text style = {{
-                    fontSize: 18,
+                    fontSize: 20,
                     fontFamily: "Poppins_400Regular",
                 }}>
-                    Pick an avatar from below
+                   Choose your Bomoji!
                 </Text>
                 <View style = {{
                     flexDirection: 'row',
@@ -178,7 +194,7 @@ const ProfilePicker = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingTop: 90,
+      //paddingTop: 90,
       alignItems: 'center',
       backgroundColor: 'white'
     },

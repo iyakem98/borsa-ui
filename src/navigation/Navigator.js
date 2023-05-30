@@ -50,6 +50,7 @@ import { fetchChat } from "../features/chat/chatSlice"
 import ProfileScreen from "../screens/ProfileScreens/Profile"
 import WelcomeAddPost from "../screens/ProfileScreens/WelcomeAddPost"
 import WelcomeProPic from "../screens/ProfileScreens/WelcomeProPic"
+import ProfilePicker from "../screens/ProfilePicker"
 
 
 
@@ -138,6 +139,7 @@ const Navigator = ({showOnBoarding}) => {
         })}/>
         <Stack.Screen name="WelcomePic" component={WelcomeProPic} options={{headerShown: false}} />
         <Stack.Screen name="WelcomePost" component={WelcomeAddPost} options={{headerShown: false}} />
+        <Stack.Screen name="ProfilePicker" component={ProfilePicker} options={{headerShown: false}} />
       <Stack.Screen name="Connect" component={ConnectScreen} />
       <Stack.Screen name="User Details" component={OtherProfile} />
       <Stack.Screen name="New Post" component={PostIndex} />

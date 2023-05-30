@@ -218,7 +218,7 @@ const MainTabNavigator = () => {
             headerShown: false
         }} />
 
-        <Tab.Screen name="Temporary" component={ProfilePicker} options={{
+        <Tab.Screen name="Temporary" component={WelcomeProPic} options={{
             tabBarIcon: ({color, size}) => (
                 <FontAwesome name="random" size={size} color={color} /> 
             ),

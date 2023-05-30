@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native"
+import { View, Text, StyleSheet, Pressable, Image } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { useSelector } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
@@ -58,13 +58,14 @@ const WelcomeProPic = () => {
         width: '100%',
         //paddingHorizontal: 30,
     }}>
-        <Pressable style = {{
-            backgroundColor: "#13b955",
-            borderRadius: 8,
-            marginHorizontal: 5,
-            paddingHorizontal: 12,
-            paddingVertical: 3,
-        }}>
+        <Pressable onPress={() => navigation.navigate('ProfilePicker')}
+            style = {{
+                backgroundColor: "#13b955",
+                borderRadius: 8,
+                marginHorizontal: 5,
+                paddingHorizontal: 12,
+                paddingVertical: 3,
+            }}>
 
             <Text style = {{
                 color: 'white',
@@ -95,6 +96,64 @@ const WelcomeProPic = () => {
 
         </Pressable>
     </View>
+
+   {/* <View style = {{
+        width: "100%",
+        alignItems: 'center',
+        paddingTop: 1,
+        paddingLeft: 40,
+    }}>
+        <Image 
+                  source = {require ('../../../assets/images/avatars/bottts8.png')} 
+                  style = {{
+                    width: 160,
+                    height: 160,
+                    resizeMode: 'cover',
+                    marginBottom: 20,
+                    background: 'white'
+                  }}
+                />
+        </View>
+        <View style = {{
+        width: "100%",
+        position: 'absolute',
+        bottom: 80,
+        left: 10,
+        //alignItems: 'center',
+        //paddingTop: 40,
+    }}>
+        <Image 
+                  source = {require ('../../../assets/images/avatars/bottts12.png')} 
+                  style = {{
+                    width: 160,
+                    height: 160,
+                    resizeMode: 'cover',
+                    marginBottom: 20,
+                    background: 'white'
+                  }}
+                />
+        </View>
+
+        <View style = {{
+        width: "100%",
+        position: 'absolute',
+        alignItems: 'flex-end',
+        bottom: 10,
+        right: 40,
+        //alignItems: 'center',
+        //paddingTop: 40,
+    }}>
+        <Image 
+                  source = {require ('../../../assets/images/avatars/bottts11.png')} 
+                  style = {{
+                    width: 160,
+                    height: 160,
+                    resizeMode: 'cover',
+                    marginBottom: 20,
+                    background: 'white'
+                  }}
+                />
+                </View> */}
 
    
 

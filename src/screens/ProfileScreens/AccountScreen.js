@@ -1,4 +1,4 @@
-import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView } from "react-native"
+import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView , Dimensions} from "react-native"
 import profile from '../../../assets/data/profile.json'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
@@ -40,6 +40,8 @@ const data = [
   // Add more images as needed
 ];
 
+const screenWidth = Dimensions.get('window').width;
+
 const AccountScreen = () => {
   const { user } = useSelector((state) => state.auth)
   const navigation = useNavigation()
@@ -57,6 +59,8 @@ const AccountScreen = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [placeResult, setPlaceResult] = useState([])
   const [userPreview, setUserPriview] = useState("")
+  const [selectedTab, setSelectedTab] = useState(0)
+  const [isImperial, setIsImperial] = useState(user.isImperial)
 
   const [isTraveler, setIsTraveler] = useState(user.isTraveler)
   const [isBuyer, setIsBuyer] = useState(user.isBuyer)
@@ -114,9 +118,9 @@ const AccountScreen = () => {
       "isTraveler": true,
       "isBuyer": true,
       "address": address,
-      "profilePic": image,
       "hideTravelerCard": false,
-      "hideBuyerCard": false
+      "hideBuyerCard": false,
+      "isImperial": isImperial,
     }
 
     axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
@@ -315,7 +319,8 @@ const AccountScreen = () => {
             setAddress(myUser.address)
             setIsBuyer(myUser.isBuyer)
             setIsTraveler(myUser.isTraveler)
-            setImage(def)
+            setIsImperial(myUser.isImperial)
+            //setImage(def)
           }}
           >
              <Text style = {{fontFamily: "Poppins_400Regular"}}>Cancel</Text>
@@ -469,6 +474,70 @@ const AccountScreen = () => {
               //onChangeText = {this.handlePassword}
               />
         </View>
+        <View style={{
+            backgroundColor: "#fff",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom: 15
+          }}>
+          {/*   {loadingBuyer &&  
+                    <View style={{
+                      //height: 20000,
+                      backgroundColor: 'yellow'
+                  }}>
+                    <ActivityIndicator size="large" color="#777" />
+                  </View>
+                  } */}
+                 
+            <View style={{
+              flexDirection: "row",
+              //alignItems: 'center',
+              justifyContent: "space-between",
+              width: screenWidth - 80,
+              marginTop: 15,
+              backgroundColor: "#eee",
+              paddingHorizontal: 5,
+              borderRadius: 10,
+              paddingVertical: 6
+            }}>
+              <Pressable disabled = {isEditing? false : true}
+                style={{
+                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    borderRadius: 5,
+                    width: "49%",
+                    paddingVertical: 5,
+                    alignItems: "center",
+                    justifyContent: 'center',
+                }} onPress={()=>{
+                    setSelectedTab(1)
+                    setIsImperial(false)
+                }}>
+                  <Text style={{
+                      fontFamily: "Poppins_500Medium",
+                      fontSize: 14,
+                      color: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#fff" : "#000",
+                  }}>Metric</Text>
+              </Pressable>
+              <Pressable disabled = {isEditing? false : true}
+                style={{
+                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    borderRadius: 5,
+                    width: "49%",
+                    paddingVertical: 5,
+                    justifyContent: 'center',
+                    alignItems: "center"
+                }} onPress={()=>{
+                  setSelectedTab(2)
+                  setIsImperial(true)
+                }}>
+                  <Text style={{
+                      fontFamily: "Poppins_500Medium",
+                      fontSize: 14,
+                      color: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#fff" : "#000",
+                  }}>Imperial</Text>
+              </Pressable>
+            </View>
+          </View>
 
     
 {/* </KeyboardAwareScrollView>     */}
