@@ -320,6 +320,7 @@ const AccountScreen = () => {
             setIsBuyer(myUser.isBuyer)
             setIsTraveler(myUser.isTraveler)
             setIsImperial(myUser.isImperial)
+            setSelectedTab(0)
             //setImage(def)
           }}
           >
