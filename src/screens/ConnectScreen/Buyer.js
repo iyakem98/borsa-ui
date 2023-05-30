@@ -294,13 +294,13 @@ const BuyerChat = async(buyerData)=> {
                     <Text style={styles.txtCity}>
                         {locationPickUpLength === 3 ? <>{`${locationPickUp[0]}, ${locationPickUp[1]}`}</> : locationPickUp[0]}
                     </Text>
-                    <Text style={{
+                    {/*<Text style={{
                         fontFamily: "Poppins_500Medium",
                         fontSize: 12,
                         color: "#777"
                     }}>
                         {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
-                    </Text>
+                </Text> */}
                 </View>
             </View>
             <View style={{
@@ -480,7 +480,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 25,
+        //marginTop: 2,
         paddingHorizontal: 10,
     },
     horizontal: {
