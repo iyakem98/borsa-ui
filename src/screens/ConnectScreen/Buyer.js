@@ -440,7 +440,7 @@ export default Buyer
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
-        height: 250,
+        //height: 250,
         width: '98%',
         marginBottom: 15,
         borderWidth: 1,
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
         borderColor: "#eee",
         borderRadius: 5,
         paddingTop: 20,
-        justifyContent: "space-between",
+        //justifyContent: "space-between",
         overflow: "hidden"
     },
     image: {
@@ -464,6 +464,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 10,
+        marginBottom: 10,
         // paddingRight: 20
     },
     txtCountry: {
@@ -481,6 +482,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         //marginTop: 2,
+        paddingVertical: 5,
         paddingHorizontal: 10,
     },
     horizontal: {
