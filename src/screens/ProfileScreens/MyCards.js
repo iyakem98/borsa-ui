@@ -437,6 +437,8 @@ const ConnectScreen = () => {
                       </View>
 
 
+
+
               <View style={{
                   padding:1,
                   marginTop: -10,
@@ -452,15 +454,25 @@ const ConnectScreen = () => {
                   <AntDesign name="calendar" size={22} color="#696969" />
                   {"  "+moment(travel.departureDate).format("DD-MM-YY")} 
                   
-                  </Text> 
-
-
-                  <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
+                  </Text>
+                   
+              {user.isImperial? (
+                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
+                {"  "}
+                <MaterialIcons name="luggage" size={26} color="black" />
+                {" " + (travel.luggageSpace*2.20462).toFixed(1)} lb 
+                
+                </Text> 
+              ) : (
+                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
                   {"  "}
                   <MaterialIcons name="luggage" size={26} color="black" />
-                  {"  "+travel.luggageSpace} kg 
+                  {"  "+ (travel.luggageSpace).toFixed(1)} kg 
                   
                   </Text> 
+              )}
+                
+                  
 
                   
                   <View style = {{
