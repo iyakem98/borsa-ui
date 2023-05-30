@@ -249,7 +249,7 @@ const BuyerChat = async(buyerData)=> {
                             <Text style={{
                                 fontFamily: "Poppins_400Regular",
                                 fontSize: 13
-                            }}>Kg</Text>
+                            }}>kg</Text>
                         </Text>
                     )}
                    
