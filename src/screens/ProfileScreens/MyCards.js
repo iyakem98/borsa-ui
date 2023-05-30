@@ -448,13 +448,24 @@ const ConnectScreen = () => {
           {/*<MaterialIcons name="delete" size={24} color="white" /> */}
           
           </Text>
-
+              
+                {user.isImperial? (
+                   <Text style={{textAlign:"left", marginTop:2, fontSize:17, color:"black"}}>
+                   {"  "}
+                   <AntDesign name="calendar" size={22} color="#696969" />
+                   {"  "+moment(travel.departureDate).format("MM-DD-YY")} 
+                   
+                   </Text>
+                ) : (
                   <Text style={{textAlign:"left", marginTop:2, fontSize:17, color:"black"}}>
                   {"  "}
                   <AntDesign name="calendar" size={22} color="#696969" />
                   {"  "+moment(travel.departureDate).format("DD-MM-YY")} 
                   
                   </Text>
+                )}
+
+                 
                    
               {user.isImperial? (
                 <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
