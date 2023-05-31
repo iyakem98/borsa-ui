@@ -86,17 +86,7 @@ export default function App() {
     return (
       <Provider store={store}>
         <PaperProvider>
-                <View
-            style={{
-              flex: 1,
-              maxHeight:20,
-              backgroundColor: '#292929',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom:2
-            }}>
-            <StatusBar style="light" />
-          </View>
+          <StatusBar style="light" />
           <SafeAreaProvider style={{
             backgroundColor: "#000",
             flex: 1
