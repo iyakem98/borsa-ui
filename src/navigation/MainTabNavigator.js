@@ -30,6 +30,7 @@ import { API_BASE_URL_Socket } from '../utils/config';
 import { fetchChat } from '../features/chat/chatSlice';
 import WelcomeProPic from '../screens/ProfileScreens/WelcomeProPic';
 import ProfilePicker from '../screens/ProfilePicker';
+import axios from 'axios';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -48,10 +49,20 @@ const MainTabNavigator = () => {
     var socket = useRef(null)
     const { user } = useSelector((state) => state.auth)
 
-    const checkIsMarked = () => {
+    const checkIsMarked = async() => {
         const userId = user?._id
         for (let index = 0; index < chattts.length; index++) {
             const isMarked = chattts[index]?.latestMessage?.marked;
+
+            const res = await axios.get('http://143.198.168.244/api/message/count/new', {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+            
+            if(res?.data?.count && res?.data?.count > 0) {
+                setNotifFlag(true)
+            }
             
             if(isMarked === false && userId == chattts[index]?.latestMessage?.receiver) {
                 console.log(isMarked)

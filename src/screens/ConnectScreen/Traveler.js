@@ -304,7 +304,7 @@ useEffect(() => {
                 </View>
                 <View style={styles.horizontal}>
                 <MaterialIcons name="luggage" size={24} color="#593196" />
-                {user.isImperial? (
+                {user?.isImperial? (
                          <Text style={{
                             fontSize: 18,
                             fontFamily: "Poppins_600SemiBold",
