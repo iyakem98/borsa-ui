@@ -89,13 +89,8 @@ export default function App() {
                 <View
             style={{
               flex: 1,
-              maxHeight:20,
-              backgroundColor: '#292929',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom:2
             }}>
-            <StatusBar style="light" />
+            <StatusBar style="dark" />
           </View>
           <SafeAreaProvider style={{
             backgroundColor: "#000",
