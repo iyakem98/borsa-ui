@@ -16,6 +16,7 @@ import SheetManager from 'react-native-actions-sheet';
 import moment from 'moment'
 import { useRoute } from '@react-navigation/native'
 import Header from '../../components/Shared/Header'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const width = Dimensions.get("screen").width
 
@@ -256,7 +257,7 @@ const ConnectScreen = () => {
           <Text style={{
               fontFamily: "Poppins_500Medium",
               fontSize: 14
-          }}>Traveler</Text>
+          }}>Traveling</Text>
       </Pressable>
       <Pressable style={{
           backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
@@ -271,7 +272,7 @@ const ConnectScreen = () => {
           <Text style={{
               fontFamily: "Poppins_500Medium",
               fontSize: 14
-          }}>Shipper</Text>
+          }}>Shipping</Text>
       </Pressable>
     </View>
   </View>
@@ -368,6 +369,11 @@ const ConnectScreen = () => {
               }}>
                 You have not posted any traveler card yet.
               </Text>
+              <LinearGradient  colors={['#13b955', "#0a863b"]} style = {{
+                        width: '100%',
+                        borderRadius: 5,
+                        //paddingTop: 100,
+            }}>
               <Pressable 
                 onPress={()=>{
                   navigation.navigate("New Post", {
@@ -375,17 +381,20 @@ const ConnectScreen = () => {
                   })
               }}
                 style = {{
-                  backgroundColor: '#13b955',
+                  //backgroundColor: '#eee',
                   padding: 8,
+                  paddingHorizontal: 22,
                   borderRadius: 10
                 }}>
                 <Text style = {{
                   fontSize: 18,
+                  fontFamily: "Poppins_400Medium",
                   color: 'white',
                 }}>
-                  Add a new card
+                  Add a card
                 </Text>
               </Pressable>
+              </LinearGradient>
             </View>
             }
 
@@ -437,6 +446,8 @@ const ConnectScreen = () => {
                       </View>
 
 
+
+
               <View style={{
                   padding:1,
                   marginTop: -10,
@@ -446,21 +457,42 @@ const ConnectScreen = () => {
           {/*<MaterialIcons name="delete" size={24} color="white" /> */}
           
           </Text>
-
+              
+                {user.isImperial? (
+                   <Text style={{textAlign:"left", marginTop:2, fontSize:17, color:"black"}}>
+                   {"  "}
+                   <AntDesign name="calendar" size={22} color="#696969" />
+                   {"  "+moment(travel.departureDate).format("MM-DD-YY")} 
+                   
+                   </Text>
+                ) : (
                   <Text style={{textAlign:"left", marginTop:2, fontSize:17, color:"black"}}>
                   {"  "}
                   <AntDesign name="calendar" size={22} color="#696969" />
                   {"  "+moment(travel.departureDate).format("DD-MM-YY")} 
                   
-                  </Text> 
+                  </Text>
+                )}
 
-
-                  <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
+                 
+                   
+              {user.isImperial? (
+                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
+                {"  "}
+                <MaterialIcons name="luggage" size={26} color="black" />
+                {" " + (travel.luggageSpace*2.20462).toFixed(1)} lb 
+                
+                </Text> 
+              ) : (
+                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
                   {"  "}
                   <MaterialIcons name="luggage" size={26} color="black" />
-                  {"  "+travel.luggageSpace} kg 
+                  {"  "+ (travel.luggageSpace).toFixed(1)} kg 
                   
                   </Text> 
+              )}
+                
+                  
 
                   
                   <View style = {{
@@ -546,10 +578,13 @@ const ConnectScreen = () => {
         style={{
           marginTop:"3%",
         }} 
+        contentContainerStyle={{
+          paddingBottom: 140
+        }}
         >
         <View style = {{
           width: "100%",
-          alignItems: 'center'
+          alignItems: 'center',
         }}>
 
           <View style = {{
@@ -614,6 +649,11 @@ const ConnectScreen = () => {
                 }}>
                   You have not posted any shipping card yet.
                 </Text>
+                <LinearGradient  colors={['#593196', "#3f216c"]} style = {{
+                        width: '100%',
+                        borderRadius: 5
+                        //paddingTop: 30,
+            }}>
                 <Pressable 
                   onPress={()=>{
                     navigation.navigate("New Post", {
@@ -621,8 +661,8 @@ const ConnectScreen = () => {
                     })
                 }}
                   style = {{
-                    backgroundColor: '#13b955',
-                    backgroundColor: '#593196',
+                    //backgroundColor: '#13b955',
+                    //backgroundColor: '#593196',
                     padding: 8,
                     borderRadius: 10
                   }}>
@@ -633,6 +673,7 @@ const ConnectScreen = () => {
                     Add a new card
                   </Text>
                 </Pressable>
+                </LinearGradient>
               </View>
               }
 

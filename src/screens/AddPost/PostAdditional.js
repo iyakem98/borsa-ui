@@ -81,7 +81,7 @@ const Description = ({navigation}) => {
     }
 
     const postTraveler = async () => {
-        if(!luggageSpace || !proofCode){
+        if(!luggageSpace){
             alert("Please fill the required fields.")
         }else{
             console.log("param", route.params)
@@ -126,7 +126,7 @@ const Description = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={route.params.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
+            <Header title={route.params.cardType == 2 ? "Shipping" : "Traveling"} backBtn />
             {
               route.params.cardType == 2 &&
               <>
@@ -167,37 +167,74 @@ const Description = ({navigation}) => {
                     />
                 </View>
 
-              
-                <View style={{
-                    justifyContent: "space-between",
-                    marginTop: 7,
-                }}>
-                    <Text style={{
-                        fontFamily: "Poppins_400Regular",
-                        fontSize: 18,
-                        marginTop: 20
+                {user.isImperial? (
+                     <View style={{
+                        justifyContent: "space-between",
+                        marginTop: 7,
                     }}>
-                        Weight (in kg)
-                    </Text>
-                    <TextInput
-                        label="Ex. 50kg"
-                        value={kilo}
-                        onChangeText={text => setKilo(text)}
-                        //mode="outlined"
-                        style={{
-                            width: "100%",
-                            marginTop:10,
-                            backgroundColor: 'white'
-                        }}
-                        keyboardType="numeric"
-                        // error={userPasswordError}
-                        outlineStyle={{
-                            backgroundColor: "#fff",
-                        }}
-                        placeholderTextColor= "#eee"
-                    />
-                </View>
+                        <Text style={{
+                            fontFamily: "Poppins_400Regular",
+                            fontSize: 18,
+                            marginTop: 20
+                        }}>
+                            Weight (in pounds)
+                        </Text>
+                        <TextInput
+                            label="Ex. 50lb"
+                            value={kilo}
+                            onChangeText={text => setKilo(text)}
+                            //mode="outlined"
+                            style={{
+                                width: "100%",
+                                marginTop:10,
+                                backgroundColor: 'white'
+                            }}
+                            keyboardType="numeric"
+                            // error={userPasswordError}
+                            outlineStyle={{
+                                backgroundColor: "#fff",
+                            }}
+                            placeholderTextColor= "#eee"
+                        />
+                    </View>
+    
+                ) : (
 
+                    <View style={{
+                        justifyContent: "space-between",
+                        marginTop: 7,
+                    }}>
+                        <Text style={{
+                            fontFamily: "Poppins_400Regular",
+                            fontSize: 18,
+                            marginTop: 20
+                        }}>
+                            Weight (in kg)
+                        </Text>
+                        <TextInput
+                            label="Ex. 50kg"
+                            value={kilo}
+                            onChangeText={text => setKilo(text)}
+                            //mode="outlined"
+                            style={{
+                                width: "100%",
+                                marginTop:10,
+                                backgroundColor: 'white'
+                            }}
+                            keyboardType="numeric"
+                            // error={userPasswordError}
+                            outlineStyle={{
+                                backgroundColor: "#fff",
+                            }}
+                            placeholderTextColor= "#eee"
+                        />
+                    </View>
+    
+
+                )}
+
+              
+               
                 <View style={{
                     justifyContent: "space-between",
                     marginTop: 10,
@@ -272,7 +309,7 @@ const Description = ({navigation}) => {
                     {/* {route.params.cardType} */}
                 </Text>
                 
-                <View style={{
+               {/* <View style={{
                     justifyContent: "space-between",
                     marginTop: 2,
                 }}>
@@ -299,39 +336,76 @@ const Description = ({navigation}) => {
                         placeholderTextColor= "#e8e8e8"
                         // keyboardType='numeric'
                     />
-                </View>
+                    </View> */}
 
-                <View style={{
-                    justifyContent: "space-between",
-                    marginTop: 10,
-                }}>
-                    <Text style={{
-                        fontFamily: "Poppins_400Regular",
-                        fontSize: 18,
-                        marginTop: 20,
-                    }}>
-                        Luggage space (in kg)
-                    </Text>
-                    <TextInput
-                        label="Luggage space"
-                        value={luggageSpace}
-                        keyboardType="numeric"
-                        onChangeText={text => setLuggageSpace(text)}
-                        //mode="outlined"
-                        style={{
-                            width: "100%",
-                            marginTop:10,
-                            backgroundColor: 'white',
-                        }}
-                        // error={userPasswordError}
-                        outlineStyle={{
-                            backgroundColor: "#fff",
-                        }}
-                        placeholderTextColor= "#e8e8e8"
-                        //placeholderTextColor= "#eee"
-                    />
-                </View>
+                    {user.isImperial? (
+                         <View style={{
+                            justifyContent: "space-between",
+                            marginTop: 10,
+                        }}>
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 18,
+                                marginTop: 20,
+                            }}>
+                                Luggage space (in pounds)
+                            </Text>
+                            <TextInput
+                                label="Luggage space"
+                                value={luggageSpace}
+                                keyboardType="numeric"
+                                onChangeText={text => setLuggageSpace(text/2.20462)}
+                                //mode="outlined"
+                                style={{
+                                    width: "100%",
+                                    marginTop:10,
+                                    backgroundColor: 'white',
+                                }}
+                                // error={userPasswordError}
+                                outlineStyle={{
+                                    backgroundColor: "#fff",
+                                }}
+                                placeholderTextColor= "#e8e8e8"
+                                //placeholderTextColor= "#eee"
+                            />
+                        </View>
+        
+                    ) : (
 
+                        <View style={{
+                            justifyContent: "space-between",
+                            marginTop: 10,
+                        }}>
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 18,
+                                marginTop: 20,
+                            }}>
+                                Luggage space (in kg)
+                            </Text>
+                            <TextInput
+                                label="Luggage space"
+                                value={luggageSpace}
+                                keyboardType="numeric"
+                                onChangeText={text => setLuggageSpace(text)}
+                                //mode="outlined"
+                                style={{
+                                    width: "100%",
+                                    marginTop:10,
+                                    backgroundColor: 'white',
+                                }}
+                                // error={userPasswordError}
+                                outlineStyle={{
+                                    backgroundColor: "#fff",
+                                }}
+                                placeholderTextColor= "#e8e8e8"
+                                //placeholderTextColor= "#eee"
+                            />
+                        </View>
+        
+                    )}
+
+               
                
 
                 <Pressable style={{

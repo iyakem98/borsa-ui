@@ -1,4 +1,4 @@
-import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView } from "react-native"
+import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView , Dimensions} from "react-native"
 import profile from '../../../assets/data/profile.json'
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
@@ -13,7 +13,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //import * as ImagePicker from 'expo-image-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import { KeyboardAvoidingView } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+const data = [
+  { id: '0', imageSource: require('../../../assets/images/avatars/blank-avatar.png') },
+  { id: '1', imageSource: require('../../../assets/images/avatars/bottts1.png') },
+  { id: '2', imageSource: require('../../../assets/images/avatars/bottts2.png') },
+  { id: '3', imageSource: require('../../../assets/images/avatars/bottts3.png') },
+  { id: '4', imageSource: require('../../../assets/images/avatars/bottts4.png') },
+  { id: '5', imageSource: require('../../../assets/images/avatars/bottts5.png') },
+  { id: '6', imageSource: require('../../../assets/images/avatars/bottts6.png') },
+  { id: '7', imageSource: require('../../../assets/images/avatars/bottts7.png') },
+  { id: '8', imageSource: require('../../../assets/images/avatars/bottts8.png') },
+  { id: '9', imageSource: require('../../../assets/images/avatars/bottts9.png') },
+  { id: '10', imageSource: require('../../../assets/images/avatars/bottts10.png') },
+  { id: '11', imageSource: require('../../../assets/images/avatars/bottts11.png') },
+  { id: '12', imageSource: require('../../../assets/images/avatars/bottts12.png') },
+  { id: '13', imageSource: require('../../../assets/images/avatars/bottts13.png') },
+  { id: '14', imageSource: require('../../../assets/images/avatars/bottts14.png') },
+  { id: '15', imageSource: require('../../../assets/images/avatars/bottts15.png') },
+  { id: '16', imageSource: require('../../../assets/images/avatars/bottts16.png') },
+  { id: '17', imageSource: require('../../../assets/images/avatars/bottts17.png') },
+  { id: '18', imageSource: require('../../../assets/images/avatars/bottts18.png') },
+  { id: '19', imageSource: require('../../../assets/images/avatars/bottts19.png') },
+  { id: '20', imageSource: require('../../../assets/images/avatars/bottts20.png') },
+  // Add more images as needed
+];
 
+const screenWidth = Dimensions.get('window').width;
 
 const AccountScreen = () => {
   const { user } = useSelector((state) => state.auth)
@@ -32,6 +59,8 @@ const AccountScreen = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [placeResult, setPlaceResult] = useState([])
   const [userPreview, setUserPriview] = useState("")
+  const [selectedTab, setSelectedTab] = useState(0)
+  const [isImperial, setIsImperial] = useState(user.isImperial)
 
   const [isTraveler, setIsTraveler] = useState(user.isTraveler)
   const [isBuyer, setIsBuyer] = useState(user.isBuyer)
@@ -89,9 +118,9 @@ const AccountScreen = () => {
       "isTraveler": true,
       "isBuyer": true,
       "address": address,
-      "profilePic": image,
       "hideTravelerCard": false,
-      "hideBuyerCard": false
+      "hideBuyerCard": false,
+      "isImperial": isImperial,
     }
 
     axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
@@ -167,16 +196,21 @@ const AccountScreen = () => {
     console.log("user id issssssss:", user._id)
   }, [user])
 
+  const getImageSourceById = (id) => {
+    const item = data.find((item) => item.id === id);
+    return item ? item.imageSource : null;
+  };
+
 
   return (
     <SafeAreaView style={{flex: 1,
       backgroundColor: 'white'
     }}>
-        <ScrollView style={{
+        <KeyboardAwareScrollView style={{
 
         }}>
     <View style = {{
-        paddingTop: 20,
+        //paddingTop: 20,
         backgroundColor: '#fff',
         height: "100%",
         width: "100%",
@@ -185,8 +219,11 @@ const AccountScreen = () => {
 
       {/* <KeyboardAwareScrollView> */}
 
-       
-        <View style={{
+      <LinearGradient  colors={['#593196', "#fff"]} style = {{
+                        width: '100%',
+                        paddingTop: 30,
+            }}>
+           <View style={{
           display:"flex",
           alignItems:"center",
           justifyContent:"center",
@@ -194,51 +231,42 @@ const AccountScreen = () => {
         }}>
           
 
-<Image source={{ uri: image }} style={{ 
-  width: 150,
-  height: 150,
-  marginTop:0,
-  // borderRadius: "100%",
-  borderRadius: 100,
-  alignItems: 'flex-end',
-  justifyContent: 'flex-end',
- }} />
+          <Image source={getImageSourceById(user.profilePic)} style={{ 
+            width: 150,
+            height: 150,
+            marginTop:0,
+            // borderRadius: "100%",
+            borderRadius: 100,
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+          }} />
 
-{/*<Entypo name="edit" size={24} color="red" onPress={()=>{
-  if(isEditing){
-    pickImage()
-  }
-}} 
-style={{
-  padding:2,
-  backgroundColor:"#593196",
-  color:"#fff",
-  marginLeft:90,
-  marginTop:-30,
-  zIndex:100
-}}
-/> */}
+        {/*<Entypo name="edit" size={24} color="red" onPress={()=>{
+          if(isEditing){
+            pickImage()
+          }
+        }} 
+        style={{
+          padding:2,
+          backgroundColor:"#593196",
+          color:"#fff",
+          marginLeft:90,
+          marginTop:-30,
+          zIndex:100
+        }}
+        /> */}
 
 
 
         <Text style={styles.fullname}>
-          {/* {firstName+' '+lastName} */}
           {firstName + ' ' + lastName} 
         </Text>
-
-       {/* <Text style={styles.username}>
-          @{userName}
-</Text> */}
-
-        <View style={styles.divider}>
-              
         </View>
+      </LinearGradient>
 
        
 
-        </View>
-
-        <View style={{marginTop:0, alignItems: 'center'}}>
+        <View style={{marginTop:10, width: '100%', alignItems: 'center'}}>
         {
           !isEditing &&
 
@@ -249,7 +277,7 @@ style={{
             backgroundColor: '#593196',
             color:"white",
             //width: 100,
-            //height: 40,
+            height: 40,
             paddingHorizontal: 10,
             paddingVertical: 10,
             borderRadius: 10,
@@ -259,7 +287,8 @@ style={{
           }}
           onPress={()=> setIsEditing(!isEditing)}
           >
-           <Text style={{color:'#fff'}}> Click here to start Editing</Text>
+           <Text style={{color:'#fff',
+            fontFamily: "Poppins_400Regular"}}> Open Editor</Text>
           </TouchableOpacity>
         }
 
@@ -290,10 +319,12 @@ style={{
             setAddress(myUser.address)
             setIsBuyer(myUser.isBuyer)
             setIsTraveler(myUser.isTraveler)
-            setImage(def)
+            setIsImperial(myUser.isImperial)
+            setSelectedTab(0)
+            //setImage(def)
           }}
           >
-             <Text>Cancel</Text>
+             <Text style = {{fontFamily: "Poppins_400Regular"}}>Cancel</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={{
@@ -313,56 +344,40 @@ style={{
            handleUpdate()
           }}
           >
-            <Text style={{color:'#fff'}}>Save Changes</Text>
+            <Text style={{color:'#fff', fontFamily: "Poppins_400Regular"}}>Save Changes</Text>
           </TouchableOpacity>
           </View>
         }
-
-       {/* <TextInput style = {{
-           margin: 15,
-           height: 50,
-           borderRadius:0,
-           width:300,
-          //  marginLeft:"10%",
-          //  marginRight:"10%",
-           padding:5,
-           borderColor: 'black',
-           borderWidth: 1,
-          //  opacity:`${isEditing? 1 : 0.5}`
-          opacity: 1
-        }}
-               underlineColorAndroid = "transparent"
-               placeholder = "Username"
-               placeholderTextColor = "black"
-               autoCapitalize = "none"
-               value={userName}
-               onChangeText={newText=>{
-                setUserName(newText)
-               }}
-               editable={isEditing}
-              //onChangeText = {this.handlePassword}
-              /> */}
         </View>
 
-        <View style={{marginTop:15}}>
-          <Text>
+        <View style={{marginTop:25}}>
+          <Text style = {{
+            fontSize: 15,
+            fontFamily: "Poppins_400Regular",
+          }}>
             First Name
           </Text>
         <TextInput style = {{
-          color: `${isEditing ? "#000" : "gray"}`,
-           marginVertical: 15,
+          color: `${
+            isEditing ? "#000" : "gray"
+          }`,
+          marginVertical: 0,
+           fontSize: 20,
+           fontFamily: "Poppins_400Regular",
+           marginBottom: 15,
            //height: 50,
            borderRadius:0,
            width:300,
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
-           paddingHorizontal: 5,
-           paddingVertical:10,
-           borderColor: 'black',
-           borderWidth: isEditing? 0 : StyleSheet.hairlineWidth,
-            borderBottomWidth: StyleSheet.hairlineWidth,
-            //  opacity:`${isEditing? 1 : 0.5}`
-            opacity: 1
+          paddingHorizontal:  0,
+           paddingVertical: 5,
+           borderColor: isEditing? '#000' : 'gray',
+           //borderWidth: isEditing? StyleSheet.hairlineWidth : 0,
+           borderBottomWidth: 0.6,
+          borderRadius: 0,
+          //  opacity:`${isEditing? 1 : 0.5}`
+          opacity: 1
         }}
                underlineColorAndroid = "transparent"
                placeholder = "First Name"
@@ -378,25 +393,32 @@ style={{
         </View>
 
         <View style={{marginTop:5}}>
-        <Text>
+        <Text style = {{
+            fontSize: 15,
+            fontFamily: "Poppins_400Regular",
+          }}>
             Last Name
           </Text>
         <TextInput style = {{
           color: `${
-            isEditing? "#000" : "gray"
+            isEditing ? "#000" : "gray"
           }`,
-           marginVertical: 15,
+          marginVertical: 0,
+          marginBottom: 15,
+           fontSize: 20,
+           fontFamily: "Poppins_400Regular",
            //height: 50,
-           //borderRadius:10,
+           borderRadius:0,
            width:300,
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
-          paddingHorizontal: 5,
-          paddingVertical:10,
-           borderColor: 'black',
-           borderWidth: isEditing? 0 : StyleSheet.hairlineWidth,
-          borderBottomWidth: StyleSheet.hairlineWidth,
-          //  opacity:`${isEditing? 1 : 0.5}`,
+          paddingHorizontal:  0,
+           paddingVertical: 5,
+           borderColor: isEditing? '#000' : 'gray',
+           //borderWidth: isEditing? StyleSheet.hairlineWidth : 0,
+           borderBottomWidth: 0.6,
+          borderRadius: 0,
+          //  opacity:`${isEditing? 1 : 0.5}`
           opacity: 1
         }}
                underlineColorAndroid = "transparent"
@@ -413,24 +435,31 @@ style={{
         </View>
 
         <View style={{marginTop:5}}>
-          <Text>
+          <Text style = {{
+            fontSize: 15,
+            fontFamily: "Poppins_400Regular",
+          }}>
             Email
           </Text>
         <TextInput style = {{
           color: `${
             isEditing ? "#000" : "gray"
           }`,
-           marginVertical: 15,
+          marginVertical: 0,
+             marginBottom: 5,
+           fontSize: 20,
+           fontFamily: "Poppins_400Regular",
            //height: 50,
            borderRadius:0,
            width:300,
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
-           paddingHorizontal: 5,
-           paddingVertical:10,
-           borderColor: 'black',
-           borderWidth: isEditing? 0 : StyleSheet.hairlineWidth,
-          borderBottomWidth: StyleSheet.hairlineWidth,
+          paddingHorizontal:  0,
+           paddingVertical: 5,
+           borderColor: isEditing? '#000' : 'gray',
+           //borderWidth: isEditing? StyleSheet.hairlineWidth : 0,
+           borderBottomWidth: 0.6,
+          borderRadius: 0,
           //  opacity:`${isEditing? 1 : 0.5}`
           opacity: 1
         }}
@@ -446,336 +475,75 @@ style={{
               //onChangeText = {this.handlePassword}
               />
         </View>
-
-       {/* <View style={{width:300, marginTop:10}}>
-        <GooglePlacesAutocomplete
-                        placeholder='Enter your address'
-                        onPress={(data) => {
-                            handleUserAddress(data)
-                            console.log(data);
-                        }}
-                        query={{
-                            key: 'AIzaSyBEQjAi9JOrXgaekQKY6oeSYb8C_5rAudU',
-                            language: 'en',
-                            types: '(cities)'
-                        }}
-                        styles={{
-                          textInputContainer: {
-                            // backgroundColor: 'grey',
-                          },
-                          textInput: {
-                            height: 50,
-                            border:"1px solid black",
-                            width:300,
-                            color: '#5d5d5d',
-                            fontSize: 16,
-                            borderRadius:10,
-                          },
-                          predefinedPlacesDescription: {
-                            color: '#1faadb',
-                          },
-                        }}
-                        />
-        </View>
-                      */}
-
-        {/* <View style={{marginTop:10}}>
-        <TextInput style = {{
-           margin: 15,
-           height: 50,
-           borderRadius:10,
-           width:300,
-          //  marginLeft:"10vw",
-          //  marginRight:"10vw",
-           padding:5,
-           borderColor: 'black',
-           borderWidth: 1,
-          //  opacity:`${isEditing? 1 : 0.5}`
-          opacity: 1
-        }}
-               underlineColorAndroid = "transparent"
-               placeholder = "Address"
-               placeholderTextColor = "black"
-               autoCapitalize = "none"
-               value={address}
-               onChangeText={
-                newText=>
-                {
-                setAddress(newText)
-                if(newText.length>0){
-                  setSuggestions(true)
-                  findPlaces(newText)
-                }
-                }
-              }
-               editable={isEditing}
-              //onChangeText = {this.handlePassword}
-              />
-        </View>
-
-        {
-          suggestions &&
-          <View
-          style={{
-            // display:"flex",
-            margin: 15,
-            marginTop:-20,
-           height: 50,
-           backgroundColor:"white",
-           borderRadius:10,
-           width:300,
-          //  marginLeft:"10vw",
-          //  marginRight:"10vw",
-           padding:5,
-          //  opacity:`${isEditing? 1 : 0.5}`,
-          opacity: 1,
-           height:"auto",
-            shadowOffset: { width: 10, height: 10 },
-            shadowColor: 'white',
-            shadowOpacity: 1.0,
-            justifyContent:"center",
-            alignContent:"center",
-            alignItems:"center"
-          }}
-        >
-           {
-           placeResult.length>0 &&  placeResult.map((place, i) => (
-            <>
-            <Text
-            style={{
-              marginBottom:5,
-              backgroundColor:""
-            }} 
-            key={i}
-            onPress={()=>
-            {
-              setAddress(place)
-              setSuggestions(false)
-            }
-              }>
-                {place}
-              </Text>
-            </>
-           ))
-          }
-          
-        </View>
-        } */}
-     
-
-        {/* <View style={{display:"flex", flexDirection:"row", justifyContent:"center", width:"100%"}}>
-        <View style={{display:"flex", flexDirection:"row"}}>
-        <CheckBox
-           value={isBuyer}
-           onValueChange={()=>{
-            if(isEditing){
-              setIsBuyer(!isBuyer)
-            }
-            
-           }}
-          style={{opacity:`${isEditing? 1 : .5}`}}
-        />
-        <Text style={{marginLeft:20}}>Buyer</Text>
-        </View>
-        
-        <View style={{display:"flex", flexDirection:"row"}}>
-        <CheckBox
-           value={isTraveler}
-           onValueChange={()=>{
-            if(isEditing){
-              setIsTraveler(!isTraveler)
-            }
-            
-           }}
-           style={{marginLeft:20,  opacity:`${isEditing? 1 : .5}`}}
-        />
-        <Text style={{marginLeft:20}}>Traveler</Text>
-        </View>
-        </View> */}
-       
-        
-       
-     
-
-      {/* <View style = {{
-        alignItems: 'center'
-      }}>
-        
-        <Text style = {{
-          fontSize: 25,
-          marginTop: 10
-        }}>
-          {user.firstName + ' ' + user.lastName}
-        </Text>
-        <Text style = {{
-          color:'gray',
-        }}>
-          {user.userName}
-        </Text>
-      </View>
-
-      <View style = {{
-        width: '90%',
-        paddingTop: 40,
-      }}>
-        
-        <Pressable onPress={() => navigation.navigate('Edit UserName')}
-          style = {styles.pressable}>
-
-          <Text style = {{
-            fontSize: 16,
+        <View style={{
+            backgroundColor: "#fff",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom: 15
           }}>
-            username
-          </Text>
-
-          <View style = {{
-            flexDirection: 'row'
-          }}>
-            <Text style = {{
-              color: "gray",
-              marginRight: 10,
-              fontSize: 16,
+          {/*   {loadingBuyer &&  
+                    <View style={{
+                      //height: 20000,
+                      backgroundColor: 'yellow'
+                  }}>
+                    <ActivityIndicator size="large" color="#777" />
+                  </View>
+                  } */}
+                 
+            <View style={{
+              flexDirection: "row",
+              //alignItems: 'center',
+              justifyContent: "space-between",
+              width: screenWidth - 80,
+              marginTop: 15,
+              backgroundColor: "#eee",
+              paddingHorizontal: 5,
+              borderRadius: 10,
+              paddingVertical: 6
             }}>
-              {user.userName}
-            </Text>
-            <AntDesign name="right" size={17} color="gray" />
-          </View>
-
-        </Pressable>
-        
-        <Pressable onPress={() => navigation.navigate('Edit Name')}
-          style = {styles.pressable}>
-
-          <Text style = {{
-            fontSize: 16,
-          }}>
-            Name
-          </Text>
-
-          <View style = {{
-            flexDirection: 'row'
-          }}>
-            <Text style = {{
-              color: "gray",
-              marginRight: 10,
-              fontSize: 16,
-            }}>
-              {user.firstName + ' ' + user.lastName} 
-            </Text>
-            <AntDesign name="right" size={17} color="gray" />
-          </View>
-
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('Edit Email')}
-          style = {styles.pressable}>
-
-          <Text style = {{
-            fontSize: 16,
-          }}>
-            Email
-          </Text>
-
-          <View style = {{
-            flexDirection: 'row'
-          }}>
-            <Text style = {{
-              color: "gray",
-              marginRight: 10,
-              fontSize: 16,
-            }}>
-              {user.email}
-            </Text>
-            <AntDesign name="right" size={17} color="gray" />
-          </View>
-
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('Edit Location')}
-          style = {styles.pressable}>
-
-          <Text style = {{
-            fontSize: 16,
-          }}>
-            Location
-          </Text>
-
-          <View style = {{
-            flexDirection: 'row'
-          }}>
-            <Text style = {{
-              color: "gray",
-              marginRight: 10,
-              fontSize: 16,
-            }}>
-               {user.city + ', ' + user.country}
-            </Text>
-            <AntDesign name="right" size={17} color="gray" />
-          </View>
-
-        </Pressable>
-
-        <Pressable onPress={() => navigation.navigate('Edit MyBuyer')}
-          style = {styles.pressable}>
-
-          <Text style = {{
-            fontSize: 16,
-          }}>
-            Buyer
-          </Text>
-
-          <View style = {{
-            flexDirection: 'row'
-          }}>
-            <Text style = {{
-              color: "gray",
-              marginRight: 10,
-              fontSize: 16,
-            }}>
-              Yes 
-            </Text>
-            <AntDesign name="right" size={17} color="gray" />
-          </View>
-
-        </Pressable>
-        <Pressable onPress={() => navigation.navigate('Edit MyTraveler')}
-          style = {styles.pressable}>
-
-          <Text style = {{
-            fontSize: 16,
-          }}>
-            Traveler
-          </Text>
-
-          <View style = {{
-            flexDirection: 'row'
-          }}>
-            {user.isTraveler? (
-                <Text style = {{
-                  color: "gray",
-                  marginRight: 10,
-                  fontSize: 16,
+              <Pressable disabled = {isEditing? false : true}
+                style={{
+                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    borderRadius: 5,
+                    width: "49%",
+                    paddingVertical: 5,
+                    alignItems: "center",
+                    justifyContent: 'center',
+                }} onPress={()=>{
+                    setSelectedTab(1)
+                    setIsImperial(false)
                 }}>
-                  Yes 
-                </Text>
-            ): (
-              <Text style = {{
-                color: "gray",
-                marginRight: 10,
-                fontSize: 16,
-              }}>
-                Yes 
-              </Text>
-            )}
-            
-            <AntDesign name="right" size={17} color="gray" />
+                  <Text style={{
+                      fontFamily: "Poppins_500Medium",
+                      fontSize: 14,
+                      color: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#fff" : "#000",
+                  }}>Metric</Text>
+              </Pressable>
+              <Pressable disabled = {isEditing? false : true}
+                style={{
+                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    borderRadius: 5,
+                    width: "49%",
+                    paddingVertical: 5,
+                    justifyContent: 'center',
+                    alignItems: "center"
+                }} onPress={()=>{
+                  setSelectedTab(2)
+                  setIsImperial(true)
+                }}>
+                  <Text style={{
+                      fontFamily: "Poppins_500Medium",
+                      fontSize: 14,
+                      color: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#fff" : "#000",
+                  }}>Imperial</Text>
+              </Pressable>
+            </View>
           </View>
-
-        </Pressable>        
-      </View> */}
 
     
 {/* </KeyboardAwareScrollView>     */}
     </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
     </SafeAreaView>
   )
 }
@@ -807,7 +575,7 @@ const styles = StyleSheet.create({
     //letterSpacing: 3,
     // fontWeight:700,
     marginTop:20,
-    marginBottom: 30,
+    marginBottom: 20,
     opacity:0.7
   },
 

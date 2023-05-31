@@ -47,6 +47,10 @@ import Chattest from "../screens/chattest"
 import SearchScreen from "../screens/SearchScreen"
 import SearchBar from "../components/Chats/ChatListItem/SearchBar"
 import { fetchChat } from "../features/chat/chatSlice"
+import ProfileScreen from "../screens/ProfileScreens/Profile"
+import WelcomeAddPost from "../screens/ProfileScreens/WelcomeAddPost"
+import WelcomeProPic from "../screens/ProfileScreens/WelcomeProPic"
+import ProfilePicker from "../screens/ProfilePicker"
 
 
 
@@ -124,7 +128,7 @@ const Navigator = ({showOnBoarding}) => {
     
     <Stack.Navigator>
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
-      <Stack.Screen name="Chats" component={ChatScreen} />
+      {/*<Stack.Screen name="Chats" component={ChatScreen} /> */}
       {/* <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} /> */}
       <Stack.Screen name="Search" component={SearchScreen}  options={({ route }) => ({
           
@@ -133,6 +137,9 @@ const Navigator = ({showOnBoarding}) => {
         
           headerShown: false
         })}/>
+        <Stack.Screen name="WelcomePic" component={WelcomeProPic} options={{headerShown: false}} />
+        <Stack.Screen name="WelcomePost" component={WelcomeAddPost} options={{headerShown: false}} />
+        <Stack.Screen name="ProfilePicker" component={ProfilePicker} options={{headerShown: false}} />
       <Stack.Screen name="Connect" component={ConnectScreen} />
       <Stack.Screen name="User Details" component={OtherProfile} />
       <Stack.Screen name="New Post" component={PostIndex} />
@@ -154,6 +161,7 @@ const Navigator = ({showOnBoarding}) => {
         })}/>
       )}
       <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>
+      <Stack.Screen name="Profile" component={ProfileScreen} options={{headerTintColor: '#000'}}/>
       <Stack.Screen name="Settings" component={SettingsScreen}/>
       <Stack.Screen name="Security" component={SecurityScreen}/>
       <Stack.Screen name="Contact Us" component={ContactScreen} 

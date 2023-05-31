@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Test from '../screens/Test';
 import ChatScreen from '../screens/ChatScreen';
 import AddPost from '../screens/AddPost';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import Test2 from '../screens/Test2';
 import TestImg from '../screens/TestImg';
 import RecentlyTest from '../screens/RecentlyTest';
@@ -28,29 +28,37 @@ import Search from '../components/Chats/ChatListItem/Search';
 import { io } from 'socket.io-client';
 import { API_BASE_URL_Socket } from '../utils/config';
 import { fetchChat } from '../features/chat/chatSlice';
+import WelcomeProPic from '../screens/ProfileScreens/WelcomeProPic';
+import ProfilePicker from '../screens/ProfilePicker';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
-    const dispatch = useDispatch()
-    const [storedNotifications, setstoredNotifications] = useState([])
-    const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
-    const [notifChat, setnotifChat] = useState()
+    const dispatch = useDispatch();
+    const isFocused = useIsFocused();
+    const [storedNotifications, setstoredNotifications] = useState([]);
+    const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat);
+    const [notifChat, setnotifChat] = useState();
     const [visible, setVisible] = useState(false);
-    const [newMessage, setNewMessage] = useState(false)
-    const navigate = useNavigation()
+    const [newMessage, setNewMessage] = useState(false);
+    const navigate = useNavigation();
     const hideMenu = () => setVisible(false);
-    const [notifFlag, setNotifFlag] = useState(false)
+    const [notifFlag, setNotifFlag] = useState(false);
 
     const showMenu = () => setVisible(true);
     var socket = useRef(null)
     const { user } = useSelector((state) => state.auth)
 
     const checkIsMarked = () => {
+        const userId = user?._id
         for (let index = 0; index < chattts.length; index++) {
             const isMarked = chattts[index]?.latestMessage?.marked;
-            if(!isMarked) {
+            
+            if(isMarked === false && userId == chattts[index]?.latestMessage?.receiver) {
+                console.log(isMarked)
                 setNotifFlag(true)
-                break;
+            } else {
+                setNotifFlag(false)
+                setNewMessage(false)
             }
         }
     }
@@ -61,7 +69,7 @@ const MainTabNavigator = () => {
 
     useEffect(() =>{
         checkIsMarked()
-    }, [user, chattts])
+    }, [user, chattts, isFocused])
     
     useEffect(() =>{
        getNotif()
@@ -82,6 +90,8 @@ const MainTabNavigator = () => {
         //   storeNotif(newMessageReceived)
             if(newMessageReceived) {
                 setNewMessage(true)
+            } else {
+                setNewMessage(false)
             }
         });
       },[])
@@ -135,7 +145,7 @@ const MainTabNavigator = () => {
                 position: "relative"
             }}>
                 <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
-                {/* {newMessage || notifFlag ? (
+                {newMessage || notifFlag ? (
                     <View style={{
                         backgroundColor: "#514590",
                         height: 15,
@@ -145,7 +155,7 @@ const MainTabNavigator = () => {
                         right: -5,
                         top: -5
                     }} />
-                ) : null} */}
+                ) : null}
             </View>
         ),
         headerShown: true,
@@ -204,6 +214,13 @@ const MainTabNavigator = () => {
         <Tab.Screen name="More" component={ProfileScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <MaterialCommunityIcons name="dots-horizontal" size={size} color={color} />
+            ),
+            headerShown: false
+        }} />
+
+        <Tab.Screen name="Temporary" component={WelcomeProPic} options={{
+            tabBarIcon: ({color, size}) => (
+                <FontAwesome name="random" size={size} color={color} /> 
             ),
             headerShown: false
         }} />

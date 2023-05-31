@@ -139,7 +139,7 @@ const Saved = () => {
                     fontSize: 20,
                     fontWeight: 'bold'
                 }}>
-                    Tap on the cards start chatting
+                    Tap on the cards to start chatting
                 </Text>
             </View>
             <ScrollView contentContainerStyle={{

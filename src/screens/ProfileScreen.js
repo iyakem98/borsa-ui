@@ -12,6 +12,32 @@ import { API_BASE_URL } from '../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+
+const data = [
+    { id: '0', imageSource: require('../../assets/images/avatars/blank-avatar.png') },
+    { id: '1', imageSource: require('../../assets/images/avatars/bottts1.png') },
+    { id: '2', imageSource: require('../../assets/images/avatars/bottts2.png') },
+    { id: '3', imageSource: require('../../assets/images/avatars/bottts3.png') },
+    { id: '4', imageSource: require('../../assets/images/avatars/bottts4.png') },
+    { id: '5', imageSource: require('../../assets/images/avatars/bottts5.png') },
+    { id: '6', imageSource: require('../../assets/images/avatars/bottts6.png') },
+    { id: '7', imageSource: require('../../assets/images/avatars/bottts7.png') },
+    { id: '8', imageSource: require('../../assets/images/avatars/bottts8.png') },
+    { id: '9', imageSource: require('../../assets/images/avatars/bottts9.png') },
+    { id: '10', imageSource: require('../../assets/images/avatars/bottts10.png') },
+    { id: '11', imageSource: require('../../assets/images/avatars/bottts11.png') },
+    { id: '12', imageSource: require('../../assets/images/avatars/bottts12.png') },
+    { id: '13', imageSource: require('../../assets/images/avatars/bottts13.png') },
+    { id: '14', imageSource: require('../../assets/images/avatars/bottts14.png') },
+    { id: '15', imageSource: require('../../assets/images/avatars/bottts15.png') },
+    { id: '16', imageSource: require('../../assets/images/avatars/bottts16.png') },
+    { id: '17', imageSource: require('../../assets/images/avatars/bottts17.png') },
+    { id: '18', imageSource: require('../../assets/images/avatars/bottts18.png') },
+    { id: '19', imageSource: require('../../assets/images/avatars/bottts19.png') },
+    { id: '20', imageSource: require('../../assets/images/avatars/bottts20.png') },
+    // Add more images as needed
+  ];
 
 const ProfileScreen = ({navigation}) => {
     const { user } = useSelector((state) => state.auth)
@@ -64,21 +90,36 @@ const ProfileScreen = ({navigation}) => {
         alert('ok')
       };
 
+      const getImageSourceById = (id) => {
+        const item = data.find((item) => item.id === id);
+        return item ? item.imageSource : null;
+      };
+
   return (
     
-    <SafeAreaView style = {{
-        paddingVertical: 30,
+    <View style = {{
+        //paddingVertical: 30,
         backgroundColor: "white"
     }}>
          <View>
-            <View style  = {styles.profileTop}>
+         <LinearGradient 
+                    //colors={['#593196', '#705c9d', "#fff"]}
+                    colors={['#593196', "#fff"]}
+                    style = {{
+                        //height: "100%",
+                        //alignItems: 'center',
+                        paddingTop: "25%",
+                        paddingHorizontal: 20,
+                        paddingBottom: 50,
+                        //justifyContent: 'center'
+            }}>
                 <View style = {{
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
-                 <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211" }} style={{ 
-                    width: 130,
-                    height: 130,
+                 <Image  source={getImageSourceById(user.profilePic)} style={{ 
+                    width: 120,
+                    height: 120,
                     marginTop:0,
                     // borderRadius: "100%",
                     borderRadius: 100,
@@ -86,13 +127,14 @@ const ProfileScreen = ({navigation}) => {
                     justifyContent: 'flex-end',
                     }} />
                     <View style = {{
-                         marginLeft: 6
+                         marginLeft: 20
                     }}>
                         <Text style = {{
                             fontSize: 25,
                             marginTop: 20,
                             // marginBottom: 2,
-                            fontFamily: "Poppins_400Regular"
+                            fontFamily: "Poppins_400Regular",
+                            //color: 'white'
                         }}>
                             {user?.firstName + ' ' + user?.lastName}
                         </Text>
@@ -100,10 +142,10 @@ const ProfileScreen = ({navigation}) => {
                             //backgroundColor: '#593196',
                             paddingHorizontal: 5,
                             paddingVertical: 2,
-                            borderRadius: 20
+                            borderRadius: 20,
                         }}>
                             <Text style = {{
-                                //color: '#fff'
+                            //color: '#fff',
                             fontFamily: "Poppins_400Regular"
                             }}>
                               {user?.email}
@@ -113,83 +155,7 @@ const ProfileScreen = ({navigation}) => {
                     </View>
                     
                 </View>
-            </View>
-      {/*  <ImageBackground
-                source={{
-                uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211",
-                }}
-                style= {styles.imagebk}
-        >
-            <View style = {styles.overlay}>
-                <Text style = {{
-                    color: 'white',
-                    fontSize: 30
-                }}> 
-                    {user && user.firstName + ' ' + user.lastName} 
-                </Text>
-                <View style = {{
-                    flexDirection: 'row',
-                    marginBottom: 20,
-                    marginLeft: 10,
-                }}>
-                    <Text style = {{
-                        color: 'white',
-                        marginTop: 5,
-                        fontSize: 14,
-                        marginRight: 5
-                    }}>
-                        {user && user.address}
-                    </Text>
-                    {/* <Text style = {{
-                        fontSize: 20,
-                        marginBottom: 0
-                    }}>
-                    🇨🇦
-                    </Text> 
-                </View>
-               {/* <View style = {{
-                    flexDirection: 'row',
-                }}>
-                    {user && user.isTraveler && 
-                        <Pressable style = {{
-                            backgroundColor: "#13b955",
-                            width: "20%",
-                            height: "45%",
-                            alignItems:'center',
-                            justifyContent: 'center',
-                            marginLeft: 10,
-                            borderRadius: 20,
-                            marginRight: 12
-                        }}>
-                           <Text style = {{
-                            color: 'white',
-                           }}>
-                                Traveler
-                           </Text>
-                        </Pressable>
-                        
-                    }
-                    
-
-                    <Pressable style = {{
-                        backgroundColor: "#593196",
-                        width: "20%",
-                        height: "45%",
-                        alignItems:'center',
-                        justifyContent: 'center',
-                        borderRadius: 20,
-                    }}>
-                        <Text style = {{
-                            color: 'white'
-                        }}>
-                            Buyer
-                        </Text>
-                    </Pressable>
-                    </View> 
-            </View>
-            
-
-                </ImageBackground> */}
+            </LinearGradient>
         <View>
             <ScrollView style = {styles.v2b}>
                 <View style = {{
@@ -215,11 +181,14 @@ const ProfileScreen = ({navigation}) => {
                             <View style = {{
                             backgroundColor: '#a991d4',
                             backgroundColor: "#593196",
+                            //backgroundColor: '#7267e7',
+                            backgroundColor: '#e8e8e8',
+                            backgroundColor: 'white',
                             padding: 8,
                             borderRadius: 50,
                             marginRight: 10,
                         }}>
-                        <MaterialCommunityIcons name="cards" size={24} color="white" />
+                        <MaterialCommunityIcons name="cards" size={24} color="black" />
                         </View>
     
                         <Text style = {{
@@ -238,11 +207,15 @@ const ProfileScreen = ({navigation}) => {
                         <View style = {{
                             backgroundColor: '#a991d4',
                             backgroundColor: 'orange',
+                            backgroundColor: '#7267e7',
+                            backgroundColor: "#593196",
+                            backgroundColor: '#e8e8e8',
+                            backgroundColor: 'white',
                             padding: 8,
                             borderRadius: 50,
                             marginRight: 10,
                         }}>
-                            <MaterialIcons name="account-circle" size={24} color="white" /> 
+                            <MaterialIcons name="account-circle" size={24} color="black" /> 
                         </View>
                        
                         <Text style = {{
@@ -327,11 +300,15 @@ const ProfileScreen = ({navigation}) => {
                                 <View style = {{
                                 backgroundColor: '#a991d4',
                                 backgroundColor: 'black',
+                                backgroundColor: '#7267e7',
+                                backgroundColor: "#593196",
+                                backgroundColor: '#e8e8e8',
+                                backgroundColor: 'white',
                                 padding: 8,
                                 borderRadius: 50,
                                 marginRight: 10,
                             }}>
-                                <MaterialIcons name="logout" size={24} color="white" />
+                                <MaterialIcons name="logout" size={24} color="black" />
                             </View>
                         
                             <Text style = {{
@@ -352,16 +329,21 @@ const ProfileScreen = ({navigation}) => {
             backgroundColor: '#a991d4',
             backgroundColor: 'lightblue',
             backgroundColor: 'red',
+            backgroundColor: '#7267e7',
+            backgroundColor: "#593196",
+            backgroundColor: '#e8e8e8',
+            backgroundColor: 'white',
             padding: 8,
             borderRadius: 50,
             marginRight: 10,
         }}>
-        <AntDesign name="deleteuser" size={24} color="white" />
+        <AntDesign name="deleteuser" size={24} color="red" />
         </View>
     
         <Text style = {{
             fontSize: 17,
-            fontFamily: "Poppins_400Regular"
+            fontFamily: "Poppins_400Regular",
+            color: 'red',
         }}>
             Delete Account
             </Text>
@@ -637,7 +619,7 @@ const ProfileScreen = ({navigation}) => {
      
     </View>
             
-    </SafeAreaView>
+    </View>
   )
 }
 

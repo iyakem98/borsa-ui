@@ -353,7 +353,7 @@ const handleVerify = async () => {
                 //textDecorationLine: "underline"
               }} onPress={()=>{
                 console.log("========")
-              }}>interact with other users appropriatelt.</Text>
+              }}>interact with other users appropriately.</Text>
             </Text>
           </View>
         </View>

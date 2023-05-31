@@ -210,33 +210,30 @@ const socketCall = () =>{
   }
   
   const fetchMessage = async(pageNum) => {
-    console.log('fetching messages')
+    setloading(true)
     try{
+      let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
+      if(msgs){
+        setMessages(JSON.parse(msgs))
+      } else {
+        setMessages([])
+      }
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`
         }
       }
+      console.log("-=-=--=")
       const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
       config)
       await AsyncStorage.setItem(`me&${chattId}`, JSON.stringify(data?.data))
-      
-      setloading(false)
 
       setMessages(data?.data)
       setNewwMessage(false)
-      return data;
+      console.log("-=-=")
    
     } catch(error){
       console.log(error)
-      let msgs =  await AsyncStorage.getItem(`me&${chattId}`)
-      if(msgs){
-        setMessages(JSON.parse(msgs))
-        setloading(false)
-      } else {
-        setMessages([])
-        setloading(false)
-      }
     }
     setloading(false)
   }
@@ -254,7 +251,6 @@ const socketCall = () =>{
 
       setMessages((prev)=>[...prev, ...data.data])
       socket.current.emit("join chat", chattId)
-      return data;
     } catch(error){
     }
     setloading(false)

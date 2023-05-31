@@ -1,6 +1,6 @@
 import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
-import { Fontisto, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { Fontisto, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
@@ -216,61 +216,10 @@ useEffect(() => {
     return (
         <>
         <Pressable style={styles.container} onPress={() =>{
-            setshowModal(true)
-            setModal(true)
+            // setshowModal(true)
+            // setModal(true)
         }}>
-            <View style={styles.topWrapper}>
-                <View style={styles.horizontal}>
-                    {/* <Image
-                        source={{
-                            uri: "https://images.unsplash.com/photo-1681844931547-54cb3b439453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                        }}
-                        style={styles.image}
-                    /> */}
-                    <View style={styles.image}>
-                        <Fontisto name="shopping-bag" size={28} color="#555" />
-                    </View>
-                    <View>
-                        <Text style={{
-                            fontSize: 16,
-                            fontFamily: "Poppins_500Medium"
-                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
-                        <Text style={{
-                            fontSize: 12,
-                            fontFamily: "Poppins_500Medium",
-                            color: "#777"
-                        }}>{item?.user?.email}</Text>
-                    </View>
-                </View>
-                <View style={styles.horizontal}>
-                    <Text style={{
-                        fontSize: 15,
-                        fontFamily: "Poppins_600SemiBold",
-                    }}>
-                        {item?.luggageSpace}
-                        <Text style={{
-                            fontFamily: "Poppins_400Regular",
-                            fontSize: 13
-                        }}>Kg</Text>
-                    </Text>
-                    {/* <Pressable style={styles.dottedButton} onPress={()=>{
-                        setModalOpen(true)
-                    }}>
-                        <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
-                    </Pressable> */}
-                    <Pressable style={{
-                        backgroundColor: "#eee",
-                        paddingHorizontal: 12,
-                        paddingVertical: 10,
-                        borderRadius: 7,
-                        marginLeft: 12
-                    }} onPress={addToWislistTraveler}>
-                        <Text style={{
-                            color: "red",
-                        }}>Save</Text>
-                    </Pressable>
-                </View>
-            </View>
+          
             <View style={styles.bottomWrapper}>
                 <View>
                     <Text style={styles.txtCountry}>
@@ -294,13 +243,107 @@ useEffect(() => {
                     <Text style={styles.txtCity}>
                         {locationPickUpLength === 3 ? <>{`${locationPickUp[0]}, ${locationPickUp[1]}`}</> : locationPickUp[0]}
                     </Text>
-                    <Text style={{
+                  {/*  <Text style={{
                         fontFamily: "Poppins_500Medium",
                         fontSize: 12,
                         color: "#777"
                     }}>
                         {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
-                    </Text>
+                </Text> */}
+                </View>
+            </View>
+            <View style={styles.topWrapper}>
+                <View style={styles.horizontal}>
+                    {/* <Image
+                        source={{
+                            uri: "https://images.unsplash.com/photo-1681844931547-54cb3b439453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+                        }}
+                        style={styles.image}
+                    /> */}
+                    <View>
+                <View style = {{
+                    flexDirection: 'row'
+                }}>
+                   {/* <Text style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins_500Medium",
+                    marginRight: 5,
+                  }}>Departing on:</Text> */}
+                  <AntDesign name="calendar" size={24} color="black" />
+                  <View style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    maxWidth: 300,
+                    marginLeft: 5,
+                  }}>
+                   <Text style = {{
+                    fontSize: 14,
+                    fontWeight: 'bold'
+                   }}>
+                   {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
+                   </Text>
+                  </View>
+                </View>
+                  
+                </View>
+                    
+                   {/* <View style={styles.image}>
+                        <Fontisto name="shopping-bag" size={28} color="#555" />
+                </View> */}
+                   {/* <View>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "Poppins_500Medium"
+                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        <Text style={{
+                            fontSize: 12,
+                            fontFamily: "Poppins_500Medium",
+                            color: "#777"
+                        }}>{item?.user?.email}</Text> 
+                    </View> */}
+                </View>
+                <View style={styles.horizontal}>
+                <MaterialIcons name="luggage" size={24} color="#593196" />
+                {user.isImperial? (
+                         <Text style={{
+                            fontSize: 18,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.luggageSpace*2.20462).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 16
+                            }}>lb</Text>
+                        </Text>
+                    ):(
+                         <Text style={{
+                            fontSize: 18,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {item?.totalWeight}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 16
+                            }}>Kg</Text>
+                        </Text>
+                    )}
+                    {/* <Pressable style={styles.dottedButton} onPress={()=>{
+                        setModalOpen(true)
+                    }}>
+                        <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
+                    </Pressable> */}
+                    <Pressable style={{
+                        //backgroundColor: "#eee",
+                        paddingHorizontal: 12,
+                        paddingVertical: 10,
+                        borderRadius: 7,
+                        marginLeft: 12
+                    }} onPress={addToWislistTraveler}>
+                       {/* <Text style={{
+                            color: "red",
+                        }}>Save</Text> */}
+                        <AntDesign name="hearto" size={24} color="black" />
+                    </Pressable>
                 </View>
             </View>
             <View style={{
@@ -310,9 +353,9 @@ useEffect(() => {
                 backgroundColor: "#f5f5f5",
                 paddingHorizontal: 10,
                 paddingVertical: 8,
-                marginTop: 15
+                marginTop: 10
               }}>
-                <View>
+               {/* <View>
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
@@ -333,7 +376,54 @@ useEffect(() => {
                         )
                     }) : null}
                   </View>
+                </View> */}
+               {/* <View>
+                  <Text style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins_500Medium",
+                  }}>Departure:</Text>
+                  <View style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    maxWidth: 300
+                  }}>
+                   <Text style = {{
+                    fontSize: 14
+                   }}>
+                   {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
+                   </Text>
+                  </View>
+                </View> */}
+
+               <Pressable onPress={()=>navigation.navigate("Profile", {
+                    theUser: item?.user
+                })}>
+                <View style = {{
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                }}>
+
+            <Image source={{ uri: item?.user?.profilePic }} style={{ 
+                    width: 40,
+                    height: 40,
+                    marginTop:0,
+                    marginRight: 5,
+                    // borderRadius: "100%",
+                    borderRadius: 100,
+                    
+                    }} />
+
+                     <View>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "Poppins_500Medium"
+                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                    </View>
+
                 </View>
+                </Pressable>
+
+               
                 <Pressable style={{
                   backgroundColor: "#13b955",
                   //backgroundColor: 'navy',
@@ -463,7 +553,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 10,
+        paddingHorizontal: 12,
         // paddingRight: 20
     },
     txtCountry: {
@@ -480,7 +570,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 25,
+        marginBottom: 10,
         paddingHorizontal: 10,
     },
     horizontal: {

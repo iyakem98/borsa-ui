@@ -197,9 +197,9 @@ const BuyerChat = async(buyerData)=> {
     return (
         <>
         <Pressable style={styles.container} onPress={() =>{
-            setshowModal(true)
-            setModal(true)
-            onPress()
+            // setshowModal(true)
+            // setModal(true)
+            // onPress()
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
@@ -217,24 +217,42 @@ const BuyerChat = async(buyerData)=> {
                             fontSize: 16,
                             fontFamily: "Poppins_500Medium"
                         }}>{item.item[0]}</Text>
+                        <Pressable onPress={()=>navigation.navigate("Profile", {
+                    theUser: item?.user
+                })}>
                         <Text style={{
                             fontSize: 14,
                             fontFamily: "Poppins_500Medium",
                             color: "#777"
                         }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        </Pressable>
                     </View>
                 </View>
                 <View style={styles.horizontal}>
-                    <Text style={{
-                        fontSize: 15,
-                        fontFamily: "Poppins_600SemiBold",
-                    }}>
-                        {item?.totalWeight}
-                        <Text style={{
-                            fontFamily: "Poppins_400Regular",
-                            fontSize: 13
-                        }}>Kg</Text>
-                    </Text>
+                    {user.isImperial? (
+                         <Text style={{
+                            fontSize: 15,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.totalWeight*2.20462).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 13
+                            }}>lb</Text>
+                        </Text>
+                    ):(
+                         <Text style={{
+                            fontSize: 15,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.totalWeight*1.0).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 13
+                            }}>kg</Text>
+                        </Text>
+                    )}
+                   
                     {/* <Pressable style={styles.dottedButton} onPress={()=>{
                         setModalOpen(true)
                     }}>
@@ -276,13 +294,13 @@ const BuyerChat = async(buyerData)=> {
                     <Text style={styles.txtCity}>
                         {locationPickUpLength === 3 ? <>{`${locationPickUp[0]}, ${locationPickUp[1]}`}</> : locationPickUp[0]}
                     </Text>
-                    <Text style={{
+                    {/*<Text style={{
                         fontFamily: "Poppins_500Medium",
                         fontSize: 12,
                         color: "#777"
                     }}>
                         {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
-                    </Text>
+                </Text> */}
                 </View>
             </View>
             <View style={{
@@ -422,15 +440,15 @@ export default Buyer
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
-        // height: 150,
-        width: '100%',
+        //height: 250,
+        width: '98%',
         marginBottom: 15,
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "#eee",
         borderRadius: 5,
         paddingTop: 20,
-        justifyContent: "space-between",
+        //justifyContent: "space-between",
         overflow: "hidden"
     },
     image: {
@@ -446,6 +464,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 10,
+        marginBottom: 10,
         // paddingRight: 20
     },
     txtCountry: {
@@ -462,7 +481,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 25,
+        //marginTop: 2,
+        paddingVertical: 5,
         paddingHorizontal: 10,
     },
     horizontal: {

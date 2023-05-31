@@ -84,7 +84,7 @@ const FromTo = ({navigation}) => {
     
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={route.params?.cardType == 2 ? "Buyer" : "Traveler"} backBtn />
+            <Header title={route.params?.cardType == 2 ? "Shipping" : "Traveling"} backBtn />
             {route.params.cardType == 2 && 
             <>
                 <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
@@ -101,7 +101,7 @@ const FromTo = ({navigation}) => {
                     borderWidth: 1,
                     borderColor: "gray",
                     borderWidth: 0,
-                    borderBottomWidth: 1,
+                    //borderBottomWidth: 1,
                     borderColor: 'lightgray',
                     paddingHorizontal: 5,
                     //paddingVertical: 5,
@@ -130,13 +130,14 @@ const FromTo = ({navigation}) => {
                             // backgroundColor: 'grey',
                           },
                           textInput: {
-                            borderWidth: 1,
                             borderStyle: "solid",
                             borderColor: "#000",
+                            borderWidth: 0.4,
                             width:300,
                             color: '#5d5d5d',
                             fontSize: 16,
-                            borderRadius:10,
+                            borderRadius:5,
+                            marginTop: 10,
                           },
                           predefinedPlacesDescription: {
                             color: '#1faadb',
@@ -157,7 +158,7 @@ const FromTo = ({navigation}) => {
                 <View style={{
                     borderWidth: 1,
                     borderWidth: 0,
-                    borderBottomWidth: 1,
+                    //borderBottomWidth: 1,
                     borderColor: 'lightgray',
                     paddingHorizontal: 5,
                     //paddingVertical: 5,
@@ -184,13 +185,14 @@ const FromTo = ({navigation}) => {
                             // backgroundColor: 'grey',
                           },
                           textInput: {
-                            borderColor: "#000",
-                            borderWidth: 1,
                             borderStyle: "solid",
+                            borderColor: "#000",
+                            borderWidth: 0.4,
                             width:300,
                             color: '#5d5d5d',
                             fontSize: 16,
-                            borderRadius:10,
+                            borderRadius:5,
+                            marginTop: 10,
                           },
                           predefinedPlacesDescription: {
                             color: '#1faadb',
@@ -207,22 +209,22 @@ const FromTo = ({navigation}) => {
                     Date from
                 </Text>
                 <Pressable style={{
-                    borderWidth: 1,
-                    borderColor: "#777",
-                    paddingHorizontal: 15,
-                    paddingVertical: 11,
-                    borderRadius: 5,
-                    borderWidth: 1,
-                    borderColor: "gray",
-                    borderWidth: 0,
-                    borderBottomWidth: 1,
-                    borderColor: 'lightgray',
-                    paddingHorizontal: 5,
-                    //paddingVertical: 5,
-                    borderRadius: 5,
-                    width: "95%",
-                    flexDirection: "row",
-                    justifyContent: "space-between"
+                   borderWidth: 1,
+                   borderColor: "#777",
+                   paddingHorizontal: 15,
+                   paddingVertical: 11,
+                   borderRadius: 5,
+                   flexDirection: "row",
+                   justifyContent: "space-between",
+                   //borderWidth: 1,
+                   borderColor: "gray",
+                   //borderWidth: 0,
+                   borderWidth: 1,
+                   borderColor: 'lightgray',
+                   paddingHorizontal: 5,
+                   //paddingVertical: 5,
+                   borderRadius: 5,
+                   marginTop: 10,
                 }} onPress={()=>{
                     if (showDatePickerFrom == false && showDatePickerTo == true) {
                         setShowDatePickerTo(false)
@@ -248,17 +250,17 @@ const FromTo = ({navigation}) => {
                      paddingHorizontal: 15,
                      paddingVertical: 11,
                      borderRadius: 5,
-                     borderWidth: 1,
+                     flexDirection: "row",
+                     justifyContent: "space-between",
+                     //borderWidth: 1,
                      borderColor: "gray",
-                     borderWidth: 0,
-                     borderBottomWidth: 1,
+                     //borderWidth: 0,
+                     borderWidth: 1,
                      borderColor: 'lightgray',
                      paddingHorizontal: 5,
                      //paddingVertical: 5,
                      borderRadius: 5,
-                     width: "95%",
-                     flexDirection: "row",
-                     justifyContent: "space-between"
+                     marginTop: 10,
                     
                 }} onPress={()=>{
                     if (showDatePickerTo == false && showDatePickerFrom == true){
@@ -275,12 +277,13 @@ const FromTo = ({navigation}) => {
                     backgroundColor: "#514590",
                     paddingVertical: 15,
                     borderRadius: 5,
-                    marginTop: 35,
+                    marginTop: "50%",
                     //marginBottom: 25,
                     width: "100%",
                     //position: "absolute",
                     bottom: 0,
                     //left: 15
+                    
                 }}
                 onPress={()=>
                     {
@@ -357,7 +360,7 @@ const FromTo = ({navigation}) => {
                     borderWidth: 1,
                     borderColor: "gray",
                     borderWidth: 0,
-                    borderBottomWidth: 1,
+                    //borderBottomWidth: 1,
                     borderColor: 'lightgray',
                     paddingHorizontal: 5,
                     //paddingVertical: 5,
@@ -385,11 +388,12 @@ const FromTo = ({navigation}) => {
                           textInput: {
                             borderStyle: "solid",
                             borderColor: "#000",
-                            borderWidth: 1,
+                            borderWidth: 0.4,
                             width:300,
                             color: '#5d5d5d',
                             fontSize: 16,
-                            borderRadius:10,
+                            borderRadius:5,
+                            marginTop: 10,
                           },
                           predefinedPlacesDescription: {
                             color: '#1faadb',
@@ -407,10 +411,10 @@ const FromTo = ({navigation}) => {
                     Destination
                 </Text>
                 <View style={{
-                    borderWidth: 1,
+                    //borderWidth: 1,
                     borderColor: "gray",
                     borderWidth: 0,
-                    borderBottomWidth: 1,
+                    //borderBottomWidth: 1,
                     borderColor: 'lightgray',
                     paddingHorizontal: 5,
                     //paddingVertical: 5,
@@ -436,11 +440,12 @@ const FromTo = ({navigation}) => {
                           },
                           textInput: {
                             //height: 50,
-                            border:"1px solid black",
+                            borderWidth: 0.4,
                             width:300,
                             color: '#5d5d5d',
                             fontSize: 16,
-                            borderRadius:10,
+                            borderRadius:5,
+                            marginTop: 10,
                           },
                           predefinedPlacesDescription: {
                             color: '#1faadb',
@@ -464,14 +469,15 @@ const FromTo = ({navigation}) => {
                     borderRadius: 5,
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    borderWidth: 1,
+                    //borderWidth: 1,
                     borderColor: "gray",
-                    borderWidth: 0,
-                    borderBottomWidth: 1,
+                    //borderWidth: 0,
+                    borderWidth: 1,
                     borderColor: 'lightgray',
                     paddingHorizontal: 5,
                     //paddingVertical: 5,
                     borderRadius: 5,
+                    marginTop: 10,
                 }} onPress={()=>{
                     setShowTravelerDatePickerFrom(true)
                 }}>
@@ -487,9 +493,10 @@ const FromTo = ({navigation}) => {
                     borderRadius: 5,
                     marginBottom: 25,
                     width: "100%",
-                    position: "absolute",
+                    //position: "absolute",
                     bottom: 0,
-                    left: 15
+                    //left: 15
+                    marginTop: "75%",
                 }}
                 onPress={()=>
                     {
@@ -514,7 +521,7 @@ const FromTo = ({navigation}) => {
                         color: "#fff",
                         fontFamily: "Poppins_400Regular",
                         fontSize: 14,
-                        textAlign: "center"
+                        textAlign: "center",
                     }}>{"Next"}</Text>
                 </Pressable>
             </ScrollView>

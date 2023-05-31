@@ -82,6 +82,7 @@ const ChatInput = ({
             //backgroundColor: 'black',
             //backgroundColor: '#009cdc',
            //backgroundColor: "#593196",
+           backgroundColor: '#7267e7',
             height: 35,
             width: 35,
             borderRadius: 20,

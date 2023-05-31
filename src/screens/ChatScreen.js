@@ -16,7 +16,7 @@ import {Avatar,  Badge, Icon, withBadge } from '@rneui/themed';
 // import { Badge } from '@rneui/themed';
 import dayjs from 'dayjs'
 import ChatListHeader from '../components/Chats/ChatListItem/ChatListHeader'
-import { FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { FontAwesome5, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import io from 'socket.io-client'
 import { useRoute } from '@react-navigation/native'
 import moment from 'moment/moment'
@@ -137,6 +137,94 @@ const ChatScreen = () => {
         backgroundColor: '#fff',
         paddingTop: 10
       }}>
+         <Pressable 
+      // onPress={() => {
+      //   if(!isUserSender) {
+      //     setIsMarked(true)
+      //   }
+      //   setNotifLength(0)
+      //   setloading(true)
+      //   setchattId(chat._id)
+      //   // chatArr2.push(chat)
+      //   setSelectedChat(chat)
+      //   navigation.navigate('Messaging', {
+      //     userSelected: user != null ? getSenderFull(user, chat.users) : null 
+      //   })
+      // }} 
+      style={{
+    flexDirection: 'row',
+    marginHorizontal: 10,
+    marginVertical: 5,
+    height: 70,
+    backgroundColor: '#fff',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#ccc'
+      }}
+    >
+      <View>
+        <Image
+         source={require('../../assets/icon.png')} 
+        //  source={null} 
+          style = {{
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            marginRight: 10
+          }}
+        />
+        
+         <View style={{
+            backgroundColor: 'green',
+            height: 10,
+            width: 10,
+            borderRadius: 10,
+            position: "absolute",
+            bottom: 14,
+            right: 14
+          }} 
+        />
+       
+      </View>
+      <View style = {{ flex: 1,}}>
+        <View style = {{flexDirection: 'row'}}>
+        
+          <Text style = {{
+            flex: 1,
+            fontWeight: 'bold',
+            fontSize: 18
+          }}>
+            Borsa {"  "}
+            <MaterialIcons name="verified" size={18} color="#593196" />
+          </Text> 
+          <Text style = {{
+            color: "gray",
+            marginTop: 2,
+            marginLeft: 2,
+            fontSize: 15
+          }}>
+            {moment(user?.createdAt).format("MMM D, YYYY")}
+          </Text>
+        </View>
+          <View style = {{
+            flexDirection: 'row'
+          }}
+          >
+            <View>
+              <Text  numberOfLines={2} style = {styles.subTitle}>
+                  Glad you&apos;re here {user?.firstName} Welcome to Borsa! 
+                  Kindly share here if you face any issues.
+              </Text>
+              {/* <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text> */}
+            </View>
+          </View>
+       
+       
+          {/* <View style={styles.notifCheckmark}>
+            <Ionicons name="checkmark-outline" size={24} color="black" />
+          </View> */}
+       
+      </View>
+    </Pressable>
         {chattts && chattts.length > 0 ? (
           chattts.map((chat, index) => {
             let newMessage
@@ -362,5 +450,15 @@ const styles = StyleSheet.create({
   },
   Tex: {
     marginTop: 200
-  }
+  },
+  notifCheckmark: {
+    alignItems: 'center',
+    justifyContent: "center",
+    position: "absolute",
+    right: 10,
+    bottom: 20,
+    width: 19,
+    height: 19,
+    borderRadius: 15
+  },
 })
