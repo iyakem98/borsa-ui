@@ -8,9 +8,31 @@ const PasswordScreen = () => {
     const navigation = useNavigation()
     const { user } = useSelector((state) => state.auth)
 
-    const [oldPassword, setOldPassword] = useState("")
+    const [currentPassword, setCurrentPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
+
+    const handlePwdChange = () => {
+        if (!currentPassword || !newPassword || !confirmNewPassword) {
+            alert('Please fill out all fields')
+        }
+
+        else if (currentPassword !== user.password) {
+            alert('Wrong password')
+        }
+
+        else if (newPassword !== currentPassword) {
+            alert('New Passwords must match!')
+        }
+
+        else if (newPassword == currentPassword) {
+            alert('You cannot reuse password')
+        }
+        
+        else if (length(newPassword) < 8) {
+            alert('Password must be at least 8 characters')
+        }
+    }
   return (
     <View style = {{
         height: '100%',
@@ -64,9 +86,9 @@ const PasswordScreen = () => {
                //placeholderTextColor = "black"
                autoCapitalize = "none"
                secureTextEntry={true}
-               value={oldPassword}
+               value={currentPassword}
                onChangeText={newText=>{
-                setOldPassword(newText)
+                setCurrentPassword(newText)
                }}
               //onChangeText = {this.handlePassword}
               />
@@ -164,13 +186,14 @@ const PasswordScreen = () => {
             justifyContent: 'center',
             marginTop: 20,
         }}>
-            <TouchableOpacity style = {{
-                backgroundColor: '#eee',
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 5,
-                marginHorizontal: 3
-            }}>
+            <TouchableOpacity
+                style = {{
+                    backgroundColor: '#eee',
+                    paddingHorizontal: 16,
+                    paddingVertical: 8,
+                    borderRadius: 5,
+                    marginHorizontal: 3
+                }}>
                 <Text style = {{
                     fontSize: 16,
                     fontFamily: "Poppins_400Regular",
@@ -179,13 +202,14 @@ const PasswordScreen = () => {
                     Cancel
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style = {{
-                backgroundColor: '#593196',
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 5,
-                marginHorizontal: 5,
-            }}>
+            <TouchableOpacity onPress={handlePwdChange}
+                style = {{
+                    backgroundColor: '#593196',
+                    paddingHorizontal: 16,
+                    paddingVertical: 8,
+                    borderRadius: 5,
+                    marginHorizontal: 5,
+                }}>
                 <Text style = {{
                     fontSize: 16,
                     color: 'white',
