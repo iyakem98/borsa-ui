@@ -294,13 +294,13 @@ const BuyerChat = async(buyerData)=> {
                     <Text style={styles.txtCity}>
                         {locationPickUpLength === 3 ? <>{`${locationPickUp[0]}, ${locationPickUp[1]}`}</> : locationPickUp[0]}
                     </Text>
-                    <Text style={{
+                    {/*<Text style={{
                         fontFamily: "Poppins_500Medium",
                         fontSize: 12,
                         color: "#777"
                     }}>
                         {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
-                    </Text>
+                </Text> */}
                 </View>
             </View>
             <View style={{
@@ -440,7 +440,7 @@ export default Buyer
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
-        height: 250,
+        //height: 250,
         width: '98%',
         marginBottom: 15,
         borderWidth: 1,
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
         borderColor: "#eee",
         borderRadius: 5,
         paddingTop: 20,
-        justifyContent: "space-between",
+        //justifyContent: "space-between",
         overflow: "hidden"
     },
     image: {
@@ -464,6 +464,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 10,
+        marginBottom: 10,
         // paddingRight: 20
     },
     txtCountry: {
@@ -480,7 +481,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 25,
+        //marginTop: 2,
+        paddingVertical: 5,
         paddingHorizontal: 10,
     },
     horizontal: {
