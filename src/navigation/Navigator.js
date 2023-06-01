@@ -51,7 +51,7 @@ import ProfileScreen from "../screens/ProfileScreens/Profile"
 import WelcomeAddPost from "../screens/ProfileScreens/WelcomeAddPost"
 import WelcomeProPic from "../screens/ProfileScreens/WelcomeProPic"
 import ProfilePicker from "../screens/ProfilePicker"
-
+import PasswordScreen from "../screens/ProfileScreens/PasswordScreen"
 
 
 const Stack = createStackNavigator();
@@ -137,7 +137,7 @@ const Navigator = ({showOnBoarding}) => {
         
           headerShown: false
         })}/>
-        <Stack.Screen name="WelcomePic" component={WelcomeProPic} options={{headerShown: false}} />
+        <Stack.Screen name="Welcome Pic" component={WelcomeProPic} options={{headerShown: false}} />
         <Stack.Screen name="WelcomePost" component={WelcomeAddPost} options={{headerShown: false}} />
         <Stack.Screen name="ProfilePicker" component={ProfilePicker} options={{headerShown: false}} />
       <Stack.Screen name="Connect" component={ConnectScreen} />
@@ -164,6 +164,7 @@ const Navigator = ({showOnBoarding}) => {
       <Stack.Screen name="Profile" component={ProfileScreen} options={{headerTintColor: '#000'}}/>
       <Stack.Screen name="Settings" component={SettingsScreen}/>
       <Stack.Screen name="Security" component={SecurityScreen}/>
+      <Stack.Screen name="Password" component={PasswordScreen}/>
       <Stack.Screen name="Contact Us" component={ContactScreen} 
         options = {{
           headerStyle: {

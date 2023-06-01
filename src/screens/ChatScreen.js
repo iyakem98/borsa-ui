@@ -96,7 +96,7 @@ const ChatScreen = () => {
 
   useEffect(() =>{
     dispatch(fetchChat())
-  }, [fetchAgain])
+  }, [fetchAgain, storedNotifications])
 
   useEffect(() =>{
     dispatch(fetchChat())
@@ -137,6 +137,7 @@ const ChatScreen = () => {
         backgroundColor: '#fff',
         paddingTop: 10
       }}>
+        
         {chattts && chattts.length > 0 ? (
           chattts.map((chat, index) => {
             let newMessage

@@ -126,15 +126,14 @@ const ProfileScreen = ({navigation}) => {
                     alignItems: 'flex-end',
                     justifyContent: 'flex-end',
                     }} />
+                ) : null}
                     <View style = {{
-                         marginLeft: 20
+                        marginLeft: 20
                     }}>
                         <Text style = {{
                             fontSize: 25,
                             marginTop: 20,
-                            // marginBottom: 2,
                             fontFamily: "Poppins_400Regular",
-                            //color: 'white'
                         }}>
                             {user?.firstName + ' ' + user?.lastName}
                         </Text>
@@ -223,6 +222,33 @@ const ProfileScreen = ({navigation}) => {
                             fontFamily: "Poppins_400Regular"
                         }}>
                             Account
+                            </Text>
+                        </View>
+                        
+                            <AntDesign name="caretright" size={22} color="lightgray" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Password')}
+                        style = {styles.press}>
+                        <View style = {styles.pressView1}>
+                        <View style = {{
+                            backgroundColor: '#a991d4',
+                            backgroundColor: 'orange',
+                            backgroundColor: '#7267e7',
+                            backgroundColor: "#593196",
+                            backgroundColor: '#e8e8e8',
+                            backgroundColor: 'white',
+                            padding: 8,
+                            borderRadius: 50,
+                            marginRight: 10,
+                        }}>
+                            <MaterialIcons name="security" size={24} color="black" />
+                        </View>
+                       
+                        <Text style = {{
+                            fontSize: 17,
+                            fontFamily: "Poppins_400Regular"
+                        }}>
+                            Security
                             </Text>
                         </View>
                         
