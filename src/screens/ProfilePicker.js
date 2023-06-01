@@ -142,7 +142,7 @@ const ProfilePicker = () => {
                 </Text>
                   { (!(user.profilePic == '0') && !tempPic) && (
                   
-                  <TouchableOpacity onPress={alert(tempPic)}
+                  <TouchableOpacity onPress={() => setTempPic(data[0])}
                     style = {{
                       flexDirection: 'row',
                       borderStyle: 'solid',

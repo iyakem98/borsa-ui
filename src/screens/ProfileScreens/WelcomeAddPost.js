@@ -25,7 +25,7 @@ const WelcomeAddPost = () => {
             alert('profile updated')
             // handleLogout()
             dispatch(getUserDetails(user._id))
-            navigation.navigate('More')
+            navigation.navigate('App Post')
           }).catch((err) => {
             alert("try again pls.")
             console.log("errorr", err)
