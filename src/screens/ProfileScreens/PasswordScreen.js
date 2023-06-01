@@ -11,46 +11,79 @@ const PasswordScreen = () => {
     const navigation = useNavigation()
     const { user } = useSelector((state) => state.auth)
 
-    const [currentPassword, setCurrentPassword] = useState("")
+    const [oldPassword, setOldPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
     const [passwordError, setPasswordError] = useState("")
 
-    const handlePwdChange = () => {
-        if (!currentPassword || !newPassword || !confirmNewPassword) {
-            setPasswordError('whaap')
-        }
-
-        else {
-            let userData = {
-                //id: user._id,
-                "oldPassword": currentPassword,
-                "newPassword": newPassword,
+    const handleChangePassword = async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}users/change-password`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              // Add any other headers required by your backend
+            },
+            body: JSON.stringify({ oldPassword, newPassword }),
+          });
+    
+          const data = await response.json();
+    
+          if (response.status === 200) {
+            // Password successfully updated
+            Alert.alert('Success', data.message);
+          } else {
+            // Password update failed
+            Alert.alert('Error', data.message);
+          }
+        } catch (err) {
+            if(err?.response?.data?.message === "Incorrect old password") {
+                setPasswordError("Incorrect old password")
+              } else if(err?.response?.data?.message === "Password must be 6-20 characters long") {
+                setPasswordError("Password must be 6-20 characters long")
+              } else if(err?.response?.data?.message === "New password cannot be the same as old password") {
+                setPasswordError("New password cannot be the same as old password")
+              } else {
+                setPasswordError("Something went wrong")
               }
-          
-           // /api/users/change-password
-
-           axios.put(`${API_BASE_URL}users/change-password/?id=${user._id}`, userData,
-            { headers: {
-                'Content-Type': 'application/json',
-            }}).then((data) => {
-                alert('password changed')
-                // handleLogout()
-                //dispatch(getUserDetails(user._id))
-                navigation.navigate('More')
-                }).catch((err) => {
-                    if(err?.response?.data?.message === "Incorrect old password") {
-                        setPasswordError("Incorrect old password")
-                      } else if(err?.response?.data?.message === "Password must be 6-20 characters long") {
-                        setPasswordError("Password must be 6-20 characters long")
-                      } else if(err?.response?.data?.message === "New password cannot be the same as old password") {
-                        setPasswordError("New password cannot be the same as old password")
-                      } else {
-                        setPasswordError("Something went wrong")
-                      }
-            }); 
         }
-    }
+      };
+
+
+      const handlePwdChange = async () => {
+        if (!oldPassword || !newPassword || !confirmNewPassword) {
+          setPasswordError('Please fill in all fields');
+        } else if (newPassword !== confirmNewPassword) {
+          setPasswordError('Passwords do not match');
+        } else {
+          try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+        
+                }
+            }
+           const response = await axios.post(`${API_BASE_URL}users/change-password`, {oldPassword, newPassword}, config)
+        
+            if (response.status === 200) {
+              alert('Password changed successfully');
+              dispatch(getUserDetails(user._id));
+              navigation.navigate('More');
+            } else {
+              const data = response.data;
+              if (data && data.message) {
+                setPasswordError(data.message);
+              } else {
+                setPasswordError('Something went wrong');
+              }
+            }
+          } catch (error) {
+            setPasswordError('Something went wrong');
+            console.error(error);
+          }
+        }
+      };
+      
   return (
     <View style = {{
         height: '100%',
@@ -104,9 +137,9 @@ const PasswordScreen = () => {
                //placeholderTextColor = "black"
                autoCapitalize = "none"
                secureTextEntry={true}
-               value={currentPassword}
+               value={oldPassword}
                onChangeText={newText=>{
-                setCurrentPassword(newText)
+                setOldPassword(newText)
                }}
               //onChangeText = {this.handlePassword}
               />
