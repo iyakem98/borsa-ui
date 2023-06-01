@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { API_BASE_URL } from "../../utils/config";
 import { getUserDetails, logout } from '../../features/auth/authSlice';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PasswordScreen = () => {
     const dispatch = useDispatch()
@@ -57,13 +58,18 @@ const PasswordScreen = () => {
           setPasswordError('Passwords do not match');
         } else {
           try {
-            const config = {
+            let config = {
                 headers: {
-                    Authorization: `Bearer ${user.token}`
-        
+                    Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
                 }
             }
-           const response = await axios.post(`${API_BASE_URL}users/change-password`, {oldPassword, newPassword}, config)
+
+            let data = {
+              "oldPassword": oldPassword,
+              "newPassword": newPassword
+            }
+
+           const response = await axios.post(`${API_BASE_URL}users/change-password`, data, config)
         
             if (response.status === 200) {
               alert('Password changed successfully');
