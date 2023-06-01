@@ -141,6 +141,12 @@ export default function App() {
     }
   }
 
+  useEffect(()=>{
+    if(expoPushToken) {
+      sendPushNotification(expoPushToken)
+    }
+  }, [expoPushToken])
+
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
