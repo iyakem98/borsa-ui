@@ -229,6 +229,13 @@ const MainTabNavigator = () => {
             headerShown: false
         }} />
 
+    <Tab.Screen name="Apple" component={WelcomeProPic} options={{
+            tabBarIcon: ({color, size}) => (
+                <AntDesign name="apple1" size={24} color="black" />
+            ),
+            headerShown: false
+        }} />
+
         {user.isFirstTime && 
             <Tab.Screen name="Welcome" component={WelcomeProPic} options={{
                 tabBarIcon: ({color, size}) => (
