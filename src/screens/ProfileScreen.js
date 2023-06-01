@@ -126,6 +126,14 @@ const ProfileScreen = ({navigation}) => {
                         borderRadius: 100,
                         alignItems: 'flex-end',
                         justifyContent: 'flex-end',
+                 <Image  source={getImageSourceById(user?.profilePic)} style={{ 
+                    width: 120,
+                    height: 120,
+                    marginTop:0,
+                    // borderRadius: "100%",
+                    borderRadius: 100,
+                    alignItems: 'flex-end',
+                    justifyContent: 'flex-end',
                     }} />
                 ) : null}
                     <View style = {{
@@ -134,9 +142,7 @@ const ProfileScreen = ({navigation}) => {
                         <Text style = {{
                             fontSize: 25,
                             marginTop: 20,
-                            // marginBottom: 2,
                             fontFamily: "Poppins_400Regular",
-                            //color: 'white'
                         }}>
                             {user?.firstName + ' ' + user?.lastName}
                         </Text>
