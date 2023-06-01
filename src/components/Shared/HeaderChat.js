@@ -80,9 +80,15 @@ const HeaderChat = ({
             <Pressable onPress={()=>navigation.goBack()} style={{marginRight: 10}}>
               <MaterialIcons name="keyboard-backspace" size={25} color="#514590" />
             </Pressable>
-            <Pressable onPress={()=> navigation.navigate("Profile", {
-                    theUser: userSelectedFromConnectCard
-                })}>
+            <Pressable 
+            onPress={()=> 
+              {
+                userSelectedFromConnectCard?.user?.firstName &&
+                navigation.navigate("Profile", {
+                  theUser: userSelectedFromConnectCard
+              })}
+            }
+            >
             <Image
               source={getImageSourceById(userSelectedFromConnectCard?.profilePic)}
               style={{
@@ -94,11 +100,17 @@ const HeaderChat = ({
             />
             </Pressable>
             <View style={{marginLeft: 10}}>
-            <Pressable onPress={()=>navigation.navigate("Profile", {
-                    theUser: userSelectedFromConnectCard
-                })}>
+            <Pressable onPress={()=>
+            {
+              userSelectedFromConnectCard?.user?.firstName &&
+              navigation.navigate("Profile", {
+                theUser: userSelectedFromConnectCard
+            })}
+            }
+            
+                >
               <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>
-                  {userSelectedFromConnectCard?.user?.firstName}  
+                  {userSelectedFromConnectCard?.user?.firstName ? userSelectedFromConnectCard?.user?.firstName : "Borsa"}  
               </Text>
               </Pressable>
               <View style={{
