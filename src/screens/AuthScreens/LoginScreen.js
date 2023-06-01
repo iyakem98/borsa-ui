@@ -35,11 +35,25 @@ const LoginScreen = ({navigation}) => {
   //   console.log("----------{{}}}", user)
   // }, [user])
 
+  const storeTokenOnLocal = async (t) => {
+    try{
+      let msgs =  await AsyncStorage.setItem(`myToken`, t)
+      
+      console.log("-=-=--=", t)
+     
+      console.log("gott", await AsyncStorage.getItem('myToken'))
+
+    } catch(error){
+      console.log("errorr", error)
+    }
+  }
+
   const handleUserData = async (value) => {
     try {
       dispatch(login(value));
       const jsonValue = JSON.stringify(value)
       await AsyncStorage.setItem('@user_data', jsonValue)
+      storeTokenOnLocal(value.token)
     } catch (e) {
       // saving error
     }

@@ -28,7 +28,7 @@
     "FormData": "^0.10.1",
     "axios": "^1.2.6",
     "dayjs": "^1.11.6",
-    "expo": "^48.0.0",
+    "expo": "^48.0.18",
     "expo-build-properties": "~0.6.0",
     "expo-cli": "6.3.2",
     "expo-constants": "^14.2.1",
