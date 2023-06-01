@@ -353,17 +353,8 @@ useEffect(() => {
   return (
 
     <>
-        {
-          load ? 
-          <ActivityIndicator style={{
-            justifyContent:"center",
-            marginTop:"48%",
-          }}
-          size="large"
-          />
-          :
-          <SafeAreaView style={styles.container}>
-          <View style={{
+    <SafeAreaView style={styles.container}>
+    <View style={{
             backgroundColor: "#fff",
             justifyContent: "center",
             alignItems: "center",
@@ -419,6 +410,18 @@ useEffect(() => {
               </Pressable>
             </View>
           </View>
+        {
+          load ? 
+          <ActivityIndicator style={{
+            justifyContent:"center",
+            marginTop:"48%",
+          }}
+          size="large"
+          />
+          :
+          <View>
+          
+          
           {loading ? (
             <View style={{
                 paddingTop: 20
@@ -1052,8 +1055,10 @@ useEffect(() => {
               </Pressable>
             </View>
           )}
-        </SafeAreaView>
+
+        </View>
         }
+        </SafeAreaView>
     </>
   )
 }
