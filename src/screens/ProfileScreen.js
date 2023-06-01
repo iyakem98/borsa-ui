@@ -126,7 +126,7 @@ const ProfileScreen = ({navigation}) => {
                     alignItems: 'flex-end',
                     justifyContent: 'flex-end',
                     }} />
-                ) : null}
+                
                     <View style = {{
                         marginLeft: 20
                     }}>
