@@ -46,6 +46,7 @@ const RegisterScreen = ({navigation}) => {
   const [verifyForm, setVerifyForm] = useState("none")
   const [confirm, setConfirm] = useState("")
   const [mailedTo, setMailedTo] = useState("")
+  const [confirmUserPassword, setConfirmUserPassword] = useState("")
   let registerUserData = null
 
   const handleUserData = async (value) => {
@@ -65,7 +66,11 @@ const RegisterScreen = ({navigation}) => {
     console.log(userName)
     if(userName.length < 2) {
       setUserPasswordError("You have to provide fullname")
-    } else if(checked && userName.length > 1) {
+    } 
+    else if (userPassword !== confirmUserPassword) {
+      setUserPasswordError("Passwords do not match")
+    }
+    else if(checked && userName.length > 1) {
       try {
         const res = await axios.post('http://143.198.168.244/api/users', {
           firstName: userName[0],
@@ -254,7 +259,7 @@ const handleVerify = async () => {
           fontFamily: "Poppins_400Regular",
           fontSize: 14,
         }}>
-          Create an account to become a member
+          Create an account to start using Borsa
         </Text>
         <TextInput
           label="Full name"
@@ -295,6 +300,21 @@ const handleVerify = async () => {
           mode="outlined"
           secureTextEntry={true}
           style={{
+            marginBottom: 13,
+          }}
+          error={userPasswordError}
+          outlineStyle={{
+            backgroundColor: "#fff",
+          }}
+        />
+        <TextInput
+          label="Confirm Password"
+          secureTextEntry={true}
+          value={confirmUserPassword}
+          onChangeText={text => setConfirmUserPassword(text)}
+          mode="outlined"
+          secureTextEntry={true}
+          style={{
             // paddingVertical: 5
           }}
           error={userPasswordError}
@@ -324,6 +344,7 @@ const handleVerify = async () => {
             onPress={() => {
               setChecked(!checked);
             }}
+
             color="#514590"
             style={{
               width: 80,

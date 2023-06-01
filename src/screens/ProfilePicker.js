@@ -10,6 +10,7 @@ import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 
 
 const data = [
+    { id: '0', imageSource: require('../../assets/images/avatars/blank-avatar.png') },
     { id: '1', imageSource: require('../../assets/images/avatars/bottts1.png') },
     { id: '2', imageSource: require('../../assets/images/avatars/bottts2.png') },
     { id: '3', imageSource: require('../../assets/images/avatars/bottts3.png') },
@@ -32,6 +33,8 @@ const data = [
     { id: '20', imageSource: require('../../assets/images/avatars/bottts20.png') },
     // Add more images as needed
   ];
+
+  
 
 const numColumns = 4;
 const screenWidth = Dimensions.get('window').width;
@@ -63,7 +66,7 @@ const ProfilePicker = () => {
           alert('profile updated')
           dispatch(getUserDetails(user._id))
           // handleLogout()
-          navigation.navigate('More')
+          navigation.popToTop()
         }).catch((err) => {dea
           alert("try again pls.")
           console.log("errorr", err)
@@ -137,6 +140,31 @@ const ProfilePicker = () => {
                 }}>
                    Choose your Bomoji!
                 </Text>
+                  { (!(user.profilePic == '0') && !tempPic) && (
+                  
+                  <TouchableOpacity onPress={alert(tempPic)}
+                    style = {{
+                      flexDirection: 'row',
+                      borderStyle: 'solid',
+                      borderWidth: 2,
+                      borderRadius: 20,
+                      paddingHorizontal: 10,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginTop: 10,
+                      marginBottom: 5,
+                    }}>
+                    <Text style = {{
+                      fontSize: 16,
+                      fontFamily: "Poppins_600SemiBold",
+                    }}>
+                      Remove My Avatar
+                    </Text>
+              </TouchableOpacity>
+                  )
+
+                  }
+                
                 <View style = {{
                     flexDirection: 'row',
                     justifyContent: 'center',
@@ -179,7 +207,7 @@ const ProfilePicker = () => {
                 <FlatList style = {{
                     //backgroundColor: 'yellow',
                 }}
-                data={data}
+                data={data.slice(1, 21)}
                 renderItem={renderImage}
                 keyExtractor={(item) => item.id}
                 numColumns={numColumns}

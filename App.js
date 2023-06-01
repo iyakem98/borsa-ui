@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import {AppState, Platform, StyleSheet, Text, View } from 'react-native';
+// import { StatusBar } from 'expo-status-bar';
+import {AppState, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 import ChatListItem from './src/components/Chats/ChatListItem';
 import ChatScreen from './src/screens/ChatScreen';
 import MessagingScreen from './src/screens/MessagingScreen';
@@ -86,7 +86,22 @@ export default function App() {
     return (
       <Provider store={store}>
         <PaperProvider>
-          <StatusBar style="light" />
+        {/* <ChatProvider>
+        <PersistGate loading={nul
+          l} persistor={persistor}>
+          <View style={styles.container}>
+            <Navigator/>
+            <StatusBar style="auto" />
+          </View>
+          </PersistGate>
+          </ChatProvider> */}
+          <StatusBar
+            animated={true}
+            backgroundColor="#aaa"
+            barStyle={'dark-content'}
+            showHideTransition={'fade'}
+            hidden={false}
+          />
           <SafeAreaProvider style={{
             backgroundColor: "#000",
             flex: 1

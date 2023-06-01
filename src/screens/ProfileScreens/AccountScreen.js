@@ -241,6 +241,26 @@ const AccountScreen = () => {
             justifyContent: 'flex-end',
           }} />
 
+          <TouchableOpacity onPress={() => navigation.navigate('ProfilePicker')}
+            style = {{
+              flexDirection: 'row',
+              borderStyle: 'solid',
+              borderWidth: 2,
+              borderRadius: 20,
+              paddingHorizontal: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 6,
+            }}>
+            <Text style = {{
+              fontSize: 16,
+              fontFamily: "Poppins_600SemiBold",
+            }}>
+              Edit photo
+            </Text>
+            <Entypo name="edit" size={16} color="black"/>
+          </TouchableOpacity>
+
         {/*<Entypo name="edit" size={24} color="red" onPress={()=>{
           if(isEditing){
             pickImage()
