@@ -44,7 +44,6 @@ const screenWidth = Dimensions.get('window').width;
 
 const AccountScreen = () => {
   const { user } = useSelector((state) => state.auth)
-  const token = user?.token
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const [def, setDef] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211")
@@ -130,7 +129,6 @@ const AccountScreen = () => {
     }}).then((data) => {
       alert('profile updated')
       // handleLogout()
-      storeTokenOnLocal()
       dispatch(getUserDetails(user._id))
       navigation.navigate('More')
     }).catch((err) => {dea
@@ -189,19 +187,6 @@ const AccountScreen = () => {
       }
     }
     setAddress(`${City}, ${Country}`)
-  }
-
-  const storeTokenOnLocal = async () => {
-    try{
-      let msgs =  await AsyncStorage.setItem(`myToken`, token)
-      
-      console.log("-=-=--=", msgs)
-     
-      console.log("gott", await AsyncStorage.getItem('myToken'))
-
-    } catch(error){
-      console.log("errorr", error)
-    }
   }
 
   useEffect(() => { 

@@ -136,6 +136,19 @@ const WelcomeProPic = () => {
     ) : (
         <View>
 
+<View style = {{
+            width: '100%',
+            alignItems: 'center',
+            marginBottom: 20,
+        }}>
+            <Image source = {getImageSourceById(user?.profilePic)} 
+            style = {{
+                width: 120,
+                height: 120,
+            }}
+            />
+        </View>
+
         <View style = {{
                 //paddingRight: "35%",
                 marginBottom: 20,
@@ -161,18 +174,6 @@ const WelcomeProPic = () => {
             </Text>
         </View>
         <View style = {{
-            width: '100%',
-            alignItems: 'center',
-            marginBottom: 20,
-        }}>
-            <Image source = {getImageSourceById(user?.profilePic)} 
-            style = {{
-                width: 120,
-                height: 120,
-            }}
-            />
-        </View>
-        <View style = {{
             //paddingHorizontal: 20,
             marginBottom: 40,
         }}> 
@@ -181,7 +182,7 @@ const WelcomeProPic = () => {
                 color: 'white',
                 fontFamily: "Poppins_400Regular"
             }}>
-                You have just chosen your avatar. You can change it anytime. 
+                You can change it anytime. 
             </Text>
         </View>
     
@@ -190,25 +191,8 @@ const WelcomeProPic = () => {
             width: '100%',
             //paddingHorizontal: 30,
         }}>
+
             <Pressable onPress={() => navigation.navigate('ProfilePicker')}
-                style = {{
-                    backgroundColor: "#13b955",
-                    borderRadius: 8,
-                    marginHorizontal: 5,
-                    paddingHorizontal: 12,
-                    paddingVertical: 3,
-                }}>
-    
-                <Text style = {{
-                    color: 'white',
-                    fontFamily: 'Poppins_400Regular',
-                    fontSize: 18,
-                }}>
-                    Continue
-                </Text>
-    
-            </Pressable>
-            <Pressable onPress={() => navigation.navigate('WelcomePost')}
                 style = {{
                     borderStyle: 'solid',
                     borderWidth: 0.5,
@@ -224,6 +208,25 @@ const WelcomeProPic = () => {
                     fontSize: 18,
                 }}>
                     Back to Avatars
+                </Text>
+    
+            </Pressable>
+
+            <Pressable onPress={() => navigation.navigate('WelcomePost')}
+                style = {{
+                    backgroundColor: "#13b955",
+                    borderRadius: 8,
+                    marginHorizontal: 5,
+                    paddingHorizontal: 12,
+                    paddingVertical: 3,
+                }}>
+    
+                <Text style = {{
+                    color: 'white',
+                    fontFamily: 'Poppins_400Regular',
+                    fontSize: 18,
+                }}>
+                    Continue
                 </Text>
     
             </Pressable>
