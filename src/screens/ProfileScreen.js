@@ -106,13 +106,10 @@ const ProfileScreen = ({navigation}) => {
                     //colors={['#593196', '#705c9d', "#fff"]}
                     colors={['#593196', "#fff"]}
                     style = {{
-                        //height: "100%",
-                        //alignItems: 'center',
-                        paddingTop: "25%",
+                        paddingTop: "10%",
                         paddingHorizontal: 20,
-                        paddingBottom: 50,
-                        //justifyContent: 'center'
-            }}>
+                        paddingBottom: 20,
+                    }}>
                 <View style = {{
                     flexDirection: 'row',
                     alignItems: 'center'
@@ -158,7 +155,7 @@ const ProfileScreen = ({navigation}) => {
         <View>
             <ScrollView style = {styles.v2b}>
                 <View style = {{
-                     paddingVertical: 40,
+                     paddingVertical: 20,
                      paddingHorizontal: 20,
                 }}>
                 <Text style = {{
@@ -712,9 +709,9 @@ const styles = StyleSheet.create({
     press: {
         flexDirection: 'row',
         width: '100%',
-        marginVertical: 15,
+        marginVertical: 2,
         // paddingHorizontal: 10,
-        paddingVertical: 100,
+        paddingVertical: 30,
         //height: 60,
         marginBottom: 8,
         borderStyle: 'solid',
