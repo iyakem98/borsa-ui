@@ -243,7 +243,7 @@ const BuyerChat = async(buyerData)=> {
                     </View>
                     <View>
                         <Text style={{
-                            fontSize: 16,
+                            fontSize: 17,
                             fontFamily: "Poppins_500Medium"
                         }}>{item.item[0]}</Text>
                        {/* <Pressable onPress={()=>navigation.navigate("Profile", {
@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         borderRadius: 5,
-        marginRight: 10,
+        //marginRight: 10,
         justifyContent: "center",
         alignItems: "center",
     },
