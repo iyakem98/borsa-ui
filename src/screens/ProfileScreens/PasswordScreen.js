@@ -73,7 +73,7 @@ const PasswordScreen = () => {
         
             if (response.status === 200) {
               alert('Password changed successfully');
-              dispatch(getUserDetails(user._id));
+              // dispatch(getUserDetails(user._id));
               navigation.navigate('More');
             } else {
               const data = response.data;
