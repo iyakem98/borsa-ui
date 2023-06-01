@@ -160,7 +160,7 @@ const Navigator = ({showOnBoarding}) => {
           headerShown: false
         })}/>
       )}
-      <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000'}}/>
+      <Stack.Screen name="Account" component={AccountScreen} options={{headerTintColor: '#000', headerShown: false}}/>
       <Stack.Screen name="Profile" component={ProfileScreen} options={{headerTintColor: '#000'}}/>
       <Stack.Screen name="Settings" component={SettingsScreen}/>
       <Stack.Screen name="Security" component={SecurityScreen}/>

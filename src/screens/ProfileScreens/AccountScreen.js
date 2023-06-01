@@ -1,6 +1,6 @@
 import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView , Dimensions} from "react-native"
 import profile from '../../../assets/data/profile.json'
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
@@ -203,7 +203,7 @@ const AccountScreen = () => {
 
 
   return (
-    <SafeAreaView style={{flex: 1,
+    <View style={{flex: 1,
       backgroundColor: 'white'
     }}>
         <KeyboardAwareScrollView style={{
@@ -221,8 +221,48 @@ const AccountScreen = () => {
 
       <LinearGradient  colors={['#593196', "#fff"]} style = {{
                         width: '100%',
-                        paddingTop: 30,
+                        paddingTop: 80,
             }}>
+              <View style = {{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 20,
+              }}>
+
+              <Pressable onPress={()=>navigation.popToTop()}
+                style = {{
+                  //backgroundColor: '#593196',
+                  flexDirection: 'row',
+                  //paddingVertical: 2,
+                  paddingHorizontal: 4,
+                  width: "25%",
+                  //marginVertical: 10,
+                  marginLeft: 10,
+                  borderRadius: 20,
+                  alignItems: 'center',
+              }}>
+            <Feather name="chevron-left" size={34} color="#fff" />
+              {/*<Text style={{fontSize:29, marginTop:-3, marginLeft:3, color: 'black'}}>&larr;</Text> */}
+              <Text style={{fontSize:18, color: '#fff'}}>
+                Back
+              </Text>
+
+            
+          </Pressable>
+
+          <Text style = {{
+            position: 'absolute',
+            left: "40%",
+            right: "38%",
+            fontSize: 20,
+            color: 'white',
+            fontFamily: 'Poppins_600SemiBold',
+          }}>
+            Account
+          </Text>
+
+              </View>
+           
            <View style={{
           display:"flex",
           alignItems:"center",
@@ -308,7 +348,7 @@ const AccountScreen = () => {
           onPress={()=> setIsEditing(!isEditing)}
           >
            <Text style={{color:'#fff',
-            fontFamily: "Poppins_400Regular"}}> Open Editor</Text>
+            fontFamily: "Poppins_400Regular"}}> Open Account Editor</Text>
           </TouchableOpacity>
         }
 
@@ -564,7 +604,7 @@ const AccountScreen = () => {
 {/* </KeyboardAwareScrollView>     */}
     </View>
     </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 
