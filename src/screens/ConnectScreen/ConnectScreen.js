@@ -216,7 +216,7 @@ const filterTravelers =  async () => {
     setLoad(true)
     let config = {
       headers: {
-          Authorization: `Bearer ${user.tkn}`
+          Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
         }}
   
   let {data} =   await axios.get(`http://143.198.168.244/api/travels`,
