@@ -229,7 +229,7 @@ const BuyerChat = async(buyerData)=> {
                     </View>
                 </View>
                 <View style={styles.horizontal}>
-                    {user.isImperial? (
+                    {user?.isImperial? (
                          <Text style={{
                             fontSize: 15,
                             fontFamily: "Poppins_600SemiBold",
