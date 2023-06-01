@@ -148,7 +148,7 @@ const filterBuyers =  async () => {
     setLoad(true)
     let config = {
       headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
         }}
   
   let {data} =   await axios.get(`http://143.198.168.244/api/buyers`,
@@ -216,7 +216,7 @@ const filterTravelers =  async () => {
     setLoad(true)
     let config = {
       headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${user.tkn}`
         }}
   
   let {data} =   await axios.get(`http://143.198.168.244/api/travels`,
@@ -274,7 +274,12 @@ const filterTravelers =  async () => {
   }
 }
 
+useEffect(() => {   
+  getToken()
+}, [])
+
     useEffect(() => {   
+      getToken()
       getUsers()
       setPageLimTraveler(totTraveler)
       
@@ -292,14 +297,21 @@ const filterTravelers =  async () => {
       
     }
 
-    
+    const[tkn, setTkn] = useState("")
+
+    const getToken = async () => {
+     let tokn = await AsyncStorage.getItem('myToken')
+     console.log("tkkkknn", tokn)
+     setTkn(tokn)
+    }
 
 
     const getUsers = async () => {
       setLoad(true)
+      getToken()
       const config = {
       headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${ await AsyncStorage.getItem('myToken')}`
         }}
 
     await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=${limit}`, config)

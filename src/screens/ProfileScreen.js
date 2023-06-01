@@ -117,7 +117,7 @@ const ProfileScreen = ({navigation}) => {
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
-                 <Image  source={getImageSourceById(user.profilePic)} style={{ 
+                 <Image  source={getImageSourceById(user?.profilePic)} style={{ 
                     width: 120,
                     height: 120,
                     marginTop:0,
