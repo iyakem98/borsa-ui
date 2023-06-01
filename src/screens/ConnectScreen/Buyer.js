@@ -10,6 +10,7 @@ import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { showMessage } from "react-native-flash-message";
 
+
 const width = Dimensions.get("screen").width
 
 const Buyer = ({
@@ -303,16 +304,39 @@ const BuyerChat = async(buyerData)=> {
                 </Text> */}
                 </View>
             </View>
-            <View style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "#f5f5f5",
-                paddingHorizontal: 10,
-                paddingVertical: 8,
-                marginTop: 15
-              }}>
-                <View>
+                <View style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    backgroundColor: "#f5f5f5",
+                    paddingHorizontal: 10,
+                    paddingVertical: 8,
+                    marginTop: 15
+                }}>
+                    <View style = {{
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+
+                <Image source={{ uri: item?.user?.profilePic }} style={{ 
+                        width: 40,
+                        height: 40,
+                        marginTop:0,
+                        marginRight: 5,
+                        // borderRadius: "100%",
+                        borderRadius: 100,
+                        
+                        }} />
+
+                        <View>
+                            <Text style={{
+                                fontSize: 16,
+                                fontFamily: "Poppins_500Medium"
+                            }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        </View>
+
+                </View>
+              {/*  <View>
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
@@ -333,7 +357,7 @@ const BuyerChat = async(buyerData)=> {
                         )
                     }) : null}
                   </View>
-                </View>
+                </View> */}
                 <Pressable style={{
                   backgroundColor: "#593196",
                   paddingHorizontal: 20,
