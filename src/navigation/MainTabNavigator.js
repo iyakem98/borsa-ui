@@ -53,6 +53,17 @@ const MainTabNavigator = () => {
         const userId = user?._id
         for (let index = 0; index < chattts.length; index++) {
             const isMarked = chattts[index]?.latestMessage?.marked;
+            console.log("=====", chattts[index]?.latestMessage, userId)
+
+            
+            
+            if(isMarked === false && userId !== chattts[index]?.latestMessage?.receiver) {
+                console.log(isMarked)
+                setNotifFlag(true)
+            } else {
+                // setNotifFlag(false)
+                // setNewMessage(false)
+            }
 
             const res = await axios.get('http://143.198.168.244/api/message/count/new', {
                 headers: {
@@ -62,14 +73,6 @@ const MainTabNavigator = () => {
             
             if(res?.data?.count && res?.data?.count > 0) {
                 setNotifFlag(true)
-            }
-            
-            if(isMarked === false && userId == chattts[index]?.latestMessage?.receiver) {
-                console.log(isMarked)
-                setNotifFlag(true)
-            } else {
-                setNotifFlag(false)
-                setNewMessage(false)
             }
         }
     }
@@ -156,7 +159,7 @@ const MainTabNavigator = () => {
                 position: "relative"
             }}>
                 <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
-                {newMessage || notifFlag ? (
+                {/* {newMessage || notifFlag ? (
                     <View style={{
                         backgroundColor: "#514590",
                         height: 15,
@@ -166,7 +169,7 @@ const MainTabNavigator = () => {
                         right: -5,
                         top: -5
                     }} />
-                ) : null}
+                ) : null} */}
             </View>
         ),
         headerShown: true,
