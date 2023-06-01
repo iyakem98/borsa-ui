@@ -117,17 +117,19 @@ const ProfileScreen = ({navigation}) => {
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
-                 <Image  source={getImageSourceById(user.profilePic)} style={{ 
-                    width: 120,
-                    height: 120,
-                    marginTop:0,
-                    // borderRadius: "100%",
-                    borderRadius: 100,
-                    alignItems: 'flex-end',
-                    justifyContent: 'flex-end',
+                {user?.profilePic ? (
+                    <Image  source={getImageSourceById(user?.profilePic)} style={{ 
+                        width: 120,
+                        height: 120,
+                        marginTop:0,
+                        // borderRadius: "100%",
+                        borderRadius: 100,
+                        alignItems: 'flex-end',
+                        justifyContent: 'flex-end',
                     }} />
+                ) : null}
                     <View style = {{
-                         marginLeft: 20
+                        marginLeft: 20
                     }}>
                         <Text style = {{
                             fontSize: 25,

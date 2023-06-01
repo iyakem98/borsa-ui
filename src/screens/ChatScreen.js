@@ -96,7 +96,7 @@ const ChatScreen = () => {
 
   useEffect(() =>{
     dispatch(fetchChat())
-  }, [fetchAgain])
+  }, [fetchAgain, storedNotifications])
 
   useEffect(() =>{
     dispatch(fetchChat())
