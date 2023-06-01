@@ -2,6 +2,9 @@ import { useNavigation } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 import { View, Text, TextInput, Pressable, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import { API_BASE_URL } from "../../utils/config";
+import { getUserDetails, logout } from '../../features/auth/authSlice';
+import axios from 'axios';
 
 const PasswordScreen = () => {
     const dispatch = useDispatch()
@@ -11,26 +14,41 @@ const PasswordScreen = () => {
     const [currentPassword, setCurrentPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
+    const [passwordError, setPasswordError] = useState("")
 
     const handlePwdChange = () => {
         if (!currentPassword || !newPassword || !confirmNewPassword) {
-            alert('Please fill out all fields')
+            setPasswordError('whaap')
         }
 
-        else if (currentPassword !== user.password) {
-            alert('Wrong password')
-        }
+        else {
+            let userData = {
+                //id: user._id,
+                "oldPassword": currentPassword,
+                "newPassword": newPassword,
+              }
+          
+           // /api/users/change-password
 
-        else if (newPassword !== currentPassword) {
-            alert('New Passwords must match!')
-        }
-
-        else if (newPassword == currentPassword) {
-            alert('You cannot reuse password')
-        }
-        
-        else if (length(newPassword) < 8) {
-            alert('Password must be at least 8 characters')
+           axios.put(`${API_BASE_URL}users/change-password/?id=${user._id}`, userData,
+            { headers: {
+                'Content-Type': 'application/json',
+            }}).then((data) => {
+                alert('password changed')
+                // handleLogout()
+                //dispatch(getUserDetails(user._id))
+                navigation.navigate('More')
+                }).catch((err) => {
+                    if(err?.response?.data?.message === "Incorrect old password") {
+                        setPasswordError("Incorrect old password")
+                      } else if(err?.response?.data?.message === "Password must be 6-20 characters long") {
+                        setPasswordError("Password must be 6-20 characters long")
+                      } else if(err?.response?.data?.message === "New password cannot be the same as old password") {
+                        setPasswordError("New password cannot be the same as old password")
+                      } else {
+                        setPasswordError("Something went wrong")
+                      }
+            }); 
         }
     }
   return (
@@ -180,6 +198,17 @@ const PasswordScreen = () => {
               //onChangeText = {this.handlePassword}
               />
         </View>
+        {passwordError ? (
+          <Text style={{
+            marginTop: 10,
+            textAlign: "center",
+            color: "red",
+            fontFamily: "Poppins_400Regular",
+            fontSize: 13
+          }}>
+            {passwordError}
+          </Text>
+        ) : (null)}
         <View style = {{
             width: '100%',
             flexDirection: 'row',

@@ -307,17 +307,6 @@ const handleVerify = async () => {
             backgroundColor: "#fff",
           }}
         />
-        {userPasswordError ? (
-          <Text style={{
-            marginTop: 10,
-            textAlign: "center",
-            color: "red",
-            fontFamily: "Poppins_400Regular",
-            fontSize: 13
-          }}>
-            {userPasswordError}
-          </Text>
-        ) : (null)}
         <TextInput
           label="Confirm Password"
           secureTextEntry={true}
@@ -355,6 +344,7 @@ const handleVerify = async () => {
             onPress={() => {
               setChecked(!checked);
             }}
+
             color="#514590"
             style={{
               width: 80,
