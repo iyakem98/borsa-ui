@@ -16,7 +16,7 @@ const PasswordScreen = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
     const [passwordError, setPasswordError] = useState("")
 
-    const handleChangePassword = async () => {
+   {/* const handleChangePassword = async () => {
         try {
           const response = await fetch(`${API_BASE_URL}users/change-password`, {
             method: 'POST',
@@ -48,7 +48,7 @@ const PasswordScreen = () => {
               }
         }
       };
-
+    */}
 
       const handlePwdChange = async () => {
         if (!oldPassword || !newPassword || !confirmNewPassword) {
