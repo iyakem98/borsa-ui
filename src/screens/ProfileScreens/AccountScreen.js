@@ -254,7 +254,7 @@ const AccountScreen = () => {
             position: 'absolute',
             left: "40%",
             right: "38%",
-            fontSize: 20,
+            fontSize: 18,
             color: 'white',
             fontFamily: 'Poppins_600SemiBold',
           }}>
@@ -296,7 +296,7 @@ const AccountScreen = () => {
               fontSize: 16,
               fontFamily: "Poppins_600SemiBold",
             }}>
-              Edit photo
+              Change avatar
             </Text>
             <Entypo name="edit" size={16} color="black"/>
           </TouchableOpacity>

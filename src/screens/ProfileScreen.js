@@ -153,7 +153,11 @@ const ProfileScreen = ({navigation}) => {
                 </View>
             </LinearGradient>
         <View>
-            <ScrollView style = {styles.v2b}>
+            <ScrollView style = {styles.v2b}
+                contentContainerStyle={{
+                    minHeight:800
+                  }}
+            >
                 <View style = {{
                      paddingVertical: 20,
                      paddingHorizontal: 20,
