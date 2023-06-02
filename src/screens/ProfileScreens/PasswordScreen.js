@@ -76,11 +76,10 @@ const PasswordScreen = () => {
               // dispatch(getUserDetails(user._id));
               navigation.navigate('More');
             } else {
-              const data = response.data;
+              const data = response
+              console.log("error is", response)
               if (data && data.message) {
                 setPasswordError(data.message);
-              } else {
-                setPasswordError('Something went wrong');
               }
             }
           } catch (error) {
