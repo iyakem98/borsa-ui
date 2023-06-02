@@ -116,7 +116,9 @@ const PasswordScreen = () => {
           }}>
             Enter your old password
           </Text>
-        <TextInput style = {{
+        <TextInput 
+        error={passwordError}
+        style = {{
           color:
              "gray" 
         ,
@@ -159,7 +161,9 @@ const PasswordScreen = () => {
           }}>
             Enter new password
           </Text>
-        <TextInput style = {{
+        <TextInput 
+            error={passwordError}
+        style = {{
           color:
              "gray" 
         ,
@@ -203,7 +207,9 @@ const PasswordScreen = () => {
           }}>
             Confirm new password
           </Text>
-        <TextInput style = {{
+        <TextInput 
+           error={passwordError}
+        style = {{
           color:
              "gray" 
         ,
