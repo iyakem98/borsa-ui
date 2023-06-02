@@ -684,7 +684,7 @@ useEffect(() => {
                     // ListHeaderComponent={BuyerHeader}
                     data={buyerTotal}
                     contentContainerStyle={{
-                      paddingBottom: 200
+                      paddingBottom: 270
                     }}
                     maxToRenderPerBatch={2}
                     renderItem={({item}) => {
@@ -978,7 +978,7 @@ useEffect(() => {
                     // ListHeaderComponent={TravelerHeader}
                     data={t}
                     contentContainerStyle={{
-                      paddingBottom: 200
+                      paddingBottom: 270
                     }}
                     renderItem={({item}) => {
                       // console.log(item)
