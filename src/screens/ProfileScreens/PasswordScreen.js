@@ -54,9 +54,14 @@ const PasswordScreen = () => {
       const handlePwdChange = async () => {
         if (!oldPassword || !newPassword || !confirmNewPassword) {
           setPasswordError('Please fill in all fields');
-        } else if (newPassword !== confirmNewPassword) {
+        } 
+        else if (newPassword !== confirmNewPassword) {
           setPasswordError('Passwords do not match');
-        } else {
+        } 
+        else if (newPassword === oldPassword) {
+          setPasswordError('You cannot use your old password');
+        } 
+        else {
           try {
             let config = {
                 headers: {

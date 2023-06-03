@@ -307,7 +307,7 @@ useEffect(() => {
 
 
     const getUsers = async () => {
-      setLoad(true)
+     //setLoad(true)
       getToken()
       const config = {
       headers: {
@@ -415,6 +415,7 @@ useEffect(() => {
           <ActivityIndicator style={{
             justifyContent:"center",
             marginTop:"48%",
+            color: 'blue'
           }}
           size="large"
           />
