@@ -30,6 +30,7 @@ const MessageTemplate = ({
             }}>
             <View style = {[styles.container, {
                 backgroundColor: m?.sender?._id === user?._id ? "#593196" : "#E8E8E8",
+                marginBottom: m?.sender?._id === user?._id ? 0 : 5,
                 //borderBottomRightRadius: m?.sender?._id === user?._id ? 0 : 8,
                 //borderBottomLeftRadius: m?.sender?._id === user?._id ? 8 : 0,
             }]}>
@@ -59,7 +60,7 @@ const MessageTemplate = ({
                     <View style = {{
                         alignItems: 'flex-end',
                         paddingRight: 10,
-                        marginTop: -7
+                        marginTop: (m?.sender?._id === user?._id)? -7: 0
                     }}>
                         {m?.sender?._id === user?._id && m.receiver != null && m?.marked ? (
                             <Ionicons name="checkmark-done" size={16} color="black" />
