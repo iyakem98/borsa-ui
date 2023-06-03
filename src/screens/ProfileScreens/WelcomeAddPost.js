@@ -25,7 +25,7 @@ const WelcomeAddPost = () => {
             alert('profile updated')
             // handleLogout()
             dispatch(getUserDetails(user._id))
-            navigation.navigate('App Post')
+           
           }).catch((err) => {
             alert("try again pls.")
             console.log("errorr", err)
@@ -47,11 +47,13 @@ const WelcomeAddPost = () => {
             alert('profile updated')
             // handleLogout()
             dispatch(getUserDetails(user._id))
-            navigation.navigate('More')
+            navigation.navigate('Chats')
           }).catch((err) => {dea
             alert("try again pls.")
             console.log("errorr", err)
           }); 
+
+          navigation.navigate('Chats')
 
     }
     return (
