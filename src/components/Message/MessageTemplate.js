@@ -26,10 +26,10 @@ const MessageTemplate = ({
         <View style={{}}>
             <View style = {{
                  alignSelf: m.sender._id === user._id ? "flex-end" : "flex-start",
+                 marginBottom: 5,
             }}>
             <View style = {[styles.container, {
                 backgroundColor: m?.sender?._id === user?._id ? "#593196" : "#E8E8E8",
-                marginTop: 10, 
                 //borderBottomRightRadius: m?.sender?._id === user?._id ? 0 : 8,
                 //borderBottomLeftRadius: m?.sender?._id === user?._id ? 8 : 0,
             }]}>
@@ -59,13 +59,14 @@ const MessageTemplate = ({
                     <View style = {{
                         alignItems: 'flex-end',
                         paddingRight: 10,
+                        marginTop: -7
                     }}>
                         {m?.sender?._id === user?._id && m.receiver != null && m?.marked ? (
-                            <Ionicons name="checkmark-outline" size={14} color="black" />
+                            <Ionicons name="checkmark-done" size={16} color="black" />
                         ) : m?.sender?._id === user?._id && m?.receiver != null && !m?.marked ? (
-                            <Ionicons name="checkmark-outline" size={14} color="black" />
+                            <Ionicons name="checkmark-done" size={16} color="black" />
                         ) : m?.sender?._id === user?._id && !m?.marked ? (
-                            <Ionicons name="checkmark-outline" size={14} color="#fff" />
+                            <Ionicons name="checkmark-done" size={16} color="#fff" />
                         ) : null}
                     </View>
             </View>

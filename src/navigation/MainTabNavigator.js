@@ -239,7 +239,7 @@ const MainTabNavigator = () => {
             headerShown: false
         }} /> */}
 
-        {user?.isFirstTime && 
+        {(user?.isFirstTime) && 
             <Tab.Screen name="Welcome" component={WelcomeProPic} options={{
                 tabBarIcon: ({color, size}) => (
                     <FontAwesome name="random" size={size} color={color} /> 
