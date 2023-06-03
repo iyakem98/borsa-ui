@@ -22,12 +22,12 @@ const WelcomeAddPost = () => {
             { headers: {
               'Content-Type': 'application/json',
           }}).then((data) => {
-            alert('profile updated')
+            alert(`All set! Welcome to borsa ${user.firstName}`)
             // handleLogout()
             dispatch(getUserDetails(user._id))
            
           }).catch((err) => {
-            alert("try again pls.")
+            //alert("try again pls.")
             console.log("errorr", err)
           }); 
 
@@ -44,12 +44,12 @@ const WelcomeAddPost = () => {
             { headers: {
               'Content-Type': 'application/json',
           }}).then((data) => {
-            alert('profile updated')
+            alert(`All set! Welcome to borsa ${user.firstName}`)
             // handleLogout()
             dispatch(getUserDetails(user._id))
             navigation.navigate('Chats')
           }).catch((err) => {dea
-            alert("try again pls.")
+            //alert("try again pls.")
             console.log("errorr", err)
           }); 
 
