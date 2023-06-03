@@ -63,12 +63,10 @@ const ProfilePicker = () => {
           { headers: {
             'Content-Type': 'application/json',
         }}).then((data) => {
-          alert('profile updated')
           dispatch(getUserDetails(user._id))
           // handleLogout()
           navigation.popToTop()
         }).catch((err) => {dea
-          alert("try again pls.")
           console.log("errorr", err)
         }); 
       }
