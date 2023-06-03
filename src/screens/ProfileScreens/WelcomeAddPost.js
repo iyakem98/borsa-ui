@@ -22,7 +22,7 @@ const WelcomeAddPost = () => {
             { headers: {
               'Content-Type': 'application/json',
           }}).then((data) => {
-            alert(`All set! Welcome to borsa ${user.firstName}`)
+            alert(`All set! Welcome to Borsa ${user.firstName}!`)
             // handleLogout()
             dispatch(getUserDetails(user._id))
            
@@ -44,7 +44,7 @@ const WelcomeAddPost = () => {
             { headers: {
               'Content-Type': 'application/json',
           }}).then((data) => {
-            alert(`All set! Welcome to borsa ${user.firstName}`)
+            alert(`All set! Welcome to Borsa ${user.firstName}!`)
             // handleLogout()
             dispatch(getUserDetails(user._id))
             navigation.navigate('Chats')

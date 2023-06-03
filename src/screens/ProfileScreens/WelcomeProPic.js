@@ -182,7 +182,7 @@ const WelcomeProPic = () => {
                 color: 'white',
                 fontFamily: "Poppins_400Regular"
             }}>
-                You can change it anytime. 
+                You can change your avatar anytime. 
             </Text>
         </View>
     
