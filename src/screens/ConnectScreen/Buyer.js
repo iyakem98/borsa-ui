@@ -10,6 +10,32 @@ import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { showMessage } from "react-native-flash-message";
 
+const data = [
+    { id: '0', imageSource: require('../../../assets/images/avatars/blank-avatar.png') },
+    { id: '1', imageSource: require('../../../assets/images/avatars/bottts1.png') },
+    { id: '2', imageSource: require('../../../assets/images/avatars/bottts2.png') },
+    { id: '3', imageSource: require('../../../assets/images/avatars/bottts3.png') },
+    { id: '4', imageSource: require('../../../assets/images/avatars/bottts4.png') },
+    { id: '5', imageSource: require('../../../assets/images/avatars/bottts5.png') },
+    { id: '6', imageSource: require('../../../assets/images/avatars/bottts6.png') },
+    { id: '7', imageSource: require('../../../assets/images/avatars/bottts7.png') },
+    { id: '8', imageSource: require('../../../assets/images/avatars/bottts8.png') },
+    { id: '9', imageSource: require('../../../assets/images/avatars/bottts9.png') },
+    { id: '10', imageSource: require('../../../assets/images/avatars/bottts10.png') },
+    { id: '11', imageSource: require('../../../assets/images/avatars/bottts11.png') },
+    { id: '12', imageSource: require('../../../assets/images/avatars/bottts12.png') },
+    { id: '13', imageSource: require('../../../assets/images/avatars/bottts13.png') },
+    { id: '14', imageSource: require('../../../assets/images/avatars/bottts14.png') },
+    { id: '15', imageSource: require('../../../assets/images/avatars/bottts15.png') },
+    { id: '16', imageSource: require('../../../assets/images/avatars/bottts16.png') },
+    { id: '17', imageSource: require('../../../assets/images/avatars/bottts17.png') },
+    { id: '18', imageSource: require('../../../assets/images/avatars/bottts18.png') },
+    { id: '19', imageSource: require('../../../assets/images/avatars/bottts19.png') },
+    { id: '20', imageSource: require('../../../assets/images/avatars/bottts20.png') },
+    // Add more images as needed
+  ];
+
+
 const width = Dimensions.get("screen").width
 
 const Buyer = ({
@@ -24,6 +50,11 @@ const Buyer = ({
     const navigation = useNavigation();
     const [showModal, setshowModal] = useState(false)
     const [modal, setModal] = useState(false)
+
+    const getImageSourceById = (id) => {
+        const item = data.find((item) => item.id === id);
+        return item ? item.imageSource : null;
+      };
 
     const viewDetail = (user) => {
         alert("detail")
@@ -196,11 +227,9 @@ const BuyerChat = async(buyerData)=> {
 
     return (
         <>
-        <Pressable style={styles.container} onPress={() =>{
-            // setshowModal(true)
-            // setModal(true)
-            // onPress()
-        }}>
+        <Pressable style={styles.container} onPress={()=>navigation.navigate("Profile", {
+                    theUser: item?.user
+                })}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
                     {/* <Image
@@ -214,10 +243,10 @@ const BuyerChat = async(buyerData)=> {
                     </View>
                     <View>
                         <Text style={{
-                            fontSize: 16,
+                            fontSize: 17,
                             fontFamily: "Poppins_500Medium"
                         }}>{item.item[0]}</Text>
-                        <Pressable onPress={()=>navigation.navigate("Profile", {
+                       {/* <Pressable onPress={()=>navigation.navigate("Profile", {
                     theUser: item?.user
                 })}>
                         <Text style={{
@@ -225,7 +254,7 @@ const BuyerChat = async(buyerData)=> {
                             fontFamily: "Poppins_500Medium",
                             color: "#777"
                         }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
-                        </Pressable>
+                    </Pressable> */}
                     </View>
                 </View>
                 <View style={styles.horizontal}>
@@ -303,16 +332,39 @@ const BuyerChat = async(buyerData)=> {
                 </Text> */}
                 </View>
             </View>
-            <View style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                backgroundColor: "#f5f5f5",
-                paddingHorizontal: 10,
-                paddingVertical: 8,
-                marginTop: 15
-              }}>
-                <View>
+                <View style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    backgroundColor: "#f5f5f5",
+                    paddingHorizontal: 10,
+                    paddingVertical: 8,
+                    marginTop: 15
+                }}>
+                    <View style = {{
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+
+                <Image source={getImageSourceById(item?.user?.profilePic)} style={{ 
+                        width: 40,
+                        height: 40,
+                        marginTop:0,
+                        marginRight: 5,
+                        // borderRadius: "100%",
+                        borderRadius: 100,
+                        
+                        }} />
+
+                        <View>
+                            <Text style={{
+                                fontSize: 16,
+                                fontFamily: "Poppins_500Medium"
+                            }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        </View>
+
+                </View>
+              {/*  <View>
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
@@ -333,7 +385,7 @@ const BuyerChat = async(buyerData)=> {
                         )
                     }) : null}
                   </View>
-                </View>
+                </View> */}
                 <Pressable style={{
                   backgroundColor: "#593196",
                   paddingHorizontal: 20,
@@ -455,7 +507,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         borderRadius: 5,
-        marginRight: 10,
+        //marginRight: 10,
         justifyContent: "center",
         alignItems: "center",
     },
@@ -482,7 +534,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         //marginTop: 2,
-        paddingVertical: 5,
+        //paddingVertical: 5,
         paddingHorizontal: 10,
     },
     horizontal: {

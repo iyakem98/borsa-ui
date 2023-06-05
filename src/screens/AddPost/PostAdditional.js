@@ -9,6 +9,7 @@ import { async } from 'q'
 import { API_BASE_URL } from '../../utils/config'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const width = Dimensions.get("screen").width
 
 const items = [
@@ -63,7 +64,9 @@ const Description = ({navigation}) => {
 
           await axios.post('http://143.198.168.244/api/buyers/', buyerData,
             {
-                'headers': { Authorization: `Bearer ${user.token}` }
+                headers: {
+                    Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
+                  }
         })
      .then((res) => {
        alert('Post succeeded.')
@@ -109,10 +112,15 @@ const Description = ({navigation}) => {
         //   }
 
           await axios.post('http://143.198.168.244/api/travels/', travelerData,
-             {'headers': { 
+             
+          {
+            
+            headers: {
                 "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${user.token}`,
-            }})
+                Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
+              }
+        
+        })
             .then((res) => {
                 alert('Post succeeded.')
                 navigation.navigate("My Cards") })

@@ -167,7 +167,7 @@ const ChatItem = ({
           {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 ? <View style={styles.notif}>
             <Text style={styles.notifClr}>{storedNotifications.length}</Text>
           </View> : <Text></Text> }  */}
-        {isUserSender && !isMarked ? (
+        {/*{isUserSender && !isMarked ? (
           <View style={styles.notifCheckmark}>
             <Ionicons name="checkmark-outline" size={24} color="black" />
           </View>
@@ -177,11 +177,22 @@ const ChatItem = ({
           </View>
         ) : notifLength > 0 || (!isUserSender && !isMarked) ? (
           <View style={styles.notif} />
-        ) : (null)}
+        ) : (null)} */}
         {/* <Text>notifffehih</Text> */}
           {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 
           &&  <View  style={styles.notif}><Text>notif</Text></View>
           }  */}
+          {isUserSender && !isMarked ? (
+          <View style={styles.notifCheckmark}>
+            <Ionicons name="checkmark-outline" size={20} color="black" />
+          </View>
+        ) : isUserSender && isMarked ? (
+          <View style={styles.notifCheckmark}>
+            <Ionicons name="checkmark-outline" size={20} color="black" />
+          </View>
+        ) : notifLength > 0 || (!isUserSender && !isMarked) ? (
+          <View style={styles.notif} />
+        ) : (null)}
       </View>
     </Pressable>
   )

@@ -110,7 +110,7 @@ const HeaderChat = ({
             
                 >
               <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>
-                  {userSelectedFromConnectCard?.user?.firstName ? userSelectedFromConnectCard?.user?.firstName : "Borsa"}  
+                  {userSelectedFromConnectCard?.firstName ? userSelectedFromConnectCard?.firstName : "Deleted Account"}  
               </Text>
               </Pressable>
               <View style={{

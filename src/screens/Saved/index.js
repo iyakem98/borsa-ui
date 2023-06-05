@@ -9,6 +9,7 @@ import BuyerCard from './buyerCard'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw';
 import { useIsFocused } from '@react-navigation/native'
 
+
 const width = Dimensions.get("screen").width
 
 const Saved = () => {

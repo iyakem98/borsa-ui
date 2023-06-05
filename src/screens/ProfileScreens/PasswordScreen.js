@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { API_BASE_URL } from "../../utils/config";
 import { getUserDetails, logout } from '../../features/auth/authSlice';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PasswordScreen = () => {
     const dispatch = useDispatch()
@@ -53,28 +54,37 @@ const PasswordScreen = () => {
       const handlePwdChange = async () => {
         if (!oldPassword || !newPassword || !confirmNewPassword) {
           setPasswordError('Please fill in all fields');
-        } else if (newPassword !== confirmNewPassword) {
+        } 
+        else if (newPassword !== confirmNewPassword) {
           setPasswordError('Passwords do not match');
-        } else {
+        } 
+        else if (newPassword === oldPassword) {
+          setPasswordError('You cannot use your old password');
+        } 
+        else {
           try {
-            const config = {
+            let config = {
                 headers: {
-                    Authorization: `Bearer ${user.token}`
-        
+                    Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
                 }
             }
-           const response = await axios.post(`${API_BASE_URL}users/change-password`, {oldPassword, newPassword}, config)
+
+            let data = {
+              "oldPassword": oldPassword,
+              "newPassword": newPassword
+            }
+
+           const response = await axios.post(`${API_BASE_URL}users/change-password`, data, config)
         
             if (response.status === 200) {
               alert('Password changed successfully');
-              dispatch(getUserDetails(user._id));
+              // dispatch(getUserDetails(user._id));
               navigation.navigate('More');
             } else {
-              const data = response.data;
+              const data = response
+              console.log("error is", response)
               if (data && data.message) {
                 setPasswordError(data.message);
-              } else {
-                setPasswordError('Something went wrong');
               }
             }
           } catch (error) {
@@ -110,7 +120,9 @@ const PasswordScreen = () => {
           }}>
             Enter your old password
           </Text>
-        <TextInput style = {{
+        <TextInput 
+        error={passwordError}
+        style = {{
           color:
              "gray" 
         ,
@@ -153,7 +165,9 @@ const PasswordScreen = () => {
           }}>
             Enter new password
           </Text>
-        <TextInput style = {{
+        <TextInput 
+            error={passwordError}
+        style = {{
           color:
              "gray" 
         ,
@@ -197,7 +211,9 @@ const PasswordScreen = () => {
           }}>
             Confirm new password
           </Text>
-        <TextInput style = {{
+        <TextInput 
+           error={passwordError}
+        style = {{
           color:
              "gray" 
         ,

@@ -63,12 +63,10 @@ const ProfilePicker = () => {
           { headers: {
             'Content-Type': 'application/json',
         }}).then((data) => {
-          alert('profile updated')
           dispatch(getUserDetails(user._id))
           // handleLogout()
           navigation.popToTop()
         }).catch((err) => {dea
-          alert("try again pls.")
           console.log("errorr", err)
         }); 
       }
@@ -142,7 +140,7 @@ const ProfilePicker = () => {
                 </Text>
                   { (!(user.profilePic == '0') && !tempPic) && (
                   
-                  <TouchableOpacity onPress={alert(tempPic)}
+                  <TouchableOpacity onPress={() => setTempPic(data[0])}
                     style = {{
                       flexDirection: 'row',
                       borderStyle: 'solid',

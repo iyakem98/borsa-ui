@@ -106,7 +106,7 @@ const ProfileScreen = ({navigation}) => {
                     //colors={['#593196', '#705c9d', "#fff"]}
                     colors={['#593196', "#fff"]}
                     style = {{
-                        paddingTop: "10%",
+                        paddingTop: "30%",
                         paddingHorizontal: 20,
                         paddingBottom: 20,
                     }}>
@@ -153,7 +153,11 @@ const ProfileScreen = ({navigation}) => {
                 </View>
             </LinearGradient>
         <View>
-            <ScrollView style = {styles.v2b}>
+            <ScrollView style = {styles.v2b}
+                contentContainerStyle={{
+                    minHeight:800
+                  }}
+            >
                 <View style = {{
                      paddingVertical: 20,
                      paddingHorizontal: 20,

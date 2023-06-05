@@ -49,7 +49,7 @@ const ConnectScreen = () => {
     console.log("card to be deleted is:", id)
     let config = {
       headers: {
-        Authorization: `Bearer ${user.token}`
+        Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
       }
     }
     Alert.alert('Deleting your card', 'Are you sure to delete?', [
@@ -75,9 +75,10 @@ const ConnectScreen = () => {
   const deleteBuyer = async (id) => {
     console.log("card to be deleted is:", id)
     let config = {
-    headers: {
-      Authorization: `Bearer ${user.token}`
-    }}
+      headers: {
+        Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
+      }
+  }
     Alert.alert('Deleting your card', 'Are you sure to delete?', [
       {text: 'OK', onPress: async () => {
         setSpinner(true)
@@ -134,7 +135,7 @@ const ConnectScreen = () => {
     }
     const config = {
       headers: {
-        Authorization: `Bearer ${user.token}`
+        Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
       }
     }
     await axios.get(`http://143.198.168.244/api/travels/my`, config)

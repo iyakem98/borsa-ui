@@ -163,7 +163,7 @@ const MessagingScreen = ({navigation}) => {
   const testNewMessages = async(newMessageReceived) => {
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`, {
       headers: {
-          Authorization: `Bearer ${user.token}`
+        Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
       }
     })
     setMessages(data?.data, newMessageReceived)
@@ -192,7 +192,7 @@ const MessagingScreen = ({navigation}) => {
         receiver: route.params.userSelected._id
       }, {
         headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
         }
       })
       socket.current.emit("new message", data)
@@ -221,7 +221,7 @@ const MessagingScreen = ({navigation}) => {
       }
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
         }
       }
       console.log("-=-=--=")
@@ -244,7 +244,7 @@ const MessagingScreen = ({navigation}) => {
     try{
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
         }
       }
       const {data} = await axios.get(`${API_BASE_URL}message/${chattId}?page=${pageNum}`,
