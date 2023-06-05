@@ -566,17 +566,27 @@ const AccountScreen = () => {
               justifyContent: "space-between",
               width: screenWidth - 80,
               marginTop: 15,
-              backgroundColor: "#eee",
+              backgroundColor: "#fff",
               paddingHorizontal: 5,
               borderRadius: 10,
-              paddingVertical: 6
+              paddingVertical: 4,
+
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.22,
+              shadowRadius: 2.22,
+
+              elevation: 3,
             }}>
               <Pressable disabled = {isEditing? false : true}
                 style={{
-                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#593196" : "#fff",
                     borderRadius: 5,
                     width: "49%",
-                    paddingVertical: 5,
+                    paddingVertical: 7,
                     alignItems: "center",
                     justifyContent: 'center',
                 }} onPress={()=>{
@@ -591,7 +601,7 @@ const AccountScreen = () => {
               </Pressable>
               <Pressable disabled = {isEditing? false : true}
                 style={{
-                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#593196" : "#fff",
                     borderRadius: 5,
                     width: "49%",
                     paddingVertical: 5,
