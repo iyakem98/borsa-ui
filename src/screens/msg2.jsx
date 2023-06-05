@@ -216,7 +216,7 @@ console.log(`loading is ` + loading)
 
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`,
     config)
-    console.log("=======", data)
+    // console.log("=======", data)
     // if(data == undefined || data == [] || data == null){
     //   // setloading(false)
     //   setMessages([])

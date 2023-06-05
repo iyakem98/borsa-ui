@@ -27,7 +27,7 @@ const AddPost = ({navigation}) => {
         
         let {data} =   await axios.get(`http://143.198.168.244/api/travels/my`,
         config)
-        console.log("=======", data.data)
+        // console.log("=======", data.data)
         if(data.data.length>0){
             Alert.alert('Already a Traveler', 'Do you want to delete your previous traveler card and add a new one?', [
                 

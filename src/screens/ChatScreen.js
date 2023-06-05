@@ -23,6 +23,7 @@ import moment from 'moment/moment'
 import { Octicons } from '@expo/vector-icons';
 import { API_BASE_URL, API_BASE_URL_Socket } from '../utils/config'
 import ChatItem from '../components/Chats/ChatItem'
+import * as Notifications from 'expo-notifications';
 
 const ChatScreen = () => {
   const dispatch = useDispatch()
@@ -81,6 +82,34 @@ const ChatScreen = () => {
 
   var formatted_other_date = null
 
+  const allowsNotificationsAsync = async() => {
+    const settings = await Notifications.getPermissionsAsync();
+    return (
+      settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+    );
+  }
+
+  const sendPush = async(newMessage) => {
+    const hasPushNotificationPermissionGranted = await allowsNotificationsAsync()
+    try {
+      if(hasPushNotificationPermissionGranted){
+        await Notifications.scheduleNotificationAsync({
+           content: {
+             title: "New message! 📬",
+             body: newMessage?.content,
+             data: { data: 'goes here' },
+           },
+           trigger: { seconds: 2 },
+         });
+       
+       } else {
+         const { status } = await Notifications.requestPermissionsAsync();
+       }
+    } catch (e) {
+      console.log("NOTIFICATION Permission: ", e)
+    }
+  }
+
   useLayoutEffect(() => {
     // console.log("before" + socket.current)
     socket.current = io(API_BASE_URL_Socket)
@@ -90,7 +119,8 @@ const ChatScreen = () => {
 
   useEffect(() => {
     socket.current.on("message recieved", (newMessageReceived) => {
-      storeNotif(newMessageReceived)
+      storeNotif(newMessageReceived);
+      sendPush(newMessageReceived);
     });
   },[])
 

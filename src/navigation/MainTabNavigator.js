@@ -53,12 +53,12 @@ const MainTabNavigator = () => {
         const userId = user?._id
         for (let index = 0; index < chattts.length; index++) {
             const isMarked = chattts[index]?.latestMessage?.marked;
-            console.log("=====", chattts[index]?.latestMessage, userId)
+            // console.log("=====", chattts[index]?.latestMessage, userId)
 
             
             
             if(isMarked === false && userId !== chattts[index]?.latestMessage?.receiver) {
-                console.log(isMarked)
+                // console.log(isMarked)
                 setNotifFlag(true)
             } else {
                 // setNotifFlag(false)
@@ -67,7 +67,7 @@ const MainTabNavigator = () => {
 
             const res = await axios.get('http://143.198.168.244/api/message/count/new', {
                 headers: {
-                    Authorization: `Bearer ${user.token}`
+                    Authorization: `Bearer ${user?.token}`
                 }
             });
             
@@ -239,7 +239,7 @@ const MainTabNavigator = () => {
             headerShown: false
         }} />
 
-        {user.isFirstTime && 
+        {user?.isFirstTime && 
             <Tab.Screen name="Welcome" component={WelcomeProPic} options={{
                 tabBarIcon: ({color, size}) => (
                     <FontAwesome name="random" size={size} color={color} /> 

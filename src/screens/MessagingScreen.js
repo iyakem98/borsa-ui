@@ -2,7 +2,7 @@ import { TouchableOpacity, View, StyleSheet, TextInput, KeyboardAvoidingView, Bu
 import { useDispatch, useSelector } from "react-redux";
 import {AntDesign, MaterialIcons, FontAwesome, MaterialCommunityIcons, Ionicons} from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { createRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { createRef, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import ScrollableFeed from '../components/Chats/ScrollableFeed.js/ScrollableFeed';
 import io from 'socket.io-client'
@@ -15,6 +15,9 @@ import { isSameUser } from '../ChatConfig/ChatLogics';
 import HeaderChat from '../components/Shared/HeaderChat';
 import ChatInput from '../components/Chats/ChatInput';
 import MessageTemplate from '../components/Message/MessageTemplate';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
 
@@ -86,7 +89,35 @@ const MessagingScreen = ({navigation}) => {
   var socket = useRef(null);
   const scrollViewRef = useRef();
   const myRef = createRef();  
-  const cameraRef = useRef()
+  const cameraRef = useRef();
+
+  const allowsNotificationsAsync = async() => {
+    const settings = await Notifications.getPermissionsAsync();
+    return (
+      settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+    );
+  }
+
+  const sendPush = async(newMessage) => {
+    const hasPushNotificationPermissionGranted = await allowsNotificationsAsync()
+    try {
+      if(hasPushNotificationPermissionGranted){
+        await Notifications.scheduleNotificationAsync({
+           content: {
+             title: "New message! 📬",
+             body: newMessage?.content,
+             data: { data: 'goes here' },
+           },
+           trigger: { seconds: 2 },
+         });
+       
+       } else {
+         const { status } = await Notifications.requestPermissionsAsync();
+       }
+    } catch (e) {
+      console.log("NOTIFICATION Permission: ", e)
+    }
+  }
 
   useLayoutEffect(()=>{
     socket.current=io(API_BASE_URL_Socket)
@@ -118,11 +149,12 @@ const MessagingScreen = ({navigation}) => {
   useEffect(() =>{
     chatRouteCompare = chatRoute
   }, [])
-
- 
+  
   useEffect(() => {
     socket.current.on("message recieved", (newMessageReceived) => {
       testNewMessages(newMessageReceived)
+      console.log("first", newMessageReceived)
+      sendPush(newMessageReceived);
     })
   }, [])
 

@@ -365,7 +365,7 @@ const handleVerify = async () => {
                 fontFamily: "Poppins_500Medium",
                 //textDecorationLine: "underline"
               }} onPress={()=>{
-                console.log("========")
+                // console.log("========")
               }}>Borsa</Text>
               {" "}user and will {" "}
               <Text style={{
@@ -373,7 +373,7 @@ const handleVerify = async () => {
                 fontFamily: "Poppins_500Medium",
                 //textDecorationLine: "underline"
               }} onPress={()=>{
-                console.log("========")
+                // console.log("========")
               }}>interact with other users appropriately.</Text>
             </Text>
           </View>
