@@ -11,14 +11,14 @@ const WelcomeAddPost = () => {
     const navigation = useNavigation()
     const { user } = useSelector((state) => state.auth)
 
-    const updateStatusandAddPost = () => {
+    const updateStatusandAddPost = async() => {
 
         let userData = {
             //id: user._id,
             "isFirstTime": false,
           }
       
-          axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
+         await axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
             { headers: {
               'Content-Type': 'application/json',
           }}).then((data) => {
@@ -31,16 +31,17 @@ const WelcomeAddPost = () => {
             console.log("errorr", err)
           }); 
 
-        navigation.navigate('AddPost')
+        // navigation.navigate('AddPost')
+        navigation.navigate('New Post')
     }
 
-    const onlyUpdateStatus = () => {
+    const onlyUpdateStatus = async() => {
         let userData = {
             //id: user._id,
             "isFirstTime": false,
           }
       
-          axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
+          await axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
             { headers: {
               'Content-Type': 'application/json',
           }}).then((data) => {
