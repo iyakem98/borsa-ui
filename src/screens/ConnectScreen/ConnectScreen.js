@@ -523,6 +523,7 @@ useEffect(() => {
                 
                             <Pressable onPress={()=>{
                               clearFilterBuyer()
+                              getUsers()
                             }}
                                 style = {{
                                     //backgroundColor: '#E8E8E8',
@@ -817,6 +818,7 @@ useEffect(() => {
                 
                             <Pressable onPress={()=>{
                               clearFilterTraveler()
+                              getTravelers()
                             }}
                                 style = {{
                                     //backgroundColor: '#E8E8E8',
