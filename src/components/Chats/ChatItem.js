@@ -184,11 +184,11 @@ const ChatItem = ({
           }  */}
           {isUserSender && !isMarked ? (
           <View style={styles.notifCheckmark}>
-            <Ionicons name="checkmark-outline" size={20} color="black" />
+            <Ionicons name="checkmark-done" size={20} color="black" />
           </View>
         ) : isUserSender && isMarked ? (
           <View style={styles.notifCheckmark}>
-            <Ionicons name="checkmark-outline" size={20} color="black" />
+            <Ionicons name="checkmark-done" size={20} color="black" />
           </View>
         ) : notifLength > 0 || (!isUserSender && !isMarked) ? (
           <View style={styles.notif} />
