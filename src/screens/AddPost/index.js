@@ -4,6 +4,7 @@ import Header from '../../components/Shared/Header'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { API_BASE_URL } from '../../utils/config'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const width = Dimensions.get("screen").width
 
@@ -22,12 +23,12 @@ const AddPost = ({navigation}) => {
         setSpinner(true)
         let config = {
             headers: {
-                Authorization: `Bearer ${user.token}`
+                Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
               }}
         
         let {data} =   await axios.get(`http://143.198.168.244/api/travels/my`,
         config)
-        console.log("=======", data.data)
+        // console.log("=======", data.data)
         if(data.data.length>0){
             Alert.alert('Already a Traveler', 'Do you want to delete your previous traveler card and add a new one?', [
                 

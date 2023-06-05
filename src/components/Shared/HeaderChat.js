@@ -33,7 +33,6 @@ const getImageSourceById = (id) => {
     const item = data.find((item) => item.id === id);
     return item ? item.imageSource : null;
   };
-  
 
 const HeaderChat = ({
     isActive,
@@ -46,18 +45,13 @@ const HeaderChat = ({
     loading,
     userSelectedFromConnectCard
 }) => {
-  const navigation = useNavigation()
+    const navigation = useNavigation()
 
-  useEffect(() => {
-    isActive()
-   console.log('is acitve 2', isActive2)
-    
-  }, [])
-  // console.log('active in header', isActive)
-  // console.log("is active", active)
-  // console.log("is active", isActive)
-  // console.log("is typing", isTyping)
-   
+    useEffect(() => { 
+      console.log("userSelected is", userSelectedFromConnectCard)
+    }, [])
+
+
   return (
     <View style={{
         overflow: 'hidden',
@@ -89,9 +83,15 @@ const HeaderChat = ({
             <Pressable onPress={()=>navigation.goBack()} style={{marginRight: 10}}>
               <MaterialIcons name="keyboard-backspace" size={25} color="#514590" />
             </Pressable>
-            <Pressable onPress={()=> navigation.navigate("Profile", {
-                    theUser: userSelectedFromConnectCard
-                })}>
+            <Pressable 
+            onPress={()=> 
+              {
+                userSelectedFromConnectCard?.user?.firstName &&
+                navigation.navigate("Profile", {
+                  theUser: userSelectedFromConnectCard
+              })}
+            }
+            >
             <Image
               source={getImageSourceById(userSelectedFromConnectCard?.profilePic)}
               style={{
@@ -103,10 +103,19 @@ const HeaderChat = ({
             />
             </Pressable>
             <View style={{marginLeft: 10}}>
-            <Pressable onPress={()=>navigation.navigate("Profile", {
-                    theUser: userSelectedFromConnectCard
-                })}>
-              <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>{userSelectedFromConnectCard && userSelectedFromConnectCard.firstName ? userSelectedFromConnectCard?.firstName : selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.firstName : selectedChat?.users[0]?.firstName} {userSelectedFromConnectCard && userSelectedFromConnectCard.lastName ? userSelectedFromConnectCard?.lastName : selectedChat?.users[0]?._id === user?._id ? selectedChat?.users[1]?.lastName : selectedChat?.users[0]?.lastName}</Text></Pressable>
+            <Pressable onPress={()=>
+            {
+              userSelectedFromConnectCard?.user?.firstName &&
+              navigation.navigate("Profile", {
+                theUser: userSelectedFromConnectCard
+            })}
+            }
+            
+                >
+              <Text style={{fontFamily: "Poppins_600SemiBold", fontSize: 16}}>
+                  {userSelectedFromConnectCard?.firstName ? userSelectedFromConnectCard?.firstName : "Deleted Account"}  
+              </Text>
+              </Pressable>
               <View style={{
                 flexDirection: "row",
                 alignItems: "center"

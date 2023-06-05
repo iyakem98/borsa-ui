@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import {AppState, Platform, StyleSheet, Text, View } from 'react-native';
+// import { StatusBar } from 'expo-status-bar';
+import {AppState, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 import ChatListItem from './src/components/Chats/ChatListItem';
 import ChatScreen from './src/screens/ChatScreen';
 import MessagingScreen from './src/screens/MessagingScreen';
@@ -8,9 +8,7 @@ import { Provider, useDispatch } from 'react-redux';
 import { store, persistor } from './src/app/store';
 import {PersistGate} from 'redux-persist/integration/react';  
 import ChatProvider from './src/context/ChatProvider';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AppContainer from './AppContainer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -33,6 +31,8 @@ import {
   requestTrackingPermissionsAsync,
   getTrackingPermissionsAsync,
 } from 'expo-tracking-transparency';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 
 export default function App() {
   let [fontsLoaded, error] = useFonts({
@@ -47,7 +47,20 @@ export default function App() {
     Poppins_800ExtraBold
   });
 
-  const [showOnBoarding, setShowOnBoarding] = useState(true)
+  const [showOnBoarding, setShowOnBoarding] = useState(true);
+
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+
+  async function schedulePushNotification() {
+    await allowsNotificationsAsync()
+  }
+  
 
   const checkOnBoardingData = async () => {
     try {
@@ -77,26 +90,50 @@ export default function App() {
     }
   }
 
+  const allowsNotificationsAsync = async() => {
+    const settings = await Notifications.getPermissionsAsync();
+    return (
+      settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+    );
+  }
+
+
+  // useEffect(() => {
+  //   sendPush()
+  // }, []);
+  // useEffect(()=>{
+  //   console.log("==========+++++++++", expoPushToken)
+  //   if(expoPushToken) {
+  //     sendPushNotification(expoPushToken)
+  //   }
+  // }, [expoPushToken])
+
   useEffect(()=>{
     checkOnBoardingData();
     checktracking();
+    schedulePushNotification();
   }, [])
   
   if(fontsLoaded) {
     return (
       <Provider store={store}>
         <PaperProvider>
-                <View
-            style={{
-              flex: 1,
-              maxHeight:20,
-              backgroundColor: '#292929',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom:2
-            }}>
-            <StatusBar style="light" />
+        {/* <ChatProvider>
+        <PersistGate loading={nul
+          l} persistor={persistor}>
+          <View style={styles.container}>
+            <Navigator/>
+            <StatusBar style="auto" />
           </View>
+          </PersistGate>
+          </ChatProvider> */}
+          <StatusBar
+            animated={true}
+            backgroundColor="#aaa"
+            barStyle={'dark-content'}
+            showHideTransition={'fade'}
+            hidden={false}
+          />
           <SafeAreaProvider style={{
             backgroundColor: "#000",
             flex: 1

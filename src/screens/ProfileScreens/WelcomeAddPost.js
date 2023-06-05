@@ -3,10 +3,59 @@ import { LinearGradient } from "expo-linear-gradient"
 import { useSelector } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
 import { AntDesign, Ionicons } from "@expo/vector-icons"
+import { getUserDetails } from "../../features/auth/authSlice"
+import axios from "axios"
+import { API_BASE_URL } from "../../utils/config"
 
 const WelcomeAddPost = () => {
     const navigation = useNavigation()
     const { user } = useSelector((state) => state.auth)
+
+    const updateStatusandAddPost = () => {
+
+        let userData = {
+            //id: user._id,
+            "isFirstTime": false,
+          }
+      
+          axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
+            { headers: {
+              'Content-Type': 'application/json',
+          }}).then((data) => {
+            alert(`All set! Welcome to Borsa ${user.firstName}!`)
+            // handleLogout()
+            dispatch(getUserDetails(user._id))
+           
+          }).catch((err) => {
+            //alert("try again pls.")
+            console.log("errorr", err)
+          }); 
+
+        navigation.navigate('AddPost')
+    }
+
+    const onlyUpdateStatus = () => {
+        let userData = {
+            //id: user._id,
+            "isFirstTime": false,
+          }
+      
+          axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
+            { headers: {
+              'Content-Type': 'application/json',
+          }}).then((data) => {
+            alert(`All set! Welcome to Borsa ${user.firstName}!`)
+            // handleLogout()
+            dispatch(getUserDetails(user._id))
+            navigation.navigate('Chats')
+          }).catch((err) => {dea
+            //alert("try again pls.")
+            console.log("errorr", err)
+          }); 
+
+          navigation.navigate('Chats')
+
+    }
     return (
       <LinearGradient 
       colors={['#705c9d','#593196']}
@@ -52,7 +101,7 @@ const WelcomeAddPost = () => {
           width: '100%',
           //paddingHorizontal: 30,
       }}>
-          <Pressable onPress={() => navigation.navigate('AddPost')}
+          <Pressable onPress={updateStatusandAddPost}
           
         style = {{
               backgroundColor: "#13b955",
@@ -71,7 +120,7 @@ const WelcomeAddPost = () => {
               </Text>
   
           </Pressable>
-          <Pressable onPress={() => navigation.navigate('Chats')}
+          <Pressable onPress={onlyUpdateStatus}
             style = {{
                 borderStyle: 'solid',
                 borderWidth: 0.5,

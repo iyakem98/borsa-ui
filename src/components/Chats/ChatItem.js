@@ -167,7 +167,7 @@ const ChatItem = ({
           {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 ? <View style={styles.notif}>
             <Text style={styles.notifClr}>{storedNotifications.length}</Text>
           </View> : <Text></Text> }  */}
-        {isUserSender && !isMarked ? (
+        {/*{isUserSender && !isMarked ? (
           <View style={styles.notifCheckmark}>
             <Ionicons name="checkmark-outline" size={24} color="black" />
           </View>
@@ -177,11 +177,22 @@ const ChatItem = ({
           </View>
         ) : notifLength > 0 || (!isUserSender && !isMarked) ? (
           <View style={styles.notif} />
-        ) : (null)}
+        ) : (null)} */}
         {/* <Text>notifffehih</Text> */}
           {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 
           &&  <View  style={styles.notif}><Text>notif</Text></View>
           }  */}
+          {isUserSender && !isMarked ? (
+          <View style={styles.notifCheckmark}>
+            <Ionicons name="checkmark-done" size={20} color="black" />
+          </View>
+        ) : isUserSender && isMarked ? (
+          <View style={styles.notifCheckmark}>
+            <Ionicons name="checkmark-done" size={20} color="black" />
+          </View>
+        ) : notifLength > 0 || (!isUserSender && !isMarked) ? (
+          <View style={styles.notif} />
+        ) : (null)}
       </View>
     </Pressable>
   )
@@ -196,8 +207,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     height: 70,
     backgroundColor: '#fff',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ccc'
+    
   },
   image: {
     width: 60,
@@ -207,6 +217,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#ccc'
   },
   notif: {
     alignItems: 'center',

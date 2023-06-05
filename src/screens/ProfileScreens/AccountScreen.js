@@ -1,6 +1,6 @@
 import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView , Dimensions} from "react-native"
 import profile from '../../../assets/data/profile.json'
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
@@ -203,7 +203,7 @@ const AccountScreen = () => {
 
 
   return (
-    <SafeAreaView style={{flex: 1,
+    <View style={{flex: 1,
       backgroundColor: 'white'
     }}>
         <KeyboardAwareScrollView style={{
@@ -221,8 +221,48 @@ const AccountScreen = () => {
 
       <LinearGradient  colors={['#593196', "#fff"]} style = {{
                         width: '100%',
-                        paddingTop: 30,
+                        paddingTop: 80,
             }}>
+              <View style = {{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 20,
+              }}>
+
+              <Pressable onPress={()=>navigation.popToTop()}
+                style = {{
+                  //backgroundColor: '#593196',
+                  flexDirection: 'row',
+                  //paddingVertical: 2,
+                  paddingHorizontal: 4,
+                  width: "25%",
+                  //marginVertical: 10,
+                  marginLeft: 10,
+                  borderRadius: 20,
+                  alignItems: 'center',
+              }}>
+            <Feather name="chevron-left" size={34} color="#fff" />
+              {/*<Text style={{fontSize:29, marginTop:-3, marginLeft:3, color: 'black'}}>&larr;</Text> */}
+              <Text style={{fontSize:18, color: '#fff'}}>
+                Back
+              </Text>
+
+            
+          </Pressable>
+
+          <Text style = {{
+            position: 'absolute',
+            left: "40%",
+            right: "38%",
+            fontSize: 18,
+            color: 'white',
+            fontFamily: 'Poppins_600SemiBold',
+          }}>
+            Account
+          </Text>
+
+              </View>
+           
            <View style={{
           display:"flex",
           alignItems:"center",
@@ -240,6 +280,36 @@ const AccountScreen = () => {
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
           }} />
+
+          <TouchableOpacity onPress={() => navigation.navigate('ProfilePicker')}
+            style = {{
+              flexDirection: 'row',
+              borderStyle: 'solid',
+              //borderWidth: 2,
+              borderRadius: 20,
+              paddingHorizontal: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 6,
+            }}>
+               <View style = {{
+              padding: 5,
+              borderStyle: 'solid',
+              marginRight: 6,
+              //borderWidth: 1,
+              borderRadius: 50,
+              backgroundColor: "#13b955",
+            }}>
+            <Entypo name="edit" size={18} color="#fff"/>
+            </View>
+            <Text style = {{
+              fontSize: 18,
+              fontFamily: "Poppins_600SemiBold",
+            }}>
+              Change avatar
+            </Text>
+           
+          </TouchableOpacity>
 
         {/*<Entypo name="edit" size={24} color="red" onPress={()=>{
           if(isEditing){
@@ -288,7 +358,7 @@ const AccountScreen = () => {
           onPress={()=> setIsEditing(!isEditing)}
           >
            <Text style={{color:'#fff',
-            fontFamily: "Poppins_400Regular"}}> Open Editor</Text>
+            fontFamily: "Poppins_400Regular"}}> Open Account Editor</Text>
           </TouchableOpacity>
         }
 
@@ -496,17 +566,27 @@ const AccountScreen = () => {
               justifyContent: "space-between",
               width: screenWidth - 80,
               marginTop: 15,
-              backgroundColor: "#eee",
+              backgroundColor: "#fff",
               paddingHorizontal: 5,
               borderRadius: 10,
-              paddingVertical: 6
+              paddingVertical: 4,
+
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.22,
+              shadowRadius: 2.22,
+
+              elevation: 3,
             }}>
               <Pressable disabled = {isEditing? false : true}
                 style={{
-                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#593196" : "#fff",
                     borderRadius: 5,
                     width: "49%",
-                    paddingVertical: 5,
+                    paddingVertical: 7,
                     alignItems: "center",
                     justifyContent: 'center',
                 }} onPress={()=>{
@@ -521,7 +601,7 @@ const AccountScreen = () => {
               </Pressable>
               <Pressable disabled = {isEditing? false : true}
                 style={{
-                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#593196" : "#fff",
                     borderRadius: 5,
                     width: "49%",
                     paddingVertical: 5,
@@ -544,7 +624,7 @@ const AccountScreen = () => {
 {/* </KeyboardAwareScrollView>     */}
     </View>
     </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 

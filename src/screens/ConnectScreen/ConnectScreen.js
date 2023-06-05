@@ -9,7 +9,7 @@ import { getConsumers, getTravelers } from '../../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { ChatState } from '../../context/ChatProvider'
-import { Feather, Ionicons } from '@expo/vector-icons'
+import { Feather, Ionicons, AntDesign } from '@expo/vector-icons'
 import Buyer from './Buyer'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw'
 import ErrorUnDraw from '../../assets/svg/errorUnDraw'
@@ -148,7 +148,7 @@ const filterBuyers =  async () => {
     setLoad(true)
     let config = {
       headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
         }}
   
   let {data} =   await axios.get(`http://143.198.168.244/api/buyers`,
@@ -216,7 +216,7 @@ const filterTravelers =  async () => {
     setLoad(true)
     let config = {
       headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
         }}
   
   let {data} =   await axios.get(`http://143.198.168.244/api/travels`,
@@ -274,7 +274,12 @@ const filterTravelers =  async () => {
   }
 }
 
+useEffect(() => {   
+  getToken()
+}, [])
+
     useEffect(() => {   
+      getToken()
       getUsers()
       setPageLimTraveler(totTraveler)
       
@@ -292,14 +297,21 @@ const filterTravelers =  async () => {
       
     }
 
-    
+    const[tkn, setTkn] = useState("")
+
+    const getToken = async () => {
+     let tokn = await AsyncStorage.getItem('myToken')
+     console.log("tkkkknn", tokn)
+     setTkn(tokn)
+    }
 
 
     const getUsers = async () => {
-      setLoad(true)
+     //setLoad(true)
+      getToken()
       const config = {
       headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${ await AsyncStorage.getItem('myToken')}`
         }}
 
     await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=${limit}`, config)
@@ -341,17 +353,8 @@ const filterTravelers =  async () => {
   return (
 
     <>
-        {
-          load ? 
-          <ActivityIndicator style={{
-            justifyContent:"center",
-            marginTop:"48%",
-          }}
-          size="large"
-          />
-          :
-          <SafeAreaView style={styles.container}>
-          <View style={{
+    <SafeAreaView style={styles.container}>
+    <View style={{
             backgroundColor: "#fff",
             justifyContent: "center",
             alignItems: "center",
@@ -407,6 +410,19 @@ const filterTravelers =  async () => {
               </Pressable>
             </View>
           </View>
+        {
+          load ? 
+          <ActivityIndicator style={{
+            justifyContent:"center",
+            marginTop:"48%",
+            color: 'blue'
+          }}
+          size="large"
+          />
+          :
+          <View>
+          
+          
           {loading ? (
             <View style={{
                 paddingTop: 20
@@ -434,21 +450,33 @@ const filterTravelers =  async () => {
                               //backgroundColor: '#009cdc',
                               //backgroundColor: "#593196",
                               //backgroundColor: '#7267e7',
-                              width:100,
-                              marginBottom:5,
+                              backgroundColor: 'white',
+                              //width:100,
+                              width: "33%",
+                              marginBottom: 12,
                               paddingHorizontal: 12,
                               paddingVertical: 6,
-                              borderRadius: 10,
+                              borderRadius: 5,
                               flexDirection: 'row',
                               alignItems: 'center',
+
+                              shadowColor: "#000",
+                              shadowOffset: {
+                                width: 0,
+                                height: 1,
+                              },
+                              shadowOpacity: 0.22,
+                              shadowRadius: 2.22,
+
+                              elevation: 3,
                       }}>
-                          <Ionicons name="filter" size={24} color="black" />
+                          <AntDesign name="plus" size={18} color="black" />
                           <Text style = {{
                               fontSize: 18,
                               marginLeft: 2,
                               //color: 'white'
                           }}>
-                            Filter
+                            Add Filter
                           </Text>
                       </TouchableOpacity>
       
@@ -507,6 +535,7 @@ const filterTravelers =  async () => {
                 
                             <Pressable onPress={()=>{
                               clearFilterBuyer()
+                              getUsers()
                             }}
                                 style = {{
                                     //backgroundColor: '#E8E8E8',
@@ -669,7 +698,7 @@ const filterTravelers =  async () => {
                     // ListHeaderComponent={BuyerHeader}
                     data={buyerTotal}
                     contentContainerStyle={{
-                      paddingBottom: 180
+                      paddingBottom: 270
                     }}
                     maxToRenderPerBatch={2}
                     renderItem={({item}) => {
@@ -722,27 +751,39 @@ const filterTravelers =  async () => {
                           <TouchableOpacity 
                           onPress={()=>setFilterTraveler(1)}
                           style = {{
-                              backgroundColor: '#e8e8e8',
+                              //backgroundColor: '#e8e8e8',
                               //backgroundColor: '#a991d4',
                               //backgroundColor: 'black',
                               //backgroundColor: '#009cdc',
                               //backgroundColor: "#593196",
                               //backgroundColor: '#7267e7',
-                              width:100,
-                              marginBottom:5,
+                              backgroundColor: 'white',
+                              //width:100,
+                              width: "33%",
+                              marginBottom: 12,
                               paddingHorizontal: 12,
                               paddingVertical: 6,
-                              borderRadius: 10,
+                              borderRadius: 5,
                               flexDirection: 'row',
                               alignItems: 'center',
+
+                              shadowColor: "#000",
+                              shadowOffset: {
+                                width: 0,
+                                height: 1,
+                              },
+                              shadowOpacity: 0.22,
+                              shadowRadius: 2.22,
+
+                              elevation: 3,
                       }}>
-                          <Ionicons name="filter" size={24} color="black" />
+                          <AntDesign name="plus" size={18} color="black" />
                           <Text style = {{
                               fontSize: 18,
                               marginLeft: 2,
                               //color: 'white'
                           }}>
-                            Filter
+                            Add Filter
                           </Text>
                       </TouchableOpacity>
       
@@ -801,6 +842,7 @@ const filterTravelers =  async () => {
                 
                             <Pressable onPress={()=>{
                               clearFilterTraveler()
+                              getTravelers()
                             }}
                                 style = {{
                                     //backgroundColor: '#E8E8E8',
@@ -963,7 +1005,7 @@ const filterTravelers =  async () => {
                     // ListHeaderComponent={TravelerHeader}
                     data={t}
                     contentContainerStyle={{
-                      paddingBottom: 180
+                      paddingBottom: 270
                     }}
                     renderItem={({item}) => {
                       // console.log(item)
@@ -1040,8 +1082,10 @@ const filterTravelers =  async () => {
               </Pressable>
             </View>
           )}
-        </SafeAreaView>
+
+        </View>
         }
+        </SafeAreaView>
     </>
   )
 }

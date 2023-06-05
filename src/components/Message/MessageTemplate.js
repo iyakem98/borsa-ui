@@ -24,17 +24,20 @@ const MessageTemplate = ({
     
     return (
         <View style={{}}>
+            <View style = {{
+                 alignSelf: m.sender._id === user._id ? "flex-end" : "flex-start",
+                 marginBottom: 5,
+            }}>
             <View style = {[styles.container, {
                 backgroundColor: m?.sender?._id === user?._id ? "#593196" : "#E8E8E8",
-                alignSelf: m.sender._id === user._id ? "flex-end" : "flex-start",
-                marginTop: 10, 
-                borderBottomRightRadius: m?.sender?._id === user?._id ? 0 : 8,
-                borderBottomLeftRadius: m?.sender?._id === user?._id ? 8 : 0,
+                marginBottom: m?.sender?._id === user?._id ? 0 : 5,
+                //borderBottomRightRadius: m?.sender?._id === user?._id ? 0 : 8,
+                //borderBottomLeftRadius: m?.sender?._id === user?._id ? 8 : 0,
             }]}>
                 <Text key={m._id} style={{color: m?.sender?._id === user?._id ? "white" : "black"}}>
                 {m.content}
                 </Text>
-                <View style={{flexDirection:"row", marginTop: 2, alignItems: "center"}}>
+              {/*  <View style={{flexDirection:"row", marginTop: 2, alignItems: "center"}}>
                     <Text style={{
                         color: m?.sender?._id === user?._id ? "#fff" : "#404040",
                         fontSize: 12,
@@ -47,8 +50,26 @@ const MessageTemplate = ({
                         <Ionicons name="checkmark-outline" size={20} color="white" />
                     ) : m?.sender?._id === user?._id && !m?.marked ? (
                         <ActivityIndicator size={20} color="#fff" />
-                    ) : null}
-                </View>
+                    ) : null} 
+
+                    
+               
+                    
+                    </View> */}
+            </View>
+                    <View style = {{
+                        alignItems: 'flex-end',
+                        paddingRight: 10,
+                        marginTop: (m?.sender?._id === user?._id)? -7: 0
+                    }}>
+                        {m?.sender?._id === user?._id && m.receiver != null && m?.marked ? (
+                            <Ionicons name="checkmark-done" size={16} color="black" />
+                        ) : m?.sender?._id === user?._id && m?.receiver != null && !m?.marked ? (
+                            <Ionicons name="checkmark-done" size={16} color="black" />
+                        ) : m?.sender?._id === user?._id && !m?.marked ? (
+                            <Ionicons name="checkmark-done" size={16} color="#fff" />
+                        ) : null}
+                    </View>
             </View>
             {/* {d !== dataDiff && i !== 0 ? (
                 <Text style={{
@@ -68,7 +89,9 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       marginHorizontal: 10,
       padding: 10,
-      borderRadius: 8,
+      //borderRadius: 8,
+      borderRadius: 16,
+      minWidth: "10%",
       maxWidth: '80%',
   
       shadowColor: '#000',

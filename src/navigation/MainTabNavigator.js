@@ -30,6 +30,7 @@ import { API_BASE_URL_Socket } from '../utils/config';
 import { fetchChat } from '../features/chat/chatSlice';
 import WelcomeProPic from '../screens/ProfileScreens/WelcomeProPic';
 import ProfilePicker from '../screens/ProfilePicker';
+import axios from 'axios';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -48,17 +49,30 @@ const MainTabNavigator = () => {
     var socket = useRef(null)
     const { user } = useSelector((state) => state.auth)
 
-    const checkIsMarked = () => {
+    const checkIsMarked = async() => {
         const userId = user?._id
         for (let index = 0; index < chattts.length; index++) {
             const isMarked = chattts[index]?.latestMessage?.marked;
+            // console.log("=====", chattts[index]?.latestMessage, userId)
+
             
-            if(isMarked === false && userId == chattts[index]?.latestMessage?.receiver) {
-                console.log(isMarked)
+            
+            if(isMarked === false && userId !== chattts[index]?.latestMessage?.receiver) {
+                // console.log(isMarked)
                 setNotifFlag(true)
             } else {
-                setNotifFlag(false)
-                setNewMessage(false)
+                // setNotifFlag(false)
+                // setNewMessage(false)
+            }
+
+            const res = await axios.get('http://143.198.168.244/api/message/count/new', {
+                headers: {
+                    Authorization: `Bearer ${user?.token}`
+                }
+            });
+            
+            if(res?.data?.count && res?.data?.count > 0) {
+                setNotifFlag(true)
             }
         }
     }
@@ -113,7 +127,7 @@ const MainTabNavigator = () => {
       } 
     //   const BadgedIcon = withBadge(storedNotifications.length)(Icon);
   return (
-    <Tab.Navigator initialRouteName='Chats' screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
+    <Tab.Navigator initialRouteName= {user?.isFirstTime? ("Welcome") : ("Chats")} screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
         backgroundColor: '#fff'
     }, headerStyle: {
         backgroundColor: '#f9f8fc',
@@ -145,7 +159,7 @@ const MainTabNavigator = () => {
                 position: "relative"
             }}>
                 <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
-                {newMessage || notifFlag ? (
+                {/* {newMessage || notifFlag ? (
                     <View style={{
                         backgroundColor: "#514590",
                         height: 15,
@@ -155,7 +169,7 @@ const MainTabNavigator = () => {
                         right: -5,
                         top: -5
                     }} />
-                ) : null}
+                ) : null} */}
             </View>
         ),
         headerShown: true,
@@ -218,12 +232,24 @@ const MainTabNavigator = () => {
             headerShown: false
         }} />
 
-        <Tab.Screen name="Temporary" component={WelcomeProPic} options={{
+   {/* <Tab.Screen name="Apple" component={WelcomeProPic} options={{
             tabBarIcon: ({color, size}) => (
-                <FontAwesome name="random" size={size} color={color} /> 
+                <AntDesign name="apple1" size={24} color="black" />
             ),
             headerShown: false
-        }} />
+        }} /> */}
+
+        {user?.isFirstTime && 
+            <Tab.Screen name="Welcome" component={WelcomeProPic} options={{
+                tabBarIcon: ({color, size}) => (
+                    <FontAwesome name="random" size={size} color={color} /> 
+                ),
+                headerShown: false,
+                tabBarStyle: { display: "none" },
+
+            }} />
+        }
+
         
         {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{
             tabBarIcon: ({color, size}) => (

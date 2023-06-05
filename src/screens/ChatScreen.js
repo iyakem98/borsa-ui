@@ -23,6 +23,7 @@ import moment from 'moment/moment'
 import { Octicons } from '@expo/vector-icons';
 import { API_BASE_URL, API_BASE_URL_Socket } from '../utils/config'
 import ChatItem from '../components/Chats/ChatItem'
+import * as Notifications from 'expo-notifications';
 
 const ChatScreen = () => {
   const dispatch = useDispatch()
@@ -81,6 +82,34 @@ const ChatScreen = () => {
 
   var formatted_other_date = null
 
+  const allowsNotificationsAsync = async() => {
+    const settings = await Notifications.getPermissionsAsync();
+    return (
+      settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+    );
+  }
+
+  const sendPush = async(newMessage) => {
+    const hasPushNotificationPermissionGranted = await allowsNotificationsAsync()
+    try {
+      if(hasPushNotificationPermissionGranted){
+        await Notifications.scheduleNotificationAsync({
+           content: {
+             title: "New message! 📬",
+             body: newMessage?.content,
+             data: { data: 'goes here' },
+           },
+           trigger: { seconds: 2 },
+         });
+       
+       } else {
+         const { status } = await Notifications.requestPermissionsAsync();
+       }
+    } catch (e) {
+      console.log("NOTIFICATION Permission: ", e)
+    }
+  }
+
   useLayoutEffect(() => {
     // console.log("before" + socket.current)
     socket.current = io(API_BASE_URL_Socket)
@@ -90,13 +119,14 @@ const ChatScreen = () => {
 
   useEffect(() => {
     socket.current.on("message recieved", (newMessageReceived) => {
-      storeNotif(newMessageReceived)
+      storeNotif(newMessageReceived);
+      sendPush(newMessageReceived);
     });
   },[])
 
   useEffect(() =>{
     dispatch(fetchChat())
-  }, [fetchAgain])
+  }, [fetchAgain, storedNotifications])
 
   useEffect(() =>{
     dispatch(fetchChat())
@@ -137,94 +167,7 @@ const ChatScreen = () => {
         backgroundColor: '#fff',
         paddingTop: 10
       }}>
-         <Pressable 
-      // onPress={() => {
-      //   if(!isUserSender) {
-      //     setIsMarked(true)
-      //   }
-      //   setNotifLength(0)
-      //   setloading(true)
-      //   setchattId(chat._id)
-      //   // chatArr2.push(chat)
-      //   setSelectedChat(chat)
-      //   navigation.navigate('Messaging', {
-      //     userSelected: user != null ? getSenderFull(user, chat.users) : null 
-      //   })
-      // }} 
-      style={{
-    flexDirection: 'row',
-    marginHorizontal: 10,
-    marginVertical: 5,
-    height: 70,
-    backgroundColor: '#fff',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ccc'
-      }}
-    >
-      <View>
-        <Image
-         source={require('../../assets/icon.png')} 
-        //  source={null} 
-          style = {{
-            width: 60,
-            height: 60,
-            borderRadius: 30,
-            marginRight: 10
-          }}
-        />
         
-         <View style={{
-            backgroundColor: 'green',
-            height: 10,
-            width: 10,
-            borderRadius: 10,
-            position: "absolute",
-            bottom: 14,
-            right: 14
-          }} 
-        />
-       
-      </View>
-      <View style = {{ flex: 1,}}>
-        <View style = {{flexDirection: 'row'}}>
-        
-          <Text style = {{
-            flex: 1,
-            fontWeight: 'bold',
-            fontSize: 18
-          }}>
-            Borsa {"  "}
-            <MaterialIcons name="verified" size={18} color="#593196" />
-          </Text> 
-          <Text style = {{
-            color: "gray",
-            marginTop: 2,
-            marginLeft: 2,
-            fontSize: 15
-          }}>
-            {moment(user?.createdAt).format("MMM D, YYYY")}
-          </Text>
-        </View>
-          <View style = {{
-            flexDirection: 'row'
-          }}
-          >
-            <View>
-              <Text  numberOfLines={2} style = {styles.subTitle}>
-                  Glad you&apos;re here {user?.firstName} Welcome to Borsa! 
-                  Kindly share here if you face any issues.
-              </Text>
-              {/* <Text>{storedNotifications && storedNotifications.length  ? `new message(s) of length ${storedNotifications.length}` : null}</Text> */}
-            </View>
-          </View>
-       
-       
-          {/* <View style={styles.notifCheckmark}>
-            <Ionicons name="checkmark-outline" size={24} color="black" />
-          </View> */}
-       
-      </View>
-    </Pressable>
         {chattts && chattts.length > 0 ? (
           chattts.map((chat, index) => {
             let newMessage

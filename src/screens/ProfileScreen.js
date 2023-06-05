@@ -106,13 +106,10 @@ const ProfileScreen = ({navigation}) => {
                     //colors={['#593196', '#705c9d', "#fff"]}
                     colors={['#593196', "#fff"]}
                     style = {{
-                        //height: "100%",
-                        //alignItems: 'center',
-                        paddingTop: "25%",
+                        paddingTop: "30%",
                         paddingHorizontal: 20,
-                        paddingBottom: 50,
-                        //justifyContent: 'center'
-            }}>
+                        paddingBottom: 20,
+                    }}>
                 <View style = {{
                     flexDirection: 'row',
                     alignItems: 'center'
@@ -126,15 +123,14 @@ const ProfileScreen = ({navigation}) => {
                     alignItems: 'flex-end',
                     justifyContent: 'flex-end',
                     }} />
+                
                     <View style = {{
-                         marginLeft: 20
+                        marginLeft: 20
                     }}>
                         <Text style = {{
                             fontSize: 25,
                             marginTop: 20,
-                            // marginBottom: 2,
                             fontFamily: "Poppins_400Regular",
-                            //color: 'white'
                         }}>
                             {user?.firstName + ' ' + user?.lastName}
                         </Text>
@@ -157,9 +153,13 @@ const ProfileScreen = ({navigation}) => {
                 </View>
             </LinearGradient>
         <View>
-            <ScrollView style = {styles.v2b}>
+            <ScrollView style = {styles.v2b}
+                contentContainerStyle={{
+                    minHeight:800
+                  }}
+            >
                 <View style = {{
-                     paddingVertical: 40,
+                     paddingVertical: 20,
                      paddingHorizontal: 20,
                 }}>
                 <Text style = {{
@@ -223,6 +223,33 @@ const ProfileScreen = ({navigation}) => {
                             fontFamily: "Poppins_400Regular"
                         }}>
                             Account
+                            </Text>
+                        </View>
+                        
+                            <AntDesign name="caretright" size={22} color="lightgray" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Password')}
+                        style = {styles.press}>
+                        <View style = {styles.pressView1}>
+                        <View style = {{
+                            backgroundColor: '#a991d4',
+                            backgroundColor: 'orange',
+                            backgroundColor: '#7267e7',
+                            backgroundColor: "#593196",
+                            backgroundColor: '#e8e8e8',
+                            backgroundColor: 'white',
+                            padding: 8,
+                            borderRadius: 50,
+                            marginRight: 10,
+                        }}>
+                            <MaterialIcons name="security" size={24} color="black" />
+                        </View>
+                       
+                        <Text style = {{
+                            fontSize: 17,
+                            fontFamily: "Poppins_400Regular"
+                        }}>
+                            Security
                             </Text>
                         </View>
                         
@@ -686,9 +713,9 @@ const styles = StyleSheet.create({
     press: {
         flexDirection: 'row',
         width: '100%',
-        marginVertical: 15,
+        marginVertical: 2,
         // paddingHorizontal: 10,
-        paddingVertical: 100,
+        paddingVertical: 30,
         //height: 60,
         marginBottom: 8,
         borderStyle: 'solid',
