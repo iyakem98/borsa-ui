@@ -207,8 +207,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     height: 70,
     backgroundColor: '#fff',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ccc'
+    
   },
   image: {
     width: 60,
@@ -218,6 +217,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#ccc'
   },
   notif: {
     alignItems: 'center',

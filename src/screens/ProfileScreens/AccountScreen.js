@@ -285,20 +285,30 @@ const AccountScreen = () => {
             style = {{
               flexDirection: 'row',
               borderStyle: 'solid',
-              borderWidth: 2,
+              //borderWidth: 2,
               borderRadius: 20,
               paddingHorizontal: 10,
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: 6,
             }}>
+               <View style = {{
+              padding: 5,
+              borderStyle: 'solid',
+              marginRight: 6,
+              //borderWidth: 1,
+              borderRadius: 50,
+              backgroundColor: "#13b955",
+            }}>
+            <Entypo name="edit" size={18} color="#fff"/>
+            </View>
             <Text style = {{
-              fontSize: 16,
+              fontSize: 18,
               fontFamily: "Poppins_600SemiBold",
             }}>
               Change avatar
             </Text>
-            <Entypo name="edit" size={16} color="black"/>
+           
           </TouchableOpacity>
 
         {/*<Entypo name="edit" size={24} color="red" onPress={()=>{
