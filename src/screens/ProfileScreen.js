@@ -153,7 +153,7 @@ const ProfileScreen = ({navigation}) => {
                 </View>
             </LinearGradient>
         <View>
-            <ScrollView style = {styles.v2b}
+            <View style = {styles.v2b}
                 contentContainerStyle={{
                     minHeight:800
                   }}
@@ -587,7 +587,7 @@ const ProfileScreen = ({navigation}) => {
         }}>+1(310)351-5957</Text>
     </View>
               
-            </ScrollView>
+            </View>
         </View>
             
     </View>

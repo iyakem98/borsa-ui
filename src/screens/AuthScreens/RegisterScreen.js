@@ -359,22 +359,20 @@ const handleVerify = async () => {
               fontFamily: "Poppins_400Regular",
               fontSize: 13
             }}>
-              By submitting this form, you accept that you will become a {" "}
+              I intend to become a registered user of {" "}
               <Text style={{
                 color: "#514590",
                 fontFamily: "Poppins_500Medium",
                 //textDecorationLine: "underline"
               }} onPress={()=>{
                 // console.log("========")
-              }}>Borsa</Text>
-              {" "}user and will {" "}
+              }}>Borsa,</Text>
+              {" "}and I have reviewed and agreed to the{" "}
               <Text style={{
                 color: "#514590",
                 fontFamily: "Poppins_500Medium",
                 //textDecorationLine: "underline"
-              }} onPress={()=>{
-                // console.log("========")
-              }}>interact with other users appropriately.</Text>
+              }} onPress={()=> navigation.navigate('Terms & Conditions')} >Terms and Conditions.</Text>
             </Text>
           </View>
         </View>

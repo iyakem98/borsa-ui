@@ -52,6 +52,7 @@ import WelcomeAddPost from "../screens/ProfileScreens/WelcomeAddPost"
 import WelcomeProPic from "../screens/ProfileScreens/WelcomeProPic"
 import ProfilePicker from "../screens/ProfilePicker"
 import PasswordScreen from "../screens/ProfileScreens/PasswordScreen"
+import TermsConditions from "../screens/AuthScreens/TermsConditions"
 
 
 const Stack = createStackNavigator();
@@ -209,6 +210,7 @@ const Navigator = ({showOnBoarding}) => {
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown: false}}/>
       <Stack.Screen name="VerifyUser" component={VerifyUser} options={{headerShown: false}}/>
       <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
+      <Stack.Screen name="Terms & Conditions" component={TermsConditions} options={{}}/>
     </Stack.Navigator>
    )}     
    </NavigationContainer>
