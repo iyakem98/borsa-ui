@@ -17,6 +17,8 @@ const PasswordScreen = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
     const [passwordError, setPasswordError] = useState("")
 
+   
+
    {/* const handleChangePassword = async () => {
         try {
           const response = await fetch(`${API_BASE_URL}users/change-password`, {
@@ -62,35 +64,33 @@ const PasswordScreen = () => {
           setPasswordError('You cannot use your old password');
         } 
         else {
-          try {
-            let config = {
+        
+          let config = {
                 headers: {
                     Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
                 }
             }
 
-            let data = {
+            let 
+            data = {
               "oldPassword": oldPassword,
               "newPassword": newPassword
             }
 
-           const response = await axios.post(`${API_BASE_URL}users/change-password`, data, config)
+
+          await axios.post(`${API_BASE_URL}users/change-password`, data, config)
+          // await AsyncStorage.removeItem("user")
+         .then((data) => {
+          alert('Password changed successfully');
+          // dispatch(getUserDetails(user._id));
+          navigation.navigate('More');
+          })
+          .catch(error => {
+           let errResponse = (error && error.response && error.response.data) 
+             || (error && error.message); 
         
-            if (response.status === 200) {
-              alert('Password changed successfully');
-              // dispatch(getUserDetails(user._id));
-              navigation.navigate('More');
-            } else {
-              const data = response
-              console.log("error is", response)
-              if (data && data.message) {
-                setPasswordError(data.message);
-              }
-            }
-          } catch (error) {
-            setPasswordError('Something went wrong');
-            console.error(error);
-          }
+            setPasswordError(errResponse.message);
+        });
         }
       };
       

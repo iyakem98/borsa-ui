@@ -17,7 +17,7 @@ const TravelerCard = ({
 
     return (
         <Pressable style={styles.container} onPress={()=>{
-            navigation.navigate('Messaging', {userSelected: item})
+            navigation.navigate('Messaging', {userSelected: item.user})
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
