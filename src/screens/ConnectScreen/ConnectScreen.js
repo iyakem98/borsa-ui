@@ -275,6 +275,17 @@ const filterTravelers =  async () => {
   }
 }
 
+const handleClear = () => {
+  setTravelerS("")
+                        setTravelerD("")
+                        setBuyerD("")
+                        setBuyerS("")
+                        setPageBuyer(1)
+                        setPageTraveler(1)
+                        setTravelersStatus("All")
+                        getUsers()
+}
+
 useEffect(() => {   
   getToken()
 }, [])
@@ -801,10 +812,7 @@ useEffect(() => {
                       </Text>
                       <TouchableOpacity 
                       onPress={()=>{
-                        setPageBuyer(1)
-                        setPageTraveler(1)
-                        setTravelersStatus("All")
-                        getUsers()
+                        handleClear()
                       }}
                       style = {{
                           backgroundColor: '#e8e8e8',
