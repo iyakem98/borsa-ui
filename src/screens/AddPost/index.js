@@ -22,16 +22,16 @@ const AddPost = ({navigation}) => {
 
       const [spinner, setSpinner] = useState(false)
     const checkusertoken = async () => {
-        // console.log('user token', await AsyncStorage.getItem('myToken'))
-        console.log('user token', user.token)
-        console.log('user first name', user.firstName)
+        console.log('user token', await AsyncStorage.getItem('myToken'))
+        // console.log('user token', user.token)
+        // console.log('user first name', user.firstName)
     }
     const checkTraveler = async () => {
         setSpinner(true)
         let config = {
             headers: {
-                // Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
-                Authorization: `Bearer ${user.token}`
+                Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
+                // Authorization: `Bearer ${user.token}`
               }}
         
         let {data} =   await axios.get(`http://143.198.168.244/api/travels/my`,
