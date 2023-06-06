@@ -348,7 +348,7 @@ const handleVerify = async () => {
             color="#514590"
             style={{
               width: 80,
-              backgroundColor: "#eee"
+              backgroundColor: "#eee",
             }}
           />
           <View style={{
