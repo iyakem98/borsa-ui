@@ -11,9 +11,9 @@ import ErrorUnDraw from '../../assets/svg/errorUnDraw'
 const width = Dimensions.get("screen").width
 
 const AddPost = ({navigation}) => {
-    useEffect(()=> {
+    {/*useEffect(()=> {
         checkusertoken()
-    },[])
+    },[]) */}
     const [selected, setSelected] = useState(1)
 
     const [isAlreadyTraveler, setIsAlreadyTraveler] = useState(false)
