@@ -78,7 +78,7 @@ const ProfileScreen = ({navigation}) => {
               let cards = data.data.data.length
               // let h = cards*445
               setBuyerHeight(cards % 2 !==0 ? cards*445 : cards*400)
-                console.log("heightttttt is", h, cards)
+                // console.log("heightttttt is", h, cards)
         }).catch((err) => {
           console.log("error fetching buyer card", err)
         }); 

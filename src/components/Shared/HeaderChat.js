@@ -83,7 +83,7 @@ const HeaderChat = ({
             <Pressable 
             onPress={()=> 
               {
-                userSelectedFromConnectCard?.user?.firstName &&
+                userSelectedFromConnectCard?.firstName &&
                 navigation.navigate("Profile", {
                   theUser: userSelectedFromConnectCard
               })}
@@ -102,7 +102,7 @@ const HeaderChat = ({
             <View style={{marginLeft: 10}}>
             <Pressable onPress={()=>
             {
-              userSelectedFromConnectCard?.user?.firstName &&
+              userSelectedFromConnectCard?.firstName &&
               navigation.navigate("Profile", {
                 theUser: userSelectedFromConnectCard
             })}
