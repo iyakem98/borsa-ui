@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { API_BASE_URL } from '../../utils/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import NetInfo from '@react-native-community/netinfo'
+import ErrorUnDraw from '../../assets/svg/errorUnDraw'
 
 const width = Dimensions.get("screen").width
 
@@ -18,6 +20,17 @@ const AddPost = ({navigation}) => {
       )
 
       const [spinner, setSpinner] = useState(false)
+
+      const [conn, setConn] = useState(true)
+      
+
+      useEffect(() => { 
+        NetInfo.fetch().then(state => {
+            console.log('Connection type', state.type);
+            console.log('Is connected?', state.isConnected);
+            setConn(state.isConnected)
+          });
+      }, [])
 
     const checkTraveler = async () => {
         setSpinner(true)
@@ -56,7 +69,27 @@ const AddPost = ({navigation}) => {
    
     return (
         <SafeAreaView style={styles.container}>
-            <Header title={"Add Post"} />
+            {
+                !conn ?
+                <View style={{
+                    alignItems: "center",
+                    paddingTop: 60
+                  }}>
+                    <ErrorUnDraw />
+                    <Text style={{
+                      fontFamily: "Poppins_500Medium",
+                      marginTop: 20,
+                      textAlign: "center",
+                      fontSize: 16
+                    }}>
+                      Not connected to internet!
+                    </Text>
+                    
+                  </View>
+                  :
+                    <>
+                  <Header title={"Add Post"} />
+
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={{
                     marginTop: 20,
@@ -150,6 +183,10 @@ const AddPost = ({navigation}) => {
 
 
             </ScrollView>
+            </>
+
+            }
+            
         </SafeAreaView>
     )
 }

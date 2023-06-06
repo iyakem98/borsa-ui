@@ -243,6 +243,7 @@ const filterTravelers =  async () => {
         filteredTravels.push(travel[i])
         console.log("yesss xxx", travel[i])
       }
+
       }else{
          if(travelerS && travelerS==x){
         filteredTravels.push(travel[i])
@@ -491,6 +492,8 @@ useEffect(() => {
                       </Text>
                       <TouchableOpacity 
                       onPress={()=>{
+                        setPageBuyer(1)
+                        setPageTraveler(1)
                         setBuyersStatus("All")
                         getUsers()
                       }}
@@ -798,6 +801,8 @@ useEffect(() => {
                       </Text>
                       <TouchableOpacity 
                       onPress={()=>{
+                        setPageBuyer(1)
+                        setPageTraveler(1)
                         setTravelersStatus("All")
                         getUsers()
                       }}
