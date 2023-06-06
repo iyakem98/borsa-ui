@@ -49,7 +49,7 @@ const WelcomeAddPost = () => {
             // handleLogout()
             dispatch(getUserDetails(user._id))
             navigation.navigate('Chats')
-          }).catch((err) => {dea
+          }).catch((err) => {
             //alert("try again pls.")
             console.log("errorr", err)
           }); 
