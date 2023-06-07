@@ -16,6 +16,7 @@ import { TextInput } from 'react-native-paper';
 import io from 'socket.io-client'
 import { API_BASE_URL } from '../../utils/config';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as Notifications from 'expo-notifications';
 
 
 const LoginScreen = ({navigation}) => {
@@ -30,18 +31,19 @@ const LoginScreen = ({navigation}) => {
   const [userPassword, setUserPassword] = useState("");
   const [userEmailError, setUserEmailError] = useState("");
   const [userPasswordError, setUserPasswordError] = useState("");
+  const [pushToken, setPushToken] = useState(null);
 
   // useEffect(()=>{
   //   console.log("----------{{}}}", user)
   // }, [user])
 
+  useEffect(()=>{
+    Notifications.requestPermissionsAsync();
+  }, [])
+
   const storeTokenOnLocal = async (t) => {
     try{
       let msgs =  await AsyncStorage.setItem(`myToken`, t)
-      
-      console.log("-=-=--=", t)
-     
-      console.log("gott", await AsyncStorage.getItem('myToken'))
 
     } catch(error){
       console.log("errorr", error)
@@ -65,12 +67,12 @@ const LoginScreen = ({navigation}) => {
     try {
       const res = await axios.post('http://143.198.168.244/api/users/login', {
         email: userEmail,
-        password: userPassword
+        password: userPassword,
+        pushToken: pushToken ? pushToken : null
       });
       // console.log(res.data);
       await handleUserData(res.data);
     } catch(e) {
-      console.log("------------{{", e?.response?.data?.message)
       if(e?.response?.data?.message === "Invalid email or password") {
         setUserPasswordError("Invalid email or password")
       } else {
