@@ -106,7 +106,7 @@ const ProfileScreen = ({navigation}) => {
                     //colors={['#593196', '#705c9d', "#fff"]}
                     colors={['#593196', "#fff"]}
                     style = {{
-                        paddingTop: "30%",
+                        paddingTop: 70,
                         paddingHorizontal: 20,
                         paddingBottom: 20,
                     }}>

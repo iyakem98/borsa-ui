@@ -1,4 +1,4 @@
-import { ActivityIndicator, Dimensions, FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Dimensions, FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
@@ -8,6 +8,7 @@ import TravelerCard from './travelerCard'
 import BuyerCard from './buyerCard'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw';
 import { useIsFocused } from '@react-navigation/native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 const width = Dimensions.get("screen").width
@@ -91,7 +92,8 @@ const Saved = () => {
                 backgroundColor: "#fff",
                 justifyContent: "center",
                 alignItems: "center",
-                paddingBottom: 15
+                paddingBottom: 15,
+                marginTop: 7
             }}>
                 <View style={{
                     flexDirection: "row",

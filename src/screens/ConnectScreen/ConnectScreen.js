@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { ActivityIndicator, Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, Dimensions, FlatList, Pressable, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import BuyerCard from '../../components/Connect/BuyerCard'
 import TravelerCard from './Traveler'
@@ -19,6 +19,7 @@ import SheetManager from 'react-native-actions-sheet';
 import TravelerHeader from '../../components/Connect/TravelerHeader'
 import BuyerHeader from '../../components/Connect/BuyerHeader'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const width = Dimensions.get("screen").width
 
@@ -363,15 +364,14 @@ useEffect(() => {
 
         
   return (
-
-    <>
     <SafeAreaView style={styles.container}>
-    <View style={{
-            backgroundColor: "#fff",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingBottom: 15
-          }}>
+      <View style={{
+        backgroundColor: "#fff",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingBottom: 15,
+        marginTop: 7
+      }}>
           {/*   {loadingBuyer &&  
                     <View style={{
                       //height: 20000,
@@ -381,47 +381,47 @@ useEffect(() => {
                   </View>
                   } */}
                  
-            <View style={{
-              flexDirection: "row",
-              alignItems: 'center',
-              justifyContent: "space-between",
-              width: width - 30,
-              backgroundColor: "#eee",
-              padding: 10,
-              borderRadius: 10
-            }}>
-              <Pressable style={{
-                  backgroundColor: selectedTab === 1 ? "#fff" : "#eee",
-                  borderRadius: 5,
-                  width: "49%",
-                  paddingVertical: 13,
-                  alignItems: "center"
-              }} onPress={()=>{
-                  isBuyer ? setIsBuyer(false) : null
-                  setSelectedTab(1)
-              }}>
-                  <Text style={{
-                      fontFamily: "Poppins_500Medium",
-                      fontSize: 14
-                  }}>Traveling</Text>
-              </Pressable>
-              <Pressable style={{
-                  backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
-                  borderRadius: 5,
-                  width: "49%",
-                  paddingVertical: 13,
-                  alignItems: "center"
-              }} onPress={()=>{
-                !isBuyer ? setIsBuyer(true) : null
-                setSelectedTab(2)
-              }}>
-                  <Text style={{
-                      fontFamily: "Poppins_500Medium",
-                      fontSize: 14
-                  }}>Shipping</Text>
-              </Pressable>
-            </View>
-          </View>
+        <View style={{
+          flexDirection: "row",
+          alignItems: 'center',
+          justifyContent: "space-between",
+          width: width - 30,
+          backgroundColor: "#eee",
+          padding: 10,
+          borderRadius: 10
+        }}>
+          <Pressable style={{
+            backgroundColor: selectedTab === 1 ? "#fff" : "#eee",
+            borderRadius: 5,
+            width: "49%",
+            paddingVertical: 13,
+            alignItems: "center"
+          }} onPress={()=>{
+            isBuyer ? setIsBuyer(false) : null
+            setSelectedTab(1)
+          }}>
+            <Text style={{
+              fontFamily: "Poppins_500Medium",
+              fontSize: 14
+            }}>Traveling</Text>
+          </Pressable>
+          <Pressable style={{
+            backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
+            borderRadius: 5,
+            width: "49%",
+            paddingVertical: 13,
+            alignItems: "center"
+          }} onPress={()=>{
+            !isBuyer ? setIsBuyer(true) : null
+            setSelectedTab(2)
+          }}>
+            <Text style={{
+              fontFamily: "Poppins_500Medium",
+              fontSize: 14
+            }}>Shipping</Text>
+          </Pressable>
+        </View>
+      </View>
         {
           load ? 
           <ActivityIndicator style={{
@@ -1099,7 +1099,6 @@ useEffect(() => {
         </View>
         }
         </SafeAreaView>
-    </>
   )
 }
 
