@@ -1,5 +1,5 @@
 // import { StatusBar } from 'expo-status-bar';
-import {AppState, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
+import {AppState, Platform, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ChatListItem from './src/components/Chats/ChatListItem';
 import ChatScreen from './src/screens/ChatScreen';
 import MessagingScreen from './src/screens/MessagingScreen';
@@ -33,6 +33,7 @@ import {
 } from 'expo-tracking-transparency';
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
+import * as Updates from 'expo-updates';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -57,60 +58,60 @@ export default function App() {
 
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
-  
   const notificationListener = useRef();
   const responseListener = useRef();
-
   const [showOnBoarding, setShowOnBoarding] = useState(true);
 
-  const registerForPushNotificationsAsync = async () => {
-    let token;
-
-    if (Device.isDevice) {
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
-
-        if (existingStatus !== "granted") {
-            const { status } = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-            console.log("existingStatus", existingStatus);
-        }
-
-        if (finalStatus !== "granted") {
-            alert("Failed to get push token for push notification!");
-            console.log("finalStatus", finalStatus);
-            return;
-        }
-
-        // Project ID can be found in app.json | app.config.js; extra > eas > projectId
-        // token = (await Notifications.getExpoPushTokenAsync({ projectId: "YOUR_PROJECT_ID" })).data;
-        token = (await Notifications.getExpoPushTokenAsync()).data;
-
-        // The token should be sent to the server so that it can be used to send push notifications to the device
-        console.log(token);
-    } else {
-        alert("Must use physical device for Push Notifications");
-    }
-
-    if (Platform.OS === "android") {
-        await Notifications.setNotificationChannelAsync("default", {
-            name: "default",
-            showBadge: true,
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: "#FE9018",
-        });
-    }
-
-    console.log("first", token)
-
-    return token;
+  async function sendPushNotification(expoPushToken) {
+    const message = {
+      to: expoPushToken,
+      sound: 'default',
+      title: 'Original Title',
+      body: 'And here is the body!',
+      data: { someData: 'goes here' },
+    };
+  
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Accept-encoding': 'gzip, deflate',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    });
   }
 
-  // async function schedulePushNotification() {
-  //   await allowsNotificationsAsync()
-  // }
+  async function registerForPushNotificationsAsync() {
+    let token;
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(token);
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
   
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+  
+    return token;
+  }
 
   const checkOnBoardingData = async () => {
     try {
@@ -119,6 +120,19 @@ export default function App() {
       setShowOnBoarding(res ? false : true)
     } catch (e) {
     // saving error
+    }
+  }
+
+  const onFetchUpdateAsync = async() => {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync();
+      }
+    } catch (error) {
+      alert(`Error fetching latest Expo update: ${error}`);
     }
   }
 
@@ -140,62 +154,26 @@ export default function App() {
     }
   }
 
-  // const allowsNotificationsAsync = async() => {
-  //   const settings = await Notifications.getPermissionsAsync();
-  //   return (
-  //     settings.granted || settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
-  //   );
-  // }
-
-  // const getPushToken = async() => {
-  //   const res = await registerForPushNotificationsAsync();
-  //   return res
-  // }
-
   useEffect(() => {
-    // console.log("first", getPushToken())
-    // const subscription = Notifications.addPushTokenListener(registerDevicePushTokenAsync);
-    // return () => subscription.remove();
-  }, []);
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-  useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => setExpoPushToken(token));
-
-    // This listener is fired whenever a notification is received while the app is foregrounded
-    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-      console.log("-----", notification)
-        setNotification(notification);
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
     });
 
-    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    responseListener.current = Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log("======", response)
-        const {
-            notification: {
-                request: {
-                    content: {
-                      data: { screen },
-                    },
-                },
-            },
-        } = response;
-
-        // When the user taps on the notification, this line checks if they //are suppose to be taken to a particular screen
-        if (screen) {
-            // props.navigation.navigate(screen);
-        }
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
     });
 
     return () => {
-        Notifications.removeNotificationSubscription(notificationListener.current);
-        Notifications.removeNotificationSubscription(responseListener.current);
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
   useEffect(()=>{
     checkOnBoardingData();
     checktracking();
-    // schedulePushNotification();
   }, [])
   
   if(fontsLoaded) {
@@ -219,9 +197,12 @@ export default function App() {
             hidden={false}
           />
           <SafeAreaProvider style={{
-            backgroundColor: "#000",
+            backgroundColor: "#fff",
             flex: 1
           }}>
+            {/* <TouchableOpacity onPress={()=>sendPushNotification(expoPushToken)}>
+              <Text>Submit</Text>
+            </TouchableOpacity> */}
             <ChatProvider>
               <PersistGate loading={null} persistor={persistor}>
                 <SheetProvider>
