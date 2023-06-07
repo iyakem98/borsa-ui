@@ -9,7 +9,7 @@ import { getConsumers, getTravelers } from '../../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { ChatState } from '../../context/ChatProvider'
-import { Feather, Ionicons } from '@expo/vector-icons'
+import { Feather, Ionicons, AntDesign } from '@expo/vector-icons'
 import Buyer from './Buyer'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw'
 import ErrorUnDraw from '../../assets/svg/errorUnDraw'
@@ -243,6 +243,7 @@ const filterTravelers =  async () => {
         filteredTravels.push(travel[i])
         console.log("yesss xxx", travel[i])
       }
+
       }else{
          if(travelerS && travelerS==x){
         filteredTravels.push(travel[i])
@@ -272,6 +273,17 @@ const filterTravelers =  async () => {
    
   }
   }
+}
+
+const handleClear = () => {
+  setTravelerS("")
+                        setTravelerD("")
+                        setBuyerD("")
+                        setBuyerS("")
+                        setPageBuyer(1)
+                        setPageTraveler(1)
+                        setTravelersStatus("All")
+                        getUsers()
 }
 
 useEffect(() => {   
@@ -450,21 +462,33 @@ useEffect(() => {
                               //backgroundColor: '#009cdc',
                               //backgroundColor: "#593196",
                               //backgroundColor: '#7267e7',
-                              width:100,
-                              marginBottom:5,
+                              backgroundColor: 'white',
+                              //width:100,
+                              width: "33%",
+                              marginBottom: 12,
                               paddingHorizontal: 12,
                               paddingVertical: 6,
-                              borderRadius: 10,
+                              borderRadius: 5,
                               flexDirection: 'row',
                               alignItems: 'center',
+
+                              shadowColor: "#000",
+                              shadowOffset: {
+                                width: 0,
+                                height: 1,
+                              },
+                              shadowOpacity: 0.22,
+                              shadowRadius: 2.22,
+
+                              elevation: 3,
                       }}>
-                          <Ionicons name="filter" size={24} color="black" />
+                          <AntDesign name="plus" size={18} color="black" />
                           <Text style = {{
                               fontSize: 18,
                               marginLeft: 2,
                               //color: 'white'
                           }}>
-                            Filter
+                            Add Filter
                           </Text>
                       </TouchableOpacity>
       
@@ -479,6 +503,8 @@ useEffect(() => {
                       </Text>
                       <TouchableOpacity 
                       onPress={()=>{
+                        setPageBuyer(1)
+                        setPageTraveler(1)
                         setBuyersStatus("All")
                         getUsers()
                       }}
@@ -523,6 +549,7 @@ useEffect(() => {
                 
                             <Pressable onPress={()=>{
                               clearFilterBuyer()
+                              getUsers()
                             }}
                                 style = {{
                                     //backgroundColor: '#E8E8E8',
@@ -738,27 +765,39 @@ useEffect(() => {
                           <TouchableOpacity 
                           onPress={()=>setFilterTraveler(1)}
                           style = {{
-                              backgroundColor: '#e8e8e8',
+                              //backgroundColor: '#e8e8e8',
                               //backgroundColor: '#a991d4',
                               //backgroundColor: 'black',
                               //backgroundColor: '#009cdc',
                               //backgroundColor: "#593196",
                               //backgroundColor: '#7267e7',
-                              width:100,
-                              marginBottom:5,
+                              backgroundColor: 'white',
+                              //width:100,
+                              width: "33%",
+                              marginBottom: 12,
                               paddingHorizontal: 12,
                               paddingVertical: 6,
-                              borderRadius: 10,
+                              borderRadius: 5,
                               flexDirection: 'row',
                               alignItems: 'center',
+
+                              shadowColor: "#000",
+                              shadowOffset: {
+                                width: 0,
+                                height: 1,
+                              },
+                              shadowOpacity: 0.22,
+                              shadowRadius: 2.22,
+
+                              elevation: 3,
                       }}>
-                          <Ionicons name="filter" size={24} color="black" />
+                          <AntDesign name="plus" size={18} color="black" />
                           <Text style = {{
                               fontSize: 18,
                               marginLeft: 2,
                               //color: 'white'
                           }}>
-                            Filter
+                            Add Filter
                           </Text>
                       </TouchableOpacity>
       
@@ -773,8 +812,7 @@ useEffect(() => {
                       </Text>
                       <TouchableOpacity 
                       onPress={()=>{
-                        setTravelersStatus("All")
-                        getUsers()
+                        handleClear()
                       }}
                       style = {{
                           backgroundColor: '#e8e8e8',
@@ -817,6 +855,7 @@ useEffect(() => {
                 
                             <Pressable onPress={()=>{
                               clearFilterTraveler()
+                              getTravelers()
                             }}
                                 style = {{
                                     //backgroundColor: '#E8E8E8',

@@ -285,20 +285,30 @@ const AccountScreen = () => {
             style = {{
               flexDirection: 'row',
               borderStyle: 'solid',
-              borderWidth: 2,
+              //borderWidth: 2,
               borderRadius: 20,
               paddingHorizontal: 10,
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: 6,
             }}>
+               <View style = {{
+              padding: 5,
+              borderStyle: 'solid',
+              marginRight: 6,
+              //borderWidth: 1,
+              borderRadius: 50,
+              backgroundColor: "#13b955",
+            }}>
+            <Entypo name="edit" size={18} color="#fff"/>
+            </View>
             <Text style = {{
-              fontSize: 16,
+              fontSize: 18,
               fontFamily: "Poppins_600SemiBold",
             }}>
               Change avatar
             </Text>
-            <Entypo name="edit" size={16} color="black"/>
+           
           </TouchableOpacity>
 
         {/*<Entypo name="edit" size={24} color="red" onPress={()=>{
@@ -556,17 +566,27 @@ const AccountScreen = () => {
               justifyContent: "space-between",
               width: screenWidth - 80,
               marginTop: 15,
-              backgroundColor: "#eee",
+              backgroundColor: "#fff",
               paddingHorizontal: 5,
               borderRadius: 10,
-              paddingVertical: 6
+              paddingVertical: 4,
+
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.22,
+              shadowRadius: 2.22,
+
+              elevation: 3,
             }}>
               <Pressable disabled = {isEditing? false : true}
                 style={{
-                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#593196" : "#fff",
                     borderRadius: 5,
                     width: "49%",
-                    paddingVertical: 5,
+                    paddingVertical: 7,
                     alignItems: "center",
                     justifyContent: 'center',
                 }} onPress={()=>{
@@ -581,7 +601,7 @@ const AccountScreen = () => {
               </Pressable>
               <Pressable disabled = {isEditing? false : true}
                 style={{
-                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#593196" : "#eee",
+                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#593196" : "#fff",
                     borderRadius: 5,
                     width: "49%",
                     paddingVertical: 5,

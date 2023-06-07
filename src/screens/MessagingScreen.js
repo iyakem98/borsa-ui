@@ -69,12 +69,14 @@ const MessagingScreen = ({navigation}) => {
   const [pushnotification, setpushNotification] = useState(false);
   const [latestMess, setlatestMess] = useState();
   const [isActive, setIsActive] = useState(false);
+  const [active, setIsactive] = useState(false);
+  const [activeTrigger, setactiveTrigger] = useState(false);
 
   const notificationListener = useRef();
   const responseListener = useRef();
   const {messageHeader, setmessageHeader} = ChatState()
   const publicFolder = "http://192.168.100.2:5000/images/"
-
+  // var active = false
   var selectedChatCompare = null;
   var chatRouteCompare = null;
 
@@ -120,20 +122,15 @@ const MessagingScreen = ({navigation}) => {
   }
 
   useLayoutEffect(()=>{
-    socket.current=io(API_BASE_URL_Socket)
-    socket.current.emit("setup", user);
-    socket.current.on("connected", () => setsocketConnected(true))
-    socket.current.emit("active", chattId)
-    // socket.current.emit("seen", chattId)
-    socket.current.on("typing", () => setIsTyping(true))
-    socket.current.on("stop typing", () => setIsTyping(false))
-    socket.current.on("active", () => setIsActive(true))
-    socket.current.on("inActive", () => setIsActive(false))
-    return () => {
-      socket.current.emit("inActive", chattId)
-      socket.current.emit("stop typing", chattId)
-    }
+    socketCall()
+    
   } ,[])
+ 
+  useEffect(()=>{
+   
+    console.log('check to see if active value', isActive)
+    
+  }, [active])
 
   useEffect(()=>{
     setMessagesLength(messages.length)
@@ -158,8 +155,38 @@ const MessagingScreen = ({navigation}) => {
     })
   }, [])
 
-  const [datesShown, setDatesShown] = useState([])
+  useEffect(() =>{  
+    if(socketConnected){
+     
+        activeHandler() 
+      
+     
+    }  
+  }, [socketConnected, isActive])
+ 
+  // useEffect(() =>{  
+  //   // console.log('is active value in mess', isActive)
+  //   console.log('is active value in mess', isActive)
+     
+  //  }, [active])
 
+  const [datesShown, setDatesShown] = useState([])
+const socketCall = () =>{
+  socket.current=io(API_BASE_URL_Socket)
+  socket.current.emit("setup", user);
+  socket.current.on("connected", () => setsocketConnected(true))
+  // socket.current.emit("active", chattId)
+  // socket.current.emit("seen", chattId)
+  socket.current.on("active", () => setIsActive(true))
+  socket.current.on("inActive", () => setIsActive(false))
+  socket.current.on("typing", () => setIsTyping(true))
+  socket.current.on("stop typing", () => setIsTyping(false))
+//  console.log('socket current active value', socket.current.active)
+  // return () => {
+  //   socket.current.emit("inActive", chattId)
+  //   socket.current.emit("stop typing", chattId)
+  // }
+}
   const testNewMessages = async(newMessageReceived) => {
     const {data} = await axios.get(`${API_BASE_URL}message/${chattId}`, {
       headers: {
@@ -256,6 +283,103 @@ const MessagingScreen = ({navigation}) => {
     }
     setloading(false)
   }
+  const typingHandler = (e) => {
+    setNewMessage(e)
+     
+    if(!socketConnected) return
+
+    if(!typing) {
+     setTyping(true)
+     socket.current.emit('typing', chattId);
+    }
+
+    let lastTypingTime = new Date().getTime()
+    var timerLength = 3000
+    setTimeout(() => {
+     var timeNow = new Date().getTime();
+     var timeDiff = timeNow - lastTypingTime;
+
+     if(timeDiff >= timerLength && typing) {
+         socket.current.emit("stop typing", chattId)
+         setTyping(false)
+     }
+    }, timerLength);
+  }
+  const activeHandler = (e) => {
+    console.log('initiating active handler')
+    // socket.current.emit("connected");
+    // console.log(socket.current.emit('inActive', chattId))
+    // console.log('is active value after inactivity', socket.current.active )
+    var timerLength = 1000
+   
+    socket.current.emit('active', chattId)
+    // setActiveHandler()
+    // console.log('is active value after activity', isActive )
+    // console.log('socket current inactive value', socket.current.inActive)
+    setTimeout(() => {
+      console.log('isactive value in active handler', isActive)
+      }, timerLength);
+    // console.log('socket current connection value', socket.current.connected)
+    // if(socket.current.active){
+    //   setIsActive(true)
+    // }
+    // console.log('socket current active value', socket.current.active)
+    // socket.current.emit("active", chattId);
+    // setIsactive(true)
+    // console.log(isActive)
+    // console.log('active value', active)
+    // console.log('socket connected value', socketConnected)
+    // console.log('is active value', isActive)
+    // // if(!socketConnected) return
+
+    // if(!active) {
+    //   // console.log('active before', active)
+    //   setIsactive(true)
+    //   setIsActive(true)
+    //   // console.log('active after', active)
+    //   socket.current.emit('active', chattId);
+   
+    
+      
+    // }
+    // if(active) {
+    //   // console.log('active before', active)
+    //   setIsactive(false)
+    //   // console.log('active after', active)
+    //   socket.current.emit('active', chattId);
+   
+    
+      
+    // }
+    
+    
+  }
+  const setActiveHandler = () =>{
+    var timerLength = 5000
+    setTimeout(() => {
+        console.log('isactive value in active handler', isActive)
+        }, timerLength);
+    // setInterval(() => {
+    //     console.log('isactive value in active handler', isActive)
+    //     }, timerLength);
+
+  }
+  const InactiveHandler = (e) => {
+   
+   
+    if(!socketConnected) return
+
+    if(isActive) {
+      
+      // setIsActive(false)
+      socket.current.emit('inActive', chattId);
+   
+    
+      
+    }
+    
+    
+  }
   return (
     <SafeAreaView style={{
       flex: 1,
@@ -268,7 +392,12 @@ const MessagingScreen = ({navigation}) => {
         height: height - 200
       }}>
         <HeaderChat
-          isActive={isActive}
+          // isActive={isActive}
+          // isActive={isActive}
+          isActive={setActiveHandler}
+          isActive2={isActive}
+          active={active}
+          activeHandler={activeHandler}
           user={user}
           selectedChat={selectedChat}
           userSelectedFromConnectCard={userSelected ? userSelected : null}
@@ -352,6 +481,9 @@ const MessagingScreen = ({navigation}) => {
           setNewMessage={setNewMessage}
           chattId={chattId}
           socket={socket}
+          typing={isTyping}
+          typingHandler={typingHandler}
+          activeHandler={activeHandler}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>

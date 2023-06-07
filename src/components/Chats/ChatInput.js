@@ -9,9 +9,20 @@ const ChatInput = ({
     newmessage,
     setNewMessage,
     chattId,
-    socket
+    socket,
+    typing,
+    typingHandler,
+    activeHandler
 }) => {
+    // console.log('socket value', socket.current.connected)
+    // console.log('typing value', typing )
+    
   return (
+    <>
+    {/* {typing &&<View>
+            <Text>Typing</Text>
+
+    </View>} */}
     <View
         style={{
             paddingTop: 5,
@@ -45,15 +56,23 @@ const ChatInput = ({
             style = {styles.input} 
             multiline
             placeholder='Type your message...'
+            // onChange={typingHandler}
+            onChange={() => {
+
+               activeHandler()
+               typingHandler()
+                // console.log("", typing)
+            }}
             onFocus={()=>{
             if(newmessage.length > 0) {
-                socket.current.emit('typing', chattId);
+                // socket.current.emit('typing', chattId);
+
             } else {
-                socket.current.emit("stop typing", chattId);
+                // socket.current.emit("stop typing", chattId);
             }
             }}
             onBlur={()=>{
-            socket.current.emit("stop typing", chattId);
+            // socket.current.emit("stop typing", chattId);
             }}
         />
         <Pressable style={{
@@ -81,6 +100,7 @@ const ChatInput = ({
         </Pressable>
         </View>
     </View>
+    </>
   )
 }
 

@@ -48,12 +48,24 @@ const RegisterScreen = ({navigation}) => {
   const [mailedTo, setMailedTo] = useState("")
   const [confirmUserPassword, setConfirmUserPassword] = useState("")
   let registerUserData = null
+  const storeTokenOnLocal = async (t) => {
+    try{
+      let msgs =  await AsyncStorage.setItem(`myToken`, t)
+      
+      console.log("-=-=--=", t)
+     
+      console.log("gott", await AsyncStorage.getItem('myToken'))
 
+    } catch(error){
+      console.log("errorr", error)
+    }
+  }
   const handleUserData = async (value) => {
     try {
       dispatch(login(value));
       const jsonValue = JSON.stringify(value)
       await AsyncStorage.setItem('@user_data', jsonValue)
+      storeTokenOnLocal(value.token)
     } catch (e) {
       // saving error
     }
@@ -348,7 +360,7 @@ const handleVerify = async () => {
             color="#514590"
             style={{
               width: 80,
-              backgroundColor: "#eee"
+              backgroundColor: "#eee",
             }}
           />
           <View style={{
@@ -359,22 +371,20 @@ const handleVerify = async () => {
               fontFamily: "Poppins_400Regular",
               fontSize: 13
             }}>
-              By submitting this form, you accept that you will become a {" "}
+              I intend to become a registered user of {" "}
               <Text style={{
                 color: "#514590",
                 fontFamily: "Poppins_500Medium",
                 //textDecorationLine: "underline"
               }} onPress={()=>{
                 // console.log("========")
-              }}>Borsa</Text>
-              {" "}user and will {" "}
+              }}>Borsa,</Text>
+              {" "}and I have reviewed and agreed to the{" "}
               <Text style={{
                 color: "#514590",
                 fontFamily: "Poppins_500Medium",
                 //textDecorationLine: "underline"
-              }} onPress={()=>{
-                // console.log("========")
-              }}>interact with other users appropriately.</Text>
+              }} onPress={()=> navigation.navigate('Terms & Conditions')} >Terms and Conditions.</Text>
             </Text>
           </View>
         </View>

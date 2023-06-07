@@ -55,7 +55,6 @@ const LoginScreen = ({navigation}) => {
       dispatch(login(value));
       const jsonValue = JSON.stringify(value)
       await AsyncStorage.setItem('@user_data', jsonValue)
-      storeTokenOnLocal(value.token)
     } catch (e) {
       // saving error
     }
@@ -72,6 +71,7 @@ const LoginScreen = ({navigation}) => {
       });
       // console.log(res.data);
       await handleUserData(res.data);
+      storeTokenOnLocal(res.data.token)
     } catch(e) {
       if(e?.response?.data?.message === "Invalid email or password") {
         setUserPasswordError("Invalid email or password")

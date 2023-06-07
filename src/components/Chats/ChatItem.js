@@ -184,11 +184,11 @@ const ChatItem = ({
           }  */}
           {isUserSender && !isMarked ? (
           <View style={styles.notifCheckmark}>
-            <Ionicons name="checkmark-outline" size={20} color="black" />
+            <Ionicons name="checkmark-done" size={20} color="black" />
           </View>
         ) : isUserSender && isMarked ? (
           <View style={styles.notifCheckmark}>
-            <Ionicons name="checkmark-outline" size={20} color="black" />
+            <Ionicons name="checkmark-done" size={20} color="black" />
           </View>
         ) : notifLength > 0 || (!isUserSender && !isMarked) ? (
           <View style={styles.notif} />
@@ -207,8 +207,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     height: 70,
     backgroundColor: '#fff',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ccc'
+    
   },
   image: {
     width: 60,
@@ -218,6 +217,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#ccc'
   },
   notif: {
     alignItems: 'center',

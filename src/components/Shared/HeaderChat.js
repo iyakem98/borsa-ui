@@ -36,6 +36,9 @@ const getImageSourceById = (id) => {
 
 const HeaderChat = ({
     isActive,
+    isActive2,
+    active,
+    activeHandler,
     user,
     selectedChat,
     isTyping,
@@ -83,7 +86,7 @@ const HeaderChat = ({
             <Pressable 
             onPress={()=> 
               {
-                userSelectedFromConnectCard?.user?.firstName &&
+                userSelectedFromConnectCard?.firstName &&
                 navigation.navigate("Profile", {
                   theUser: userSelectedFromConnectCard
               })}
@@ -102,7 +105,7 @@ const HeaderChat = ({
             <View style={{marginLeft: 10}}>
             <Pressable onPress={()=>
             {
-              userSelectedFromConnectCard?.user?.firstName &&
+              userSelectedFromConnectCard?.firstName &&
               navigation.navigate("Profile", {
                 theUser: userSelectedFromConnectCard
             })}
@@ -117,7 +120,16 @@ const HeaderChat = ({
                 flexDirection: "row",
                 alignItems: "center"
               }}>
-                {isActive && !isTyping && !loading ? (
+                {/* {isActive && !isTyping && !loading ? (
+                  <View style={{
+                    backgroundColor: 'green',
+                    height: 10,
+                    width: 10,
+                    borderRadius: 10,
+                    marginRight: 5
+                  }} />
+                ) : null} */}
+                {isActive2 ? (
                   <View style={{
                     backgroundColor: 'green',
                     height: 10,
@@ -126,7 +138,9 @@ const HeaderChat = ({
                     marginRight: 5
                   }} />
                 ) : null}
-                <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>{loading ? "Loading..." : isTyping ? "Typing..." : isActive ? "Active" : "Offline"}</Text>
+                <Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>{loading ? "Loading..." : isTyping ? "Typing..." : isActive2 ? "Active" : "Offline"}</Text>
+                {/* {isActive2 &&<Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>Active</Text>} */}
+                {/* {isTyping &&<Text style={{fontFamily: "Poppins_400Regular", fontSize: 13}}>Typing ...</Text>} */}
               </View>
             </View>
           </View>
