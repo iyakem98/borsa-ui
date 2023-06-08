@@ -127,7 +127,7 @@ const MainTabNavigator = () => {
       } 
     //   const BadgedIcon = withBadge(storedNotifications.length)(Icon);
   return (
-    <Tab.Navigator initialRouteName= {user?.isFirstTime? ("Welcome") : ("Chats")} screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
+    <Tab.Navigator initialRouteName= {"Chats"} screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
         backgroundColor: '#fff'
     }, headerStyle: {
         backgroundColor: '#f9f8fc',
@@ -239,7 +239,7 @@ const MainTabNavigator = () => {
             headerShown: false
         }} /> */}
 
-        {user?.isFirstTime && 
+        {/* {user?.isFirstTime && 
             <Tab.Screen name="Welcome" component={WelcomeProPic} options={{
                 tabBarIcon: ({color, size}) => (
                     <FontAwesome name="random" size={size} color={color} /> 
@@ -248,7 +248,7 @@ const MainTabNavigator = () => {
                 tabBarStyle: { display: "none" },
 
             }} />
-        }
+        } */}
 
         
         {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{

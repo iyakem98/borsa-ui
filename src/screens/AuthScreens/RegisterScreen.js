@@ -93,6 +93,7 @@ const RegisterScreen = ({navigation}) => {
         console.log(res.data);
         await handleUserData(res.data);
       } catch(e) {
+        console.log("------------", e)
         console.log("------------", e?.response?.data?.message)
         if(e?.response?.data?.message === "Invalid email or password") {
           setUserPasswordError("Invalid email or password")

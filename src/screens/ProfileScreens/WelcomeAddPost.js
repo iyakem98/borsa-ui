@@ -48,13 +48,12 @@ const WelcomeAddPost = () => {
             alert(`All set! Welcome to Borsa ${user.firstName}!`)
             // handleLogout()
             dispatch(getUserDetails(user._id))
-            navigation.navigate('Chats')
           }).catch((err) => {
             //alert("try again pls.")
             console.log("errorr", err)
           }); 
 
-          navigation.navigate('Chats')
+          navigation.navigate('Main')
 
     }
     return (

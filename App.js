@@ -62,6 +62,10 @@ export default function App() {
   const responseListener = useRef();
   const [showOnBoarding, setShowOnBoarding] = useState(true);
 
+  useEffect(()=>{
+    console.log("--", expoPushToken)
+  }, [expoPushToken])
+
   async function sendPushNotification(expoPushToken) {
     const message = {
       to: expoPushToken,

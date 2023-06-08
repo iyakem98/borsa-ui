@@ -128,6 +128,9 @@ const Navigator = ({showOnBoarding}) => {
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     
     <Stack.Navigator>
+
+      {/* <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
+      {user?.isFirstTime && <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} />}
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
       {/*<Stack.Screen name="Chats" component={ChatScreen} /> */}
       {/* <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} /> */}
