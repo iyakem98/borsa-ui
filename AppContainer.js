@@ -16,9 +16,10 @@ import axios from 'axios';
 import { UpdateLastSeenAndStatus } from './src/features/auth/authSlice';
 import { fetchChat } from './src/features/chat/chatSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_BASE_URL } from './src/utils/config';
 
 
-function AppContainer({showOnBoarding}) {
+function AppContainer({showOnBoarding, expoPushToken}) {
   
     const { user } = useSelector((state) => state.auth)
     const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
@@ -31,6 +32,28 @@ function AppContainer({showOnBoarding}) {
   // console.log(user)
   const {date, setDate} = ChatState()
   const datte  = moment()
+
+  const handlePushToken = async() => {
+    try {
+      const {data} = await axios.post(`${API_BASE_URL}users/add-push-tokens`, {
+        pushTokens: expoPushToken
+      }, {
+        headers: {
+            Authorization: `Bearer ${user.token}`
+        }
+      })
+      console.log("--------", data)
+    } catch (e) {
+      // console.log("====++", e?.response?.message)
+    }
+  }
+
+  useEffect(()=>{
+    console.log("--}}{}", expoPushToken)
+    if(expoPushToken && user) {
+      handlePushToken()
+    }
+  }, [expoPushToken, user])
 
   const getUser = async() => {
     try {

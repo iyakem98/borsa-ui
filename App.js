@@ -34,6 +34,8 @@ import {
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import * as Updates from 'expo-updates';
+import axios from 'axios';
+import { API_BASE_URL } from './src/utils/config';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -56,15 +58,13 @@ export default function App() {
     Poppins_800ExtraBold
   });
 
+  // -----------------
+
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
   const [showOnBoarding, setShowOnBoarding] = useState(true);
-
-  useEffect(()=>{
-    console.log("--", expoPushToken)
-  }, [expoPushToken])
 
   async function sendPushNotification(expoPushToken) {
     const message = {
@@ -210,7 +210,7 @@ export default function App() {
             <ChatProvider>
               <PersistGate loading={null} persistor={persistor}>
                 <SheetProvider>
-                  <AppContainer showOnBoarding={showOnBoarding} />
+                  <AppContainer showOnBoarding={showOnBoarding} expoPushToken={expoPushToken} />
                 </SheetProvider>
               </PersistGate>
             </ChatProvider>
