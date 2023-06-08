@@ -66,7 +66,7 @@ const WelcomeAddPost = () => {
           paddingHorizontal: 10,
           //justifyContent: 'center'
       }}>
-        <Pressable onPress={()=>navigation.popToTop()} style = {{
+        <Pressable onPress={()=>navigation.navigate('Welcome')} style = {{
             marginBottom: 40,
         }}>
             <AntDesign name="arrowleft" size={24} color="#fff" />

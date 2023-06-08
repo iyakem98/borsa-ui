@@ -118,9 +118,9 @@ const Navigator = ({showOnBoarding}) => {
 
     dispatch(fetchChat())
     // console.log(chattts[1])
-    
+    // console.log("===", user)
   
-}, [user])
+  }, [user])
 
   return (
    <NavigationContainer>
@@ -132,6 +132,7 @@ const Navigator = ({showOnBoarding}) => {
       {/* <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
       {user?.isFirstTime && <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} />}
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
+      {!user?.isFirstTime && <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} />}
       {/*<Stack.Screen name="Chats" component={ChatScreen} /> */}
       {/* <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} /> */}
       <Stack.Screen name="Search" component={SearchScreen}  options={({ route }) => ({
@@ -141,7 +142,7 @@ const Navigator = ({showOnBoarding}) => {
         
           headerShown: false
         })}/>
-        <Stack.Screen name="Welcome Pic" component={WelcomeProPic} options={{headerShown: false}} />
+        {/* <Stack.Screen name="Welcome Pic" component={WelcomeProPic} options={{headerShown: false}} /> */}
         <Stack.Screen name="WelcomePost" component={WelcomeAddPost} options={{headerShown: false}} />
         <Stack.Screen name="ProfilePicker" component={ProfilePicker} options={{headerShown: false}} />
       <Stack.Screen name="Connect" component={ConnectScreen} />

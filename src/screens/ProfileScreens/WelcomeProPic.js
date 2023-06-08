@@ -1,7 +1,10 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigation } from "@react-navigation/native"
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { login } from "../../features/auth/authSlice";
 
 const data = [
     { id: '0', imageSource: require('../../../assets/images/avatars/blank-avatar.png') },
@@ -30,12 +33,27 @@ const data = [
 
 const WelcomeProPic = () => {
     const navigation = useNavigation()
+    const dispatch = useDispatch()
     const { user } = useSelector((state) => state.auth)
 
     const getImageSourceById = (id) => {
         const item = data.find((item) => item.id === id);
         return item ? item.imageSource : null;
       };
+
+    const checkHandleUserStatus = async () => {
+        try {
+            let data = {...user}
+            data.isFirstTime = false
+            const jsonValue = JSON.stringify(data)
+            await AsyncStorage.setItem('@user_data', jsonValue)
+            if(data && user) {
+                dispatch(login(data));
+            }
+        } catch(e) {
+        }
+    }
+
   return (
     <LinearGradient 
     colors={['#705c9d','#593196']}
@@ -93,7 +111,10 @@ const WelcomeProPic = () => {
         width: '100%',
         //paddingHorizontal: 30,
     }}>
-        <Pressable onPress={() => navigation.navigate('ProfilePicker')}
+        <Pressable onPress={() => {
+            navigation.navigate('ProfilePicker');
+            checkHandleUserStatus()
+        }}
             style = {{
                 backgroundColor: "#13b955",
                 borderRadius: 8,
@@ -111,7 +132,10 @@ const WelcomeProPic = () => {
             </Text>
 
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('WelcomePost')}
+        <Pressable onPress={() => {
+            navigation.navigate('WelcomePost');
+            checkHandleUserStatus();
+        }}
             style = {{
                 borderStyle: 'solid',
                 borderWidth: 0.5,
@@ -226,7 +250,7 @@ const WelcomeProPic = () => {
                     fontFamily: 'Poppins_400Regular',
                     fontSize: 18,
                 }}>
-                    Continue
+                    Continu
                 </Text>
     
             </Pressable>
