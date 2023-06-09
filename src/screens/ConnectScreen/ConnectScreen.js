@@ -1011,7 +1011,7 @@ useEffect(() => {
       
                   <FlatList
                     // ListHeaderComponent={TravelerHeader}
-                    data={t}
+                    data={travelerTotal}
                     contentContainerStyle={{
                       paddingBottom: 270
                     }}
