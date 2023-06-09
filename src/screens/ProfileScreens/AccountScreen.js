@@ -229,7 +229,7 @@ const AccountScreen = () => {
                 marginBottom: 20,
               }}>
 
-              <Pressable onPress={()=>navigation.popToTop()}
+              <Pressable onPress={()=>navigation.navigate('More')}
                 style = {{
                   //backgroundColor: '#593196',
                   flexDirection: 'row',

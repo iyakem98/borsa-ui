@@ -31,6 +31,7 @@ import { fetchChat } from '../features/chat/chatSlice';
 import WelcomeProPic from '../screens/ProfileScreens/WelcomeProPic';
 import ProfilePicker from '../screens/ProfilePicker';
 import axios from 'axios';
+import WelcomeImperial from '../screens/ProfileScreens/WelcomeImperial';
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -228,6 +229,13 @@ const MainTabNavigator = () => {
         <Tab.Screen name="More" component={ProfileScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <MaterialCommunityIcons name="dots-horizontal" size={size} color={color} />
+            ),
+            headerShown: false
+        }} />
+
+<Tab.Screen name="Misc" component={WelcomeImperial} options={{
+            tabBarIcon: ({color, size}) => (
+                <Ionicons name="heart-outline" size={size} color={color} />
             ),
             headerShown: false
         }} />
