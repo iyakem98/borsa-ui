@@ -53,7 +53,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.borsa",
-      "buildNumber": "16"
+      "buildNumber": "17"
     },
     "android": {
       "adaptiveIcon": {
