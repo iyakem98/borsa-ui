@@ -389,7 +389,7 @@ const ConnectScreen = () => {
                 }}>
                 <Text style = {{
                   fontSize: 18,
-                  fontFamily: "Poppins_400Medium",
+                  fontFamily: "Poppins_400Regular",
                   color: 'white',
                 }}>
                   Add a card
@@ -670,6 +670,7 @@ const ConnectScreen = () => {
                   <Text style = {{
                     fontSize: 18,
                     color: 'white',
+                    fontFamily: 'Poppins_400Regular'
                   }}>
                     Add a new card
                   </Text>
