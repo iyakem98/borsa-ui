@@ -250,7 +250,7 @@ const WelcomeProPic = () => {
                     fontFamily: 'Poppins_400Regular',
                     fontSize: 18,
                 }}>
-                    Continu
+                    Continue
                 </Text>
     
             </Pressable>
