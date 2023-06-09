@@ -154,7 +154,9 @@ const ChatItem = ({
           <View style = {{
             flexDirection: 'row'
           }}>
-            <View>
+            <View style = {{
+              width: '90%',
+            }}>
               <Text  numberOfLines={2} style = {styles.subTitle}>
                 {isTyping ? "Typing..." : newMessage ? newMessage : chat.latestMessage.content}
               </Text>
