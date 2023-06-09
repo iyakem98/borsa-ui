@@ -63,7 +63,6 @@ const ProfilePicker = () => {
           { headers: {
             'Content-Type': 'application/json',
         }}).then((data) => {
-          console.log("-------------", data?.data)
           dispatch(getUserDetails(user._id))
           // handleLogout()
           navigation.popToTop()

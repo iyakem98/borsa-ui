@@ -110,12 +110,19 @@ catch(error){
 const getUserDetails = async (userId) => {
   console.log(userId + 'detailservice')
   try{
+    let jsonValue = await AsyncStorage.getItem('@user_data');
+    let convertedValue = jsonValue != null ? JSON.parse(jsonValue) : null;
+    console.log("-----==-=-=", convertedValue?.token)
+
+    
+
     const {data} = await axios.get(`${API_URL}users/${userId}`)
     
     console.log("new user dataaaaaaaaaaa:", data)
+    let userData = {...data, token: convertedValue?.token, isFirstTime: false}
   
-    if (data) {
-      return data;
+    if (data && convertedValue) {
+      return userData;
     }
     else {
       console.log('error in authservice')

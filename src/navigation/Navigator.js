@@ -99,21 +99,6 @@ const Navigator = ({showOnBoarding}) => {
       
     
   // }, [])
-  const checkUserData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@storage_Key');
-      const userData = jsonValue != null ? JSON.parse(jsonValue) : null;
-      if(userData) {
-        dispatch(login(value));
-      }
-    } catch(e) {
-      // error reading value
-    }
-  }
-
-  useEffect(()=>{
-    checkUserData()
-  }, [])
   useEffect(() =>{
 
     dispatch(fetchChat())
