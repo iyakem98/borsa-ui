@@ -5,20 +5,59 @@ import { useNavigation } from "@react-navigation/native"
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { login } from "../../features/auth/authSlice";
+import { getUserDetails } from "../../features/auth/authSlice";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import axios from "axios";
+import { API_BASE_URL } from "../../utils/config";
 
 const screenWidth = Dimensions.get('window').width;
 
 const WelcomeImperial = () => {
     const { user } = useSelector((state) => state.auth)
-    const [isImperial, setIsImperial] = useState(user.isImperial)
+    const [isImperial, setIsImperial] = useState(user?.isImperial)
     const [selectedTab, setSelectedTab] = useState(0)
+    const [originalImperial, setOriginalImperial] = useState(user?.isImperial)
+
+    const dispatch = useDispatch()
+    const navigation = useNavigation()
+
+    const handleUpdate = async () => {
+
+        if (isImperial === originalImperial) {
+            navigation.navigate('WelcomePost')
+        }
+
+        else {
+
+            let userData = {
+                "isImperial": isImperial,
+              }
+          
+              axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
+                { headers: {
+                  'Content-Type': 'application/json',
+              }}).then((data) => {
+               //alert('profile updated')
+                // handleLogout()
+                dispatch(getUserDetails(user._id))
+                
+                navigation.navigate('WelcomePost')
+              }).catch((err) => {
+                alert("try again pls.")
+                console.log("errorr", err)
+              }); 
+        }
+    
+       
+      }
+
   return (
     <LinearGradient 
     colors={['#705c9d','#593196']}
     style = {{
         height: "100%",
         //alignItems: 'center',
-        paddingTop: 100,
+        paddingTop: 120,
         paddingHorizontal: 15,
         //justifyContent: 'center'
     }}>
@@ -32,15 +71,17 @@ marginBottom: 20,
 <Text style = {{
     fontSize: 22,
     color: 'white',
-    fontFamily: "Poppins_400Regular"
+    fontFamily: "Poppins_400Regular",
+    marginBottom: 30,
 }}>
-    Please choose your preferred measurement system:
+   Please choose your preferred measurement system:
+
 </Text>
-<Text style={styles.optionText}>1. Metric System (SI)</Text>
+<Text style={styles.optionText}>Metric System (SI)</Text>
 <Text style={styles.exampleText}>Weight: kg</Text>
 <Text style={styles.exampleText}>Distance: km</Text>
 <Text style={styles.exampleText}>Date Format: DD/MM/YYYY</Text>
-<Text style={styles.optionText}>2. Imperial System </Text>
+<Text style={styles.optionText}>Imperial System </Text>
 <Text style={styles.exampleText}>Weight: lb</Text>
 <Text style={styles.exampleText}>Distance: mi</Text>
 <Text style={styles.exampleText}>Date Format: MM/DD/YYYY</Text>
@@ -68,7 +109,7 @@ alignItems: 'center',
             }}>
               <Pressable
                 style={{
-                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#fff" : "transparent",
+                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#13b955" : "transparent",
                     borderRadius: 5,
                     width: "49%",
                     paddingVertical: 7,
@@ -81,12 +122,12 @@ alignItems: 'center',
                   <Text style={{
                       fontFamily: "Poppins_500Medium",
                       fontSize: 14,
-                      color: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#000" : '#fff',
+                      color: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#fff" : "#fff",
                   }}>Metric</Text>
               </Pressable>
               <Pressable 
                 style={{
-                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#fff" : "transparent",
+                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#13b955" : "transparent",
                     borderRadius: 5,
                     width: "49%",
                     paddingVertical: 5,
@@ -99,12 +140,37 @@ alignItems: 'center',
                   <Text style={{
                       fontFamily: "Poppins_500Medium",
                       fontSize: 14,
-                      color: selectedTab === 2 || (user.isImperial && selectedTab == 0) ?  "#000" : '#fff',
+                      color: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#fff" : "#fff",
                   }}>Imperial</Text>
               </Pressable>
             </View>
 
 </View>
+    <View style = {{
+                paddingTop: 40,
+                paddingLeft: 10,
+            }}>
+                <TouchableOpacity onPress={handleUpdate}
+                    style = {{
+                        width: '28%',
+                        //alignItems: 'center',
+                        borderStyle: 'solid',
+                        //paddingHorizontal: 8,
+                        //backgroundColor: 'white',
+                        paddingVertical: 8,
+                        borderRadius: 5,
+                        borderWidth: 0.6,
+                        borderColor: '#fff',
+                    }}>
+                    <Text style = {{
+                        color: 'white',
+                        alignSelf: 'center',
+
+                    }}>
+                        Continue
+                    </Text>
+                </TouchableOpacity>
+            </View>
 </View>
    </LinearGradient>
   )

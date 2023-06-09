@@ -233,12 +233,12 @@ const MainTabNavigator = () => {
             headerShown: false
         }} />
 
-<Tab.Screen name="Misc" component={WelcomeImperial} options={{
+{/* <Tab.Screen name="Misc" component={WelcomeImperial} options={{
             tabBarIcon: ({color, size}) => (
                 <Ionicons name="heart-outline" size={size} color={color} />
             ),
             headerShown: false
-        }} />
+        }} /> */}
 
    {/* <Tab.Screen name="Apple" component={WelcomeProPic} options={{
             tabBarIcon: ({color, size}) => (

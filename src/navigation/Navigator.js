@@ -53,6 +53,7 @@ import WelcomeProPic from "../screens/ProfileScreens/WelcomeProPic"
 import ProfilePicker from "../screens/ProfilePicker"
 import PasswordScreen from "../screens/ProfileScreens/PasswordScreen"
 import TermsConditions from "../screens/AuthScreens/TermsConditions"
+import WelcomeImperial from "../screens/ProfileScreens/WelcomeImperial"
 
 
 const Stack = createStackNavigator();
@@ -128,6 +129,7 @@ const Navigator = ({showOnBoarding}) => {
           headerShown: false
         })}/>
         {/* <Stack.Screen name="Welcome Pic" component={WelcomeProPic} options={{headerShown: false}} /> */}
+        <Stack.Screen name="WelcomeImperial" component={WelcomeImperial} options={{headerShown: false}} />
         <Stack.Screen name="WelcomePost" component={WelcomeAddPost} options={{headerShown: false}} />
         <Stack.Screen name="ProfilePicker" component={ProfilePicker} options={{headerShown: false}} />
       <Stack.Screen name="Connect" component={ConnectScreen} />

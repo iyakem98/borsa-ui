@@ -133,7 +133,7 @@ const WelcomeProPic = () => {
 
         </Pressable>
         <Pressable onPress={() => {
-            navigation.navigate('WelcomePost');
+            navigation.navigate('WelcomeImperial');
             checkHandleUserStatus();
         }}
             style = {{
