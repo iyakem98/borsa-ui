@@ -245,11 +245,11 @@ useEffect(() => {
 
     return (
         <>
-        <Pressable style={styles.container} onPress={() =>{
-            // setshowModal(true)
-            // setModal(true)
-        }}>
-          
+        <Pressable style={styles.container} 
+            onPress={()=>navigation.navigate("Profile", {
+                theUser: item?.user
+            })}>
+  
             <View style={styles.bottomWrapper}>
                 <View>
                     <Text style={styles.txtCountry}>
@@ -350,7 +350,7 @@ useEffect(() => {
                             fontSize: 18,
                             fontFamily: "Poppins_600SemiBold",
                         }}>
-                            {item?.totalWeight}
+                            {(item?.luggageSpace*1.0).toFixed(1)}
                             <Text style={{
                                 fontFamily: "Poppins_400Regular",
                                 fontSize: 16

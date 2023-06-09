@@ -288,15 +288,16 @@ const BuyerChat = async(buyerData)=> {
                         <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
                     </Pressable> */}
                     <Pressable style={{
-                        backgroundColor: "#eee",
+                        //backgroundColor: "#eee",
                         paddingHorizontal: 12,
                         paddingVertical: 10,
                         borderRadius: 7,
                         marginLeft: 12
                     }} onPress={addToWislistTraveler}>
-                        <Text style={{
+                       {/* <Text style={{
                             color: "red",
-                        }}>Save</Text>
+                        }}>Save</Text> */}
+                         <AntDesign name="hearto" size={24} color="black" />
                     </Pressable>
                 </View>
             </View>

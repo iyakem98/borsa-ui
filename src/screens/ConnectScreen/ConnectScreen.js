@@ -464,7 +464,7 @@ useEffect(() => {
                               //backgroundColor: '#7267e7',
                               backgroundColor: 'white',
                               //width:100,
-                              width: "33%",
+                              width: "13%",
                               marginBottom: 12,
                               paddingHorizontal: 12,
                               paddingVertical: 6,
@@ -482,14 +482,8 @@ useEffect(() => {
 
                               elevation: 3,
                       }}>
-                          <AntDesign name="plus" size={18} color="black" />
-                          <Text style = {{
-                              fontSize: 18,
-                              marginLeft: 2,
-                              //color: 'white'
-                          }}>
-                            Add Filter
-                          </Text>
+                          <Ionicons name="filter" size={24} color="black" />
+                         
                       </TouchableOpacity>
       
                       :
@@ -773,7 +767,7 @@ useEffect(() => {
                               //backgroundColor: '#7267e7',
                               backgroundColor: 'white',
                               //width:100,
-                              width: "33%",
+                              width: "13%",
                               marginBottom: 12,
                               paddingHorizontal: 12,
                               paddingVertical: 6,
@@ -791,14 +785,15 @@ useEffect(() => {
 
                               elevation: 3,
                       }}>
-                          <AntDesign name="plus" size={18} color="black" />
+                        <Ionicons name="filter" size={24} color="black" />
+                         {/* <AntDesign name="plus" size={18} color="black" />
                           <Text style = {{
                               fontSize: 18,
                               marginLeft: 2,
                               //color: 'white'
                           }}>
                             Add Filter
-                          </Text>
+                        </Text> */}
                       </TouchableOpacity>
       
                       :
