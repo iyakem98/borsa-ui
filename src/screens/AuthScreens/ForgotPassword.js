@@ -37,7 +37,7 @@ const LoginScreen = ({navigation}) => {
         email: userEmail
       });
       console.log(res.data);
-      await navigation.navigate('VerifyUser', res.data)
+      await navigation.navigate('ResetPassword', res.data)
     } catch(e) {
       console.log("------------", e.response.data)
       if(e?.response?.data?.message === "Invalid Email") {

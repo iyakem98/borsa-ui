@@ -43,6 +43,7 @@ import FromTo from "../screens/AddPost/FromTo"
 import Description from "../screens/AddPost/Description"
 import PostAdditional from "../screens/AddPost/PostAdditional"
 import VerifyUser from "../screens/AuthScreens/VerifyUser"
+import ResetPassword from "../screens/AuthScreens/ResetPassword"
 import Chattest from "../screens/chattest"
 import SearchScreen from "../screens/SearchScreen"
 import SearchBar from "../components/Chats/ChatListItem/SearchBar"
@@ -200,6 +201,7 @@ const Navigator = ({showOnBoarding}) => {
       <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown: false}}/>
       <Stack.Screen name="VerifyUser" component={VerifyUser} options={{headerShown: false}}/>
+      <Stack.Screen name="ResetPassword" component={ResetPassword} options={{headerShown: false}}/>
       <Stack.Screen name="Register" component={RegisterScreen} options={{headerShown: false, headerTintColor: '#593196'}}/>
       <Stack.Screen name="Terms & Conditions" component={TermsConditions} options={{}}/>
     </Stack.Navigator>
