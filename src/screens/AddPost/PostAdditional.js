@@ -69,7 +69,7 @@ const Description = ({navigation}) => {
                   }
         })
      .then((res) => {
-       alert('Post succeeded.')
+       alert('Traveler Card Posted.')
        navigation.navigate("My Cards", {
            selectedTab: 2,
        })
@@ -122,7 +122,7 @@ const Description = ({navigation}) => {
         
         })
             .then((res) => {
-                alert('Post succeeded.')
+                alert('Traveling Card successfully posted.')
                 navigation.navigate("My Cards") })
               .catch((err) => {
                console.log("error:", err)
