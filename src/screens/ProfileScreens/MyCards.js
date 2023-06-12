@@ -481,7 +481,7 @@ const MyCards = () => {
                 <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
                 {"  "}
                 <MaterialIcons name="luggage" size={26} color="black" />
-                {" " + (travel?.luggageSpace*1.0).toFixed(1)} lb 
+                {" " + (travel?.luggageSpace*2.20462).toFixed(1)} lb 
                 
                 </Text> 
               ) : (
