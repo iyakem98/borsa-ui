@@ -21,7 +21,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 const width = Dimensions.get("screen").width
 
 
-const ConnectScreen = () => {
+const MyCards = () => {
   const dispatch = useDispatch()
   const route = useRoute()
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ const ConnectScreen = () => {
   const { travelers} = useSelector((state) => state.auth)
   const { user} = useSelector((state) => state.auth)
   const { fetchAgain, setfetchAgain, chatSelected, setchatSelected, } = ChatState()
-  registerSheet('example-two', <BottomSheet />);
+  {/*registerSheet('example-two', <BottomSheet />);*/}
 
   
   function tweakBuyer() {
@@ -481,17 +481,20 @@ const ConnectScreen = () => {
                 <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
                 {"  "}
                 <MaterialIcons name="luggage" size={26} color="black" />
-                {" " + (travel.luggageSpace*2.20462).toFixed(1)} lb 
+                {" " + (travel?.luggageSpace*1.0).toFixed(1)} lb 
                 
                 </Text> 
               ) : (
                 <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
                   {"  "}
                   <MaterialIcons name="luggage" size={26} color="black" />
-                  {"  "+ (travel.luggageSpace).toFixed(1)} kg 
+                  {"  "+ (travel?.luggageSpace*1.0).toFixed(1)} kg 
+                  
                   
                   </Text> 
               )}
+
+              
                 
                   
 
@@ -870,7 +873,7 @@ const ConnectScreen = () => {
   )
 }
 
-export default ConnectScreen
+export default MyCards
 
 const styles = StyleSheet.create({
   container: {
