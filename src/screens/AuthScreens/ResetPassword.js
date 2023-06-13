@@ -13,7 +13,7 @@ const ResetPassword = ({navigation, route}) => {
     const params = route.params
   const dispatch = useDispatch();
 
-  const navigation = useNavigation()
+  //const navigation = useNavigation()
 
   const [isLoading, setIsLoading] = useState(false);
   const [userOtp, setUserOtp] = useState("");
