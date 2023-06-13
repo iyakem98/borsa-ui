@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, FlatList, SectionList } from 'react-native'
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, FlatList, SectionList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
 import { TextInput } from 'react-native-paper'
@@ -11,6 +11,7 @@ import { useRoute } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 const FromTo = ({navigation}) => {
+    const currentDate = new Date()
     const [countryFromCode, setCountryFromCode] = useState('FR')
     const [countryFrom, setCountryFrom] = useState(null)
     const [countryToCode, setCountryToCode] = useState('ET')
@@ -20,9 +21,12 @@ const FromTo = ({navigation}) => {
     const [date, setDate] = useState(new Date())
     const [showDatePickerFrom, setShowDatePickerFrom] = useState(false)
     const [showDatePickerTo, setShowDatePickerTo] = useState(false)
-    const [from, setFrom] = useState("")
+    const from = currentDate.toISOString()
     const [to, setTo] = useState("")
     const [mode, setMode] = useState('date');
+    const[showExpiryDate, setShowExpiryDate] = useState(false)
+    const futureDate = new Date(currentDate);
+    futureDate.setDate(currentDate.getDate() + 90);
 
 
     const [travelerDate, setTravelerDate] = useState("")
@@ -77,6 +81,18 @@ const FromTo = ({navigation}) => {
     }
 
     const [showDatePickerTravelerFrom, setShowTravelerDatePickerFrom] = useState(false)
+
+    const setExpiryOn = () => {
+        setShowExpiryDate(true)
+    }
+
+    const setExpiryOff = () => {
+        if(showDatePickerTo == true){
+            setShowDatePickerTo(false)
+        }
+
+        setShowExpiryDate(false)
+    }
 
     useEffect(()=>{
         console.log(moment(from).format('L'))
@@ -200,7 +216,7 @@ const FromTo = ({navigation}) => {
                         }}
                         />
                 </View>
-                <Text style={{
+               {/* <Text style={{
                     marginTop: 20,
                     marginBottom: 3,
                     fontFamily: "Poppins_400Regular",
@@ -235,14 +251,17 @@ const FromTo = ({navigation}) => {
                         fontFamily: "Poppins_500Medium"
                     }}>{from.toLocaleString()}</Text>
                     <AntDesign name="calendar" size={24} color="#777" />
-                </Pressable>
-                <Text style={{
+                </Pressable> */}
+
+                {showExpiryDate? (
+                    <View>
+                    <Text style={{
                     marginTop: 20,
                     marginBottom: 3,
                     fontFamily: "Poppins_400Regular",
                     fontSize: 18,
                 }}>
-                    Date to
+                    Expire card on
                 </Text>
                 <Pressable style={{
                      borderWidth: 1,
@@ -273,11 +292,69 @@ const FromTo = ({navigation}) => {
                     }}>{to.toLocaleString()}</Text>
                     <AntDesign name="calendar" size={24} color="#777" />
                 </Pressable>
+                <View style = {{
+                        marginTop: 10,
+                        alignItems: 'center',
+                    }}>
+                        <TouchableOpacity onPress={setExpiryOff}
+                        style = {{
+                            backgroundColor: "#eee",
+                            paddingVertical: 8,
+                            paddingHorizontal: 18,
+                            borderRadius: 5,
+
+                        }}>
+                           <Text style = {{
+                            fontFamily: "Poppins_400Regular",
+                            fontSize: 16,
+                            //color: 'white',
+                           }}>
+                            Cancel Expiry Date
+                           </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                ) : (
+                    <View>
+                    <Text style = {{
+                         marginTop: 20,
+                         marginBottom: 3,
+                         fontFamily: "Poppins_400Regular",
+                         fontSize: 16,
+                    }}>
+                        Shipping cards typically expire in 90 days. Would you like to set a custom expiry date?
+                    </Text>
+                    <View style = {{
+                        marginTop: 18,
+                        alignItems: 'center',
+                    }}>
+                        <TouchableOpacity onPress={setExpiryOn}
+                        style = {{
+                            backgroundColor: "#514590",
+                            backgroundColor: '#7267e7',
+                            paddingVertical: 8,
+                            paddingHorizontal: 18,
+                            borderRadius: 5,
+
+                        }}>
+                           <Text style = {{
+                            fontFamily: "Poppins_400Regular",
+                            fontSize: 16,
+                            color: 'white',
+                           }}>
+                            Add expiry date
+                           </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                )}
+                
+                
                 <Pressable style={{
                     backgroundColor: "#514590",
                     paddingVertical: 15,
                     borderRadius: 5,
-                    marginTop: "50%",
+                    marginTop: showExpiryDate? "60%" : "68%",
                     //marginBottom: 25,
                     width: "100%",
                     //position: "absolute",
@@ -287,7 +364,7 @@ const FromTo = ({navigation}) => {
                 }}
                 onPress={()=>
                     {
-                        if(!countryFrom || !countryTo || !from || !to){
+                        if(!countryFrom || !countryTo){
                             alert("Please fill all the fields.")
                         }
                         else
@@ -296,8 +373,8 @@ const FromTo = ({navigation}) => {
                                 cardType: 2,
                                 buyerCountryFrom: countryFrom,
                                 buyerCountryTo: countryTo,
-                                buyerDateFrom: from,
-                                buyerDateTo: to
+                                buyerDateFrom: currentDate.toISOString(),
+                                buyerDateTo: showExpiryDate? to : futureDate.toISOString()
                               })
                         }
                     }
