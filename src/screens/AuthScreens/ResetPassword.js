@@ -9,7 +9,7 @@ import { TextInput } from 'react-native-paper';
 import { showMessage } from "react-native-flash-message";
 
 
-const ResetPassword = ({navigation, route}) => {
+const ResetPassword = ({route}) => {
     const params = route.params
   const dispatch = useDispatch();
 
