@@ -52,11 +52,11 @@ const ResetPassword = ({navigation, route}) => {
 
           showMessage({
             message: "Change Succeeded",
-            description: `Please use your new password next time you login.`,
+            description: `Please login with your new password.`,
             type: "success",
         });
 
-        setTimeout(navigation.navigate("Chats"), 3000)
+        setTimeout(navigation.navigate("Login"), 3000)
 
           console.log(res.data);
           // await handleUserData();
