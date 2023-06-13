@@ -2,6 +2,7 @@ import {View, Text, SafeAreaView, Pressable, ScrollView} from 'react-native'
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigation  } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../components/Shared/Header';
 import { TextInput } from 'react-native-paper';
@@ -12,6 +13,8 @@ const ResetPassword = ({navigation, route}) => {
     const params = route.params
   const dispatch = useDispatch();
 
+  const navigation = useNavigation()
+
   const [isLoading, setIsLoading] = useState(false);
   const [userOtp, setUserOtp] = useState("");
   const [password, setPassword] = useState("");
@@ -21,19 +24,7 @@ const ResetPassword = ({navigation, route}) => {
     console.log("--", params)
   } ,[])
 
-  const handleUserData = async (value) => {
-    try {
-      dispatch({
-        type: "LOGIN",
-        payload: { user: value },
-      });
-      const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem('@user_data', jsonValue)
-    } catch (e) {
-      // saving error
-    }
-  }
-
+ 
   const handleReset = async() => {
     if(!password || password.length<6 || password!=confirm){
         showMessage({
@@ -55,16 +46,26 @@ const ResetPassword = ({navigation, route}) => {
         try {
           const res = await axios.post('http://143.198.168.244/api/users/reset-password', {
             userId: params?._id,
-            otp: userOtp
+            otp: userOtp,
+            password: password
           });
+
+          showMessage({
+            message: "Change Succeeded",
+            description: `Please use your new password next time you login.`,
+            type: "success",
+        });
+
+        setTimeout(navigation.navigate("Chats"), 3000)
+
           console.log(res.data);
-          await handleUserData();
+          // await handleUserData();
         } catch(e) {
           console.log("------------", e.response.data)
           if(e?.response?.data?.message === "Invalid Request, missing parameters") {
             showMessage({
                 message: "Invalid Code",
-                description: `Please make sure the sent to your email is the same.`,
+                description: `Please make sure the OTP is same as the one sent to you.`,
                 type: "warning",
             });
           }
