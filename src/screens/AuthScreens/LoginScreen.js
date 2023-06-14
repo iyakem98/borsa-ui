@@ -65,7 +65,7 @@ const LoginScreen = ({navigation}) => {
     setIsLoading(true)
     try {
       const res = await axios.post('http://143.198.168.244/api/users/login', {
-        email: userEmail,
+        email: userEmail.toLowerCase(),
         password: userPassword,
         pushToken: pushToken ? pushToken : null
       });
