@@ -1,4 +1,4 @@
-import { View, Text, Pressable, FlatList, TouchableOpacity, StyleSheet, Image, Dimensions } from "react-native"
+import { View, Text, Pressable, FlatList, TouchableOpacity, StyleSheet, Image, Dimensions, ActivityIndicator } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 import axios from "axios";
@@ -7,6 +7,7 @@ import { getUserDetails } from "../features/auth/authSlice";
 import { API_BASE_URL } from "../utils/config";
 import { LinearGradient } from "expo-linear-gradient";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
+
 
 
 const data = [
@@ -48,16 +49,19 @@ const ProfilePicker = () => {
 
     const { user } = useSelector((state) => state.auth)
     const [profilePic, setProfilePic] = useState(user.profilePic)
+    const [loading, setLoading] = useState(false)
 
     const [tempPic, setTempPic] = useState(null)
 
     const handleUpdate = async () => {
        
-    
         let userData = {
           //id: user._id,
           "profilePic": tempPic? String(tempPic.id) : profilePic,
         }
+
+        setLoading(true)
+       // alert(loading)
     
         axios.put(`${API_BASE_URL}users/profile/?id=${user._id}`, userData,
           { headers: {
@@ -65,10 +69,13 @@ const ProfilePicker = () => {
         }}).then((data) => {
           dispatch(getUserDetails(user._id))
           // handleLogout()
+          setLoading(false)
           navigation.popToTop()
         }).catch((err) => {
+          setLoading(false)
           console.log("errorr", err)
         }); 
+      
       }
     
       const getImageSourceById = (id) => {
@@ -201,6 +208,16 @@ const ProfilePicker = () => {
 
                 </View>
             </View>
+
+            {loading && <View style = {{
+                    top: "28%",
+                    left: '45%',
+                    zIndex: 100000,
+                    position: "absolute",
+                  }}> 
+                   <ActivityIndicator size="large" color="#777" />
+                  </View>}
+                  
            
                 <FlatList style = {{
                     //backgroundColor: 'yellow',
