@@ -120,6 +120,7 @@ const ChatScreen = () => {
   useEffect(() => {
     socket.current.on("message recieved", (newMessageReceived) => {
       storeNotif(newMessageReceived);
+      // console.log("===========", newMessageReceived)
       sendPush(newMessageReceived);
     });
   },[])

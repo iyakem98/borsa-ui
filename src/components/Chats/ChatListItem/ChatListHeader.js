@@ -104,7 +104,7 @@ const ChatListHeader = ( {chatArr} ) => {
       
       if(chat?.users && chat?.users[1]?.firstName && (chat?.users[1]?.firstName.toLowerCase().includes(query)) && chat?.latestMessage != null ){
         if(chat !== null || chat !== undefined){
-          console.log(chat.lastestMessage)
+          // console.log(chat.lastestMessage)
 
             // if(chat.lastestMessage !== undefined || chat.lastestMessage !== null  ){
             if(chat.lastestMessage == undefined || chat.lastestMessage == null  ){

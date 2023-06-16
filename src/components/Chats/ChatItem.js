@@ -83,10 +83,6 @@ const ChatItem = ({
     dispatch(fetchChat())
   }, [notifLength])
 
-  useEffect(()=>{
-    console.log("--000=--", isUserSender, !isMarked)
-  } ,[isUserSender, !isMarked])
-
   const handleMarked = async() => {
     // try {
     //   const res = await axios.put('http://143.198.168.244/api/message/marked', {}, {})

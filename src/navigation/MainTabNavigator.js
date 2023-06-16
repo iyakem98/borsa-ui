@@ -89,7 +89,7 @@ const MainTabNavigator = () => {
     useEffect(() =>{
        getNotif()
     //    {storedNotifications  && console.log(storedNotifications[0].chatUsers)}
-    console.log(storedNotifications)
+    // console.log(storedNotifications)
     //     console.log(notificationstored)
       
       }, [])

@@ -42,14 +42,13 @@ function AppContainer({showOnBoarding, expoPushToken}) {
             Authorization: `Bearer ${user.token}`
         }
       })
-      console.log("--------", data)
+      // console.log("--------", data)
     } catch (e) {
       // console.log("====++", e?.response?.message)
     }
   }
 
   useEffect(()=>{
-    console.log("--}}{}", expoPushToken)
     if(expoPushToken && user) {
       handlePushToken()
     }
@@ -71,7 +70,7 @@ function AppContainer({showOnBoarding, expoPushToken}) {
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
-      console.log(nextAppState)
+      console.log("APPSTATE: ", nextAppState)
       // if (
       //   appState.current.match(/inactive|background/) &&
       //   nextAppState === 'active'
