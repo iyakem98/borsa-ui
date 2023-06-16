@@ -30,6 +30,7 @@ const data = [
   { id: '18', imageSource: require('../../../assets/images/avatars/bottts18.png') },
   { id: '19', imageSource: require('../../../assets/images/avatars/bottts19.png') },
   { id: '20', imageSource: require('../../../assets/images/avatars/bottts20.png') },
+  { id: 'admin_photo', imageSource: require('../../../assets/icon.png') },
   // Add more images as needed
 ];
 

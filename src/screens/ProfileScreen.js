@@ -97,11 +97,13 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     
+    <ScrollView>
     <View style = {{
         //paddingVertical: 30,
         backgroundColor: "white"
     }}>
          <View>
+            
          <LinearGradient 
                     //colors={['#593196', '#705c9d', "#fff"]}
                     colors={['#593196', "#fff"]}
@@ -152,12 +154,12 @@ const ProfileScreen = ({navigation}) => {
                     
                 </View>
             </LinearGradient>
-        <View>
-            <ScrollView style = {styles.v2b}
+        <View style = {styles.v2b}>
+            {/* <ScrollView 
                 contentContainerStyle={{
                     minHeight:800
                   }}
-            >
+            > */}
                 <View style = {{
                      paddingVertical: 20,
                      paddingHorizontal: 20,
@@ -587,10 +589,12 @@ const ProfileScreen = ({navigation}) => {
         }}>+1(310)351-5957</Text>
     </View>
               
-            </ScrollView>
+            {/* </ScrollView> */}
         </View>
-            
+   
     </View>
+   
+   
 
     <View style={styles.centeredView}>
       <Modal
@@ -647,6 +651,7 @@ const ProfileScreen = ({navigation}) => {
     </View>
             
     </View>
+    </ScrollView>
   )
 }
 

@@ -71,6 +71,10 @@ const RegisterScreen = ({navigation}) => {
     }
   }
 
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   const handleLogin = async() => {
     setUserPasswordError("")
     setIsLoading(true)
@@ -84,10 +88,12 @@ const RegisterScreen = ({navigation}) => {
     }
     else if(checked && userName.length > 1) {
       try {
+        const capitalizedFirstName = capitalizeFirstLetter(userName[0]);
+        const capitalizedLastName = capitalizeFirstLetter(userName[1]);;
         const res = await axios.post('http://143.198.168.244/api/users', {
-          firstName: userName[0],
-          lastName: userName[1],
-          email: userEmail,
+          firstName: capitalizedFirstName,
+          lastName: capitalizedLastName,
+          email: userEmail.toLowerCase(),
           password: userPassword
         });
         console.log(res.data);
