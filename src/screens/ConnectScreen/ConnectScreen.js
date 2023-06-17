@@ -541,7 +541,7 @@ useEffect(() => {
                             maxHeight: "100%",
                         }}>
                 
-                            <Pressable onPress={()=>{
+                            <TouchableOpacity onPress={()=>{
                               clearFilterBuyer()
                               getUsers()
                             }}
@@ -553,10 +553,20 @@ useEffect(() => {
                                 }}
                             >
                             <Ionicons name="close-circle" size={28} color="black" />
-                            </Pressable>
+                            </TouchableOpacity>
                 
                             <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
-                                
+                                <View style = {{
+                                  width: '100%',
+                                  alignItems: 'center',
+                                }}>
+                                  <Text style = {{
+                                    fontFamily: "Poppins_400Regular",
+                                    color: 'red',
+                                  }}>
+                                    Filter results are based on country only 
+                                  </Text>
+                                </View>
                                 <Text style={{
                                     marginTop: 20,
                                     marginBottom: 3,
@@ -848,7 +858,7 @@ useEffect(() => {
                             maxHeight: "100%",
                         }}>
                 
-                            <Pressable onPress={()=>{
+                            <TouchableOpacity onPress={()=>{
                               clearFilterTraveler()
                               getTravelers()
                             }}
@@ -860,9 +870,21 @@ useEffect(() => {
                                 }}
                             >
                             <Ionicons name="close-circle" size={28} color="black" />
-                            </Pressable>
+                            </TouchableOpacity>
                 
                             <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.scrollView}>
+
+                               <View style = {{
+                                  width: '100%',
+                                  alignItems: 'center',
+                                }}>
+                                  <Text style = {{
+                                    fontFamily: "Poppins_400Regular",
+                                    color: 'red',
+                                  }}>
+                                    Filter results are based on country only 
+                                  </Text>
+                                </View>
                                 
                                 <Text style={{
                                     marginTop: 20,
