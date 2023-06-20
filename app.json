@@ -53,7 +53,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.borsa",
-      "buildNumber": "19"
+      "buildNumber": "21"
     },
     "android": {
       "adaptiveIcon": {
@@ -61,7 +61,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.Borsa",
-       "versionCode": 10
+       "versionCode": 11
     },
     "web": {
       "favicon": "./assets/favicon.png"

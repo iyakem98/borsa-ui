@@ -93,6 +93,10 @@ const PasswordScreen = () => {
         });
         }
       };
+
+      const handleCancel = () => {
+        navigation.navigate('More')
+      }
       
   return (
     <View style = {{
@@ -264,7 +268,7 @@ const PasswordScreen = () => {
             justifyContent: 'center',
             marginTop: 20,
         }}>
-            <TouchableOpacity
+            <TouchableOpacity onPress={handleCancel}
                 style = {{
                     backgroundColor: '#eee',
                     paddingHorizontal: 16,
