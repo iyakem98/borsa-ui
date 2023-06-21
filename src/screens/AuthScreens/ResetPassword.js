@@ -13,7 +13,7 @@ const ResetPassword = ({route}) => {
     const params = route.params
   const dispatch = useDispatch();
 
-  //const navigation = useNavigation()
+ const navigation = useNavigation()
 
   const [isLoading, setIsLoading] = useState(false);
   const [userOtp, setUserOtp] = useState("");
@@ -56,8 +56,11 @@ const ResetPassword = ({route}) => {
             type: "success",
         });
 
-        setTimeout(navigation.navigate("Login"), 3000)
+        setTimeout(() => {
+          navigation.navigate("Login")
+        }, 3000);
 
+ 
           console.log(res.data);
           // await handleUserData();
         } catch(e) {
