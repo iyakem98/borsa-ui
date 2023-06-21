@@ -65,6 +65,9 @@ const fetchChat = async () => {
   
  
   }
+  const offLoadChat = async () => {
+    console.log('unloading chat data')
+    }
 // const singleChat = async (chatId) => {
 //   console.log(chatId)
 //   // console.log('in single chat service')
@@ -124,6 +127,7 @@ const chatService = {
     accessChat,
     fetchChat,
     tryChat,
+    offLoadChat
     // singleChat
    
 }

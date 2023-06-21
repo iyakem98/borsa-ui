@@ -55,6 +55,8 @@ import ProfilePicker from "../screens/ProfilePicker"
 import PasswordScreen from "../screens/ProfileScreens/PasswordScreen"
 import TermsConditions from "../screens/AuthScreens/TermsConditions"
 import WelcomeImperial from "../screens/ProfileScreens/WelcomeImperial"
+import AddPost from "../screens/AddPost/index"
+import Saved from "../screens/Saved"
 
 
 const Stack = createStackNavigator();
@@ -115,7 +117,7 @@ const Navigator = ({showOnBoarding}) => {
     // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
     
     <Stack.Navigator>
-
+      {/* <Stack.Screen name="Saved" component={Saved} options={{headerShown: false, headerTintColor: '#593196'}} /> */}
       {/* <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
       {user?.isFirstTime && <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} />}
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />

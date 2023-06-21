@@ -96,6 +96,9 @@ const initialState = {
       }
     }
   )
+  export const offLoadChat = createAsyncThunk('chat/offload', async () => {
+    await chatService.offLoadChat()
+  })
   // export const deleteChat = createAsyncThunk(
   //   'chat/remove',
   //   async (chatID, thunkAPI) => {
@@ -170,11 +173,10 @@ const initialState = {
           state.isSuccess = true
           state.chattts.push(action.payload)
         })
-        // .addCase(deleteChat.fulfilled, (state, action) => {
-        //   state.isLoading = false
-        //   state.isSuccess = true
+        .addCase(offLoadChat.fulfilled, (state) => {
+          state.chattts = null
          
-        // })
+        })
     },
   })
   

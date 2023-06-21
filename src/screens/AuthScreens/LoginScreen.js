@@ -17,22 +17,27 @@ import io from 'socket.io-client'
 import { API_BASE_URL } from '../../utils/config';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as Notifications from 'expo-notifications';
+import { fetchChat } from '../../features/chat/chatSlice';
 
 
 const LoginScreen = ({navigation}) => {
+
   const { user } = useSelector((state) => state.auth)
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
-
+  // const { 
+  //   isLoading, setIsLoading
+  // } = ChatState();
+  const {chattts} = useSelector((state) => state.chat)
   const [isLoading, setIsLoading] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userEmailError, setUserEmailError] = useState("");
   const [userPasswordError, setUserPasswordError] = useState("");
   const [pushToken, setPushToken] = useState(null);
-
+// console.log('loading', isLoading)
   // useEffect(()=>{
   //   console.log("----------{{}}}", user)
   // }, [user])
@@ -55,6 +60,8 @@ const LoginScreen = ({navigation}) => {
       dispatch(login(value));
       const jsonValue = JSON.stringify(value)
       await AsyncStorage.setItem('@user_data', jsonValue)
+      // dispatch(fetchChat())
+      // console.log('chattts data after login', chattts)
     } catch (e) {
       // saving error
     }
@@ -72,6 +79,10 @@ const LoginScreen = ({navigation}) => {
       // console.log(res.data);
       await handleUserData(res.data);
       storeTokenOnLocal(res.data.token)
+      // console.log('fetching chats')
+      // navigate.navigate("Chats")
+      // dispatch(fetchChat())
+      // fetchChatOnLoginOnly(res.data.token)
     } catch(e) {
       if(e?.response?.data?.message === "Invalid email or password") {
         setUserPasswordError("Invalid email or password")
@@ -212,7 +223,11 @@ const LoginScreen = ({navigation}) => {
   useEffect(() => {  
     checkSavedLogin()
   }, [])
+ 
+  // const fetchChatOnLoginOnly = async(userToken) =>{
+  // console.log('user token', userToken)
 
+  // }
   return (
     <SafeAreaView style={{
       flex: 1,

@@ -32,8 +32,8 @@ const ChatScreen = () => {
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   // const { onlineStatus } = useSelector((state) => state.auth)
   const [onlineStatus, setonlineStatus] = useState(false)
-  const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
-  const {triggerChange, settriggerChange, loading,  setloading} = ChatState();
+  const {chattts, selllectedChat, isError, message} = useSelector((state) => state.chat)
+  const {triggerChange, settriggerChange, loading,  setloading, isLoading, setIsLoading} = ChatState();
   const {messages} = useSelector((state) => state.mess)
   const {
     selectedChat, setSelectedChat, 
@@ -81,7 +81,7 @@ const ChatScreen = () => {
   const [messageOnce, setmessageOnce] = useState(false)
 
   var formatted_other_date = null
-
+console.log('loading', isLoading)
   const allowsNotificationsAsync = async() => {
     const settings = await Notifications.getPermissionsAsync();
     return (
@@ -109,7 +109,7 @@ const ChatScreen = () => {
       console.log("NOTIFICATION Permission: ", e)
     }
   }
-
+  // console.log('user', user)
   useLayoutEffect(() => {
     // console.log("before" + socket.current)
     socket.current = io(API_BASE_URL_Socket)

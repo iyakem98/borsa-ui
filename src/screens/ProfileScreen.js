@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { offLoadChat } from '../features/chat/chatSlice';
 
 const data = [
     { id: '0', imageSource: require('../../assets/images/avatars/blank-avatar.png') },
@@ -46,9 +47,10 @@ const ProfileScreen = ({navigation}) => {
     const ENDPOINT = "http://192.168.100.2:5000"
     var socket = io(ENDPOINT)
     const {onlineStatus, setonlineStatus} = ChatState()
-    const handleLogout = () => {
+    const handleLogout = async() => {
         {user ? socket.emit("userLogout", {userID: user._id}) : (null)}
         dispatch(logout())
+        dispatch(offLoadChat())
         // navigate.navigate("Login")
     }
 

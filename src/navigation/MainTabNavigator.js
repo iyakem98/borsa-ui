@@ -128,13 +128,20 @@ const MainTabNavigator = () => {
       } 
     //   const BadgedIcon = withBadge(storedNotifications.length)(Icon);
   return (
-    <Tab.Navigator initialRouteName= {"Chats"} screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
+    <Tab.Navigator initialRouteName= {"AddPost"} screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
         backgroundColor: '#fff'
     }, headerStyle: {
         backgroundColor: '#f9f8fc',
     },
       
     }}>
+    {/* <Tab.Navigator  screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
+    //     backgroundColor: '#fff'
+    // }, headerStyle: {
+    //     backgroundColor: '#f9f8fc',
+    // },
+      
+    // }}>  */}
         <Tab.Screen name="Connect" component={ConnectScreen} options={{
             tabBarIcon: ({color, size}) => (
                 <SimpleLineIcons name="people" size={size} color={color} />

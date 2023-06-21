@@ -141,6 +141,7 @@ const logout = async() => {
   // socket.on('disconnect', (test))
   try {
     await AsyncStorage.removeItem('@user_data')
+    await AsyncStorage.removeItem("user")
   } catch(e) {
     console.log("first", e)
   }
