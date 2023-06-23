@@ -61,8 +61,7 @@ const ResetPassword = ({route}) => {
         setTimeout(() => {
           navigation.navigate("Login")
         }, 3000);
-           console.log(res);
-          })
+      })
           .catch(e => {
             let errResponse = (e && e.response && e.response.data) 
             || (e && e.message); 
