@@ -99,6 +99,7 @@ const ConnectScreen = () => {
     const [travelerD, setTravelerD] = useState("")
 
     const findBuyerPickup = (ar) => {
+      console.log("arrrrrr", ar)
       let lngth = ar.length
       let country = ar[lngth-1].value
       let city = ar[0].value
@@ -225,6 +226,7 @@ const filterTravelers =  async () => {
   // console.log("=======", data.data)
   let travel = data.data
   let filteredTravels = []
+  
   if(travel){
     for(let i=0; i<travel.length; i++){
       let x = travel[i].departure.split(",")
@@ -593,7 +595,7 @@ useEffect(() => {
                 
                                 <GooglePlacesAutocomplete
                                         placeholder='Enter pickup location of shipper'
-                                        onPress={(value)=>findBuyerPickup(value.terms)}
+                                        onPress={(value)=>console.log(value)}
                                         query={{
                                             key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
                                             language: 'en',
@@ -626,7 +628,6 @@ useEffect(() => {
                                     marginTop: 20,
                                     marginBottom: 3,
                                     fontFamily: "Poppins_400Regular",
-                                    //fontSize: 18,
                                 }}>
                                     Delivery Location
                                 </Text>

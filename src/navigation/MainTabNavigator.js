@@ -11,7 +11,7 @@ import { Badge, Icon, withBadge } from '@rneui/themed';
 import RegisterScreen from '../../src/screens/AuthScreens/RegisterScreen';
 import { useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu'
 import { getSenderFull } from '../ChatConfig/ChatLogics';
 import { useDispatch, useSelector } from 'react-redux';
 import Test from '../screens/Test';
@@ -52,7 +52,7 @@ const MainTabNavigator = () => {
 
     const checkIsMarked = async() => {
         const userId = user?._id
-        for (let index = 0; index < chattts.length; index++) {
+        for (let index = 0; index < chattts?.length; index++) {
             const isMarked = chattts[index]?.latestMessage?.marked;
             // console.log("=====", chattts[index]?.latestMessage, userId)
 

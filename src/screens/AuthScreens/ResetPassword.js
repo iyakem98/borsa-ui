@@ -41,15 +41,17 @@ const ResetPassword = ({route}) => {
         });   
     }
 
-    else{
+    if(password && password.length>5 && password==confirm && userOtp && userOtp.length==4)
+    {
         setIsLoading(true)
-        try {
-          const res = await axios.post('http://143.198.168.244/api/users/reset-password', {
-            userId: params?._id,
-            otp: userOtp,
-            password: password
-          });
-
+        
+        await axios.post('http://143.198.168.244/api/users/reset-password', {
+          userId: params?._id,
+          otp: userOtp,
+          password: password
+        })
+          // await AsyncStorage.removeItem("user")
+         .then((res) => {
           showMessage({
             message: "Change Succeeded",
             description: `Please login with your new password.`,
@@ -59,21 +61,20 @@ const ResetPassword = ({route}) => {
         setTimeout(() => {
           navigation.navigate("Login")
         }, 3000);
-
- 
-          console.log(res.data);
-          // await handleUserData();
-        } catch(e) {
-          console.log("------------", e.response.data)
-          if(e?.response?.data?.message === "Invalid Request, missing parameters") {
-            showMessage({
-                message: "Invalid Code",
-                description: `Please make sure the OTP is same as the one sent to you.`,
-                type: "warning",
-            });
-          }
-        }
-        setIsLoading(false)
+           console.log(res);
+          })
+          .catch(e => {
+            let errResponse = (e && e.response && e.response.data) 
+            || (e && e.message); 
+            
+            console.log("------------", errResponse)
+              showMessage({
+                  message: "Error",
+                  description: `Something went wrong. Try again.`,
+                  type: "warning",
+              });
+        });
+      setIsLoading(false)
     }
    
   }
