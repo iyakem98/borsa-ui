@@ -128,7 +128,7 @@ const MainTabNavigator = () => {
       } 
     //   const BadgedIcon = withBadge(storedNotifications.length)(Icon);
   return (
-    <Tab.Navigator initialRouteName= {"AddPost"} screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
+    <Tab.Navigator initialRouteName= {"Chats"} screenOptions={{tabBarActiveTintColor: '#514590', tabBarStyle: {
         backgroundColor: '#fff'
     }, headerStyle: {
         backgroundColor: '#f9f8fc',
