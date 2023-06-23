@@ -6,7 +6,6 @@ import CountryPicker from 'react-native-country-picker-modal'
 import { AntDesign } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment'
-import GooglePlaces from 'react-native-autocomplete-googleplaces-tnmt'
 import { useRoute } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 

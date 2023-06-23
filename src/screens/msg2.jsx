@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native'
 // import {Camera} from "expo-camera"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as MediaLibrary from "expo-media-library"
+// import * as MediaLibrary from "expo-media-library"
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { API_BASE_URL, API_BASE_URL_Socket } from '../utils/config';

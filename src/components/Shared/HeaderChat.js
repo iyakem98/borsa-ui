@@ -44,7 +44,8 @@ const HeaderChat = ({
     selectedChat,
     isTyping,
     loading,
-    userSelectedFromConnectCard
+    userSelectedFromConnectCard,
+    onGoBack
 }) => {
     const navigation = useNavigation()
 
@@ -81,7 +82,7 @@ const HeaderChat = ({
             flexDirection: "row",
             alignItems: "center"
           }}>
-            <Pressable onPress={()=>navigation.goBack()} style={{marginRight: 10}}>
+            <Pressable onPress={onGoBack ? onGoBack : () => navigation.goBack()} style={{marginRight: 10}}>
               <MaterialIcons name="keyboard-backspace" size={25} color="#514590" />
             </Pressable>
             <Pressable 

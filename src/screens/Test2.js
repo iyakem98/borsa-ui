@@ -2,7 +2,7 @@ import { AntDesign } from '@expo/vector-icons'
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Button, Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 // import {Camera} from "expo-camera"
-import * as MediaLibrary from "expo-media-library"
+// import * as MediaLibrary from "expo-media-library"
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
@@ -118,9 +118,9 @@ function Test2() {
   // }, [])
   if(image){
     const savePhoto = () => {
-        MediaLibrary.saveToLibraryAsync(image.uri).then(() => {
-            setImage(undefined);
-          });
+        // MediaLibrary.saveToLibraryAsync(image.uri).then(() => {
+        //     setImage(undefined);
+        //   });
 
     }
     return (

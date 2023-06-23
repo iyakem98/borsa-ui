@@ -394,6 +394,7 @@ const socketCall = () =>{
         <HeaderChat
           // isActive={isActive}
           // isActive={isActive}
+          onGoBack={()=>navigation.pop()}
           isActive={setActiveHandler}
           isActive2={isActive}
           active={active}

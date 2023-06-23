@@ -6224,11 +6224,6 @@ expo-manifests@~0.5.0:
   dependencies:
     expo-json-utils "~0.5.0"
 
-expo-media-library@~15.2.3:
-  version "15.2.3"
-  resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-15.2.3.tgz#188f3c77f58b354f0ea6250f6756ac1e1a226291"
-  integrity sha512-Oz8b8Xsvfj7YcutUBtI84NUIqSnt7iCM5HZ5DyKoWKKiDK/+aUuj3RXNQELG8jUw6pQPgEwgbZ1+J8SdH/y9jw==
-
 expo-modules-autolinking@0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.8.1.tgz#533c38192847d2272e9af986f8f4c58aae6dfff3"
@@ -11554,11 +11549,6 @@ react-native-actions-sheet@^0.8.29:
   version "0.8.29"
   resolved "https://registry.yarnpkg.com/react-native-actions-sheet/-/react-native-actions-sheet-0.8.29.tgz#a2913b04a23ff1d1a1b4a38e5f66c6738dabeaf2"
   integrity sha512-5ybScHjE1abdJD+w3rHaxCD4ldKouagl6NdoE/oyxLtDzoVP6dSnO/VlMjWqn52xbfQXyElwpPA8Ur2ujWEGdQ==
-
-react-native-autocomplete-googleplaces-tnmt@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-autocomplete-googleplaces-tnmt/-/react-native-autocomplete-googleplaces-tnmt-1.0.4.tgz#0cdba3c9d6ba0329120a387a10d36e2608e83c89"
-  integrity sha512-mq/8bZ/JE8kpDdbyam9XnXMqecjvUYXsZzzZbqq7a985IiI1k3dmltkltSesp/m2Bt0gIfV8YxokQ1kyQaTd0Q==
 
 react-native-codegen@^0.71.5:
   version "0.71.5"
