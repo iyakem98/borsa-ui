@@ -109,12 +109,13 @@ const AccountScreen = () => {
   const handleUpdate = async () => {
     setIsEditing(!isEditing)
 
+
     let userData = {
       //id: user._id,
-      "firstName": firstName,
-      "lastName": lastName,
+      "firstName": capitalizeFirstLetter(firstName),
+      "lastName": capitalizeFirstLetter(lastName),
       "userName": userName,
-      "email": email,
+      "email": email.lowecase(),
       "isTraveler": true,
       "isBuyer": true,
       "address": address,
@@ -135,6 +136,10 @@ const AccountScreen = () => {
       alert("try again pls.")
       console.log("errorr", err)
     }); 
+  }
+
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   const findPlaces = (newText) => {
@@ -455,7 +460,7 @@ const AccountScreen = () => {
                autoCapitalize = "none"
                value={firstName}
                onChangeText={newText=>{
-                setFirstName(newText)
+                setFirstName(capitalizeFirstLetter(newText))
                }}
                editable={isEditing}
               //onChangeText = {this.handlePassword}
@@ -497,7 +502,7 @@ const AccountScreen = () => {
                autoCapitalize = "none"
                value={lastName}
                onChangeText={newText=>{
-                setLastName(newText)
+                setLastName(capitalizeFirstLetter(newText))
                }}
                editable={isEditing}
               //onChangeText = {this.handlePassword}
