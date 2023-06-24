@@ -227,12 +227,17 @@ const BuyerChat = async(buyerData)=> {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
-          } else if(isInCart) {
-            console.log("asdsad")
+        } else if(isInCart) {
+            let filtered = jsonValue.filter(
+                (j) =>
+                j._id != item._id
+              );
+              await AsyncStorage.setItem('@savedBuyer', JSON.stringify(filtered));
+              setIsFul(false)
             showMessage({
-                message: "Already Exists",
-                description: `Item already exists in wishlist!`,
-                type: "warning",
+                message: "Item Removed",
+                description: `Item removed from wishlist!`,
+                type: "success",
             });
           }
         } catch (e) {

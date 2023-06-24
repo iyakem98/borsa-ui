@@ -251,11 +251,16 @@ const TravelerChat = async(travData) => {
                 type: "success",
             });
           } else if(isInCart) {
-            console.log("asdsad")
+            let filtered = jsonValue.filter(
+                (j) =>
+                j._id != item._id
+              );
+              await AsyncStorage.setItem('@savedTravelers', JSON.stringify(filtered));
+              setIsFul(false)
             showMessage({
-                message: "Already Exists",
-                description: `Item already exists in wishlist!`,
-                type: "warning",
+                message: "Item Removed",
+                description: `Item removed from wishlist!`,
+                type: "success",
             });
           }
         } catch (e) {
