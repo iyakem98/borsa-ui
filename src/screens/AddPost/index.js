@@ -103,7 +103,7 @@ const AddPost = ({navigation}) => {
                     fontSize: 18,
                     marginBottom: 10,
                 }}>
-                    Are you a traveling or getting items?
+                    Are you traveling or shipping items?
                 </Text>
                 <View style={styles.horizontal}>
                     <Pressable style={[styles.component, selected === 1 ? {

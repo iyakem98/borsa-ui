@@ -136,7 +136,7 @@ const PasswordScreen = () => {
            fontFamily: "Poppins_400Regular",
            //height: 50,
            borderRadius:0,
-           width:300,
+           width:"100%",
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
           paddingHorizontal:  5,
@@ -182,7 +182,7 @@ const PasswordScreen = () => {
            fontFamily: "Poppins_400Regular",
            //height: 50,
            borderRadius:0,
-           width:300,
+           width:"100%",
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
           paddingHorizontal:  5,
@@ -227,7 +227,7 @@ const PasswordScreen = () => {
            fontFamily: "Poppins_400Regular",
            //height: 50,
            borderRadius:0,
-           width:300,
+           width:"100%",
           //  marginLeft:"10vw",
           //  marginRight:"10vw",
           paddingHorizontal:  5,
@@ -274,7 +274,7 @@ const PasswordScreen = () => {
                     paddingHorizontal: 16,
                     paddingVertical: 8,
                     borderRadius: 5,
-                    marginHorizontal: 3
+                    marginHorizontal: 20,
                 }}>
                 <Text style = {{
                     fontSize: 16,
@@ -290,7 +290,7 @@ const PasswordScreen = () => {
                     paddingHorizontal: 16,
                     paddingVertical: 8,
                     borderRadius: 5,
-                    marginHorizontal: 5,
+                    marginHorizontal: 20,
                 }}>
                 <Text style = {{
                     fontSize: 16,
