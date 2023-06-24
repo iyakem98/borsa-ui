@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, FlatList, SectionList, TouchableOpacity } from 'react-native'
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, FlatList, SectionList, TouchableOpacity, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
 import { TextInput } from 'react-native-paper'
@@ -395,7 +395,7 @@ const FromTo = ({navigation}) => {
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
-                    display='inline'
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setFrom(moment(selectedDate).format('YYYY-MM-DD'))
@@ -408,7 +408,7 @@ const FromTo = ({navigation}) => {
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
-                    display='inline'
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setTo(moment(selectedDate).format('YYYY-MM-DD'))
@@ -607,7 +607,7 @@ const FromTo = ({navigation}) => {
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
-                    display='inline'
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setTravelerDate(moment(selectedDate).format('YYYY-MM-DD'))
