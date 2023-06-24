@@ -9,6 +9,7 @@ import Buyer from '../ConnectScreen/Buyer'
 import TravelerCard from '../ConnectScreen/Traveler'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
+import EmptyUnDraw from '../../assets/svg/emptyUnDraw'
 
 const data = [
   { id: '0', imageSource: require('../../../assets/images/avatars/blank-avatar.png') },
@@ -370,7 +371,19 @@ const ProfileScreen = ({navigation}) => {
  
                  {
                    t.length<1 &&
-                   <Text style={{marginTop:30, fontSize:19, textAlign:"center", marginLeft:20}}>No traveler card found.</Text>
+                   <View style={{
+                    alignItems: "center",
+                    minHeight: "100%",
+                    paddingTop:40
+                }}>
+                    <EmptyUnDraw />
+                    <Text style={{
+                        fontFamily: "Poppins_500Medium",
+                        marginTop: 20,
+                        textAlign: "center",
+                        fontSize: 16
+                    }}>No traveler card found.</Text>
+                </View>
                  }
             
              </SafeAreaView>
@@ -397,7 +410,19 @@ const ProfileScreen = ({navigation}) => {
 
             {
                   b.length<1 &&
-                  <Text style={{marginTop:30, fontSize:19, textAlign:"center", marginLeft:20}}>No shipping card found.</Text>
+                  <View style={{
+                    alignItems: "center",
+                    minHeight: "100%",
+                    paddingTop:40
+                }}>
+                    <EmptyUnDraw />
+                    <Text style={{
+                        fontFamily: "Poppins_500Medium",
+                        marginTop: 20,
+                        textAlign: "center",
+                        fontSize: 16
+                    }}>No buyer card found.</Text>
+                </View>
                 }
             </View>
           }
