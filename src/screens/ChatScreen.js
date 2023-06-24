@@ -227,7 +227,7 @@ console.log('loading', isLoading)
                 } else { 
                   var formatted_date = null 
                   if(chat.lastestMessage !== undefined || chat.lastestMessage !== null){
-                    formatted_date = user.isImperial? moment(chat.latestMessage.createdAt).format("MM/DD/YY") : moment(chat.latestMessage.createdAt).format("DD/MM/YY")
+                    formatted_date = user?.isImperial? moment(chat.latestMessage.createdAt).format("MM/DD/YY") : moment(chat.latestMessage.createdAt).format("DD/MM/YY")
                   }
                   return (
                     <ChatItem 

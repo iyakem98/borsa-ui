@@ -23,7 +23,7 @@ const RegisterScreen = ({navigation}) => {
   const [userFullName, setUserFullName] = useState("")
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [checked, setChecked] = useState(true)
+  const [checked, setChecked] = useState(false)
   const [userEmailError, setUserEmailError] = useState("");
   const [userPasswordError, setUserPasswordError] = useState("");
 
@@ -358,7 +358,16 @@ const handleVerify = async () => {
           width: "100%",
           // backgroundColor: "#eee"
         }}>
-          <Checkbox
+
+          <View>
+            <View style = {{
+            marginRight: 8,
+            borderStyle:'solid',
+            borderWidth: 0.9,
+            borderRadius: 50,
+          }}>
+
+            <Checkbox
             status={checked ? 'checked' : 'unchecked'}
             onPress={() => {
               setChecked(!checked);
@@ -370,6 +379,12 @@ const handleVerify = async () => {
               backgroundColor: "#eee",
             }}
           />
+              
+            </View>
+          
+
+          </View>
+        
           <View style={{
             flex: 1
           }}>

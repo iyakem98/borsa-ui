@@ -584,11 +584,11 @@ const ProfileScreen = ({navigation}) => {
             fontFamily: "Poppins_400Regular",
             fontSize: 12
         }}>Email: admin@borsa.world</Text>
-        <Text style={{
+        {/*<Text style={{
             color: "#777",
             fontFamily: "Poppins_400Regular",
             fontSize: 12
-        }}>+1(310)351-5957</Text>
+        }}>+1(310)351-5957</Text> */}
     </View>
               
             {/* </ScrollView> */}
