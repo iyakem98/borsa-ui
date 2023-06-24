@@ -395,7 +395,7 @@ const TravelerChat = async(travData) => {
                         marginLeft: 12
                     }} onPress={addToWislistTraveler}>
                        {
-                        ids.indexOf(item._id)>-1 ? 
+                        ids.includes(item._id) ? 
                         <AntDesign name="heart" size={24} color="#13b955" />
                         :
                         (

@@ -399,7 +399,9 @@ const FromTo = ({navigation}) => {
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setFrom(moment(selectedDate).format('YYYY-MM-DD'))
-                        setShowDatePickerFrom(false)
+                        setTimeout(() => {
+                            setShowDatePickerFrom(false)
+                          }, 5000);
                     }}
                 />
             ) : null}
@@ -412,7 +414,9 @@ const FromTo = ({navigation}) => {
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setTo(moment(selectedDate).format('YYYY-MM-DD'))
-                        setShowDatePickerTo(false)
+                        setTimeout(() => {
+                            setShowDatePickerTo(false)
+                          }, 5000);
                     }}
                 />
             )}
@@ -612,7 +616,9 @@ const FromTo = ({navigation}) => {
                     onChange={(date, selectedDate)=>{
                         setTravelerDate(moment(selectedDate).format('YYYY-MM-DD'))
                         console.log("daaaaaaate is:", selectedDate)
-                        setShowTravelerDatePickerFrom(false)
+                        setTimeout(() => {
+                            setShowTravelerDatePickerFrom(false)
+                          }, 5000);
                     }}
                 />
             ) : null}
