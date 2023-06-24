@@ -339,7 +339,7 @@ const MyCards = () => {
             }} 
             onPress={()=>{
                 navigation.navigate("New Post", {
-                    cardToAdd: "traveler"
+                    cardToAdd: 1
                 })
             }}
             >
@@ -368,7 +368,7 @@ const MyCards = () => {
                 fontSize: 18,
                 marginBottom: 20,
               }}>
-                You have not posted any traveler card yet.
+               No card found. Cards you post will appear here.
               </Text>
               <LinearGradient  colors={['#13b955', "#0a863b"]} style = {{
                         width: '100%',
@@ -378,7 +378,7 @@ const MyCards = () => {
               <Pressable 
                 onPress={()=>{
                   navigation.navigate("New Post", {
-                      cardToAdd: "traveler"
+                      cardToAdd: 1
                   })
               }}
                 style = {{
@@ -621,7 +621,7 @@ const MyCards = () => {
             }} 
             onPress={()=>{
                 navigation.navigate("New Post", {
-                    cardToAdd: "buyer"
+                    cardToAdd: 2
                 })
             }}
             >
@@ -651,7 +651,7 @@ const MyCards = () => {
                   fontSize: 18,
                   marginBottom: 20,
                 }}>
-                  You have not posted any shipping card yet.
+                 No card found. Cards you post will appear here.
                 </Text>
                 <LinearGradient  colors={['#593196', "#3f216c"]} style = {{
                         width: '100%',
@@ -661,7 +661,7 @@ const MyCards = () => {
                 <Pressable 
                   onPress={()=>{
                     navigation.navigate("New Post", {
-                        cardToAdd: "traveler"
+                        cardToAdd: 2
                     })
                 }}
                   style = {{

@@ -111,7 +111,7 @@ const LoginScreen = ({navigation}) => {
               fontFamily: "Poppins_400Regular",
               fontSize: 14,
               textAlign: "center"
-          }}>{isLoading ? "Loading ..." : "Login"}</Text>
+          }}>{isLoading ? "Loading ..." : "Next"}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>

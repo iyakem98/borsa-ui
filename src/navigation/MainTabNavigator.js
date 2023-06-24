@@ -220,7 +220,7 @@ const MainTabNavigator = () => {
         // )
         }} />
 
-        <Tab.Screen name="AddPost" component={AddPost} options={{
+        <Tab.Screen name="Post" component={AddPost} options={{
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="plussquareo" size={size} color={color} />
             ),

@@ -7,6 +7,7 @@ import { API_BASE_URL } from '../../utils/config'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NetInfo from '@react-native-community/netinfo'
 import ErrorUnDraw from '../../assets/svg/errorUnDraw'
+import { useRoute } from '@react-navigation/native'
 
 const width = Dimensions.get("screen").width
 
@@ -14,7 +15,8 @@ const AddPost = ({navigation}) => {
     // useEffect(()=> {
     //     checkusertoken()
     // },[])
-    const [selected, setSelected] = useState(1)
+    const route = useRoute()
+    const [selected, setSelected] = useState(route?.params?.cardToAdd ? route.params.cardToAdd : 1)
 
     const [isAlreadyTraveler, setIsAlreadyTraveler] = useState(false)
 

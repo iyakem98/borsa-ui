@@ -35,10 +35,7 @@ const ConnectScreen = () => {
   const { travelers} = useSelector(
     (state) => state.auth
   )
-  
-  const { user} = useSelector(
-    (state) => state.auth
-  )
+
   const { fetchAgain, setfetchAgain,
     chatSelected, setchatSelected, } = ChatState()
   
@@ -287,12 +284,8 @@ const handleClear = () => {
                         getUsers()
 }
 
-useEffect(() => {   
-  getToken()
-}, [])
 
     useEffect(() => {   
-      getToken()
       getUsers()
       setPageLimTraveler(totTraveler)
       
@@ -310,21 +303,14 @@ useEffect(() => {
       
     }
 
-    const[tkn, setTkn] = useState("")
-
-    const getToken = async () => {
-     let tokn = await AsyncStorage.getItem('myToken')
-     console.log("tkkkknn", tokn)
-     setTkn(tokn)
-    }
-
-
     const getUsers = async () => {
-     //setLoad(true)
-      getToken()
+
+      let user1 = await  AsyncStorage.getItem("@user_data")
+      let user = JSON.parse(user1)
+     
       const config = {
       headers: {
-          Authorization: `Bearer ${ await AsyncStorage.getItem('myToken')}`
+          Authorization: `Bearer ${user.token}`
         }}
 
     await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=${limit}`, config)
@@ -429,7 +415,7 @@ useEffect(() => {
             marginTop:"48%",
             color: 'blue'
           }}
-          size="large"
+          size="small"
           />
           :
           <View>
@@ -437,9 +423,9 @@ useEffect(() => {
           
           {loading ? (
             <View style={{
-                paddingTop: 20
+                paddingTop: "50%"
             }}>
-              <ActivityIndicator size="large" color="#777" />
+              <ActivityIndicator size="small" color="#777" />
             </View>
           ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
             <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
@@ -755,7 +741,7 @@ useEffect(() => {
                     zIndex: 100000,
                     position: "absolute",
                   }}> 
-                   <ActivityIndicator size="large" color="#777" />
+                   <ActivityIndicator size="small" color="#777" />
                   </View>}
                   
                 </View> 
@@ -1068,7 +1054,7 @@ useEffect(() => {
                     zIndex: 100000,
                     position: "absolute",
                   }}> 
-                   <ActivityIndicator size="large" color="#777" />
+                   <ActivityIndicator size="small" color="#777" />
                   </View>}
                   
                 </View>

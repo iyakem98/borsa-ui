@@ -99,7 +99,7 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     
-    <ScrollView>
+    <ScrollView style={{maxHeight:2000}}>
     <View style = {{
         //paddingVertical: 30,
         backgroundColor: "white"

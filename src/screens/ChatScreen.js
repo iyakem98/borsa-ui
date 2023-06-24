@@ -129,13 +129,16 @@ console.log('loading', isLoading)
     dispatch(fetchChat())
   }, [fetchAgain, storedNotifications])
 
-  useEffect(() =>{
-    dispatch(fetchChat())
-  }, [user])
+  // useEffect(() =>{
+  //   dispatch(fetchChat())
+  // }, [user])
 
-  useEffect(() => {
-    navigation.addListener('focus', () => dispatch(fetchChat()))
-  }, [])
+  // useEffect(() => {
+  //   navigation.addListener('focus', () => dispatch(fetchChat()))
+  //   return () => {
+  //     navigation.removeListener('focus')
+  //   }
+  // }, [])
 
   useEffect(() => {
     if(todaytest == true){
