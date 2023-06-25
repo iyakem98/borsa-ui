@@ -415,7 +415,7 @@ const handleClear = () => {
             marginTop:"48%",
             color: 'blue'
           }}
-          size="small"
+          size="large"
           />
           :
           <View>
@@ -741,7 +741,7 @@ const handleClear = () => {
                     zIndex: 100000,
                     position: "absolute",
                   }}> 
-                   <ActivityIndicator size="small" color="#777" />
+                   <ActivityIndicator size="large" color="#777" />
                   </View>}
                   
                 </View> 
@@ -1054,7 +1054,7 @@ const handleClear = () => {
                     zIndex: 100000,
                     position: "absolute",
                   }}> 
-                   <ActivityIndicator size="small" color="#777" />
+                   <ActivityIndicator size="large" color="#777" />
                   </View>}
                   
                 </View>
