@@ -93,6 +93,12 @@ const FromTo = ({navigation}) => {
         setShowExpiryDate(false)
     }
 
+    const setShowFalser = () => {
+        setTravelerDate(moment(date).format('YYYY-MM-DD'))
+        //setTravelerDate(date.toLocaleString())
+        setShowTravelerDatePickerFrom(false)
+    }
+
     useEffect(()=>{
         console.log(moment(from).format('L'))
     }, [from])
@@ -607,7 +613,23 @@ const FromTo = ({navigation}) => {
             </ScrollView>
 
             {showDatePickerTravelerFrom ? (
-                <DateTimePicker
+                <View>
+                    <View>
+                      
+                             <Pressable style = {{
+                                //backgroundColor: '#e8e8e8',
+                                width: '20%',
+                                alignItems: 'center',
+                                marginLeft: 3,
+                            }}
+                                onPress={setShowFalser}>
+                                <AntDesign name="closecircle" size={24} color="red" />
+                            </Pressable>
+                       
+                    
+                    </View>
+                    
+                     <DateTimePicker
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
@@ -621,6 +643,8 @@ const FromTo = ({navigation}) => {
                           }, 5000);
                     }}
                 />
+                </View>
+               
             ) : null}
           
             

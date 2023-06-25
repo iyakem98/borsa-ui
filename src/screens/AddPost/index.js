@@ -183,7 +183,7 @@ const AddPost = ({navigation}) => {
                         fontFamily: "Poppins_400Regular",
                         fontSize: 14,
                         textAlign: "center"
-                    }}>{spinner ? "Loading" : "Next"}</Text>
+                    }}>{spinner ? "Loading..." : "Next"}</Text>
                 </Pressable>
 
 
