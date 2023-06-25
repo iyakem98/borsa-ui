@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, AppState , Button} from "react-native"
-import {NavigationContainer} from '@react-navigation/native'
+import {NavigationContainer, useRoute} from '@react-navigation/native'
 import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack"
 import MessagingScreen from "../screens/MessagingScreen"
 import ChatScreen from "../screens/ChatScreen"
@@ -33,7 +33,7 @@ import TestImg from "../screens/TestImg"
 import { ChatState } from "../context/ChatProvider"
 import RecentlyTest from "../screens/RecentlyTest"
 import UserRecently from "../screens/UserRecently"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { useEffect } from "react"
 import UserTest from "../screens/UserTest"
 import PushScreen from "../screens/PushScreen"
@@ -65,7 +65,9 @@ const Navigator = ({showOnBoarding}) => {
   // const appState = useRef(AppState.currentState);
   const { user } = useSelector((state) => state.auth)
   const {messageHeader, setmessageHeader} = ChatState()
+  const route = useRoute()
   const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
+  const [isWelcomeFirst, setIsWelcomeFirst] = useState(false);
   // useEffect(() =>{
 
   //   const subscription = AppState.addEventListener('change', nextAppState => {
@@ -111,6 +113,24 @@ const Navigator = ({showOnBoarding}) => {
   
   }, [user])
 
+  const handleWelcomeStack = async() => {
+    try {
+      const res = await AsyncStorage.get('@finished_welcome_screen');
+      if(res) {
+        setIsWelcomeFirst(true)
+      }
+    } catch(e) {
+
+    }
+  }
+
+  useEffect(()=>{
+    console.log("==========")
+    if(isWelcomeFirst) {
+      handleWelcomeStack();
+    }
+  }, [route])
+
   return (
    <NavigationContainer>
    {user !== null || user != undefined  ? (
@@ -121,7 +141,7 @@ const Navigator = ({showOnBoarding}) => {
       {/* <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
       {user?.isFirstTime && <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} />}
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
-      {!user?.isFirstTime && <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} />}
+      {/* {!user?.isFirstTime && !isWelcomeFirst ? <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} /> : null} */}
       {/*<Stack.Screen name="Chats" component={ChatScreen} /> */}
       {/* <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} /> */}
       <Stack.Screen name="Search" component={SearchScreen}  options={({ route }) => ({

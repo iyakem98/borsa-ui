@@ -142,6 +142,7 @@ const logout = async() => {
   try {
     await AsyncStorage.removeItem('@user_data')
     await AsyncStorage.removeItem("user")
+    await AsyncStorage.removeItem("@finished_welcome_screen")
   } catch(e) {
     console.log("first", e)
   }

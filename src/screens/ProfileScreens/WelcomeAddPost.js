@@ -6,6 +6,7 @@ import { AntDesign, Ionicons } from "@expo/vector-icons"
 import { getUserDetails } from "../../features/auth/authSlice"
 import axios from "axios"
 import { API_BASE_URL } from "../../utils/config"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const WelcomeAddPost = () => {
     const navigation = useNavigation()
@@ -51,7 +52,9 @@ const WelcomeAddPost = () => {
           }).catch((err) => {
             //alert("try again pls.")
             console.log("errorr", err)
-          }); 
+          });
+
+          await AsyncStorage.setItem('@finished_welcome_screen', "true");
 
           navigation.navigate('Main')
 
