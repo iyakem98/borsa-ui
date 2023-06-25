@@ -79,7 +79,7 @@ const WelcomeAddPost = () => {
                 color: 'white',
                 fontFamily: "Poppins_400Regular"
             }}>
-                Borsa is a messaging platform that connects travelers with extra luggage space to shippers that want items delivered.
+               Unlock Seamless Logistics using Borsa, Where Adventurous Travelers and Shippers Find Their Perfect Match!
             </Text>
         </View>
 

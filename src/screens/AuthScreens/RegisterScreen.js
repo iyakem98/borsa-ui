@@ -80,16 +80,23 @@ const RegisterScreen = ({navigation}) => {
     setIsLoading(true)
     const userName = userFullName.split(" ")
     console.log(userName)
-    if(userName.length < 2) {
-      setUserPasswordError("You have to provide fullname")
+    if(firstName.length < 1) {
+      setUserPasswordError("You have to provide first name")
+    } 
+    else if(lastName.length < 1) {
+      setUserPasswordError("You have to provide last name")
     } 
     else if (userPassword !== confirmUserPassword) {
       setUserPasswordError("Passwords do not match")
     }
-    else if(checked && userName.length > 1) {
+    else if(checked && firstName.length > 0 && lastName.length > 0) {
       try {
-        const capitalizedFirstName = capitalizeFirstLetter(userName[0]);
-        const capitalizedLastName = capitalizeFirstLetter(userName[1]);;
+        //const capitalizedFirstName = capitalizeFirstLetter(userName[0]);
+        //const capitalizedLastName = capitalizeFirstLetter(userName[1]);;
+
+        const capitalizedFirstName = capitalizeFirstLetter(firstName)
+        const capitalizedLastName = capitalizeFirstLetter(lastName);;
+
         const res = await axios.post('http://143.198.168.244/api/users', {
           firstName: capitalizedFirstName,
           lastName: capitalizedLastName,
@@ -280,22 +287,41 @@ const handleVerify = async () => {
         }}>
           Create an account to start using Borsa
         </Text>
-        <TextInput
-          label="Full name"
-          value={userFullName}
-          onChangeText={text => setUserFullName(text)}
-          mode="outlined"
-          style={{
-            marginTop: 15,
-            marginBottom: 13,
-            // paddingVertical: 5
-          }}
-          error={userPasswordError}
-          outlineStyle={{
-            backgroundColor: "#fff",
-          }}
-          placeholderTextColor= "#eee"
-        />
+        <View>
+          <TextInput
+            label="First Name"
+            value={firstName}
+            onChangeText={text => setFirstName(text.trim())}
+            mode="outlined"
+            style={{
+              marginTop: 15,
+              marginBottom: 13,
+              // paddingVertical: 5
+            }}
+            error={userPasswordError}
+            outlineStyle={{
+              backgroundColor: "#fff",
+            }}
+            placeholderTextColor= "#eee"
+          />
+          <TextInput
+            label="Last Name"
+            value={lastName}
+            onChangeText={text => setLastName(text.trim())}
+            mode="outlined"
+            style={{
+              //marginTop: 15,
+              marginBottom: 13,
+              // paddingVertical: 5
+            }}
+            error={userPasswordError}
+            outlineStyle={{
+              backgroundColor: "#fff",
+            }}
+            placeholderTextColor= "#eee"
+          />
+        </View>
+       
         <TextInput
           label="Email"
           value={userEmail}
