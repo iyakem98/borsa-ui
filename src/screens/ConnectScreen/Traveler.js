@@ -80,91 +80,72 @@ const getImageSourceById = (id) => {
   };
 
 useEffect(() => {
-   savedIds()
-}, [ful])
-
-const [ids, setIds] = useState([])
-const [ful, setIsFul] = useState(false)
-
-const savedIds = async (id) => {
-    let value = await AsyncStorage.getItem('@savedTravelers');
-    let jsonValue = await JSON.parse(value)
-
-    let ids = []
-
-    if(value !== null && jsonValue) {
-      for (var i = 0; i < jsonValue.length; i++) {
-        ids.push(jsonValue[i]?._id)
-      }
-
-      setIds(ids)
-    }
-
-}
-
+   
+    // setchattId(null)
+}, [chattId])
 
 
     
-const TravelerChat = async(travData) => {
-    // setchattId(13)
-    // console.log('cccc' + chattId)
-    // store2 = true
-//     setchattId(false)
-// setchattId(123)
-// setchattId((state) => {
-//   return state
-// })
-    
-    
-    // setchattId(121)
-    // console.log('ccccddd' + chattId)
-    // console.log('ccccss' + chattId)
-    const userId = travData._id
-    const userFName = travData.firstName
-//   console.log(chattts)
-    try{
-        const config = {
-          headers: {
-              Authorization: `Bearer ${user.token}`
-    
+    const TravelerChat = async(travData) => {
+        // setchattId(13)
+        // console.log('cccc' + chattId)
+        // store2 = true
+    //     setchattId(false)
+    // setchattId(123)
+    // setchattId((state) => {
+    //   return state
+    // })
+        
+        
+        // setchattId(121)
+        // console.log('ccccddd' + chattId)
+        // console.log('ccccss' + chattId)
+        const userId = travData._id
+        const userFName = travData.firstName
+    //   console.log(chattts)
+        try{
+            const config = {
+              headers: {
+                  Authorization: `Bearer ${user.token}`
+        
+              }
           }
-      }
-    //   if(!chattts){
-    //     console.log("ghiegwighiewg")
-    //   }
-    //   else{
-    //     console.log(chattts)
-    //     console.log('existing chat')
-    //   }
-     
+        //   if(!chattts){
+        //     console.log("ghiegwighiewg")
+        //   }
+        //   else{
+        //     console.log(chattts)
+        //     console.log('existing chat')
+        //   }
+         
 //    console.log(chattts)
-                    
-                   
-                    
-                   
-                    navigation.navigate('Messaging', {userSelected:
                         
-                        travData})
+                       
                         
-                    // // // console.log("loading" + loading)
-                     setloading(true)
-                    const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-                    // console.log(data)
-                    setchatSelected(true)
-                    setchattId(data._id)
-                    console.log("chatt id"+  chattId)
-                  
-                    
-                    
-                    
+                       
+                        navigation.navigate('Messaging', {userSelected:
+                            
+                            travData})
+                            
+                        // // // console.log("loading" + loading)
+                         setloading(true)
+                        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                        // console.log(data)
+                        setchatSelected(true)
+                        setchattId(data._id)
+                        console.log("chatt id"+  chattId)
+                      
+                        
+                        
+                        
+                
+            }
             
+            
+        catch(err){
+            console.log(err)
         }
-        
-        
-    catch(err){
-        console.log(err)
     }
-}
     const createChat = async(chat, userId, travData, userFName ,config)  => {
         // console.log(userFName)
         console.log('user[0]' + chat.users[0].firstName)
@@ -241,8 +222,6 @@ const TravelerChat = async(travData) => {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
-            setIds(ids.push(item._id))
-            setIsFul(!ful)
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedTravelers', JSON.stringify([item]));
@@ -251,23 +230,12 @@ const TravelerChat = async(travData) => {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
-            setIds(ids.push(item._id))
           } else if(isInCart) {
-            let filtered = jsonValue.filter(
-                (j) =>
-                j._id != item._id
-              );
-              await AsyncStorage.setItem('@savedTravelers', JSON.stringify(filtered));
-              setIsFul(!ful)
-              let newC = ids.filter(
-                (i) =>
-               i != item._id
-              );
-              setIds(newC)
+            console.log("asdsad")
             showMessage({
-                message: "Item Removed",
-                description: `Item removed from wishlist!`,
-                type: "success",
+                message: "Already Exists",
+                description: `Item already exists in wishlist!`,
+                type: "warning",
             });
           }
         } catch (e) {
@@ -401,17 +369,10 @@ const TravelerChat = async(travData) => {
                         borderRadius: 7,
                         marginLeft: 12
                     }} onPress={addToWislistTraveler}>
-                       {
-                        ids.includes(item._id) ? 
-                        <AntDesign name="heart" size={24} color="#13b955" />
-                        :
-                        (
-                        ful ? 
-                        <AntDesign name="heart" size={24} color="#13b955" />
-                        :
+                       {/* <Text style={{
+                            color: "red",
+                        }}>Save</Text> */}
                         <AntDesign name="hearto" size={24} color="black" />
-                        )
-                       }
                     </Pressable>
                 </View>
             </View>

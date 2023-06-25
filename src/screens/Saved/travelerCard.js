@@ -1,6 +1,6 @@
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { Fontisto, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Fontisto, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 
 const width = Dimensions.get("screen").width
@@ -28,18 +28,14 @@ const TravelerCard = ({
                         style={styles.image}
                     /> */}
                     <View style={styles.image}>
-                        <Fontisto name="shopping-bag" size={28} color="#555" />
+                    <FontAwesome name="plane" size={24} color="black" />
                     </View>
                     <View>
                         <Text style={{
                             fontSize: 16,
                             fontFamily: "Poppins_500Medium"
                         }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
-                        <Text style={{
-                            fontSize: 12,
-                            fontFamily: "Poppins_500Medium",
-                            color: "#777"
-                        }}>{item?.user?.email}</Text>
+                        
                     </View>
                 </View>
                 <View style={styles.horizontal}>

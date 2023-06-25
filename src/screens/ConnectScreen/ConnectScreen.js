@@ -425,7 +425,7 @@ const handleClear = () => {
             <View style={{
                 paddingTop: "50%"
             }}>
-              <ActivityIndicator size="small" color="#777" />
+              <ActivityIndicator size="large" color="#777" />
             </View>
           ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
             <View style = {{backgroundColor: "white", paddingVertical: 0}}>         

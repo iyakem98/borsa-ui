@@ -2,6 +2,7 @@ import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-nati
 import React, { useState } from 'react'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'react-redux'
 
 const width = Dimensions.get("screen").width
 
@@ -16,6 +17,8 @@ const BuyerCard = ({
     const locationPickUpLength = locationPickUp.length
     const locationDeparture = item?.departure.split(", ")
     const locationDepartureLength = locationDeparture.length
+
+    const { user } = useSelector((state) => state.auth)
 
     return (
         <Pressable style={styles.container} onPress={()=>{
@@ -37,25 +40,38 @@ const BuyerCard = ({
                         <Text style={{
                             fontSize: 16,
                             fontFamily: "Poppins_500Medium"
-                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        }}>{item?.item[0]}</Text>
                         <Text style={{
                             fontSize: 12,
                             fontFamily: "Poppins_500Medium",
                             color: "#777"
-                        }}>{item?.user?.email}</Text>
+                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
                     </View>
                 </View>
                 <View style={styles.horizontal}>
-                    <Text style={{
-                        fontSize: 15,
-                        fontFamily: "Poppins_600SemiBold",
-                    }}>
-                        {item?.luggageSpace}
-                        <Text style={{
-                            fontFamily: "Poppins_400Regular",
-                            fontSize: 13
-                        }}>Kg</Text>
-                    </Text>
+                {user?.isImperial? (
+                         <Text style={{
+                            fontSize: 15,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.totalWeight*2.20462).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 13
+                            }}>lb</Text>
+                        </Text>
+                    ):(
+                         <Text style={{
+                            fontSize: 15,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.totalWeight*1.0).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 13
+                            }}>kg</Text>
+                        </Text>
+                    )}
                     {/* <Pressable style={styles.dottedButton} onPress={()=>{
                         setModalOpen(true)
                     }}>
