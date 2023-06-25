@@ -57,6 +57,7 @@ import TermsConditions from "../screens/AuthScreens/TermsConditions"
 import WelcomeImperial from "../screens/ProfileScreens/WelcomeImperial"
 import AddPost from "../screens/AddPost/index"
 import Saved from "../screens/Saved"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 
 const Stack = createStackNavigator();
@@ -114,7 +115,7 @@ const Navigator = ({showOnBoarding}) => {
 
   const handleWelcomeStack = async() => {
     try {
-      const res = await AsyncStorage.get('@finished_welcome_screen');
+      const res = await AsyncStorage.getItem('@finished_welcome_screen');
       if(res) {
         setIsWelcomeFirst(true)
       }
@@ -140,7 +141,7 @@ const Navigator = ({showOnBoarding}) => {
       {/* <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, headerTintColor: '#593196'}}/> */}
       {user?.isFirstTime && <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} />}
       <Stack.Screen name="Main" component={MainTabNavigator} options={{headerShown: false, headerTintColor: '#593196'}} />
-      {/* {!user?.isFirstTime && !isWelcomeFirst ? <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} /> : null} */}
+      {!user?.isFirstTime ? <Stack.Screen name="Welcome" component={WelcomeProPic} options={{headerShown: false, headerTintColor: '#593196'}} /> : null}
       {/*<Stack.Screen name="Chats" component={ChatScreen} /> */}
       {/* <Stack.Screen name="Chats" component={Chattest} options={{headerShown: true}} /> */}
       <Stack.Screen name="Search" component={SearchScreen}  options={({ route }) => ({
@@ -152,7 +153,9 @@ const Navigator = ({showOnBoarding}) => {
         })}/>
         {/* <Stack.Screen name="Welcome Pic" component={WelcomeProPic} options={{headerShown: false}} /> */}
         <Stack.Screen name="WelcomeImperial" component={WelcomeImperial} options={{headerShown: false}} />
-        <Stack.Screen name="WelcomePost" component={WelcomeAddPost} options={{headerShown: false}} />
+        {/* {!isWelcomeFirst ? ( */}
+          <Stack.Screen name="WelcomePost" component={WelcomeAddPost} options={{headerShown: false}} />
+        {/* ) : null} */}
         <Stack.Screen name="ProfilePicker" component={ProfilePicker} options={{headerShown: false}} />
       <Stack.Screen name="Connect" component={ConnectScreen} />
       <Stack.Screen name="User Details" component={OtherProfile} />
