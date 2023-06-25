@@ -65,7 +65,6 @@ const Navigator = ({showOnBoarding}) => {
   // const appState = useRef(AppState.currentState);
   const { user } = useSelector((state) => state.auth)
   const {messageHeader, setmessageHeader} = ChatState()
-  const route = useRoute()
   const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
   const [isWelcomeFirst, setIsWelcomeFirst] = useState(false);
   // useEffect(() =>{
@@ -129,7 +128,7 @@ const Navigator = ({showOnBoarding}) => {
     if(isWelcomeFirst) {
       handleWelcomeStack();
     }
-  }, [route])
+  }, [])
 
   return (
    <NavigationContainer>
