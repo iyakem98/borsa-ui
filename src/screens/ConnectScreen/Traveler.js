@@ -241,7 +241,8 @@ const TravelerChat = async(travData) => {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
-            setIsFul(true)
+            setIds(ids.push(item._id))
+            setIsFul(!ful)
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedTravelers', JSON.stringify([item]));
@@ -250,13 +251,19 @@ const TravelerChat = async(travData) => {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
+            setIds(ids.push(item._id))
           } else if(isInCart) {
             let filtered = jsonValue.filter(
                 (j) =>
                 j._id != item._id
               );
               await AsyncStorage.setItem('@savedTravelers', JSON.stringify(filtered));
-              setIsFul(false)
+              setIsFul(!ful)
+              let newC = ids.filter(
+                (i) =>
+               i != item._id
+              );
+              setIds(newC)
             showMessage({
                 message: "Item Removed",
                 description: `Item removed from wishlist!`,
