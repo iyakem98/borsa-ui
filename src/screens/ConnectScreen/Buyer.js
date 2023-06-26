@@ -62,17 +62,31 @@ const Buyer = ({
 
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
-//   useEffect(() =>{
 
-//     dispatch(fetchChat())
-//     // console.log(chattts[1])
-    
-  
-// }, [user])
-useEffect(() => {
-   
-    // setchattId(null)
-}, [chattId])
+  useEffect(() => {
+    savedIds()
+ }, [ful])
+
+ const [ids, setIds] = useState([])
+const [ful, setIsFul] = useState(false)
+
+const savedIds = async (id) => {
+    let value = await AsyncStorage.getItem('@savedBuyer');
+    let jsonValue = await JSON.parse(value)
+
+    let ids = []
+
+    if(value !== null && jsonValue) {
+      for (var i = 0; i < jsonValue.length; i++) {
+        ids.push(jsonValue[i]?._id)
+      }
+
+      setIds(ids)
+    }
+
+}
+
+
 const BuyerChat = async(buyerData)=> {
     const userId = buyerData._id
     try{
@@ -204,6 +218,7 @@ const BuyerChat = async(buyerData)=> {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
+            setIsFul(!ful)
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedBuyer', JSON.stringify([item]));
@@ -212,12 +227,22 @@ const BuyerChat = async(buyerData)=> {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
-          } else if(isInCart) {
-            console.log("asdsad")
+        } else if(isInCart) {
+            let filtered = jsonValue.filter(
+                (j) =>
+                j._id != item._id
+              );
+              await AsyncStorage.setItem('@savedBuyer', JSON.stringify(filtered));
+              setIsFul(!ful)
+              let newC = ids.filter(
+                (i) =>
+               i != item._id
+              );
+              setIds(newC)
             showMessage({
-                message: "Already Exists",
-                description: `Item already exists in wishlist!`,
-                type: "warning",
+                message: "Item Removed",
+                description: `Item removed from wishlist!`,
+                type: "success",
             });
           }
         } catch (e) {
@@ -242,6 +267,7 @@ const BuyerChat = async(buyerData)=> {
                         <AntDesign name="gift" size={30} color="#555" />
                     </View>
                     <View>
+
                         <Text style={{
                             fontSize: 17,
                             fontFamily: "Poppins_500Medium"
@@ -294,10 +320,12 @@ const BuyerChat = async(buyerData)=> {
                         borderRadius: 7,
                         marginLeft: 12
                     }} onPress={addToWislistTraveler}>
-                       {/* <Text style={{
-                            color: "red",
-                        }}>Save</Text> */}
-                         <AntDesign name="hearto" size={24} color="black" />
+                       {
+                        ids.includes(item._id) || ful ? 
+                        <AntDesign name="heart" size={24} color="#593196" />
+                        :
+                        <AntDesign name="hearto" size={24} color="black" />
+                       }
                     </Pressable>
                 </View>
             </View>
