@@ -2,6 +2,7 @@ import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-nati
 import React, { useState } from 'react'
 import { Fontisto, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { ChatState } from '../../context/ChatProvider'
 
 const width = Dimensions.get("screen").width
 
@@ -34,6 +35,7 @@ const TravelerCard = ({
     item,
     addToWislistTraveler
 }) => {
+    const { setchattId } = ChatState(); 
     const navigation = useNavigation();
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
@@ -47,6 +49,8 @@ const TravelerCard = ({
 
     return (
         <Pressable style={styles.container} onPress={()=>{
+            console.log("-----=-=-=", item._id)
+            setchattId(item._id)
             navigation.navigate('Messaging', {userSelected: item.user})
         }}>
             <View style={styles.topWrapper}>

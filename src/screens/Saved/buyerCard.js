@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
+import { ChatState } from '../../context/ChatProvider'
 
 const width = Dimensions.get("screen").width
 
@@ -35,7 +36,7 @@ const BuyerCard = ({
     item,
     addToWislistTraveler
 }) => {
-    // console.log(item)
+    const { setchattId } = ChatState(); 
     const navigation = useNavigation()
     const [modalOpen, setModalOpen] = useState(true);
     const locationPickUp = item?.destination.split(", ")
@@ -52,8 +53,8 @@ const BuyerCard = ({
 
     return (
         <Pressable style={styles.container} onPress={()=>{
+            setchattId(item._id)
             navigation.navigate('Messaging', {userSelected: item.user})
-            console.log("yeeeeeeeee", item?.user)
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
