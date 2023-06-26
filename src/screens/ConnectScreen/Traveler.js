@@ -222,6 +222,8 @@ useEffect(() => {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
+            // setIds(ids.push(item._id))
+            setIsFul(true)
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedTravelers', JSON.stringify([item]));
@@ -230,8 +232,19 @@ useEffect(() => {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
+            setIds(ids.push(item._id))
           } else if(isInCart) {
-            console.log("asdsad")
+            let filtered = jsonValue.filter(
+                (j) =>
+                j._id != item._id
+              );
+              await AsyncStorage.setItem('@savedTravelers', JSON.stringify(filtered));
+              setIsFul(!ful)
+              let newC = ids.filter(
+                (i) =>
+               i != item._id
+              );
+              setIds(newC)
             showMessage({
                 message: "Already Exists",
                 description: `Item already exists in wishlist!`,
@@ -369,10 +382,17 @@ useEffect(() => {
                         borderRadius: 7,
                         marginLeft: 12
                     }} onPress={addToWislistTraveler}>
-                       {/* <Text style={{
-                            color: "red",
-                        }}>Save</Text> */}
+                       {
+                        ids.includes(item._id) ? 
+                        <AntDesign name="heart" size={24} color="#13b955" />
+                        :
+                        (
+                        ful ? 
+                        <AntDesign name="heart" size={24} color="#13b955" />
+                        :
                         <AntDesign name="hearto" size={24} color="black" />
+                        )
+                       }
                     </Pressable>
                 </View>
             </View>

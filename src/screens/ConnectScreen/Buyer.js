@@ -204,6 +204,7 @@ const BuyerChat = async(buyerData)=> {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
+            setIsFul(!ful)
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedBuyer', JSON.stringify([item]));
@@ -212,8 +213,19 @@ const BuyerChat = async(buyerData)=> {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
-          } else if(isInCart) {
-            console.log("asdsad")
+            setIds(ids.push(item._id))
+        } else if(isInCart) {
+            let filtered = jsonValue.filter(
+                (j) =>
+                j._id != item._id
+              );
+              await AsyncStorage.setItem('@savedBuyer', JSON.stringify(filtered));
+              setIsFul(!ful)
+              let newC = ids.filter(
+                (i) =>
+               i != item._id
+              );
+              setIds(newC)
             showMessage({
                 message: "Already Exists",
                 description: `Item already exists in wishlist!`,
@@ -242,6 +254,7 @@ const BuyerChat = async(buyerData)=> {
                         <AntDesign name="gift" size={30} color="#555" />
                     </View>
                     <View>
+
                         <Text style={{
                             fontSize: 17,
                             fontFamily: "Poppins_500Medium"
@@ -294,10 +307,17 @@ const BuyerChat = async(buyerData)=> {
                         borderRadius: 7,
                         marginLeft: 12
                     }} onPress={addToWislistTraveler}>
-                       {/* <Text style={{
-                            color: "red",
-                        }}>Save</Text> */}
-                         <AntDesign name="hearto" size={24} color="black" />
+                       {
+                        ids.indexOf(item._id)>-1 ? 
+                        <AntDesign name="heart" size={24} color="#593196" />
+                        :
+                        (
+                        ful ? 
+                        <AntDesign name="heart" size={24} color="#593196" />
+                        :
+                        <AntDesign name="hearto" size={24} color="black" />
+                        )
+                       }
                     </Pressable>
                 </View>
             </View>
