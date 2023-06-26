@@ -2,7 +2,7 @@
   "expo": {
     "name": "Borsa",
     "slug": "Borsa",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -53,7 +53,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.borsa",
-      "buildNumber": "21",
+      "buildNumber": "22",
       "infoPlist": {
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
       }
@@ -64,7 +64,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.Borsa",
-      "versionCode": 11
+      "versionCode": 12
     },
     "web": {
       "favicon": "./assets/favicon.png"

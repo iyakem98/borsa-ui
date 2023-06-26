@@ -749,9 +749,23 @@ const MyCards = () => {
               {"  "}
 
                   {" "+buyer.departure.split(",")[0]+"   "} 
+                   {/* {buyer.departure.split(",").length === 3? (
+                    
+                      <Text>
+                       {" "+buyer.departure.split(",")[2]+"   "} 
+                      </Text>
+                   
+                  ): (
+                    <View>
+                      <Text>
+                      {" "+buyer.departure.split(",")[1]+"   "} 
+                      </Text>
+                    </View>
+                  )} */}
                   <MaterialIcons name="flight-takeoff" size={20} color="black" />
                    {"   "+buyer.destination.split(",")[0]}
                   </Text> 
+                  
                     </View>
 
                     <View style = {{
