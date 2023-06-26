@@ -195,7 +195,7 @@ const MyCards = () => {
       alignItems: 'center',
     }}>
 
-    <Pressable onPress={()=>navigation.popToTop()}
+    <Pressable onPress={()=>navigation.navigate('More')}
       style = {{
         //backgroundColor: '#593196',
         flexDirection: 'row',
@@ -281,12 +281,14 @@ const MyCards = () => {
   {
     spinner && 
     <View style={{
-      position:"absolute",
-      top:"40%",
-      left:"0%",
-      zIndex: 200,
-      justifyContent: "center",
+      //position:"absolute",
+      height: "100%",
+      //top:"40%",
+      //left:"0%",
+      //zIndex: 200,
+      //justifyContent: "center",
       alignItems: "center",
+      paddingTop: 35,
       width: "100%"
   }}>
     <ActivityIndicator size="large" color="black" />

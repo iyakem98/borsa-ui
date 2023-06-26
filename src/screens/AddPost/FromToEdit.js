@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, FlatList, SectionList, TouchableOpacity } from 'react-native'
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, FlatList, SectionList, TouchableOpacity, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
 import { TextInput } from 'react-native-paper'
@@ -9,7 +9,7 @@ import moment from 'moment'
 import { useRoute } from '@react-navigation/native'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
-const FromTo = ({navigation}) => {
+const FromToEdit = ({navigation}) => {
     const currentDate = new Date()
     const [countryFromCode, setCountryFromCode] = useState('FR')
     const [countryFrom, setCountryFrom] = useState(null)
@@ -91,6 +91,12 @@ const FromTo = ({navigation}) => {
         }
 
         setShowExpiryDate(false)
+    }
+
+    const setShowFalser = () => {
+        {(travelerDate === from) && setTravelerDate(moment(date).format('YYYY-MM-DD'))}
+        //setTravelerDate(date.toLocaleString())
+        setShowTravelerDatePickerFrom(false)
     }
 
     useEffect(()=>{
@@ -395,11 +401,13 @@ const FromTo = ({navigation}) => {
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
-                    display='inline'
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setFrom(moment(selectedDate).format('YYYY-MM-DD'))
-                        setShowDatePickerFrom(false)
+                        setTimeout(() => {
+                            setShowDatePickerFrom(false)
+                          }, 5000);
                     }}
                 />
             ) : null}
@@ -408,11 +416,13 @@ const FromTo = ({navigation}) => {
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
-                    display='inline'
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setTo(moment(selectedDate).format('YYYY-MM-DD'))
-                        setShowDatePickerTo(false)
+                        setTimeout(() => {
+                            setShowDatePickerTo(false)
+                          }, 5000);
                     }}
                 />
             )}
@@ -555,7 +565,7 @@ const FromTo = ({navigation}) => {
                     borderRadius: 5,
                     marginTop: 10,
                 }} onPress={()=>{
-                    setShowTravelerDatePickerFrom(!showDatePickerTravelerFrom)
+                    setShowTravelerDatePickerFrom(true)
                 }}>
                     <Text style={{
                         fontFamily: "Poppins_500Medium"
@@ -603,18 +613,44 @@ const FromTo = ({navigation}) => {
             </ScrollView>
 
             {showDatePickerTravelerFrom ? (
-                <DateTimePicker
+                <View>
+                    <View>
+                      
+                             <Pressable style = {{
+                                backgroundColor: '#514590',
+                                //width: '20%',
+                                alignItems: 'center',
+                                marginLeft: 3,
+                                paddingHorizontal: 5,
+                            }}
+                                onPress={setShowFalser}>
+                               {/* <AntDesign name="closecircle" size={24} color="red" /> */}
+                               <Text style = {{
+                                color: 'white',
+                               }}>
+                                Apply
+                               </Text>
+                            </Pressable>
+                       
+                    
+                    </View>
+                    
+                     <DateTimePicker
                     testID="dateTimePicker"
                     value={date}
                     mode={mode}
-                    display='inline'
+                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     // is24Hour={true}
                     onChange={(date, selectedDate)=>{
                         setTravelerDate(moment(selectedDate).format('YYYY-MM-DD'))
                         console.log("daaaaaaate is:", selectedDate)
-                        setShowTravelerDatePickerFrom(false)
+                        setTimeout(() => {
+                            setShowTravelerDatePickerFrom(false)
+                          }, 5000);
                     }}
                 />
+                </View>
+               
             ) : null}
           
             
@@ -625,7 +661,7 @@ const FromTo = ({navigation}) => {
     )
 }
 
-export default FromTo
+export default FromToEdit
 
 const styles = StyleSheet.create({
     container: {
