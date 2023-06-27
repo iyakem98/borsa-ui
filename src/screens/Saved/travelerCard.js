@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import { Fontisto, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { ChatState } from '../../context/ChatProvider'
+import { API_BASE_URL } from '../../utils/config'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 const width = Dimensions.get("screen").width
 
@@ -35,23 +38,60 @@ const TravelerCard = ({
     item,
     addToWislistTraveler
 }) => {
-    const { setchattId } = ChatState(); 
+    // const { setchattId } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading } = ChatState(); 
     const navigation = useNavigation();
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
     const locationDeparture = item?.departure.split(", ")
     const locationDepartureLength = locationDeparture.length
-
+    const { user } = useSelector((state) => state.auth)
     const getImageSourceById = (id) => {
         const item = data.find((item) => item.id === id);
         return item ? item.imageSource : null;
       };
-
+      const TravelerChat = async(travData) => {
+        const userId = travData._id
+        const userFName = travData.firstName
+        
+        // console.log('trav data', travData)
+        // console.log('userId', userId)
+        try{
+            const config = {
+              headers: {
+                  Authorization: `Bearer ${user.token}`
+        
+              }
+          }
+                        navigation.navigate('Messaging', {userSelected:
+                            
+                            travData})
+                         setloading(true)
+                        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                        // console.log('data id', data._id)
+                        setchatSelected(true)
+                        setchattId(data._id)
+                        // console.log("chatt id"+  chattId)
+                      
+                        
+                        
+                        
+                
+            }
+            
+            
+        catch(err){
+            console.log(err)
+        }
+    }
     return (
         <Pressable style={styles.container} onPress={()=>{
             console.log("-----=-=-=", item._id)
-            setchattId(item._id)
-            navigation.navigate('Messaging', {userSelected: item.user})
+            console.log("item", item)
+            TravelerChat(item.user)
+            // setchattId(item._id)
+            // setchattId("649a1eded51a2a58047b4727")
+            // navigation.navigate('Messaging', {userSelected: item.user})
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>

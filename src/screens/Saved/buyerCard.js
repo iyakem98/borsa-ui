@@ -36,7 +36,8 @@ const BuyerCard = ({
     item,
     addToWislistTraveler
 }) => {
-    const { setchattId } = ChatState(); 
+    // const { setchattId } = ChatState();
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading } = ChatState();  
     const navigation = useNavigation()
     const [modalOpen, setModalOpen] = useState(true);
     const locationPickUp = item?.destination.split(", ")
@@ -50,11 +51,45 @@ const BuyerCard = ({
         const item = data.find((item) => item.id === id);
         return item ? item.imageSource : null;
       };
-
+      const BuyerChat = async(buyerData) => {
+        const userId = buyerData._id
+        const userFName = buyerData.firstName
+        
+        // console.log('trav data', travData)
+        // console.log('userId', userId)
+        try{
+            const config = {
+              headers: {
+                  Authorization: `Bearer ${user.token}`
+        
+              }
+          }
+                        navigation.navigate('Messaging', {userSelected:
+                            
+                            buyerData})
+                         setloading(true)
+                        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                        // console.log('data id', data._id)
+                        setchatSelected(true)
+                        setchattId(data._id)
+                        // console.log("chatt id"+  chattId)
+                      
+                        
+                        
+                        
+                
+            }
+            
+            
+        catch(err){
+            console.log(err)
+        }
+    }
     return (
         <Pressable style={styles.container} onPress={()=>{
-            setchattId(item._id)
-            navigation.navigate('Messaging', {userSelected: item.user})
+            BuyerChat(item.user)
+            // setchattId(item._id)
+            // navigation.navigate('Messaging', {userSelected: item.user})
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>
