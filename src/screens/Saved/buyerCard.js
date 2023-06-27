@@ -1,4 +1,4 @@
-import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Image, Pressable, StyleSheet, Text, View, Modal } from 'react-native'
 import React, { useState } from 'react'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
@@ -85,9 +85,13 @@ const BuyerCard = ({
             console.log(err)
         }
     }
+    const BuyerChatToBeAdded = () => {
+        alert('For this Beta version, you have to go to the "Connect" tab to start a new chat')
+    }
     return (
         <Pressable style={styles.container} onPress={()=>{
-            BuyerChat(item.user)
+            //BuyerChat(item.user)
+            BuyerChatToBeAdded()
             // setchattId(item._id)
             // navigation.navigate('Messaging', {userSelected: item.user})
         }}>

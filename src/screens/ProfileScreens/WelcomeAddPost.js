@@ -82,7 +82,15 @@ const WelcomeAddPost = () => {
                 color: 'white',
                 fontFamily: "Poppins_400Regular"
             }}>
-               Unlock Seamless Logistics using Borsa, Where Adventurous Travelers and Shippers Find Their Perfect Match!
+               Unlock Seamless Logistics using Borsa, where Adventurous Travelers and Shippers Find Their Perfect Match!
+            </Text>
+            <Text style = {{
+                fontSize: 20,
+                color: 'white',
+                marginTop: 20,
+                fontFamily: "Poppins_600SemiBold",
+            }}>
+               This is a beta testing version.
             </Text>
         </View>
 

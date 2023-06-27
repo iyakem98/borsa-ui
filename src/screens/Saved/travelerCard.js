@@ -84,11 +84,18 @@ const TravelerCard = ({
             console.log(err)
         }
     }
+
+    const TravelerChatToBeAdded = () => {
+        alert('For this Beta version, you have to go to the "Connect" tab to start a new chat')
+    }
     return (
         <Pressable style={styles.container} onPress={()=>{
-            console.log("-----=-=-=", item._id)
-            console.log("item", item)
-            TravelerChat(item.user)
+            //console.log("-----=-=-=", item._id)
+            //console.log("item", item)
+            //TravelerChat(item.user)
+
+            TravelerChatToBeAdded()
+
             // setchattId(item._id)
             // setchattId("649a1eded51a2a58047b4727")
             // navigation.navigate('Messaging', {userSelected: item.user})
