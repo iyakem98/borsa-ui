@@ -300,8 +300,8 @@ const BuyerChat = async(buyerData)=> {
                             color: "red",
                         }}>Save</Text> */}
                         <Text style = {{
-                            //color: '#13b955',
-                            fontWeight: 600,
+                            color: '#593196',
+                            fontWeight: 500,
                         }}>
                             Save
                         </Text>
