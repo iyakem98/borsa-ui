@@ -4,7 +4,8 @@ import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 import { ChatState } from '../../context/ChatProvider'
-
+import axios from 'axios'
+import { API_BASE_URL } from '../../utils/config'
 const width = Dimensions.get("screen").width
 
 const data = [
