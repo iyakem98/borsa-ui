@@ -99,10 +99,10 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     
-    <ScrollView style={{maxHeight:2000}}>
+    <ScrollView>
     <View style = {{
         //paddingVertical: 30,
-        backgroundColor: "white"
+        backgroundColor: "white",
     }}>
          <View>
             
@@ -653,6 +653,12 @@ const ProfileScreen = ({navigation}) => {
     </View>
             
     </View>
+    <View style = {{
+        height: "25%",
+        backgroundColor: 'white'
+    }}>
+
+    </View>
     </ScrollView>
   )
 }
@@ -709,7 +715,7 @@ const styles = StyleSheet.create({
     v2b: {
         backgroundColor: 'white',
         width: '100%',
-        height: 700,
+        flex: 1,
         // position: 'absolute',
        // marginTop: 70,
        // borderTopRightRadius: 15,
