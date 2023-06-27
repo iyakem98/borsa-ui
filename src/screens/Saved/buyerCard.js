@@ -91,8 +91,8 @@ const BuyerCard = ({
     }
     return (
         <Pressable style={styles.container} onPress={()=>{
-            //BuyerChat(item.user)
-            BuyerChatToBeAdded()
+            BuyerChat(item.user)
+            // BuyerChatToBeAdded()
             // setchattId(item._id)
             // navigation.navigate('Messaging', {userSelected: item.user})
         }}>

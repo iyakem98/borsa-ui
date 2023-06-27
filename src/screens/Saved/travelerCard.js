@@ -92,9 +92,9 @@ const TravelerCard = ({
         <Pressable style={styles.container} onPress={()=>{
             //console.log("-----=-=-=", item._id)
             //console.log("item", item)
-            //TravelerChat(item.user)
+            TravelerChat(item.user)
 
-            TravelerChatToBeAdded()
+            // TravelerChatToBeAdded()
 
             // setchattId(item._id)
             // setchattId("649a1eded51a2a58047b4727")
