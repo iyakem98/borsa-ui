@@ -143,7 +143,7 @@ const Saved = () => {
                     fontWeight: 'bold',
                     textAlign: 'center',
                 }}>
-                    Chatting from your saved cards will be available soon
+                    Tap on the cards to start chatting
                 </Text>
             </View>
             <ScrollView contentContainerStyle={{

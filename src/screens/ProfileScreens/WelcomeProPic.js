@@ -90,7 +90,15 @@ const WelcomeProPic = () => {
             color: 'white',
             fontFamily: "Poppins_400Regular"
         }}>
-            Welcome to Borsa!
+            Welcome to Borsa
+        </Text>
+        <Text style = {{
+            fontSize: 18,
+            color: 'white',
+            fontFamily: "Poppins_400Regular",
+            marginTop: 16,
+        }}>
+            Thank you for becoming a member of our Pilot Team! We value your feedback.
         </Text>
     </View>
     <View style = {{
@@ -206,7 +214,7 @@ const WelcomeProPic = () => {
                 color: 'white',
                 fontFamily: "Poppins_400Regular"
             }}>
-                You can change your avatar anytime. 
+                You can change your avatar later at anytime. 
             </Text>
         </View>
     
@@ -236,7 +244,7 @@ const WelcomeProPic = () => {
     
             </Pressable>
 
-            <Pressable onPress={() => navigation.navigate('WelcomePost')}
+            <Pressable onPress={() => navigation.navigate('WelcomeImperial')}
                 style = {{
                     backgroundColor: "#13b955",
                     borderRadius: 8,

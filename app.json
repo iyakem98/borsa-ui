@@ -53,7 +53,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.borsa",
-      "buildNumber": "24",
+      "buildNumber": "25",
       "infoPlist": {
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
         "NSPhotoLibraryUsageDescription": "This identifier will be used for accessing photos in future updates."

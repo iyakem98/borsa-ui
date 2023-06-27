@@ -1,6 +1,6 @@
 import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
-import { AntDesign, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { AntDesign, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, Entypo } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
@@ -300,7 +300,7 @@ const BuyerChat = async(buyerData)=> {
                             color: "red",
                         }}>Save</Text> */}
                         <Text style = {{
-                            color: '#593196',
+                            //color: '#593196',
                             fontWeight: 500,
                         }}>
                             Save
@@ -369,7 +369,12 @@ const BuyerChat = async(buyerData)=> {
                             <Text style={{
                                 fontSize: 16,
                                 fontFamily: "Poppins_500Medium"
-                            }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                            }}>{item?.user?.firstName} {item?.user?.lastName} {
+                            }</Text>
+                        </View>
+
+                        <View>
+                        <Entypo name="shopping-bag" size={18} color="#593194" />
                         </View>
 
                 </View>
@@ -395,10 +400,14 @@ const BuyerChat = async(buyerData)=> {
                     }) : null}
                   </View>
                 </View> */}
-                <Pressable style={{
-                  backgroundColor: "#593196",
+                <TouchableOpacity style={{
+                  //backgroundColor: "#593196",
+                  backgroundColor: 'white',
                   paddingHorizontal: 20,
-                  paddingVertical: 8,
+                  paddingVertical: 6,
+                  borderRadius: 8,
+                  borderStyle: 'solid',
+                  borderWidth: 1.5,
                   borderRadius: 8
                 }} onPress={()=>{
                     BuyerChat(buyer.user)
@@ -406,9 +415,9 @@ const BuyerChat = async(buyerData)=> {
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
-                    color: "#fff"
+                    //color: "#fff"
                   }}>Message</Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
               {showModal && <Modal
         animationType="slide"

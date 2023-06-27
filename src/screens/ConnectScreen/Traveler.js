@@ -1,6 +1,6 @@
 import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
-import { Fontisto, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons'
+import { Fontisto, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
@@ -333,7 +333,7 @@ useEffect(() => {
                     </View> */}
                 </View>
                 <View style={styles.horizontal}>
-                <MaterialIcons name="luggage" size={20} color="#000" />
+                <MaterialIcons name="luggage" size={24} color="#000" />
                 {user?.isImperial? (
                          <Text style={{
                             fontSize: 18,
@@ -377,7 +377,7 @@ useEffect(() => {
                         <Text style = {{
                             //color: '#13b955',
                             //color: "red",
-                            color: '#593196',
+                            //color: '#593196',
                             fontWeight: 500,
                         }}>
                             Save
@@ -460,17 +460,27 @@ useEffect(() => {
                         }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
                     </View>
 
+                    <View style = {{
+                        marginLeft: 6,
+                    }}>
+                    <FontAwesome name="paper-plane" size={17} color="#13b955" />
+                    </View>
+
                 </View>
                 </Pressable>
 
                
-                <Pressable style={{
-                  backgroundColor: "#13b955",
+                <TouchableOpacity style={{
+                  //backgroundColor: "#13b955",
                   //backgroundColor: 'navy',
                   //backgroundColor: '#009cdc',
                   paddingHorizontal: 20,
-                  paddingVertical: 8,
-                  borderRadius: 8
+                  paddingVertical: 6,
+                  borderRadius: 8,
+                  borderStyle: 'solid',
+                  borderWidth: 1.5,
+                  //borderColor: '#13b955',
+                  backgroundColor: 'white',
                 }} onPress={()=>{
                     store1 = true
                     setchattId(null)
@@ -479,9 +489,10 @@ useEffect(() => {
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
-                    color: "#fff"
+                    //color: '#13b955',
+                    //color: "#fff"
                   }}>Message</Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
         </Pressable>
         <Modal
@@ -502,7 +513,8 @@ useEffect(() => {
                     }}>
                         <Text style = {{
                             fontSize: 20,
-                        }}>{traveler?.user?.firstName+' '+traveler?.user?.lastName}</Text>
+                        }}>{traveler?.user?.firstName+' '+traveler?.user?.lastName} 
+                        </Text>
                     </View>
 
                   {/*  <View style={{
@@ -594,6 +606,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 12,
+        paddingBottom: 10,
         // paddingRight: 20
     },
     txtCountry: {
