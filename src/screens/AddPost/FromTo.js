@@ -368,7 +368,7 @@ const FromTo = ({navigation}) => {
                         }
                         else
                         {
-                            navigation.navigate("PostAdditional", {
+                         navigation.navigate("PostAdditional", {
                                 cardType: 2,
                                 buyerCountryFrom: countryFrom,
                                 buyerCountryTo: countryTo,
