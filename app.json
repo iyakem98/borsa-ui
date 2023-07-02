@@ -58,23 +58,17 @@
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
         "NSPhotoLibraryUsageDescription": "This identifier will be used for accessing photos in future updates."
       }
-      
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.Borsa",
+      "package": "com.borsa",
       "versionCode": 12
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "b5d28df2-3c1c-48e9-873d-3aa415f0b35b"
-      }
     }
   }
 }
