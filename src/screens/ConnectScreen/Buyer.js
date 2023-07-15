@@ -1,6 +1,6 @@
-import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
-import { AntDesign, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, Entypo } from '@expo/vector-icons'
+import { AntDesign, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
@@ -62,17 +62,31 @@ const Buyer = ({
 
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
-//   useEffect(() =>{
 
-//     dispatch(fetchChat())
-//     // console.log(chattts[1])
-    
-  
-// }, [user])
-useEffect(() => {
-   
-    // setchattId(null)
-}, [chattId])
+  useEffect(() => {
+    savedIds()
+ }, [ful])
+
+ const [ids, setIds] = useState([])
+const [ful, setIsFul] = useState(false)
+
+const savedIds = async (id) => {
+    let value = await AsyncStorage.getItem('@savedBuyer');
+    let jsonValue = await JSON.parse(value)
+
+    let ids = []
+
+    if(value !== null && jsonValue) {
+      for (var i = 0; i < jsonValue.length; i++) {
+        ids.push(jsonValue[i]?._id)
+      }
+
+      setIds(ids)
+    }
+
+}
+
+
 const BuyerChat = async(buyerData)=> {
     const userId = buyerData._id
     try{
@@ -204,6 +218,7 @@ const BuyerChat = async(buyerData)=> {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
+            setIsFul(true)
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedBuyer', JSON.stringify([item]));
@@ -212,12 +227,23 @@ const BuyerChat = async(buyerData)=> {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
-          } else if(isInCart) {
-            console.log("asdsad")
+            setIsFul(true)
+        } else if(isInCart) {
+            let filtered = jsonValue.filter(
+                (j) =>
+                j._id != item._id
+              );
+              await AsyncStorage.setItem('@savedBuyer', JSON.stringify(filtered));
+              setIsFul(false)
+              let newC = ids.filter(
+                (i) =>
+               i != item._id
+              );
+              setIds(newC)
             showMessage({
-                message: "Already Exists",
-                description: `Item already exists in wishlist!`,
-                type: "warning",
+                message: "Item Removed",
+                description: `Item removed from wishlist!`,
+                type: "success",
             });
           }
         } catch (e) {
@@ -242,6 +268,7 @@ const BuyerChat = async(buyerData)=> {
                         <AntDesign name="gift" size={30} color="#555" />
                     </View>
                     <View>
+
                         <Text style={{
                             fontSize: 17,
                             fontFamily: "Poppins_500Medium"
@@ -287,26 +314,20 @@ const BuyerChat = async(buyerData)=> {
                     }}>
                         <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
                     </Pressable> */}
-                    <TouchableOpacity style={{
-                        backgroundColor: "#eee",
+                    <Pressable style={{
+                        //backgroundColor: "#eee",
                         paddingHorizontal: 12,
-                        paddingVertical: 6,
+                        paddingVertical: 10,
                         borderRadius: 7,
-                        marginLeft: 12,
-                        borderStyle: 'solid',
-                        //borderWidth: '0.8'
+                        marginLeft: 12
                     }} onPress={addToWislistTraveler}>
-                       {/* <Text style={{
-                            color: "red",
-                        }}>Save</Text> */}
-                        <Text style = {{
-                            //color: '#593196',
-                            fontWeight: 500,
-                        }}>
-                            Save
-                        </Text>
-                         {/*<AntDesign name="hearto" size={24} color="black" />*/}
-                    </TouchableOpacity>
+                       {
+                        ids.includes(item._id) || ful ? 
+                        <AntDesign name="heart" size={24} color="#593196" />
+                        :
+                        <AntDesign name="hearto" size={24} color="black" />
+                       }
+                    </Pressable>
                 </View>
             </View>
             <View style={styles.bottomWrapper}>
@@ -369,12 +390,7 @@ const BuyerChat = async(buyerData)=> {
                             <Text style={{
                                 fontSize: 16,
                                 fontFamily: "Poppins_500Medium"
-                            }}>{item?.user?.firstName} {item?.user?.lastName} {
-                            }</Text>
-                        </View>
-
-                        <View>
-                        <Entypo name="shopping-bag" size={18} color="#593194" />
+                            }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
                         </View>
 
                 </View>
@@ -400,14 +416,10 @@ const BuyerChat = async(buyerData)=> {
                     }) : null}
                   </View>
                 </View> */}
-                <TouchableOpacity style={{
-                  //backgroundColor: "#593196",
-                  backgroundColor: 'white',
+                <Pressable style={{
+                  backgroundColor: "#593196",
                   paddingHorizontal: 20,
-                  paddingVertical: 6,
-                  borderRadius: 8,
-                  borderStyle: 'solid',
-                  borderWidth: 1.5,
+                  paddingVertical: 8,
                   borderRadius: 8
                 }} onPress={()=>{
                     BuyerChat(buyer.user)
@@ -415,9 +427,9 @@ const BuyerChat = async(buyerData)=> {
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
-                    //color: "#fff"
+                    color: "#fff"
                   }}>Message</Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
               {showModal && <Modal
         animationType="slide"
