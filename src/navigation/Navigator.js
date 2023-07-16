@@ -185,11 +185,11 @@ const Navigator = ({showOnBoarding}) => {
       <Stack.Screen name="Contact Us" component={ContactScreen} 
         options = {{
           headerStyle: {
-            backgroundColor: '#593196',
+            // backgroundColor: '#593196',
            // backgroundColor: '#a991d4',
           },
           
-          headerTintColor: "#fff"
+          // headerTintColor: "#fff"
         }}/>
       {/* <Stack.Screen name = "My Cards" component={MyCards} options={{headerShown: false}}/>
       */}

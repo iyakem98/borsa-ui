@@ -1,8 +1,53 @@
 import { View, Text, Pressable, Stylesheet, TextInput, Image, StyleSheet } from "react-native"
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import emailjs from '@emailjs/browser';
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { API_BASE_URL } from "../../utils/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ActivityIndicator } from "react-native";
 const ContactScreen = () => {
-
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
+ 
+  const { user } = useSelector((state) => state.auth)
+  const HandleSubmit = async()=>{
+    
+    try{
+      const config = {
+          headers: {
+              Authorization: `Bearer ${user.token}`
+  
+          }
+      }
+      const {data} = await axios.post(`${API_BASE_URL}users/email/contact-us`, {
+        fullName: fullName,
+        email: email,
+        message: message
+      }, {
+        headers: {
+          Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
+        }
+      })
+      setLoading(false)
+    //  console.log('message sent sucessfully')
+     alert('feedback sent sucessfully')
+      
+     
+  }
+  catch(err){
+      console.log(err)
+}
+  }
+  if(loading){
+    return<>
+    <ActivityIndicator size="large" color="#777" style={{paddingTop: 300}}/>
+    {/* <Text>sending message</Text> */}
+    </>
+  }
   return (
     <View style = {{
         //paddingTop: 20,
@@ -116,12 +161,14 @@ const ContactScreen = () => {
 
           }}>
 
-          <View style = {{
-                    width: "100%",
-                    justifyContent: 'space-around',
-                    flexDirection: 'row',
-                }}>
-                <TextInput placeholder='First Name'
+          {/* <View style = {{
+                    width: 500,
+                    // justifyContent: 'space-around',
+                    // flexDirection: 'row',
+                }}> */}
+                {/* <TextInput placeholder='Name'
+                 value={fullName}
+                 onChangeText={text => setFullName(text)}
                   style = {{
                     width: '43%',
                     //paddingHorizontal: 8,
@@ -133,9 +180,9 @@ const ContactScreen = () => {
                     marginBottom: 16,
   
                   }}
-                  />
+                  /> */}
 
-                <TextInput placeholder='Last Name'
+                {/* <TextInput placeholder='Last Name'
                   style = {{
                     width: '43%',
                     //paddingHorizontal: 8,
@@ -147,13 +194,31 @@ const ContactScreen = () => {
                     marginBottom: 16,
   
                   }}
-                  />
+                  /> */}
   
-                </View>
+                {/* </View> */}
 
-                <TextInput placeholder='Enter your email'
+                  
+                <TextInput placeholder='Name'
+                 value={fullName}
+                 onChangeText={text => setFullName(text)}
                 style = {{
-                  width: '85%',
+                  width: '100%',
+                  paddingHorizontal: 8,
+                  paddingVertical: 8,
+                  borderStyle: 'solid',
+                  borderBottomWidth: 0.5,
+                  borderColor: "lightgray",
+                  fontSize: 18,
+                  marginBottom: 16,
+
+                }}
+                />
+                <TextInput placeholder='Email'
+                 value={email}
+                 onChangeText={text => setEmail(text)}
+                style = {{
+                  width: '100%',
                   paddingHorizontal: 8,
                   paddingVertical: 8,
                   borderStyle: 'solid',
@@ -165,19 +230,23 @@ const ContactScreen = () => {
                 }}
                 />
 
-              <TextInput placeholder='Enter your message'
+              <TextInput placeholder='feedback'
+               value={message}
+               onChangeText={text => setMessage(text)}
                 style = {{
                   width: '100%',
-                  paddingHorizontal: 8,
+                  // paddingHorizontal: 8,
                   paddingVertical: 8,
                   borderStyle: 'solid',
                   borderWidth: 0.5,
-                  height: 220,
+                  height: 100,
                   borderColor: "lightgray",
                   fontSize: 18,
+                  textAlignVertical: "top",
                   marginBottom: 16,
 
                 }}
+                multiline={true}
                 />
 
                 <Pressable style = {{
@@ -190,12 +259,16 @@ const ContactScreen = () => {
                   marginLeft: 'auto',
                   marginRight: 'auto',
 
+                }}
+                onPress={() => {
+                  setLoading(true)
+                  HandleSubmit()
                 }}>
                   <Text style = {{
                     color: 'white',
                     fontSize: 17
                   }}>
-                    Send message
+                    Submit
                   </Text>
                 </Pressable>
 
