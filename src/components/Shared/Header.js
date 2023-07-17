@@ -11,7 +11,8 @@ const Header = ({
   onTextChange,
   textField,
   textData,
-  onBackPress
+  onBackPress,
+  onChange
 }) => {
   const navigation = useNavigation();
 
@@ -33,8 +34,9 @@ const Header = ({
           flex: 1,
         }}>
           <TextInput
-            label="Search"
+            label="Type a word to find a chat"
             value={textData}
+            onChange={() => onChange(true)}
             onChangeText={text => onTextChange(text)}
             mode="outlined"
             autoCapitalize="none"

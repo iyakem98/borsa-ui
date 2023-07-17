@@ -24,6 +24,7 @@ const ChatProvider = ({ children }) => {
   const [loading, setloading] = useState(false)
   const [searchTriggerChange, setsearchTriggerChange] = useState(false)
   const [searchFirstName, setsearchFirstName] = useState(undefined)
+  const [searchIcon, setSearchIcon] = useState(undefined)
   const [activeToday, setactiveToday] = useState(false)
   const [checkContent, setcheckContent] = useState(false)
   const [TtriggerChange, setTtriggerChange] = useState(false)
@@ -104,7 +105,9 @@ const ChatProvider = ({ children }) => {
         travelerFilterDestination,
         setTravelerFilterDestination,
         isLoading,
-        setIsLoading
+        setIsLoading,
+        searchIcon,
+        setSearchIcon
 
 
 

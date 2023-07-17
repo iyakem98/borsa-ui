@@ -20,6 +20,7 @@ import TravelerHeader from '../../components/Connect/TravelerHeader'
 import BuyerHeader from '../../components/Connect/BuyerHeader'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Lottie from 'lottie-react-native';
 import CountryPicker from 'react-native-country-picker-modal'
 import CountryFlag from "react-native-country-flag"
 
@@ -468,7 +469,8 @@ const [bdelivery, setBdelivery] = useState(false)
           <ActivityIndicator style={{
             justifyContent:"center",
             marginTop:"48%",
-            color: 'blue'
+            // color: 'blue'
+            color: 'black'
           }}
           size="large"
           />
@@ -478,9 +480,12 @@ const [bdelivery, setBdelivery] = useState(false)
           
           {loading ? (
             <View style={{
-                paddingTop: "50%"
+                paddingTop: "130%"
             }}>
-              <ActivityIndicator size="large" color="#777" />
+              {/* <ActivityIndicator size="large" color="#777" /> */}
+              <Lottie
+      source={require('../../assets/Animation - 1689355162679.json')}
+    />
             </View>
           ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
             <View style = {{backgroundColor: "white", paddingVertical: 0}}>         

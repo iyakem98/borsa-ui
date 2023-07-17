@@ -259,6 +259,33 @@ const ProfileScreen = ({navigation}) => {
                         
                             <AntDesign name="caretright" size={22} color="lightgray" />
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Contact Us')}
+                        style = {styles.press}>
+                        <View style = {styles.pressView1}>
+                        <View style = {{
+                            backgroundColor: '#a991d4',
+                            backgroundColor: 'orange',
+                            backgroundColor: '#7267e7',
+                            backgroundColor: "#593196",
+                            backgroundColor: '#e8e8e8',
+                            backgroundColor: 'white',
+                            padding: 8,
+                            borderRadius: 50,
+                            marginRight: 10,
+                        }}>
+                            <MaterialIcons name="contact-support" size={24} color="black" />
+                        </View>
+                       
+                        <Text style = {{
+                            fontSize: 17,
+                            fontFamily: "Poppins_400Regular"
+                        }}>
+                            Contact Us
+                            </Text>
+                        </View>
+                        
+                            <AntDesign name="caretright" size={22} color="lightgray" />
+                    </TouchableOpacity>
                    {/* <Pressable onPress={() => navigation.navigate('Security')}
                         style = {styles.press}>
                         <View style = {{
