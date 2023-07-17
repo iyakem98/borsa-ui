@@ -53,12 +53,11 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.borsa",
-      "buildNumber": "23",
+      "buildNumber": "25",
       "infoPlist": {
         "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you.",
         "NSPhotoLibraryUsageDescription": "This identifier will be used for accessing photos in future updates."
       }
-      
     },
     "android": {
       "adaptiveIcon": {
@@ -73,7 +72,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "b5d28df2-3c1c-48e9-873d-3aa415f0b35b"
+        "projectId": "ffb19752-c430-4a49-9393-6bfc2721b436"
       }
     }
   }

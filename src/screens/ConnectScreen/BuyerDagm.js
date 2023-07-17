@@ -38,7 +38,7 @@ const data = [
 
 const width = Dimensions.get("screen").width
 
-const Buyer = ({
+const BuyerDagm = ({
     item,
     onPress
 }) => {
@@ -218,7 +218,7 @@ const BuyerChat = async(buyerData)=> {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
-            setIsFul(true)
+            setIsFul(!ful)
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedBuyer', JSON.stringify([item]));
@@ -227,14 +227,13 @@ const BuyerChat = async(buyerData)=> {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
-            setIsFul(true)
         } else if(isInCart) {
             let filtered = jsonValue.filter(
                 (j) =>
                 j._id != item._id
               );
               await AsyncStorage.setItem('@savedBuyer', JSON.stringify(filtered));
-              setIsFul(false)
+              setIsFul(!ful)
               let newC = ids.filter(
                 (i) =>
                i != item._id
@@ -517,7 +516,7 @@ const BuyerChat = async(buyerData)=> {
     )
 }
 
-export default Buyer
+export default BuyerDagm
 
 const styles = StyleSheet.create({
     container: {

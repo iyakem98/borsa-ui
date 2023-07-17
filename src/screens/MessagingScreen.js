@@ -145,6 +145,7 @@ const MessagingScreen = ({navigation}) => {
   }, [selectedChat])
   useEffect(() =>{
     chatRouteCompare = chatRoute
+    console.log('chattId', chattId)
   }, [])
   
   useEffect(() => {

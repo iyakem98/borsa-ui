@@ -82,7 +82,7 @@ const WelcomeAddPost = () => {
                 color: 'white',
                 fontFamily: "Poppins_400Regular"
             }}>
-               Unlock Seamless Logistics using Borsa, Where Adventurous Travelers and Shippers Find Their Perfect Match!
+               Unlock Seamless Logistics using Borsa, where Adventurous Travelers and Shippers Find Their Perfect Match!
             </Text>
         </View>
 
@@ -91,12 +91,13 @@ const WelcomeAddPost = () => {
           marginBottom: 20,
       }}> 
           <Text style = {{
-              fontSize: 18,
-              color: 'white',
-              fontFamily: "Poppins_400Regular"
-          }}>
-              Do you want to set up your traveler and/or shipper post now?
-          </Text>
+                fontSize: 16,
+                color: 'white',
+                //marginTop: 20,
+                fontFamily: "Poppins_600SemiBold",
+            }}>
+               This is a beta testing version so some features are not fully functional.
+            </Text>
       </View>
   
       <View style = {{
@@ -104,7 +105,7 @@ const WelcomeAddPost = () => {
           width: '100%',
           //paddingHorizontal: 30,
       }}>
-          <Pressable onPress={updateStatusandAddPost}
+          {/*<Pressable onPress={updateStatusandAddPost}
           
         style = {{
               backgroundColor: "#13b955",
@@ -122,23 +123,21 @@ const WelcomeAddPost = () => {
                   Yes
               </Text>
   
-          </Pressable>
+            </Pressable> */}
           <Pressable onPress={onlyUpdateStatus}
             style = {{
-                borderStyle: 'solid',
-                borderWidth: 0.5,
-                borderColor: '#fff',
-                marginHorizontal: 5,
-                paddingHorizontal: 8,
-                paddingVertical: 3,
+                backgroundColor: "#13b955",
                 borderRadius: 8,
+                marginHorizontal: 5,
+                paddingHorizontal: 12,
+                paddingVertical: 3,
             }}>
                <Text style = {{
                   color: 'white',
                   fontFamily: 'Poppins_400Regular',
                   fontSize: 18,
               }}>
-                  Skip
+                Continue
               </Text>
   
           </Pressable>

@@ -467,7 +467,7 @@ const MyCards = () => {
                    <AntDesign name="calendar" size={22} color="#696969" />
                    {"  "+moment(travel.departureDate).format("MM-DD-YY")} 
                    
-                   </Text>
+                   </Text> 
                 ) : (
                   <Text style={{textAlign:"left", marginTop:2, fontSize:17, color:"black"}}>
                   {"  "}
@@ -774,19 +774,41 @@ const MyCards = () => {
                       //backgroundColor: 'red'
 
                     }}>
-                    <Text style={{marginTop:0, fontSize:15, color:"#696969"}}>
-                  {"  "}
-                  <AntDesign name="calendar" size={18} color="#696969" />
-                  {"  "+moment(buyer.startDate).format("DD-MM-YY")} 
-                  
-                  </Text> 
+                      {user.isImperial? (
+                         <Text style={{marginTop:0, fontSize:15, color:"#696969"}}>
+                         {"  "}
+                         <AntDesign name="calendar" size={18} color="#696969" />
+                         {"  "+moment(buyer.startDate).format("MM-DD-YY")} 
+                         
+                         </Text> 
+                      ): (
+                        <Text style={{marginTop:0, fontSize:15, color:"#696969"}}>
+                        {"  "}
+                        <AntDesign name="calendar" size={18} color="#696969" />
+                        {"  "+moment(buyer.startDate).format("DD-MM-YY")} 
+                        
+                        </Text> 
+                      )}
 
-                  <Text style={{marginTop:0, fontSize:15, color:"#696969"}}>
-                  {"   "}
-                  <FontAwesome5 name="calendar-times" size={18} color="#696969" />
-                  {"  "+moment(buyer.endDate).format("DD-MM-YY")} 
-                  
-                  </Text> 
+                      {user.isImperial? (
+                         <Text style={{marginTop:0, fontSize:15, color:"#696969"}}>
+                         {"   "}
+                         <FontAwesome5 name="calendar-times" size={18} color="#696969" />
+                         {"  "+moment(buyer.endDate).format("MM-DD-YY")} 
+                         
+                         </Text> 
+                      ) : (
+                        <Text style={{marginTop:0, fontSize:15, color:"#696969"}}>
+                        {"   "}
+                        <FontAwesome5 name="calendar-times" size={18} color="#696969" />
+                        {"  "+moment(buyer.endDate).format("DD-MM-YY")} 
+                        
+                        </Text> 
+                      )
+                        }
+                   
+
+                 
                     </View>
 
                   

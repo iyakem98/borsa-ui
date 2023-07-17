@@ -140,7 +140,8 @@ const Saved = () => {
             }}>
                 <Text style = {{
                     fontSize: 20,
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    textAlign: 'center',
                 }}>
                     Tap on the cards to start chatting
                 </Text>

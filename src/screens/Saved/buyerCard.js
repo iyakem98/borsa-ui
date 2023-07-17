@@ -1,9 +1,11 @@
-import { Dimensions, Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Image, Pressable, StyleSheet, Text, View, Modal } from 'react-native'
 import React, { useState } from 'react'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
-
+import { ChatState } from '../../context/ChatProvider'
+import axios from 'axios'
+import { API_BASE_URL } from '../../utils/config'
 const width = Dimensions.get("screen").width
 
 const data = [
@@ -35,7 +37,8 @@ const BuyerCard = ({
     item,
     addToWislistTraveler
 }) => {
-    // console.log(item)
+    // const { setchattId } = ChatState();
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading } = ChatState();  
     const navigation = useNavigation()
     const [modalOpen, setModalOpen] = useState(true);
     const locationPickUp = item?.destination.split(", ")
@@ -49,11 +52,49 @@ const BuyerCard = ({
         const item = data.find((item) => item.id === id);
         return item ? item.imageSource : null;
       };
-
+      const BuyerChat = async(buyerData) => {
+        const userId = buyerData._id
+        const userFName = buyerData.firstName
+        
+        // console.log('trav data', travData)
+        // console.log('userId', userId)
+        try{
+            const config = {
+              headers: {
+                  Authorization: `Bearer ${user.token}`
+        
+              }
+          }
+                        navigation.navigate('Messaging', {userSelected:
+                            
+                            buyerData})
+                         setloading(true)
+                        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                        // console.log('data id', data._id)
+                        setchatSelected(true)
+                        setchattId(data._id)
+                        // console.log("chatt id"+  chattId)
+                      
+                        
+                        
+                        
+                
+            }
+            
+            
+        catch(err){
+            console.log(err)
+        }
+    }
+    const BuyerChatToBeAdded = () => {
+        alert('For this Beta version, you have to go to the "Connect" tab to start a new chat')
+    }
     return (
         <Pressable style={styles.container} onPress={()=>{
-            navigation.navigate('Messaging', {userSelected: item.user})
-            console.log("yeeeeeeeee", item?.user)
+            BuyerChat(item.user)
+            // BuyerChatToBeAdded()
+            // setchattId(item._id)
+            // navigation.navigate('Messaging', {userSelected: item.user})
         }}>
             <View style={styles.topWrapper}>
                 <View style={styles.horizontal}>

@@ -1,14 +1,16 @@
 import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
-import { AntDesign, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { Fontisto, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import { API_BASE_URL } from '../../utils/config'
 import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
+import { API_BASE_URL } from '../../utils/config'
 import { showMessage } from "react-native-flash-message";
+
+const width = Dimensions.get("screen").width
 
 const data = [
     { id: '0', imageSource: require('../../../assets/images/avatars/blank-avatar.png') },
@@ -35,43 +37,57 @@ const data = [
     // Add more images as needed
   ];
 
-
-const width = Dimensions.get("screen").width
-
-const Buyer = ({
-    item,
-    onPress
+const TravelerDagm = ({
+    item
 }) => {
-    const buyer = item
-    const dispatch = useDispatch()
+    var changeChat = false
+    let traveler = item
     const { user } = useSelector((state) => state.auth)
     const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
-    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading } = ChatState(); 
+    const { selectedChat, setSelectedChat, chats, setChats, chatSelected, setchatSelected,  chattId, setchattId, loading,  setloading, fetchAgain, setfetchAgain, } = ChatState(); 
+    const dispatch = useDispatch()
     const navigation = useNavigation();
-    const [showModal, setshowModal] = useState(false)
-    const [modal, setModal] = useState(false)
-
-    const getImageSourceById = (id) => {
-        const item = data.find((item) => item.id === id);
-        return item ? item.imageSource : null;
-      };
-
-    const viewDetail = (user) => {
-        alert("detail")
+    var travelerId = useRef(null)
+    const [isBuyer, setIsBuyer] = useState(false)
+    function tweakBuyer() {
+        setIsBuyer(!isBuyer)
     }
-
+var store1 = null
+var store2 = null
+    const [modal, setModal] = useState(false)
+    const [showModal, setshowModal] = useState(false)
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
 
-  useEffect(() => {
-    savedIds()
- }, [ful])
+//   useEffect(() =>{
 
- const [ids, setIds] = useState([])
+//     dispatch(fetchChat())
+//     // console.log(chattts[1])
+    
+  
+// }, [user])
+//   useEffect(() =>{
+
+//     dispatch(fetchChat())
+//     // console.log(chattts[1])
+    
+  
+// }, [])
+
+const getImageSourceById = (id) => {
+    const item = data.find((item) => item.id === id);
+    return item ? item.imageSource : null;
+  };
+
+useEffect(() => {
+   savedIds()
+}, [ful])
+
+const [ids, setIds] = useState([])
 const [ful, setIsFul] = useState(false)
 
 const savedIds = async (id) => {
-    let value = await AsyncStorage.getItem('@savedBuyer');
+    let value = await AsyncStorage.getItem('@savedTravelers');
     let jsonValue = await JSON.parse(value)
 
     let ids = []
@@ -87,110 +103,117 @@ const savedIds = async (id) => {
 }
 
 
-const BuyerChat = async(buyerData)=> {
-    const userId = buyerData._id
+
+    
+const TravelerChat = async(travData) => {
+    // setchattId(13)
+    // console.log('cccc' + chattId)
+    // store2 = true
+//     setchattId(false)
+// setchattId(123)
+// setchattId((state) => {
+//   return state
+// })
+    
+    
+    // setchattId(121)
+    // console.log('ccccddd' + chattId)
+    // console.log('ccccss' + chattId)
+    const userId = travData._id
+    const userFName = travData.firstName
+//   console.log(chattts)
     try{
         const config = {
-            headers: {
-                Authorization: `Bearer ${user.token}`
+          headers: {
+              Authorization: `Bearer ${user.token}`
     
-            }
-        }
-        navigation.navigate('Messaging', {userSelected: buyerData})
-            
-        // // // console.log("loading" + loading)
-         setloading(true)
-        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-        // console.log(data)
-        setchatSelected(true)
-        setchattId(data._id)
-        // console.log("chatt id"+  chattId)
-
-        // if((chattts.length < 0) || chattts != null || chattts != undefined){
-        //     navigation.navigate('Messaging', {userSelected:
-        
-        //         buyerData})
-        //         setloading(false)
-        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-        //     setchatSelected(true)
-        //     setchattId(data._id)
-        // }
-        // else{
-
-        //     chattts.map(async(chat) => {
-        //         if(chat.users[0]._id == userId || chat.users[1]._id == userId){
-        //             navigation.navigate('Messaging', {userSelected:
-                
-        //                 buyerData})
-        //             setloading(true)
-        //             setchatSelected(true)
-        //             setchattId(chat._id)
-        //         }
-
-        //         else {
-        //             navigation.navigate('Messaging', {userSelected:
-        
-        //                 buyerData})
-        //                 setloading(false)
-        //             const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-        //             setchatSelected(true)
-        //             setchattId(data._id)
-        //         }
-    
-        //       })
-        //    /* navigation.navigate('Messaging', {userSelected:
-        
-        //         travData})
-        //         setloading(false)
-        //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-        //     setchatSelected(true)
-        //     setchattId(data._id) */
-        // }
-       
-       {/* if(chattts.length > 0){
-            chattts.map(async(chat) => {
-                console.log("p-=-=-=", chat?.users[1]?._id, userId)
-                if(chat.users[0]._id == userId || chat?.users[1]?._id == userId){
-                    navigation.navigate('Messaging', {userSelected:
-                
-                        buyerData})
-                    setloading(true)
-                    setchatSelected(true)
-                    setchattId(chat._id)
-                }
-                else{
+          }
+      }
+    //   if(!chattts){
+    //     console.log("ghiegwighiewg")
+    //   }
+    //   else{
+    //     console.log(chattts)
+    //     console.log('existing chat')
+    //   }
+     
+//    console.log(chattts)
+                    
+                   
+                    
                    
                     navigation.navigate('Messaging', {userSelected:
-                
-                        buyerData})
-                        setloading(false)
+                        
+                        travData})
+                        
+                    // // // console.log("loading" + loading)
+                     setloading(true)
                     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                    // console.log(data)
                     setchatSelected(true)
                     setchattId(data._id)
-    
-    
-                }
-    
-              })
-
+                    console.log("chatt id"+  chattId)
+                  
+                    
+                    
+                    
+            
         }
-        else{
-            setloading(false)
-            navigation.navigate('Messaging', {userSelected:
         
-                buyerData})
-                setloading(false)
-            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-            setchatSelected(true)
-            setchattId(data._id)
-        } */}
-      
-    }
+        
     catch(err){
         console.log(err)
+    }
 }
-}
+    const createChat = async(chat, userId, travData, userFName ,config)  => {
+        // console.log(userFName)
+        console.log('user[0]' + chat.users[0].firstName)
+        console.log('user[1]' + chat.users[1].firstName)
+        // if(chat.users[0]._id == userId || chat.users[1]._id == userId){
+        if(chat.users[1]._id == userId){
+            console.log('chat exists')
+                navigation.navigate('Messaging', {userSelected:
+            
+                    travData})
+                setloading(true)
+                // console.log("loading" + loading)
+                setchatSelected(true)
+                setchattId(chat._id)
+            }
+            // else if(chat.users[1].firstName != userFName){
+            // else if(chat.latestMessage == null || chat.latestMessage == undefined){
+            //     // console.log(chat.users[1].firstName )
+            //     navigation.navigate('Messaging', {userSelected:
+        
+            //                     travData})
+            //                     setloading(false)
+                            // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                            
+            //                 setchatSelected(true)
+            //                 setchattId(data._id)   
+            // }
 
+
+
+        //     else if(chat.users[0]._id != userId ||chat.users[1]._id != userId){
+        //     // else if(chat.users[1]._id != userId){
+        //         console.log('no chat users')
+        //         // console.log(chat.users[1].firstName)
+        //         // console.log('chat does not exist')
+        //         
+        //     }
+
+    }
+    const createChat2 = async(chat, userId, travData, userFName ,config)  => {
+        navigation.navigate('Messaging', {userSelected:
+        
+                                travData})
+                                setloading(false)
+                            const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                            setchatSelected(true)
+                            setchattId(data._id)   
+        
+    }
     const locationPickUp = item?.destination.split(", ")
     const locationPickUpLength = locationPickUp.length
     const locationDeparture = item?.departure.split(", ")
@@ -199,9 +222,9 @@ const BuyerChat = async(buyerData)=> {
     const addToWislistTraveler = async() => {
         try {
             // await AsyncStorage.removeItem('@savedTravelers')
-          const value = await AsyncStorage.getItem('@savedBuyer');
-          let jsonValue = await JSON.parse(value)
+          const value = await AsyncStorage.getItem('@savedTravelers');
           let isInCart = false
+          let jsonValue = await JSON.parse(value)
           if(value !== null && jsonValue) {
             for (var i = 0; i < jsonValue.length; i++) {
               console.log(jsonValue[i]._id, item?._id)
@@ -212,28 +235,30 @@ const BuyerChat = async(buyerData)=> {
           }
           if(!isInCart && value && value.length) {
             console.log("first")
-            await AsyncStorage.setItem('@savedBuyer', JSON.stringify([...jsonValue, item]));
+            await AsyncStorage.setItem('@savedTravelers', JSON.stringify([...jsonValue, item]));
             showMessage({
                 message: "Success",
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
+            // setIds(ids.push(item._id))
             setIsFul(true)
           } else if(!isInCart) {
             console.log("ses")
-            await AsyncStorage.setItem('@savedBuyer', JSON.stringify([item]));
+            await AsyncStorage.setItem('@savedTravelers', JSON.stringify([item]));
             showMessage({
                 message: "Success",
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
             setIsFul(true)
-        } else if(isInCart) {
+            // setIds(ids.push(item._id))
+          } else if(isInCart) {
             let filtered = jsonValue.filter(
                 (j) =>
                 j._id != item._id
               );
-              await AsyncStorage.setItem('@savedBuyer', JSON.stringify(filtered));
+              await AsyncStorage.setItem('@savedTravelers', JSON.stringify(filtered));
               setIsFul(false)
               let newC = ids.filter(
                 (i) =>
@@ -253,83 +278,11 @@ const BuyerChat = async(buyerData)=> {
 
     return (
         <>
-        <Pressable style={styles.container} onPress={()=>navigation.navigate("Profile", {
-                    theUser: item?.user
-                })}>
-            <View style={styles.topWrapper}>
-                <View style={styles.horizontal}>
-                    {/* <Image
-                        source={{
-                            uri: "https://images.unsplash.com/photo-1681844931547-54cb3b439453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                        }}
-                        style={styles.image}
-                    /> */}
-                    <View style={styles.image}>
-                        <AntDesign name="gift" size={30} color="#555" />
-                    </View>
-                    <View>
-
-                        <Text style={{
-                            fontSize: 17,
-                            fontFamily: "Poppins_500Medium"
-                        }}>{item.item[0]}</Text>
-                       {/* <Pressable onPress={()=>navigation.navigate("Profile", {
-                    theUser: item?.user
-                })}>
-                        <Text style={{
-                            fontSize: 14,
-                            fontFamily: "Poppins_500Medium",
-                            color: "#777"
-                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
-                    </Pressable> */}
-                    </View>
-                </View>
-                <View style={styles.horizontal}>
-                    {user?.isImperial? (
-                         <Text style={{
-                            fontSize: 15,
-                            fontFamily: "Poppins_600SemiBold",
-                        }}>
-                            {(item?.totalWeight*2.20462).toFixed(1)}
-                            <Text style={{
-                                fontFamily: "Poppins_400Regular",
-                                fontSize: 13
-                            }}>lb</Text>
-                        </Text>
-                    ):(
-                         <Text style={{
-                            fontSize: 15,
-                            fontFamily: "Poppins_600SemiBold",
-                        }}>
-                            {(item?.totalWeight*1.0).toFixed(1)}
-                            <Text style={{
-                                fontFamily: "Poppins_400Regular",
-                                fontSize: 13
-                            }}>kg</Text>
-                        </Text>
-                    )}
-                   
-                    {/* <Pressable style={styles.dottedButton} onPress={()=>{
-                        setModalOpen(true)
-                    }}>
-                        <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
-                    </Pressable> */}
-                    <Pressable style={{
-                        //backgroundColor: "#eee",
-                        paddingHorizontal: 12,
-                        paddingVertical: 10,
-                        borderRadius: 7,
-                        marginLeft: 12
-                    }} onPress={addToWislistTraveler}>
-                       {
-                        ids.includes(item._id) || ful ? 
-                        <AntDesign name="heart" size={24} color="#593196" />
-                        :
-                        <AntDesign name="hearto" size={24} color="black" />
-                       }
-                    </Pressable>
-                </View>
-            </View>
+        <Pressable style={styles.container} 
+            onPress={()=>navigation.navigate("Profile", {
+                theUser: item?.user
+            })}>
+  
             <View style={styles.bottomWrapper}>
                 <View>
                     <Text style={styles.txtCountry}>
@@ -353,7 +306,7 @@ const BuyerChat = async(buyerData)=> {
                     <Text style={styles.txtCity}>
                         {locationPickUpLength === 3 ? <>{`${locationPickUp[0]}, ${locationPickUp[1]}`}</> : locationPickUp[0]}
                     </Text>
-                    {/*<Text style={{
+                  {/*  <Text style={{
                         fontFamily: "Poppins_500Medium",
                         fontSize: 12,
                         color: "#777"
@@ -362,43 +315,116 @@ const BuyerChat = async(buyerData)=> {
                 </Text> */}
                 </View>
             </View>
-                <View style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    backgroundColor: "#f5f5f5",
-                    paddingHorizontal: 10,
-                    paddingVertical: 8,
-                    marginTop: 15
+            <View style={styles.topWrapper}>
+                <View style={styles.horizontal}>
+                    {/* <Image
+                        source={{
+                            uri: "https://images.unsplash.com/photo-1681844931547-54cb3b439453?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+                        }}
+                        style={styles.image}
+                    /> */}
+                    <View>
+                <View style = {{
+                    flexDirection: 'row'
                 }}>
-                    <View style = {{
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}>
-
-                <Image source={getImageSourceById(item?.user?.profilePic)} style={{ 
-                        width: 40,
-                        height: 40,
-                        marginTop:0,
-                        marginRight: 5,
-                        // borderRadius: "100%",
-                        borderRadius: 100,
-                        
-                        }} />
-
-                        <View>
-                            <Text style={{
-                                fontSize: 16,
-                                fontFamily: "Poppins_500Medium"
-                            }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
-                        </View>
-
+                   {/* <Text style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins_500Medium",
+                    marginRight: 5,
+                  }}>Departing on:</Text> */}
+                  <AntDesign name="calendar" size={24} color="black" />
+                  <View style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    maxWidth: 300,
+                    marginLeft: 5,
+                  }}>
+                   <Text style = {{
+                    fontSize: 14,
+                    fontWeight: 'bold'
+                   }}>
+                   {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
+                   </Text>
+                  </View>
                 </View>
-              {/*  <View>
+                  
+                </View>
+                    
+                   {/* <View style={styles.image}>
+                        <Fontisto name="shopping-bag" size={28} color="#555" />
+                </View> */}
+                   {/* <View>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "Poppins_500Medium"
+                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                        <Text style={{
+                            fontSize: 12,
+                            fontFamily: "Poppins_500Medium",
+                            color: "#777"
+                        }}>{item?.user?.email}</Text> 
+                    </View> */}
+                </View>
+                <View style={styles.horizontal}>
+                <MaterialIcons name="luggage" size={24} color="#593196" />
+                {user?.isImperial? (
+                         <Text style={{
+                            fontSize: 18,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.luggageSpace*2.20462).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 16
+                            }}>lb</Text>
+                        </Text>
+                    ):(
+                         <Text style={{
+                            fontSize: 18,
+                            fontFamily: "Poppins_600SemiBold",
+                        }}>
+                            {(item?.luggageSpace*1.0).toFixed(1)}
+                            <Text style={{
+                                fontFamily: "Poppins_400Regular",
+                                fontSize: 16
+                            }}>Kg</Text>
+                        </Text>
+                    )}
+                    {/* <Pressable style={styles.dottedButton} onPress={()=>{
+                        setModalOpen(true)
+                    }}>
+                        <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
+                    </Pressable> */}
+                    <Pressable style={{
+                        //backgroundColor: "#eee",
+                        paddingHorizontal: 12,
+                        paddingVertical: 10,
+                        borderRadius: 7,
+                        marginLeft: 12
+                    }} onPress={addToWislistTraveler}>
+                       {
+                        ids.includes(item._id) || ful ? 
+                        <AntDesign name="heart" size={24} color="#13b955" />
+                        :
+                        <AntDesign name="hearto" size={24} color="black" />
+                       }
+                    </Pressable>
+                </View>
+            </View>
+            <View style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                backgroundColor: "#f5f5f5",
+                paddingHorizontal: 10,
+                paddingVertical: 8,
+                marginTop: 10
+              }}>
+               {/* <View>
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
-                  }}>All Items</Text>
+                  }}>Excluded Items</Text>
                   <View style={{
                     flexDirection: "row",
                     alignItems: "center",
@@ -416,13 +442,64 @@ const BuyerChat = async(buyerData)=> {
                     }) : null}
                   </View>
                 </View> */}
+               {/* <View>
+                  <Text style={{
+                    fontSize: 14,
+                    fontFamily: "Poppins_500Medium",
+                  }}>Departure:</Text>
+                  <View style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    maxWidth: 300
+                  }}>
+                   <Text style = {{
+                    fontSize: 14
+                   }}>
+                   {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
+                   </Text>
+                  </View>
+                </View> */}
+
+               <Pressable onPress={()=>navigation.navigate("Profile", {
+                    theUser: item?.user
+                })}>
+                <View style = {{
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                }}>
+
+            <Image source={getImageSourceById(item?.user?.profilePic)} style={{ 
+                    width: 40,
+                    height: 40,
+                    marginTop:0,
+                    marginRight: 5,
+                    // borderRadius: "100%",
+                    borderRadius: 100,
+                    
+                    }} />
+
+                     <View>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "Poppins_500Medium"
+                        }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
+                    </View>
+
+                </View>
+                </Pressable>
+
+               
                 <Pressable style={{
-                  backgroundColor: "#593196",
+                  backgroundColor: "#13b955",
+                  //backgroundColor: 'navy',
+                  //backgroundColor: '#009cdc',
                   paddingHorizontal: 20,
                   paddingVertical: 8,
                   borderRadius: 8
                 }} onPress={()=>{
-                    BuyerChat(buyer.user)
+                    store1 = true
+                    setchattId(null)
+                    TravelerChat(traveler.user)
                 }}>
                   <Text style={{
                     fontSize: 16,
@@ -431,7 +508,8 @@ const BuyerChat = async(buyerData)=> {
                   }}>Message</Text>
                 </Pressable>
               </View>
-              {showModal && <Modal
+        </Pressable>
+        <Modal
         animationType="slide"
         transparent={true}
         visible={modal}
@@ -449,59 +527,55 @@ const BuyerChat = async(buyerData)=> {
                     }}>
                         <Text style = {{
                             fontSize: 20,
-                        }}>{buyer.user.firstName+' '+buyer.user.lastName}</Text>
+                        }}>{traveler?.user?.firstName+' '+traveler?.user?.lastName}</Text>
                     </View>
 
                   {/*  <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
-                        // flex: 1,
                         flexDirection:"row"
                     }}> */}
-                       {/* <Ionicons name="location" size={20} color="black" /> */}
-                        {/* <Text> &nbsp; &nbsp; {buyer.user.address}</Text> */}
-                        {/*<Text>{buyer.user.address}</Text> 
-                    </View> */}
+                      {/*  <Ionicons name="location" size={20} color="black" />
+                       {/* <Text> &nbsp; &nbsp; {traveler.user.address}</Text> */}
+                      {/* <Text>{traveler.user.address}</Text> */}
+                   {/* </View> */}
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
-                        // flex: 1,
                         flexDirection:"row"
                     }}>
-                         <Foundation name="shopping-bag" size={30} color="black" />
-                         {/* <Text> &nbsp; &nbsp; {buyer.item}</Text> */}
-                         <Text style = {{
-                            fontSize: 22
-                         }}>{buyer.item}</Text>
+                         {/*<Foundation name="shopping-bag" size={20} color="black" />
+                         {/* <Text> &nbsp; &nbsp; Unknown</Text> */}
+                        {/* <Text>Unknown</Text> */}
                     </View>
 
-                  {/*  <View style={{
-                        marginTop:10,
+                    <View style={{
+                        marginTop:1,
                         fontSize:18,
                         // display:"flex",
-                        // flex: 1,
                         flexDirection:"row"
-                    }}> */}
-                        {/* <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-                         {/* <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text> */}
-                        {/* <Text>{buyer.TotalWeight}</Text>
-                    </View> */}
+                    }}>
+                         <MaterialCommunityIcons name="weight-kilogram" size={30} color="black" />
+                         {/* <Text> &nbsp; &nbsp; {traveler.luggageSpace}</Text> */}
+                         <Text style = {{
+                            fontSize: 22,
+                         }}>{traveler.luggageSpace}</Text>
+                    </View>
 
                     <View style={{
                         marginTop:10,
                         fontSize:18,
                         // display:"flex",
-                        // flex: 1,
                         flexDirection:"row"
                     }}>
                         <MaterialIcons name="pending-actions" size={30} color="black" />
-                        {/* <Text> &nbsp; &nbsp; {buyer.status}</Text> */}
+                        {/* <Text> &nbsp; &nbsp; {traveler.status}</Text> */}
                         <Text style = {{
-                            fontSize: 22,
-                        }}>{buyer.status}</Text>
+                            fontSize: 20,
+                        }}>{traveler.status}</Text>
                     </View>
 
             <Pressable
@@ -511,42 +585,40 @@ const BuyerChat = async(buyerData)=> {
             </Pressable>
           </View>
         </View>
-      </Modal>}
-        </Pressable>
+        </Modal>
         </>
     )
 }
 
-export default Buyer
+export default TravelerDagm
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
-        //height: 250,
-        width: '98%',
+        // height: 150,
+        width: '100%',
         marginBottom: 15,
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "#eee",
         borderRadius: 5,
         paddingTop: 20,
-        //justifyContent: "space-between",
+        justifyContent: "space-between",
         overflow: "hidden"
     },
     image: {
         height: 50,
         width: 50,
         borderRadius: 5,
-        //marginRight: 10,
+        marginRight: 10,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
     },
     topWrapper: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 10,
-        marginBottom: 10,
+        paddingHorizontal: 12,
         // paddingRight: 20
     },
     txtCountry: {
@@ -563,8 +635,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        //marginTop: 2,
-        //paddingVertical: 5,
+        marginBottom: 10,
         paddingHorizontal: 10,
     },
     horizontal: {
@@ -597,14 +668,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22,
-    },
     modalView: {
         margin: 20,
+        marginTop: 200,
         backgroundColor: 'white',
         borderRadius: 20,
         padding: 35,
@@ -617,26 +683,26 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-    },
-    button: {
+      },
+      button: {
         borderRadius: 20,
-        padding: 10,
+        padding: 5,
         elevation: 2,
-    },
-    buttonOpen: {
+      },
+      buttonOpen: {
         backgroundColor: '#593196',
-    },
-    buttonClose: {
-        //backgroundColor: '#593196',
-    },
-    textStyle: {
+      },
+      buttonClose: {
+        //backgroundColor: 'red',
+      },
+      textStyle: {
         color: 'red',
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize:30
-    },
+      },
       modalText: {
         marginBottom: 16,
         textAlign: 'center',
-    },
+      },
 })

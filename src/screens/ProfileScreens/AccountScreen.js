@@ -115,7 +115,7 @@ const AccountScreen = () => {
       "firstName": capitalizeFirstLetter(firstName),
       "lastName": capitalizeFirstLetter(lastName),
       "userName": userName,
-      "email": email.lowecase(),
+      "email": email.toLowerCase(),
       "isTraveler": true,
       "isBuyer": true,
       "address": address,

@@ -418,12 +418,13 @@ const Description = ({navigation}) => {
 
                 <Pressable style={{
                     backgroundColor: "#13b955",
+                    backgroundColor: "#514590",
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,
                     width: "100%",
                     position: "absolute",
-                    bottom: 0,
+                    bottom: 20,
                     left: 15
                 }} onPress={()=>postTraveler()}>
                     <Text style={{
