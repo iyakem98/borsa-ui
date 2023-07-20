@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Stylesheet, TextInput, Image, StyleSheet } from "react-native"
+import { View, Text, Pressable, Stylesheet, TextInput, Image, StyleSheet, KeyboardAvoidingView, SafeAreaView, Dimensions } from "react-native"
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import emailjs from '@emailjs/browser';
 import { useState } from "react";
@@ -8,6 +8,8 @@ import { API_BASE_URL } from "../../utils/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator } from "react-native";
 const ContactScreen = () => {
+  const height = Dimensions.get('window').height
+const width = Dimensions.get('window').width
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
@@ -49,6 +51,16 @@ const ContactScreen = () => {
     </>
   }
   return (
+    <SafeAreaView style={{
+      flex: 1,
+      backgroundColor: "#fff",
+      height: height
+    }}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : ''} style={{
+        position: "relative",
+        flex: 1,
+        height: height - 200
+      }}>
     <View style = {{
         //paddingTop: 20,
         backgroundColor: "#fff",
@@ -277,6 +289,8 @@ const ContactScreen = () => {
 
         </View>
     </View>
+    </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 
