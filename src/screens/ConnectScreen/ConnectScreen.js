@@ -352,13 +352,11 @@ const [bdelivery, setBdelivery] = useState(false)
     useEffect(() => {   
       getUsers()
       setPageLimTraveler(totTraveler)
-      
     }, [pageBuyer, pageTraveler])
  
     const changeBuyerPage = () => {
       setLoadingBuyer(true)
       setPageBuyer(pageBuyer+1)
-      //setLoadingBuyer(true)
     }
 
     const changeTravelerPage = () => {

@@ -64,6 +64,14 @@ const Buyer = ({
   const [image, setImage] = useState(def);
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+          setIds([])
+          savedIds()
+    });
+    return unsubscribe;
+ }, [navigation]);
+
+  useEffect(() => {
     savedIds()
  }, [ful])
 
@@ -219,6 +227,7 @@ const BuyerChat = async(buyerData)=> {
                 type: "success",
             });
             setIsFul(true)
+            savedIds()
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedBuyer', JSON.stringify([item]));
@@ -228,6 +237,7 @@ const BuyerChat = async(buyerData)=> {
                 type: "success",
             });
             setIsFul(true)
+            savedIds()
         } else if(isInCart) {
             let filtered = jsonValue.filter(
                 (j) =>
@@ -240,6 +250,7 @@ const BuyerChat = async(buyerData)=> {
                i != item._id
               );
               setIds(newC)
+              savedIds()
             showMessage({
                 message: "Item Removed",
                 description: `Item removed from wishlist!`,
@@ -322,7 +333,7 @@ const BuyerChat = async(buyerData)=> {
                         marginLeft: 12
                     }} onPress={addToWislistTraveler}>
                        {
-                        ids.includes(item._id) || ful ? 
+                        ids.includes(item._id) ? 
                         <AntDesign name="heart" size={24} color="#593196" />
                         :
                         <AntDesign name="hearto" size={24} color="black" />

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { API_BASE_URL } from '../../utils/config'
-import { showMessage } from "react-native-flash-message";
+import { FlashMessageTransition, showMessage } from "react-native-flash-message";
 
 const width = Dimensions.get("screen").width
 
@@ -58,7 +58,6 @@ var store2 = null
     const [showModal, setshowModal] = useState(false)
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
-
 //   useEffect(() =>{
 
 //     dispatch(fetchChat())
@@ -70,14 +69,20 @@ var store2 = null
 
 //     dispatch(fetchChat())
 //     // console.log(chattts[1])
-    
-  
 // }, [])
 
 const getImageSourceById = (id) => {
     const item = data.find((item) => item.id === id);
     return item ? item.imageSource : null;
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+          setIds([])
+          savedIds()
+    });
+    return unsubscribe;
+ }, [navigation]);
 
 useEffect(() => {
    savedIds()
@@ -243,6 +248,7 @@ const TravelerChat = async(travData) => {
             });
             // setIds(ids.push(item._id))
             setIsFul(true)
+            savedIds()
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedTravelers', JSON.stringify([item]));
@@ -252,6 +258,7 @@ const TravelerChat = async(travData) => {
                 type: "success",
             });
             setIsFul(true)
+            savedIds()
             // setIds(ids.push(item._id))
           } else if(isInCart) {
             let filtered = jsonValue.filter(
@@ -265,6 +272,7 @@ const TravelerChat = async(travData) => {
                i != item._id
               );
               setIds(newC)
+              savedIds()
             showMessage({
                 message: "Item Removed",
                 description: `Item removed from wishlist!`,
@@ -403,8 +411,8 @@ const TravelerChat = async(travData) => {
                         marginLeft: 12
                     }} onPress={addToWislistTraveler}>
                        {
-                        ids.includes(item._id) || ful ? 
-                        <AntDesign name="heart" size={24} color="#13b955" />
+                        ids.includes(item._id) ? 
+                        <AntDesign name="heart" size={24} color="#13b955" />  
                         :
                         <AntDesign name="hearto" size={24} color="black" />
                        }
