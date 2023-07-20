@@ -1,6 +1,6 @@
-import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Dimensions, Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
-import { Fontisto, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons'
+import { Fontisto, Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, AntDesign } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ChatState } from '../../context/ChatProvider'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { API_BASE_URL } from '../../utils/config'
-import { showMessage } from "react-native-flash-message";
+import { FlashMessageTransition, showMessage } from "react-native-flash-message";
 
 const width = Dimensions.get("screen").width
 
@@ -58,7 +58,6 @@ var store2 = null
     const [showModal, setshowModal] = useState(false)
     const [def, setDef] = useState("https://www.hollywoodreporter.com/wp-content/uploads/2023/01/GettyImages-1319690076-H-2023.jpg?w=1296")
   const [image, setImage] = useState(def);
-
 //   useEffect(() =>{
 
 //     dispatch(fetchChat())
@@ -70,8 +69,6 @@ var store2 = null
 
 //     dispatch(fetchChat())
 //     // console.log(chattts[1])
-    
-  
 // }, [])
 
 const getImageSourceById = (id) => {
@@ -79,73 +76,100 @@ const getImageSourceById = (id) => {
     return item ? item.imageSource : null;
   };
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+          setIds([])
+          savedIds()
+    });
+    return unsubscribe;
+ }, [navigation]);
+
 useEffect(() => {
-   
-    // setchattId(null)
-}, [chattId])
+   savedIds()
+}, [ful])
+
+const [ids, setIds] = useState([])
+const [ful, setIsFul] = useState(false)
+
+const savedIds = async (id) => {
+    let value = await AsyncStorage.getItem('@savedTravelers');
+    let jsonValue = await JSON.parse(value)
+
+    let ids = []
+
+    if(value !== null && jsonValue) {
+      for (var i = 0; i < jsonValue.length; i++) {
+        ids.push(jsonValue[i]?._id)
+      }
+
+      setIds(ids)
+    }
+
+}
+
 
 
     
-    const TravelerChat = async(travData) => {
-        // setchattId(13)
-        // console.log('cccc' + chattId)
-        // store2 = true
-    //     setchattId(false)
-    // setchattId(123)
-    // setchattId((state) => {
-    //   return state
-    // })
-        
-        
-        // setchattId(121)
-        // console.log('ccccddd' + chattId)
-        // console.log('ccccss' + chattId)
-        const userId = travData._id
-        const userFName = travData.firstName
-    //   console.log(chattts)
-        try{
-            const config = {
-              headers: {
-                  Authorization: `Bearer ${user.token}`
-        
-              }
+const TravelerChat = async(travData) => {
+    // setchattId(13)
+    // console.log('cccc' + chattId)
+    // store2 = true
+//     setchattId(false)
+// setchattId(123)
+// setchattId((state) => {
+//   return state
+// })
+    
+    
+    // setchattId(121)
+    // console.log('ccccddd' + chattId)
+    // console.log('ccccss' + chattId)
+    const userId = travData._id
+    const userFName = travData.firstName
+//   console.log(chattts)
+    try{
+        const config = {
+          headers: {
+              Authorization: `Bearer ${user.token}`
+    
           }
-        //   if(!chattts){
-        //     console.log("ghiegwighiewg")
-        //   }
-        //   else{
-        //     console.log(chattts)
-        //     console.log('existing chat')
-        //   }
-         
+      }
+    //   if(!chattts){
+    //     console.log("ghiegwighiewg")
+    //   }
+    //   else{
+    //     console.log(chattts)
+    //     console.log('existing chat')
+    //   }
+     
 //    console.log(chattts)
+                    
+                   
+                    
+                   
+                    navigation.navigate('Messaging', {userSelected:
                         
-                       
+                        travData})
                         
-                       
-                        navigation.navigate('Messaging', {userSelected:
-                            
-                            travData})
-                            
-                        // // // console.log("loading" + loading)
-                         setloading(true)
-                        const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-                        // console.log(data)
-                        setchatSelected(true)
-                        setchattId(data._id)
-                        console.log("chatt id"+  chattId)
-                      
-                        
-                        
-                        
-                
-            }
+                    // // // console.log("loading" + loading)
+                     setloading(true)
+                    const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
+                    // console.log(data)
+                    setchatSelected(true)
+                    setchattId(data._id)
+                    console.log("chatt id"+  chattId)
+                  
+                    
+                    
+                    
             
-            
-        catch(err){
-            console.log(err)
         }
+        
+        
+    catch(err){
+        console.log(err)
     }
+}
     const createChat = async(chat, userId, travData, userFName ,config)  => {
         // console.log(userFName)
         console.log('user[0]' + chat.users[0].firstName)
@@ -222,6 +246,9 @@ useEffect(() => {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
+            // setIds(ids.push(item._id))
+            setIsFul(true)
+            savedIds()
           } else if(!isInCart) {
             console.log("ses")
             await AsyncStorage.setItem('@savedTravelers', JSON.stringify([item]));
@@ -230,12 +257,26 @@ useEffect(() => {
                 description: `Item added to wishlist successfully!`,
                 type: "success",
             });
+            setIsFul(true)
+            savedIds()
+            // setIds(ids.push(item._id))
           } else if(isInCart) {
-            console.log("asdsad")
+            let filtered = jsonValue.filter(
+                (j) =>
+                j._id != item._id
+              );
+              await AsyncStorage.setItem('@savedTravelers', JSON.stringify(filtered));
+              setIsFul(false)
+              let newC = ids.filter(
+                (i) =>
+               i != item._id
+              );
+              setIds(newC)
+              savedIds()
             showMessage({
-                message: "Already Exists",
-                description: `Item already exists in wishlist!`,
-                type: "warning",
+                message: "Item Removed",
+                description: `Item removed from wishlist!`,
+                type: "success",
             });
           }
         } catch (e) {
@@ -333,7 +374,7 @@ useEffect(() => {
                     </View> */}
                 </View>
                 <View style={styles.horizontal}>
-                <MaterialIcons name="luggage" size={24} color="#000" />
+                <MaterialIcons name="luggage" size={24} color="#13b955" />
                 {user?.isImperial? (
                          <Text style={{
                             fontSize: 18,
@@ -362,28 +403,20 @@ useEffect(() => {
                     }}>
                         <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
                     </Pressable> */}
-                    <TouchableOpacity style={{
-                        backgroundColor: "#eee",
+                    <Pressable style={{
+                        //backgroundColor: "#eee",
                         paddingHorizontal: 12,
-                        paddingVertical: 6,
+                        paddingVertical: 10,
                         borderRadius: 7,
-                        marginLeft: 12,
-                        borderStyle: 'solid',
-                        //borderWidth: '0.8'
+                        marginLeft: 12
                     }} onPress={addToWislistTraveler}>
-                       {/* <Text style={{
-                            color: "red",
-                        }}>Save</Text> */}
-                        <Text style = {{
-                            //color: '#13b955',
-                            //color: "red",
-                            //color: '#593196',
-                            fontWeight: 500,
-                        }}>
-                            Save
-                        </Text>
-                         {/*<AntDesign name="hearto" size={24} color="black" />*/}
-                    </TouchableOpacity>
+                       {
+                        ids.includes(item._id) ? 
+                        <AntDesign name="heart" size={24} color="#13b955" />  
+                        :
+                        <AntDesign name="hearto" size={24} color="black" />
+                       }
+                    </Pressable>
                 </View>
             </View>
             <View style={{
@@ -460,27 +493,17 @@ useEffect(() => {
                         }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
                     </View>
 
-                    <View style = {{
-                        marginLeft: 6,
-                    }}>
-                    <FontAwesome name="paper-plane" size={17} color="#13b955" />
-                    </View>
-
                 </View>
                 </Pressable>
 
                
-                <TouchableOpacity style={{
-                  //backgroundColor: "#13b955",
+                <Pressable style={{
+                  backgroundColor: "#13b955",
                   //backgroundColor: 'navy',
                   //backgroundColor: '#009cdc',
                   paddingHorizontal: 20,
-                  paddingVertical: 6,
-                  borderRadius: 8,
-                  borderStyle: 'solid',
-                  borderWidth: 1.5,
-                  //borderColor: '#13b955',
-                  backgroundColor: 'white',
+                  paddingVertical: 8,
+                  borderRadius: 8
                 }} onPress={()=>{
                     store1 = true
                     setchattId(null)
@@ -489,10 +512,9 @@ useEffect(() => {
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
-                    //color: '#13b955',
-                    //color: "#fff"
+                    color: "#fff"
                   }}>Message</Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
         </Pressable>
         <Modal
@@ -513,8 +535,7 @@ useEffect(() => {
                     }}>
                         <Text style = {{
                             fontSize: 20,
-                        }}>{traveler?.user?.firstName+' '+traveler?.user?.lastName} 
-                        </Text>
+                        }}>{traveler?.user?.firstName+' '+traveler?.user?.lastName}</Text>
                     </View>
 
                   {/*  <View style={{
@@ -606,7 +627,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 12,
-        paddingBottom: 10,
         // paddingRight: 20
     },
     txtCountry: {

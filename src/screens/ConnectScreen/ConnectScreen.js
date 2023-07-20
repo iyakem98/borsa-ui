@@ -21,6 +21,9 @@ import BuyerHeader from '../../components/Connect/BuyerHeader'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Lottie from 'lottie-react-native';
+import CountryPicker from 'react-native-country-picker-modal'
+import CountryFlag from "react-native-country-flag"
+
 const width = Dimensions.get("screen").width
 
 const ConnectScreen = () => {
@@ -77,6 +80,56 @@ const ConnectScreen = () => {
     const [pageLimBuyer, setPageLimBuyer] = useState(0)
     const [pageLimTraveler, setPageLimTraveler] = useState(0)
 
+    const [ccc, setCcc] = useState(null)
+
+    const onSelectTravelerSource = (country) => {
+      console.log("ccc", country)
+      setCcc(country)
+      if(country.name=="United States"){
+        setTravelerS("USA")
+      }else{
+        setTravelerS(country.name)
+      }
+      setTravelerSF(country.cca2)
+      setTpickup(false)
+    }
+
+    const onSelectTravelerDestination = (country) => {
+      console.log("ccc", country)
+      setCcc(country)
+      if(country.name=="United States"){
+        setTravelerD("USA")
+      }else{
+        setTravelerD(country.name)
+      }
+      setTravelerDF(country.cca2)
+      setTdelivery(false)
+    }
+
+    const onSelectBuyerSource = (country) => {
+      console.log("ccc", country)
+      setCcc(country)
+      if(country.name=="United States"){
+        setBuyerS("USA")
+      }else{
+        setBuyerS(country.name)
+      }
+      setBuyerSF(country.cca2)
+      setBpickup(false)
+    }
+
+    const onSelectBuyerDestination = (country) => {
+      console.log("ccc", country)
+      setCcc(country)
+      if(country.name=="United States"){
+        setBuyerD("USA")
+      }else{
+        setBuyerD(country.name)
+      }
+      setBuyerDF(country.cca2)
+      setBdelivery(false)
+    }
+
 
     const [loading, setloading] = useState(true)
     const [loadingBuyer, setLoadingBuyer] = useState(false)
@@ -91,9 +144,13 @@ const ConnectScreen = () => {
 
     const [buyerS, setBuyerS] = useState("")
     const [buyerD, setBuyerD] = useState("")
+    const [buyerSF, setBuyerSF] = useState("")
+    const [buyerDF, setBuyerDF] = useState("")
 
     const [travelerS, setTravelerS] = useState("")
     const [travelerD, setTravelerD] = useState("")
+    const [travelerSF, setTravelerSF] = useState("")
+    const [travelerDF, setTravelerDF] = useState("")
 
     const findBuyerPickup = (ar) => {
       let lngth = ar.length
@@ -233,9 +290,6 @@ const filterTravelers =  async () => {
       y = y.replace(" ", "")
       console.log("yyyyy", y, travelerD)
 
-      // if(x===travelerS){
-      //   console.log("got one here", x, travelerS)
-      // }
      if(travelerD && travelerS){
          if(travelerS && travelerS==x && travelerD && travelerD==y){
         filteredTravels.push(travel[i])
@@ -273,28 +327,36 @@ const filterTravelers =  async () => {
   }
 }
 
-const handleClear = () => {
-  setTravelerS("")
+          const handleClear = () => {
+                        setTravelerS("")
+                        setTravelerSF("")
                         setTravelerD("")
+                        setTravelerDF("")
                         setBuyerD("")
+                        setBuyerDF("")
                         setBuyerS("")
+                        setBuyerSF("")
                         setPageBuyer(1)
                         setPageTraveler(1)
                         setTravelersStatus("All")
                         getUsers()
 }
 
+const [tpickup, setTpickup] = useState(false)
+const [tdelivery, setTdelivery] = useState(false)
+
+const [bpickup, setBpickup] = useState(false)
+const [bdelivery, setBdelivery] = useState(false)
+
 
     useEffect(() => {   
       getUsers()
       setPageLimTraveler(totTraveler)
-      
     }, [pageBuyer, pageTraveler])
  
     const changeBuyerPage = () => {
       setLoadingBuyer(true)
       setPageBuyer(pageBuyer+1)
-      //setLoadingBuyer(true)
     }
 
     const changeTravelerPage = () => {
@@ -358,14 +420,6 @@ const handleClear = () => {
         paddingBottom: 15,
         marginTop: 7
       }}>
-          {/*   {loadingBuyer &&  
-                    <View style={{
-                      //height: 20000,
-                      backgroundColor: 'yellow'
-                  }}>
-                    <ActivityIndicator size="large" color="#777" />
-                  </View>
-                  } */}
                  
         <View style={{
           flexDirection: "row",
@@ -533,6 +587,7 @@ const handleClear = () => {
                 
                             <TouchableOpacity onPress={()=>{
                               clearFilterBuyer()
+                              handleClear()
                               getUsers()
                             }}
                                 style = {{
@@ -550,12 +605,7 @@ const handleClear = () => {
                                   width: '100%',
                                   alignItems: 'center',
                                 }}>
-                                  <Text style = {{
-                                    fontFamily: "Poppins_400Regular",
-                                    color: 'red',
-                                  }}>
-                                    Filter results are based on country only 
-                                  </Text>
+                                 
                                 </View>
                                 <Text style={{
                                     marginTop: 20,
@@ -580,38 +630,54 @@ const handleClear = () => {
                                    
                                    <View style={styles.container}>
                 
-                
-                                <GooglePlacesAutocomplete
-                                        placeholder='Enter pickup location of shipper'
-                                        // fix picking buyer pickup
-                                        onPress={(value)=>findBuyerPickup(value.terms)}
-                                        query={{
-                                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
-                                            language: 'en',
-                                            types: '(cities)'
-                                        }}
-                                        //keyboardAppearance= {'dark'}
-                                        styles={{
-                                          textInputContainer: {
-                                            // backgroundColor: 'grey',
-                                          },
 
+{!buyerS && (
+      <View style={{
+        width:"100%", 
+        backgroundColor:"#f6f6fb",
+        height:40,
+        padding:5,
+        display:"flex",
+        alignContent:"center",
+        alignItems:"center",
+        fontSize:20,
+      }}>
+      <CountryPicker
+          withFlag
+          onSelect={onSelectBuyerSource}
+          styles={{
+             fontFamily:"Poppins_400Regular",
+          }}
+      />
+      </View>
+       )}
 
-                                          textInput: {
-                                            borderWidth: 0.4,
-                                            borderStyle: "solid",
-                                            borderColor: "#000",
-                                            width:300,
-                                            color: '#5d5d5d',
-                                            //fontSize: 16,
-                                            borderRadius:5,
-                                            marginTop: 10,
-                                          },
-                                          predefinedPlacesDescription: {
-                                            color: '#1faadb',
-                                          },
-                                        }}
-                                        />
+          {buyerS && !bpickup && (
+            <Pressable
+            onPress={()=>setBuyerS("")}
+            style={{
+              width:"100%", 
+              backgroundColor:"#f6f6fb",
+              height:40,
+              padding:5,
+              display:"flex",
+              alignContent:"center",
+              alignItems:"center"
+            }}>
+
+        
+                <View style={{flexDirection:"row"}}>
+              <Text style={{fontSize:17, fontFamily: "Poppins_400Regular",}}>
+                {buyerS} 
+              </Text>
+              <Text style={{marginLeft:20, marginTop:5}}>
+                <CountryFlag isoCode={buyerSF} size={10} />
+              </Text>
+              </View>
+      
+     
+      </Pressable>
+      )}
                 
                                 </View>
                                 </View>
@@ -635,33 +701,53 @@ const handleClear = () => {
                                 }}>
                                     
                 
-                                <GooglePlacesAutocomplete
-                                        placeholder='Enter destination location of shipper'
-                                        onPress={(value)=>findBuyerDestination(value.terms)}
-                                        query={{
-                                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
-                                            language: 'en',
-                                            types: '(cities)'
-                                        }}
-                                        styles={{
-                                          textInputContainer: {
-                                            // backgroundColor: 'grey',
-                                          },
-                                          textInput: {
-                                            borderColor: "#000",
-                                            borderWidth: 0.4,
-                                            borderStyle: "solid",
-                                            width:300,
-                                            color: '#5d5d5d',
-                                            //fontSize: 16,
-                                            borderRadius:5,
-                                            marginTop: 10,
-                                          },
-                                          predefinedPlacesDescription: {
-                                            color: '#1faadb',
-                                          },
-                                        }}
-                                        />
+{!buyerD && (
+      <View style={{
+        width:"100%", 
+        backgroundColor:"#f6f6fb",
+        height:40,
+        padding:5,
+        display:"flex",
+        alignContent:"center",
+        alignItems:"center",
+        fontSize:20,
+      }}>
+      <CountryPicker
+          withFlag
+          onSelect={onSelectBuyerDestination}
+          styles={{
+             fontFamily:"Poppins_400Regular",
+          }}
+      />
+      </View>
+       )}
+
+          {buyerD && !bdelivery && (
+            <Pressable
+            onPress={()=>setBdelivery("")}
+            style={{
+              width:"100%", 
+              backgroundColor:"#f6f6fb",
+              height:40,
+              padding:5,
+              display:"flex",
+              alignContent:"center",
+              alignItems:"center"
+            }}>
+
+        
+                <View style={{flexDirection:"row"}}>
+              <Text style={{fontSize:17, fontFamily: "Poppins_400Regular",}}>
+                {buyerD} 
+              </Text>
+              <Text style={{marginLeft:20, marginTop:5}}>
+                <CountryFlag isoCode={buyerDF} size={10} />
+              </Text>
+              </View>
+      
+     
+      </Pressable>
+      )}
                                 </View>
                                 </ScrollView>
                                 <View style = {{
@@ -853,6 +939,7 @@ const handleClear = () => {
                 
                             <TouchableOpacity onPress={()=>{
                               clearFilterTraveler()
+                              handleClear()
                               getTravelers()
                             }}
                                 style = {{
@@ -871,12 +958,7 @@ const handleClear = () => {
                                   width: '100%',
                                   alignItems: 'center',
                                 }}>
-                                  <Text style = {{
-                                    fontFamily: "Poppins_400Regular",
-                                    color: 'red',
-                                  }}>
-                                    Filter results are based on country only 
-                                  </Text>
+                                
                                 </View>
                                 
                                 <Text style={{
@@ -885,7 +967,7 @@ const handleClear = () => {
                                     fontFamily: "Poppins_400Regular",
                                     //fontSize: 18,
                                 }}>
-                                    Pickup Location
+                                    Flying from
                                 </Text>
                                 <View style={{
                                     borderWidth: 1,
@@ -901,36 +983,56 @@ const handleClear = () => {
                                     
                                    
                                    <View style={styles.container}>
-                
-                
-                                <GooglePlacesAutocomplete
-                                        placeholder='Enter source location of traveler'
-                                        onPress={(value)=>findTravelerPickup(value.terms)}
-                                        query={{
-                                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
-                                            language: 'en',
-                                            types: '(cities)'
-                                        }}
-                                        //keyboardAppearance= {'dark'}
-                                        styles={{
-                                          textInputContainer: {
-                                            // backgroundColor: 'grey',
-                                          },
-                                          textInput: {
-                                            borderWidth: 0.4,
-                                            borderStyle: "solid",
-                                            borderColor: "#000",
-                                            width:300,
-                                            color: '#5d5d5d',
-                                            //fontSize: 16,
-                                            borderRadius:5,
-                                            marginTop: 10,
-                                          },
-                                          predefinedPlacesDescription: {
-                                            color: '#1faadb',
-                                          },
-                                        }}
-                                        />
+
+
+       {!travelerS && (
+      <View style={{
+        width:"100%", 
+        backgroundColor:"#f6f6fb",
+        height:40,
+        padding:5,
+        display:"flex",
+        alignContent:"center",
+        alignItems:"center",
+        fontSize:20,
+      }}>
+      <CountryPicker
+          withFlag
+          onSelect={onSelectTravelerSource}
+          styles={{
+             fontFamily:"Poppins_400Regular",
+          }}
+      />
+      </View>
+       )}
+
+          {travelerS && !tpickup && (
+            <Pressable
+            onPress={()=>setTravelerS("")}
+            style={{
+              width:"100%", 
+              backgroundColor:"#f6f6fb",
+              height:40,
+              padding:5,
+              display:"flex",
+              alignContent:"center",
+              alignItems:"center"
+            }}>
+
+        
+                <View style={{flexDirection:"row"}}>
+              <Text style={{fontSize:17, fontFamily: "Poppins_400Regular",}}>
+                {travelerS} 
+              </Text>
+              <Text style={{marginLeft:20, marginTop:5}}>
+                <CountryFlag isoCode={travelerSF} size={10} />
+              </Text>
+              </View>
+      
+     
+      </Pressable>
+      )}
+
                 
                                 </View>
                                 </View>
@@ -940,7 +1042,7 @@ const handleClear = () => {
                                     fontFamily: "Poppins_400Regular",
                                     //fontSize: 18,
                                 }}>
-                                    Delivery Location
+                                    Flying to
                                 </Text>
                                 <View style={{
                                     borderWidth: 1,
@@ -952,35 +1054,54 @@ const handleClear = () => {
                                     borderRadius: 5,
                                     //width: "95%"
                                 }}>
-                                    
-                
-                                <GooglePlacesAutocomplete
-                                        placeholder='Enter destination location of traveler'
-                                        onPress={(value)=>findTravelerDestination(value.terms)}
-                                        query={{
-                                            key: 'AIzaSyA_-VSJ-j1yY2kl50xxcNcRqvZiK3-Kng4',
-                                            language: 'en',
-                                            types: '(cities)'
-                                        }}
-                                        styles={{
-                                          textInputContainer: {
-                                            // backgroundColor: 'grey',
-                                          },
-                                          textInput: {
-                                            borderColor: "#000",
-                                            borderWidth: 0.4,
-                                            borderStyle: "solid",
-                                            width:300,
-                                            color: '#5d5d5d',
-                                            //fontSize: 16,
-                                            borderRadius:5,
-                                            marginTop: 10,
-                                          },
-                                          predefinedPlacesDescription: {
-                                            color: '#1faadb',
-                                          },
-                                        }}
-                                        />
+                         
+       {!travelerD && (
+      <View style={{
+        width:"100%", 
+        backgroundColor:"#f6f6fb",
+        height:40,
+        padding:5,
+        display:"flex",
+        alignContent:"center",
+        alignItems:"center",
+        fontSize:20,
+      }}>
+      <CountryPicker
+          withFlag
+          onSelect={onSelectTravelerDestination}
+          styles={{
+             fontFamily:"Poppins_400Regular",
+          }}
+      />
+      </View>
+       )}
+
+          {travelerD && !tdelivery && (
+            <Pressable
+            onPress={()=>setTravelerD("")}
+            style={{
+              width:"100%", 
+              backgroundColor:"#f6f6fb",
+              height:40,
+              padding:5,
+              display:"flex",
+              alignContent:"center",
+              alignItems:"center"
+            }}>
+
+        
+                <View style={{flexDirection:"row"}}>
+              <Text style={{fontSize:17, fontFamily: "Poppins_400Regular",}}>
+                {travelerD} 
+              </Text>
+              <Text style={{marginLeft:20, marginTop:5}}>
+                <CountryFlag isoCode={travelerDF} size={10} />
+              </Text>
+              </View>
+      
+     
+      </Pressable>
+      )}
                                 </View>
                                 </ScrollView>
                                 <View style = {{
