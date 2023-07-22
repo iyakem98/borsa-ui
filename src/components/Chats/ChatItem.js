@@ -1,10 +1,9 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons, Octicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { fetchChat } from "../../features/chat/chatSlice";
-import axios from "axios";
 import { io } from "socket.io-client";
 import { API_BASE_URL_Socket } from "../../utils/config";
 
@@ -106,7 +105,6 @@ const ChatItem = ({
   getSenderFull,
   formatted_date,
   setSelectedChat,
-  popNav,
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -245,24 +243,6 @@ const ChatItem = ({
         ) : (
           <Text>File Uploaded</Text>
         )}
-        {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 ? <View style={styles.notif}>
-            <Text style={styles.notifClr}>{storedNotifications.length}</Text>
-          </View> : <Text></Text> }  */}
-        {/*{isUserSender && !isMarked ? (
-          <View style={styles.notifCheckmark}>
-            <Ionicons name="checkmark-outline" size={24} color="black" />
-          </View>
-        ) : isUserSender && isMarked ? (
-          <View style={styles.notifCheckmark}>
-            <Ionicons name="checkmark-done-outline" size={24} color="black" />
-          </View>
-        ) : notifLength > 0 || (!isUserSender && !isMarked) ? (
-          <View style={styles.notif} />
-        ) : (null)} */}
-        {/* <Text>notifffehih</Text> */}
-        {/* {(storedNotifications != null || storedNotifications != undefined) && storedNotifications.length > 0 
-          &&  <View  style={styles.notif}><Text>notif</Text></View>
-          }  */}
         {isUserSender && !isMarked ? (
           <View style={styles.notifCheckmark}>
             <Ionicons name="checkmark-done" size={20} color="black" />
@@ -306,7 +286,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 10,
     bottom: 20,
-    //backgroundColor: "#514590",
     backgroundColor: "#7267e7",
     width: 12,
     height: 12,
@@ -319,7 +298,6 @@ const styles = StyleSheet.create({
   },
   notifClr: {
     color: "red",
-    // paddingTop: 10
   },
   notifCheckmark: {
     alignItems: "center",

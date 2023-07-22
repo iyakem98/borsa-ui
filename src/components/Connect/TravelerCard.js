@@ -1,62 +1,13 @@
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Pressable,
-} from "react-native";
+import { View, Image, Text, StyleSheet, Pressable } from "react-native";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
-import { accessChat } from "../../features/chat/chatSlice";
+import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { getSenderFull } from "../../ChatConfig/ChatLogics";
 import { ChatState } from "../../context/ChatProvider";
-import { API_BASE_URL } from "../../utils/config";
 
 const TravelerCard = ({ traveler }) => {
-  const { user } = useSelector((state) => state.auth);
-  // const {chattts, isLoading, isError, message} = useSelector((state) => state.chat)
-  const {
-    selectedChat,
-    setSelectedChat,
-    chats,
-    setChats,
-    chatSelected,
-    setchatSelected,
-  } = ChatState();
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-  var travelerId = useRef(null);
-
   const moveToChatScreen = async (travId) => {
     alert("hey");
-    // const userId = travId
-    // console.log(userId)
-    // // console.log(travelerId.current)
-    // try{
-    //     const config = {
-    //       headers: {
-    //           Authorization: `Bearer ${user.token}`
-
-    //       }
-    //   }
-    //     const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-    //     // console.log(data._id)
-    //     setchatSelected(true)
-
-    //     navigation.navigate('Messaging', {chatId: data._id, userSelected:
-
-    //         user != null ? getSenderFull(user, data.users).userName : null })
-
-    //     }
-    //     // return data
-
-    // catch(err){
-    //     console.log(err)
-    // }
   };
 
   return (

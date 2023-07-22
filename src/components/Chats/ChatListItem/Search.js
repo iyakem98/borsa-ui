@@ -1,14 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { TouchableWithoutFeedback } from "react-native";
-import { Keyboard } from "react-native";
 import { Pressable } from "react-native";
-import { TextInput } from "react-native";
 import { StyleSheet } from "react-native";
-import { Text } from "react-native";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 
 function Search() {
   const navigate = useNavigation();
@@ -35,7 +29,6 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingVertical: 16,
-    // flexDirection: 'row',
     justifyContent: "space-around",
     marginBottom: 5,
   },

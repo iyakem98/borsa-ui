@@ -12,21 +12,11 @@ dayjs.extend(relativeTime);
 const ChatListItem = ({ chat }) => {
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.auth);
-  const { messages } = useSelector((state) => state.mess);
-  const [mess, setMess] = useState({});
-  const {
-    selectedChat,
-    setSelectedChat,
-    chats,
-    setChats,
-    chatSelected,
-    setchatSelected,
-  } = ChatState();
+  const { selectedChat, setSelectedChat } = ChatState();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(allMessages(chat._id));
     setSelectedChat(chat);
-    console.log(selectedChat);
   }, []);
   return (
     <Pressable
@@ -50,23 +40,8 @@ const ChatListItem = ({ chat }) => {
           <Text style={styles.name}>
             {user != null ? getSenderFull(user, chat.users).firstName : null}
           </Text>
-          {/* <Text style = {styles.subTitle}>
-                        {dayjs(chat.lastMessage.createdAt).fromNow(true)}
-                    </Text>  */}
         </View>
-        {/* {messages && messages.map((mess) => {
-                // <Text numberOfLines={2} style = {styles.subTitle}>
-                <Text key={mess._id} style = {styles.subTitle}>
-                {mess.content}
-                 </Text>
-
-              })}  */}
       </View>
-      {/* <View>
-                  {messages && messages.map((mess) => (
-                <Text key={mess._id} style={styles.Tex}>{mess.content}</Text>
-                   )) } 
-        </View> */}
     </Pressable>
   );
 };

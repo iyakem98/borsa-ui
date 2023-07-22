@@ -1,11 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { TouchableWithoutFeedback } from "react-native";
-import { Keyboard } from "react-native";
-import { TextInput } from "react-native";
-import { StyleSheet } from "react-native";
-import { Text } from "react-native";
-import { View } from "react-native";
+import { TextInput, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 function ChatListHeader2() {
@@ -23,7 +18,6 @@ function ChatListHeader2() {
               paddingVertical: 7,
               width: "100%",
               fontSize: 17,
-              //color: '#593196'
             }}
             placeholder="search for users"
             placeholderTextColor="gray"
@@ -47,11 +41,9 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingVertical: 16,
-    // flexDirection: 'row',
     justifyContent: "space-around",
     marginBottom: 5,
   },
-
   input: {
     flexDirection: "row",
     backgroundColor: "#efefef",
@@ -68,7 +60,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginRight: 10,
   },
-
   cheader: {
     fontWeight: "bold",
     fontSize: 40,

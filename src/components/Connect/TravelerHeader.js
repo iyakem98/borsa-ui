@@ -5,11 +5,9 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  TouchableHighlight,
 } from "react-native";
 import { ChatState } from "../../context/ChatProvider";
-import { Button } from "react-native-paper";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useState } from "react";
 
@@ -19,9 +17,7 @@ const TravelerHeader = () => {
     setTravelerFilterOn,
     travelerFilter,
     setTravelerFilter,
-    travelerFilterPickup,
     setTravelerFilterPickup,
-    travelerFilterDestination,
     setTravelerFilterDestination,
   } = ChatState();
 
@@ -36,7 +32,6 @@ const TravelerHeader = () => {
     let lngth = ar.length;
     let country = ar[lngth - 1].value;
     let city = ar[0].value;
-    //alert(city)
     if (lngth > 2) {
       city += ", " + ar[1].value;
     }
@@ -71,14 +66,12 @@ const TravelerHeader = () => {
       {travelerFilterOn ? (
         <View
           style={{
-            //backgroundColor: 'yellow',
             maxHeight: "100%",
           }}
         >
           <Pressable
             onPress={toggleFilter}
             style={{
-              //backgroundColor: '#E8E8E8',
               paddingLeft: 10,
               width: "10%",
             }}
@@ -95,7 +88,6 @@ const TravelerHeader = () => {
                 marginTop: 20,
                 marginBottom: 3,
                 fontFamily: "Poppins_400Regular",
-                //fontSize: 18,
               }}
             >
               Departure
@@ -105,12 +97,9 @@ const TravelerHeader = () => {
                 borderWidth: 1,
                 borderColor: "gray",
                 borderWidth: 0,
-                //borderBottomWidth: 1,
                 borderColor: "lightgray",
                 paddingHorizontal: 5,
-                //paddingVertical: 5,
                 borderRadius: 5,
-                //width: "95%"
               }}
             >
               <View style={styles.container}>
@@ -149,7 +138,6 @@ const TravelerHeader = () => {
                 marginTop: 20,
                 marginBottom: 3,
                 fontFamily: "Poppins_400Regular",
-                //fontSize: 18,
               }}
             >
               Destination
@@ -158,12 +146,9 @@ const TravelerHeader = () => {
               style={{
                 borderWidth: 1,
                 borderWidth: 0,
-                //borderBottomWidth: 1,
                 borderColor: "lightgray",
                 paddingHorizontal: 5,
-                //paddingVertical: 5,
                 borderRadius: 5,
-                //width: "95%"
               }}
             >
               <GooglePlacesAutocomplete
@@ -247,11 +232,6 @@ const TravelerHeader = () => {
               onPress={toggleFilter}
               style={{
                 backgroundColor: "#e8e8e8",
-                //backgroundColor: '#a991d4',
-                //backgroundColor: 'black',
-                //backgroundColor: '#009cdc',
-                //backgroundColor: "#593196",
-                //backgroundColor: '#7267e7',
                 paddingHorizontal: 12,
                 paddingVertical: 6,
                 borderRadius: 10,

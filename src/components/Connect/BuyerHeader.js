@@ -6,11 +6,9 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  TouchableHighlight,
 } from "react-native";
 import { ChatState } from "../../context/ChatProvider";
-import { Button } from "react-native-paper";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useState } from "react";
 
@@ -20,9 +18,7 @@ const BuyerHeader = () => {
     setBuyerFilterOn,
     buyerFilter,
     setBuyerFilter,
-    buyerFilterPickup,
     setBuyerFilterPickup,
-    buyerFilterDestination,
     setBuyerFilterDestination,
   } = ChatState();
 
@@ -72,14 +68,12 @@ const BuyerHeader = () => {
       {buyerFilterOn ? (
         <View
           style={{
-            //backgroundColor: 'yellow',
             maxHeight: "100%",
           }}
         >
           <Pressable
             onPress={toggleFilter}
             style={{
-              //backgroundColor: '#E8E8E8',
               paddingLeft: 10,
               width: "10%",
             }}
@@ -106,12 +100,9 @@ const BuyerHeader = () => {
                 borderWidth: 1,
                 borderColor: "gray",
                 borderWidth: 0,
-                //borderBottomWidth: 1,
                 borderColor: "lightgray",
                 paddingHorizontal: 5,
-                //paddingVertical: 5,
                 borderRadius: 5,
-                //width: "95%"
               }}
             >
               <View style={styles.container}>
@@ -123,11 +114,8 @@ const BuyerHeader = () => {
                     language: "en",
                     types: "(cities)",
                   }}
-                  //keyboardAppearance= {'dark'}
                   styles={{
-                    textInputContainer: {
-                      // backgroundColor: 'grey',
-                    },
+                    textInputContainer: {},
                     textInput: {
                       borderWidth: 0.4,
                       borderStyle: "solid",
@@ -150,7 +138,6 @@ const BuyerHeader = () => {
                 marginTop: 20,
                 marginBottom: 3,
                 fontFamily: "Poppins_400Regular",
-                //fontSize: 18,
               }}
             >
               Delivery Location
@@ -159,12 +146,9 @@ const BuyerHeader = () => {
               style={{
                 borderWidth: 1,
                 borderWidth: 0,
-                //borderBottomWidth: 1,
                 borderColor: "lightgray",
                 paddingHorizontal: 5,
-                //paddingVertical: 5,
                 borderRadius: 5,
-                //width: "95%"
               }}
             >
               <GooglePlacesAutocomplete
@@ -239,7 +223,6 @@ const BuyerHeader = () => {
         <View
           style={{
             flexDirection: "row",
-            //justifyContent:'space-around',
             alignItems: "center",
           }}
         >
@@ -248,11 +231,6 @@ const BuyerHeader = () => {
               onPress={toggleFilter}
               style={{
                 backgroundColor: "#e8e8e8",
-                //backgroundColor: '#a991d4',
-                //backgroundColor: 'black',
-                //backgroundColor: '#009cdc',
-                //backgroundColor: "#593196",
-                //backgroundColor: '#7267e7',
                 paddingHorizontal: 12,
                 paddingVertical: 6,
                 borderRadius: 10,
@@ -265,7 +243,6 @@ const BuyerHeader = () => {
                 style={{
                   fontSize: 18,
                   marginLeft: 2,
-                  //color: 'white'
                 }}
               >
                 Filter

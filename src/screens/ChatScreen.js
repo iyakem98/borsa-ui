@@ -1,37 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
   Pressable,
-  TouchableOpacity,
   Image,
   ScrollView,
-  AppState,
   Platform,
 } from "react-native";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import ChatListItem from "../components/Chats/ChatListItem";
-// import ChatListHeader from '../components/Chats/ChatListItem/ChatListHeader'
+import { useDispatch, useSelector } from "react-redux";
 import { ChatState } from "../context/ChatProvider";
-import { fetchChat, reset } from "../features/chat/chatSlice";
-import { getSender, getSenderFull } from "../ChatConfig/ChatLogics";
-import Test from "./Test";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-// import moment from 'moment'
-import { allMessages } from "../features/message/messageSlice";
-import { Avatar, Badge, Icon, withBadge } from "@rneui/themed";
-// import { Badge } from '@rneui/themed';
-import dayjs from "dayjs";
-import ChatListHeader from "../components/Chats/ChatListItem/ChatListHeader";
-import { FontAwesome5, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { fetchChat } from "../features/chat/chatSlice";
+import { getSenderFull } from "../ChatConfig/ChatLogics";
 import io from "socket.io-client";
-import { useRoute } from "@react-navigation/native";
 import moment from "moment/moment";
-import { Octicons } from "@expo/vector-icons";
 import { API_BASE_URL, API_BASE_URL_Socket } from "../utils/config";
 import ChatItem from "../components/Chats/ChatItem";
 import * as Notifications from "expo-notifications";
@@ -39,82 +22,24 @@ import * as Notifications from "expo-notifications";
 const ChatScreen = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
-  // const { onlineStatus } = useSelector((state) => state.auth)
-  const [onlineStatus, setonlineStatus] = useState(false);
-  const { chattts, selllectedChat, isError, message } = useSelector(
-    (state) => state.chat
-  );
-  const {
-    triggerChange,
-    settriggerChange,
-    loading,
-    setloading,
-    isLoading,
-    setIsLoading,
-  } = ChatState();
+  const { chattts } = useSelector((state) => state.chat);
+  const { setloading, isLoading } = ChatState();
   const { messages } = useSelector((state) => state.mess);
-  const {
-    selectedChat,
-    setSelectedChat,
-    chats,
-    setChats,
-    chatSelected,
-    setchatSelected,
-    fetchAgain,
-    setfetchAgain,
-    notification,
-    setNotification,
-    receivedMessage,
-    setreceivedMessage,
-    sentMessage,
-    setsentMessage,
-    messageSentOrReceived,
-    setmessageSentOrReceived,
-    chattId,
-    setchattId,
-    checkContent,
-    setcheckContent,
-    TtriggerChange,
-    setTtriggerChange,
-    YtriggerChange,
-    setYtriggerChange,
-    OtriggerChange,
-    setOtriggerChange,
-    // onlineStatus, setonlineStatus
-  } = ChatState();
+  const { setSelectedChat, fetchAgain, setchattId } = ChatState();
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [Today, setToday] = useState(false);
   const [Yesterday, setYesterday] = useState(false);
   const [otherDs, setotherDs] = useState(false);
-  var otherDates = null;
   var yesterdaytest = null;
   var todaytest = null;
   const ENDPOINT = "http://192.168.100.2:5000";
   var socket = useRef(null);
-  var formatted_date = null;
-  var chatArrAll = [];
-  const TodaysChats = [];
-  const YesterdaysChats = [];
-  const OtherChats = [];
   const API_URL = `${API_BASE_URL}chat/`;
-  const route = useRoute();
 
-  const [users, setUsers] = useState({});
   const [socketConnected, setsocketConnected] = useState(false);
-  const [NotifFlag, setNotifFlag] = useState(false);
   // var storedNotifications = []
   const [storedNotifications, setstoredNotifications] = useState([]);
-  const [notifChat, setnotifChat] = useState();
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
-  const socketURL = API_URL + "5000";
-  const [messageOnce, setmessageOnce] = useState(false);
-
-  var formatted_other_date = null;
-  console.log("loading", isLoading);
   const allowsNotificationsAsync = async () => {
     const settings = await Notifications.getPermissionsAsync();
     return (
@@ -163,17 +88,6 @@ const ChatScreen = () => {
     dispatch(fetchChat());
   }, [fetchAgain, storedNotifications]);
 
-  // useEffect(() =>{
-  //   dispatch(fetchChat())
-  // }, [user])
-
-  // useEffect(() => {
-  //   navigation.addListener('focus', () => dispatch(fetchChat()))
-  //   return () => {
-  //     navigation.removeListener('focus')
-  //   }
-  // }, [])
-
   useEffect(() => {
     if (todaytest == true) {
       setToday(true);
@@ -207,24 +121,15 @@ const ChatScreen = () => {
       >
         {chattts && chattts.length > 0 ? (
           chattts.map((chat, index) => {
-            let newMessage;
-            // chatArrAll.push(chat)
             if (chat !== null || chat !== undefined) {
-              // console.log(chat.lastestMessage)
-
-              // if(chat.lastestMessage !== undefined || chat.lastestMessage !== null  ){
               if (
                 chat.lastestMessage == undefined ||
                 chat.lastestMessage == null
               ) {
                 // console.log('undefined chat(s)')
-                null;
+                // null;
               }
               if (chat.latestMessage) {
-                // reserved for displaying a single chat box for no messages rather than multiple
-                // console.log('chat exists')
-                // chatArr2.push(chat)
-                // setSelectedChat(chat)
                 let msgdate = null;
                 msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD");
                 let today = moment();
@@ -253,7 +158,6 @@ const ChatScreen = () => {
                     />
                   );
                 } else if (d == 1) {
-                  // if(triggerChange == false){
                   return (
                     <ChatItem
                       key={index}
@@ -395,7 +299,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   connectBtn: {
-    // backgroundColor: "red",
     backgroundColor: "#593196",
     width: "65%",
     height: 43,
@@ -436,7 +339,6 @@ const styles = StyleSheet.create({
   },
   notifClr: {
     color: "red",
-    // paddingTop: 10
   },
   image: {
     width: 60,

@@ -1,12 +1,4 @@
-import {
-  View,
-  Modal,
-  Image,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Pressable,
-} from "react-native";
+import { View, Modal, Image, Text, StyleSheet, Pressable } from "react-native";
 import {
   Entypo,
   MaterialIcons,
@@ -18,36 +10,18 @@ import {
 import { useSelector } from "react-redux";
 import { ChatState } from "../../context/ChatProvider";
 import { useNavigation } from "@react-navigation/native";
-import { getSenderFull } from "../../ChatConfig/ChatLogics";
-import { getUserDetails } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { API_BASE_URL } from "../../utils/config";
 import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchChat } from "../../features/chat/chatSlice";
 
 const BuyerCard = ({ buyer }) => {
   // console.log(buyer.user)
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { chattts, isLoading, isError, message } = useSelector(
-    (state) => state.chat
-  );
-  const {
-    selectedChat,
-    setSelectedChat,
-    chats,
-    setChats,
-    chatSelected,
-    setchatSelected,
-    chattId,
-    setchattId,
-    loading,
-    setloading,
-    fetchAgain,
-    setfetchAgain,
-  } = ChatState();
+  const { chattts } = useSelector((state) => state.chat);
+  const { setchatSelected, setchattId, setloading } = ChatState();
   const navigation = useNavigation();
   const [showModal, setshowModal] = useState(false);
   const [modal, setModal] = useState(false);
@@ -78,51 +52,6 @@ const BuyerCard = ({ buyer }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      // --------
-      // if((checkbuyer != null || checkbuyer != undefined) ){
-      //     checkbuyerarr.push()
-      //     for(var i = 0; i <checkbuyerarr.length ; i++){
-      //         if(checkbuyerarr[i] ==  buyerData._id){
-      //             setloading(true)
-      //             navigation.navigate('Messaging', {userSelected:
-
-      //                     buyerData})
-      //              const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-      //             setchatSelected(true)
-      //              setchattId(data._id)
-      //              await AsyncStorage.setItem('initialChat')
-      //         }
-      //     }
-      //     // if(checkbuyer == buyerData._id){
-      //     //     console.log('true')
-      //     // }
-      //     // setloading(true)
-      //     // // navigation.navigate('Messaging', {userSelected:
-
-      //     // //         buyerData})
-      //     //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-      //     // setchatSelected(true)
-      //     //  setchattId(data._id)
-      //     // else{
-      //     //     console.log('false')
-      //     // }
-      // }
-      // else{
-      //     await AsyncStorage.removeItem('initialChat')
-      //     setloading(false)
-
-      //     navigation.navigate('Messaging', {userSelected:
-
-      //         buyerData})
-      //  const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-      // setchatSelected(true)
-      //  setchattId(data._id)
-      //  const BuyerID = data.users[1]._id
-      //  await AsyncStorage.setItem('initialChat', BuyerID)
-      // }
-      // ----------
-      // setloading(true)
-      // setloading(true)
       if (chattts.length > 0) {
         chattts.map(async (chat) => {
           if (chat.users[0]._id == userId || chat.users[1]._id == userId) {
@@ -131,25 +60,6 @@ const BuyerCard = ({ buyer }) => {
             setchatSelected(true);
             setchattId(chat._id);
           }
-          // ------------------------------
-          // else{
-
-          //     navigation.navigate('Messaging', {userSelected:
-
-          //         buyerData})
-          //         setloading(false)
-          //     const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-          //     setchatSelected(true)
-          //     setchattId(data._id)
-          //     // setloading(false)
-          //     // navigation.navigate('Messaging', {userSelected:
-
-          //     //     buyerData})
-          //     // const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-          //     // setchatSelected(true)
-          //     // setchattId(data._id)
-
-          // }
         });
       } else {
         navigation.navigate("Messaging", { userSelected: buyerData });
@@ -162,70 +72,10 @@ const BuyerCard = ({ buyer }) => {
         setchatSelected(true);
         setchattId(data._id);
       }
-      // -----------------
-      // chattts.map(async(chat) => {
-      //     if(chat.users[0]._id == userId || chat.users[1]._id == userId){
-      //         navigation.navigate('Messaging', {userSelected:
-
-      //             buyerData})
-      //         setloading(true)
-      //         setchatSelected(true)
-      //         setchattId(chat._id)
-      //     }
-      //     else if (chat == null){
-      //         setloading(false)
-      //         navigation.navigate('Messaging', {userSelected:
-
-      //             buyerData})
-      //         const {data} = await axios.post(`${API_BASE_URL}chat`, {userId}, config)
-      //         setchatSelected(true)
-      //         setchattId(data._id)
-
-      //     }
-
-      //   })
-      // ------------------------------------------
-      // setloading(true)
-      // navigation.navigate('Messaging', {userSelected:
-
-      //     buyerData})
-      //     const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-
-      //     setchatSelected(true)
-      //     setchattId(data._id)
-      // -----------------------------
-      // if(data.latestMessage != null){
-
-      // }
-      // const {data} = await axios.post(`${API_BASE_URL}chat/`, {userId}, config)
-
-      //     setchatSelected(true)
-      // setchattId(data._id)
-      // const BuyerID = data.users[1]._id
-      // console.log(data.users[1]._id)
-      // console.log(buyerData._id)
-      // await AsyncStorage.setItem('initialChat', BuyerID)
-      // const checkbuyer = await AsyncStorage.getItem('initialChat')
-      // console.log(checkbuyer)
-      // console.log(data.latestMessage)
-      // if(data.latestMessage != null || data.latestMessage != undefined){
-      //     setloading(true)
-      //     setchatSelected(true)
-      // setchattId(data._id)
-      // }
-
-      // navigation.navigate('Messaging', {chatId: data._id, userSelected:
-
-      //     user != null ? getSenderFull(user, data.users) : null })
-
-      // return data
     } catch (err) {
       console.log(err);
       // }
     }
-  };
-  const goToUserProfile = async () => {
-    //navigation.navigate("User Details")
   };
   return (
     <>
@@ -252,24 +102,7 @@ const BuyerCard = ({ buyer }) => {
                 <Text style={styles.text_loc}>{buyer.user.address},</Text>
               </View>
             </View>
-            {/*  <Pressable style = {{
-                borderStyle: 'solid',
-                borderBottomWidth: 0.8,
-                marginLeft: 6,
-                width: "65%",
-                paddingHorizontal: 2,
-                borderColor: "#593196",
-             }}>
-                <Text style = {{
-                    //color: '#593196',
-                    //color: 'gray',
-                    fontWeight: 'bold'
-                }}>
-                    View Profile
-                </Text>
-            </Pressable> */}
           </View>
-
           <View
             style={{
               width: "70%",
@@ -289,22 +122,10 @@ const BuyerCard = ({ buyer }) => {
               >
                 {buyer.user.firstName + " " + buyer.user.lastName}
               </Text>
-
-              {/* <Entypo name="magnifying-glass" size={20} color='#593196' style = {{marginHorizontal: 5, marginTop: 5}} /> */}
             </View>
 
             <View style={styles.destination}>
-              <View
-                style={
-                  {
-                    //backgroundColor: '#593196',
-                    //backgroundColor: '#a991d4',
-                    //borderRadius: "50%",
-                    //padding: 5,date
-                    //marginRight: 5
-                  }
-                }
-              >
+              <View>
                 <Octicons
                   name="list-unordered"
                   size={18}
@@ -379,30 +200,7 @@ const BuyerCard = ({ buyer }) => {
                 Start chatting
               </Text>
             </Pressable>
-            <View>
-              {/* <Pressable style = {{
-                border: '1px solid #593196',
-                //backgroundColor: '#a991d4',
-                width: "70%",
-                alignItems: 'center',
-                marginVertical: 4,
-                paddingVertical: 5,
-                borderRadius: 30
-
-            }} 
-             onPress= {() => {
-                setModal(true)
-                console.log("buyyyyyyyyyer:", buyer)
-             }}
-            >
-                <Text style = {{
-                    fontSize: 18,
-                    color: '#593196'
-                }}>
-                    View Profile
-                </Text>
-            </Pressable> */}
-            </View>
+            <View></View>
           </View>
         </View>
 
@@ -518,9 +316,6 @@ const BuyerCard = ({ buyer }) => {
         )}
       </Pressable>
     </>
-    // <View>
-    //     {/* <Text>{buyer}</Text> */}
-    // </View>
   );
 };
 

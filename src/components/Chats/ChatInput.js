@@ -7,8 +7,8 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React, { useRef } from "react";
-import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import React from "react";
+import { AntDesign } from "@expo/vector-icons";
 
 const width = Dimensions.get("screen").width;
 
@@ -16,21 +16,11 @@ const ChatInput = ({
   sendMessage,
   newmessage,
   setNewMessage,
-  chattId,
-  socket,
-  typing,
   typingHandler,
   activeHandler,
 }) => {
-  // console.log('socket value', socket.current.connected)
-  // console.log('typing value', typing )
-
   return (
     <>
-      {/* {typing &&<View>
-            <Text>Typing</Text>
-
-    </View>} */}
       <View
         style={{
           paddingTop: 5,
@@ -66,11 +56,9 @@ const ChatInput = ({
             style={styles.input}
             multiline
             placeholder="Type your message..."
-            // onChange={typingHandler}
             onChange={() => {
               activeHandler();
               typingHandler();
-              // console.log("", typing)
             }}
             onFocus={() => {
               if (newmessage.length > 0) {
@@ -86,10 +74,6 @@ const ChatInput = ({
           <Pressable
             style={{
               backgroundColor: "#13b955",
-              //backgroundColor: '#a991d4',
-              //backgroundColor: 'black',
-              //backgroundColor: '#009cdc',
-              //backgroundColor: "#593196",
               backgroundColor: "#7267e7",
               height: 35,
               width: 35,
