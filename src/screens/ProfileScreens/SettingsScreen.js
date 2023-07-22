@@ -1,15 +1,15 @@
-import { View, Text } from "react-native"
+import { View, Text } from "react-native";
 
 const SettingsScreen = () => {
   return (
-    <View style = {{
+    <View
+      style={{
         paddingTop: 100,
-    }}>
-        <Text>
-            Settings Screen
-        </Text>
+      }}
+    >
+      <Text>Settings Screen</Text>
     </View>
-  )
-}
+  );
+};
 
-export default SettingsScreen
+export default SettingsScreen;

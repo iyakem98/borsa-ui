@@ -1,23 +1,22 @@
-import {View, Text, SafeAreaView, Pressable, ScrollView} from 'react-native'
-import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Header from '../../components/Shared/Header';
-import { TextInput } from 'react-native-paper';
+import { View, Text, SafeAreaView, Pressable, ScrollView } from "react-native";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Header from "../../components/Shared/Header";
+import { TextInput } from "react-native-paper";
 import { showMessage } from "react-native-flash-message";
 
-
-const VerifyUser = ({navigation, route}) => {
-    const params = route.params
+const VerifyUser = ({ navigation, route }) => {
+  const params = route.params;
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const [userOtp, setUserOtp] = useState("");
 
-  useEffect(()=>{
-    console.log("--", params)
-  } ,[])
+  useEffect(() => {
+    console.log("--", params);
+  }, []);
 
   const handleUserData = async (value) => {
     try {
@@ -25,62 +24,75 @@ const VerifyUser = ({navigation, route}) => {
         type: "LOGIN",
         payload: { user: value },
       });
-      const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem('@user_data', jsonValue)
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("@user_data", jsonValue);
     } catch (e) {
       // saving error
     }
-  }
+  };
 
-  const handleLogin = async() => {
-    setIsLoading(true)
+  const handleLogin = async () => {
+    setIsLoading(true);
     try {
-      const res = await axios.post('http://143.198.168.244/api/users/verify-email', {
-        userId: params?._id,
-        otp: userOtp
-      });
+      const res = await axios.post(
+        "http://143.198.168.244/api/users/verify-email",
+        {
+          userId: params?._id,
+          otp: userOtp,
+        }
+      );
       console.log(res.data);
       await handleUserData();
-    } catch(e) {
-      console.log("------------", e.response.data)
-      if(e?.response?.data?.message === "Invalid Request, missing parameters") {
+    } catch (e) {
+      console.log("------------", e.response.data);
+      if (
+        e?.response?.data?.message === "Invalid Request, missing parameters"
+      ) {
         showMessage({
-            message: "Invalid Code",
-            description: `Please make sure the sent to your email is the same.`,
-            type: "warning",
+          message: "Invalid Code",
+          description: `Please make sure the sent to your email is the same.`,
+          type: "warning",
         });
       }
     }
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: "#fff"
-    }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: "#fff",
+      }}
+    >
       <Header backBtn />
-      <ScrollView contentContainerStyle={{
-        paddingHorizontal: 15,
-        flexGrow: 1
-      }}>
-        <Text style={{
-          fontFamily: "Poppins_600SemiBold",
-          fontSize: 30,
-          marginTop: 10,
-        }}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 15,
+          flexGrow: 1,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "Poppins_600SemiBold",
+            fontSize: 30,
+            marginTop: 10,
+          }}
+        >
           Verify your email?
         </Text>
-        <Text style={{
-          fontFamily: "Poppins_400Regular",
-          fontSize: 14,
-        }}>
+        <Text
+          style={{
+            fontFamily: "Poppins_400Regular",
+            fontSize: 14,
+          }}
+        >
           Please fill the Fields from your email we recently sent you.
         </Text>
         <TextInput
           label="Code"
           value={userOtp}
-          onChangeText={text => setUserOtp(text)}
+          onChangeText={(text) => setUserOtp(text)}
           mode="outlined"
           style={{
             marginTop: 15,
@@ -91,29 +103,35 @@ const VerifyUser = ({navigation, route}) => {
             backgroundColor: "#fff",
             borderColor: "#ccc",
           }}
-          placeholderTextColor= "#eee"
+          placeholderTextColor="#eee"
         />
-        <Pressable style={{
-          backgroundColor: "#514590",
-          // bottom: 10,
-          // left: 15,
-          // position: "absolute",
-          paddingVertical: 15,
-          borderRadius: 5,
-          marginTop: 15,
-          width: "100%"
-        }} onPress={handleLogin}>
-          <Text style={{
+        <Pressable
+          style={{
+            backgroundColor: "#514590",
+            // bottom: 10,
+            // left: 15,
+            // position: "absolute",
+            paddingVertical: 15,
+            borderRadius: 5,
+            marginTop: 15,
+            width: "100%",
+          }}
+          onPress={handleLogin}
+        >
+          <Text
+            style={{
               color: "#fff",
               fontFamily: "Poppins_400Regular",
               fontSize: 14,
-              textAlign: "center"
-          }}>{isLoading ? "Loading ..." : "Login"}</Text>
+              textAlign: "center",
+            }}
+          >
+            {isLoading ? "Loading ..." : "Login"}
+          </Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default VerifyUser
-
+export default VerifyUser;

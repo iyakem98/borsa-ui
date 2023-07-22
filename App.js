@@ -1,19 +1,27 @@
 // import { StatusBar } from 'expo-status-bar';
-import {AppState, Platform, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import ChatListItem from './src/components/Chats/ChatListItem';
-import ChatScreen from './src/screens/ChatScreen';
-import MessagingScreen from './src/screens/MessagingScreen';
-import Navigator from './src/navigation/Navigator';
-import { Provider, useDispatch } from 'react-redux';
-import { store, persistor } from './src/app/store';
-import {PersistGate} from 'redux-persist/integration/react';  
-import ChatProvider from './src/context/ChatProvider';
-import { useEffect, useRef, useState } from 'react';
-import AppContainer from './AppContainer';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Provider as PaperProvider } from 'react-native-paper';
+import {
+  AppState,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import ChatListItem from "./src/components/Chats/ChatListItem";
+import ChatScreen from "./src/screens/ChatScreen";
+import MessagingScreen from "./src/screens/MessagingScreen";
+import Navigator from "./src/navigation/Navigator";
+import { Provider, useDispatch } from "react-redux";
+import { store, persistor } from "./src/app/store";
+import { PersistGate } from "redux-persist/integration/react";
+import ChatProvider from "./src/context/ChatProvider";
+import { useEffect, useRef, useState } from "react";
+import AppContainer from "./AppContainer";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider as PaperProvider } from "react-native-paper";
 import FlashMessage from "react-native-flash-message";
-import {SheetProvider} from 'react-native-actions-sheet';
+import { SheetProvider } from "react-native-actions-sheet";
 import {
   useFonts,
   Poppins_300Light,
@@ -24,25 +32,25 @@ import {
   Poppins_600SemiBold,
   Poppins_600SemiBold_Italic,
   Poppins_700Bold,
-  Poppins_800ExtraBold
-} from '@expo-google-fonts/poppins';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+  Poppins_800ExtraBold,
+} from "@expo-google-fonts/poppins";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   requestTrackingPermissionsAsync,
   getTrackingPermissionsAsync,
-} from 'expo-tracking-transparency';
+} from "expo-tracking-transparency";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import * as Updates from 'expo-updates';
-import axios from 'axios';
-import { API_BASE_URL } from './src/utils/config';
+import * as Updates from "expo-updates";
+import axios from "axios";
+import { API_BASE_URL } from "./src/utils/config";
 
 Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-    }),
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
 });
 
 export default function App() {
@@ -55,7 +63,7 @@ export default function App() {
     Poppins_600SemiBold,
     Poppins_600SemiBold_Italic,
     Poppins_700Bold,
-    Poppins_800ExtraBold
+    Poppins_800ExtraBold,
   });
 
   // -----------------
@@ -69,18 +77,18 @@ export default function App() {
   async function sendPushNotification(expoPushToken) {
     const message = {
       to: expoPushToken,
-      sound: 'default',
-      title: 'Original Title',
-      body: 'And here is the body!',
-      data: { someData: 'goes here' },
+      sound: "default",
+      title: "Original Title",
+      body: "And here is the body!",
+      data: { someData: "goes here" },
     };
-  
-    await fetch('https://exp.host/--/api/v2/push/send', {
-      method: 'POST',
+
+    await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Accept-encoding': 'gzip, deflate',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Accept-encoding": "gzip, deflate",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(message),
     });
@@ -89,45 +97,46 @@ export default function App() {
   async function registerForPushNotificationsAsync() {
     let token;
     if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
+      if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log(token);
     } else {
-      alert('Must use physical device for Push Notifications');
+      alert("Must use physical device for Push Notifications");
     }
-  
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
+        lightColor: "#FF231F7C",
       });
     }
-  
+
     return token;
   }
 
   const checkOnBoardingData = async () => {
     try {
       // const res = await AsyncStorage.removeItem('doNotShowOnBoarding')
-      const res = await AsyncStorage.getItem('@doNotShowOnBoarding')
-      setShowOnBoarding(res ? false : true)
+      const res = await AsyncStorage.getItem("@doNotShowOnBoarding");
+      setShowOnBoarding(res ? false : true);
     } catch (e) {
-    // saving error
+      // saving error
     }
-  }
+  };
 
-  const onFetchUpdateAsync = async() => {
+  const onFetchUpdateAsync = async () => {
     try {
       const update = await Updates.checkForUpdateAsync();
 
@@ -138,53 +147,59 @@ export default function App() {
     } catch (error) {
       alert(`Error fetching latest Expo update: ${error}`);
     }
-  }
+  };
 
-  const checktracking = async()=>{
-    if(Platform.OS == 'ios') {
+  const checktracking = async () => {
+    if (Platform.OS == "ios") {
       try {
-        const granted = await getTrackingPermissionsAsync()
+        const granted = await getTrackingPermissionsAsync();
         if (granted) {
           // Your app is authorized to track the user or their device
-          console.log("GRANTED")
+          console.log("GRANTED");
           await requestTrackingPermissionsAsync();
         } else {
-          console.log("NOT GRANTED")
+          console.log("NOT GRANTED");
           await requestTrackingPermissionsAsync();
         }
-      } catch(e) {
-        console.log("ERROR ON TRACKING")
+      } catch (e) {
+        console.log("ERROR ON TRACKING");
       }
     }
-  }
+  };
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     checkOnBoardingData();
     checktracking();
-  }, [])
-  
-  if(fontsLoaded) {
+  }, []);
+
+  if (fontsLoaded) {
     return (
       <Provider store={store}>
         <PaperProvider>
-        {/* <ChatProvider>
+          {/* <ChatProvider>
         <PersistGate loading={nul
           l} persistor={persistor}>
           <View style={styles.container}>
@@ -196,21 +211,26 @@ export default function App() {
           <StatusBar
             animated={true}
             backgroundColor="#aaa"
-            barStyle={'dark-content'}
-            showHideTransition={'fade'}
+            barStyle={"dark-content"}
+            showHideTransition={"fade"}
             hidden={false}
           />
-          <SafeAreaProvider style={{
-            backgroundColor: "#fff",
-            flex: 1
-          }}>
+          <SafeAreaProvider
+            style={{
+              backgroundColor: "#fff",
+              flex: 1,
+            }}
+          >
             {/* <TouchableOpacity onPress={()=>sendPushNotification(expoPushToken)}>
               <Text>Submit</Text>
             </TouchableOpacity> */}
             <ChatProvider>
               <PersistGate loading={null} persistor={persistor}>
                 <SheetProvider>
-                  <AppContainer showOnBoarding={showOnBoarding} expoPushToken={expoPushToken} />
+                  <AppContainer
+                    showOnBoarding={showOnBoarding}
+                    expoPushToken={expoPushToken}
+                  />
                 </SheetProvider>
               </PersistGate>
             </ChatProvider>
@@ -220,7 +240,7 @@ export default function App() {
       </Provider>
     );
   } else {
-    <Text>{error}</Text>
+    <Text>{error}</Text>;
   }
 }
 
@@ -228,8 +248,7 @@ const styles = StyleSheet.create({
   // "proxy": "http://192.168.100.2:5002/",
   container: {
     flex: 1,
-    backgroundColor: '#f9f8fc',
-    justifyContent: 'center',
-    
+    backgroundColor: "#f9f8fc",
+    justifyContent: "center",
   },
 });

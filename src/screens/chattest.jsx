@@ -1,25 +1,17 @@
-import React from 'react'
-import { View } from 'react-native'
-import { ChatState } from '../context/ChatProvider';
-import { Text } from 'react-native';
-
-
-
-
+import React from "react";
+import { View } from "react-native";
+import { ChatState } from "../context/ChatProvider";
+import { Text } from "react-native";
 
 function Chattest() {
-    const {
-        searchTriggerChange,
-        setsearchTriggerChange
-        } = ChatState();
+  const { searchTriggerChange, setsearchTriggerChange } = ChatState();
   return (
     <>
-   
-    <View>
+      <View>
         <Text>test chat</Text>
-    </View>
+      </View>
     </>
-  )
+  );
 }
 
-export default Chattest
+export default Chattest;

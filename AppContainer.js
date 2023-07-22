@@ -1,124 +1,127 @@
 // import { StatusBar } from 'expo-status-bar';
-import {AppState, StyleSheet, Text, View } from 'react-native';
-import ChatListItem from './src/components/Chats/ChatListItem';
-import ChatScreen from './src/screens/ChatScreen';
-import MessagingScreen from './src/screens/MessagingScreen';
-import Navigator from './src/navigation/Navigator';
-import { Provider,  useDispatch,  useSelector } from 'react-redux';
-import { store, persistor } from './src/app/store';
-import {PersistGate} from 'redux-persist/integration/react';  
-import ChatProvider, { ChatState } from './src/context/ChatProvider';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useRef } from 'react';
-import moment from 'moment';
-import axios from 'axios';
-import { UpdateLastSeenAndStatus } from './src/features/auth/authSlice';
-import { fetchChat } from './src/features/chat/chatSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_BASE_URL } from './src/utils/config';
+import { AppState, StyleSheet, Text, View } from "react-native";
+import ChatListItem from "./src/components/Chats/ChatListItem";
+import ChatScreen from "./src/screens/ChatScreen";
+import MessagingScreen from "./src/screens/MessagingScreen";
+import Navigator from "./src/navigation/Navigator";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import { store, persistor } from "./src/app/store";
+import { PersistGate } from "redux-persist/integration/react";
+import ChatProvider, { ChatState } from "./src/context/ChatProvider";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useRef } from "react";
+import moment from "moment";
+import axios from "axios";
+import { UpdateLastSeenAndStatus } from "./src/features/auth/authSlice";
+import { fetchChat } from "./src/features/chat/chatSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_BASE_URL } from "./src/utils/config";
 
-
-function AppContainer({showOnBoarding, expoPushToken}) {
-  
-    const { user } = useSelector((state) => state.auth)
-    const {chattts, selllectedChat,  isLoading, isError, message} = useSelector((state) => state.chat)
-    const dispatch = useDispatch()
-    const appState = useRef(AppState.currentState);
-    const [online, setOnline] = useState("online");
-    const [away, setAway] = useState("away")
-    // console.log(user)
+function AppContainer({ showOnBoarding, expoPushToken }) {
+  const { user } = useSelector((state) => state.auth);
+  const { chattts, selllectedChat, isLoading, isError, message } = useSelector(
+    (state) => state.chat
+  );
+  const dispatch = useDispatch();
+  const appState = useRef(AppState.currentState);
+  const [online, setOnline] = useState("online");
+  const [away, setAway] = useState("away");
+  // console.log(user)
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   // console.log(user)
-  const {date, setDate} = ChatState()
-  const datte  = moment()
+  const { date, setDate } = ChatState();
+  const datte = moment();
 
-  const handlePushToken = async() => {
+  const handlePushToken = async () => {
     try {
-      const {data} = await axios.post(`${API_BASE_URL}users/add-push-tokens`, {
-        pushTokens: expoPushToken
-      }, {
-        headers: {
-            Authorization: `Bearer ${user.token}`
+      const { data } = await axios.post(
+        `${API_BASE_URL}users/add-push-tokens`,
+        {
+          pushTokens: expoPushToken,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
         }
-      })
+      );
       // console.log("--------", data)
     } catch (e) {
       // console.log("====++", e?.response?.message)
     }
-  }
+  };
 
-  useEffect(()=>{
-    if(expoPushToken && user) {
-      handlePushToken()
+  useEffect(() => {
+    if (expoPushToken && user) {
+      handlePushToken();
     }
-  }, [expoPushToken, user])
+  }, [expoPushToken, user]);
 
-  const getUser = async() => {
+  const getUser = async () => {
     try {
-      const user = await  AsyncStorage.getItem('user')
+      const user = await AsyncStorage.getItem("user");
       // console.log(user)
       // const user = JSON.parse(user1)
     } catch (e) {
-      console.log("GET ASYNC USER DATA ERROR: ", e)
+      console.log("GET ASYNC USER DATA ERROR: ", e);
     }
-  }
-
-  useEffect(() =>{
-    getUser()
-  }, [user])
+  };
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      console.log("APPSTATE: ", nextAppState)
+    getUser();
+  }, [user]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      console.log("APPSTATE: ", nextAppState);
       // if (
       //   appState.current.match(/inactive|background/) &&
       //   nextAppState === 'active'
       // ) {
       //   console.log('App has come to the foreground!');
       // }
-    //   if(appState.current.match(/background/) &&
-    //   nextAppState === 'background'){
-    //     console.log('display that the user is away')
-    //   }
-    
-    if(nextAppState === 'background'){
-      if(user != null){
-        // sendData(away, user._id)
-        console.log('12')
+      //   if(appState.current.match(/background/) &&
+      //   nextAppState === 'background'){
+      //     console.log('display that the user is away')
+      //   }
+
+      if (nextAppState === "background") {
+        if (user != null) {
+          // sendData(away, user._id)
+          console.log("12");
+        }
+
+        // UpdateLastSeenAndStatus(away)
+        // const userData = {
+        //   status: away,
+        //   userId: user._id
+        // }
+        // console.log(userData)
+        // dispatch(UpdateLastSeenAndStatus(userData))
       }
-      
-      
-      // UpdateLastSeenAndStatus(away)
-      // const userData = {
-      //   status: away,
-      //   userId: user._id
-      // }
-      // console.log(userData)
-      // dispatch(UpdateLastSeenAndStatus(userData))
-    }
-    if(nextAppState === 'active'){
-      // UpdateLastSeenAndStatus(online)
-      if(user != null){
-        // sendData(online, user._id)
-        // console.log(user)
-        console.log('12')
+      if (nextAppState === "active") {
+        // UpdateLastSeenAndStatus(online)
+        if (user != null) {
+          // sendData(online, user._id)
+          // console.log(user)
+          console.log("12");
+        }
+
+        // const userData = {
+        //   status: online,
+        //   userId: user._id
+        // }
+        // console.log(userData)
+        // dispatch(UpdateLastSeenAndStatus(userData))
       }
-      
-      // const userData = {
-      //   status: online,
-      //   userId: user._id
+      // else if(nextAppState === 'active'){
+      //   console.log('return user to online status')
       // }
-      // console.log(userData)
-      // dispatch(UpdateLastSeenAndStatus(userData))
-    }
-    // else if(nextAppState === 'active'){
-    //   console.log('return user to online status')
-    // }
-    // console.log(user)
-    //   appState.current = nextAppState;
-    //   setAppStateVisible(appState.current);
-    //   console.log('AppState', appState.current);
+      // console.log(user)
+      //   appState.current = nextAppState;
+      //   setAppStateVisible(appState.current);
+      //   console.log('AppState', appState.current);
     });
 
     return () => {
@@ -129,22 +132,20 @@ function AppContainer({showOnBoarding, expoPushToken}) {
     // console.log(online)
     // console.log(userId)
     const userData = {
-        status: online,
-        userId: user._id
-      }
-      console.log(userData)
-          dispatch(UpdateLastSeenAndStatus(userData))
-          // dispatch(fetchChat())
-
-  }
+      status: online,
+      userId: user._id,
+    };
+    console.log(userData);
+    dispatch(UpdateLastSeenAndStatus(userData));
+    // dispatch(fetchChat())
+  };
   // // const UpdateLastSeenAndStatus = async(status) =>{
   // //   try{
 
-    
   // //   const   config = {
-        
+
   // //     headers: {
-       
+
   // //       Authorization: `Bearer ${user.token}`
   // //     },
   // //     // body: JSON.stringify({
@@ -158,8 +159,7 @@ function AppContainer({showOnBoarding, expoPushToken}) {
   // //     userId : user._id,
   // //     status: status,
   // //     lastSeen : UpdatedLastSeen
-      
-      
+
   // //   },
   // //   config)
   // //   console.log('user status and last seen are updated')
@@ -167,38 +167,31 @@ function AppContainer({showOnBoarding, expoPushToken}) {
   // // catch(error){
   // //   console.log(error)
   // // }
-     
 
   // }
   return (
-   
- 
-  //  <PersistGate loading={null} persistor={persistor}>
-   <View style={styles.container}>
-     <Navigator showOnBoarding={showOnBoarding} />
-     {/* <StatusBar style="auto" /> */}
-   </View>
+    //  <PersistGate loading={null} persistor={persistor}>
+    <View style={styles.container}>
+      <Navigator showOnBoarding={showOnBoarding} />
+      {/* <StatusBar style="auto" /> */}
+    </View>
     // </PersistGate>
-    
-
-
- 
- 
-  )
+  );
 }
 
-{/* <View>
+{
+  /* <View>
     <Text>ete</Text>
-</View>  */}
+</View>  */
+}
 
-export default AppContainer
+export default AppContainer;
 
 const styles = StyleSheet.create({
-    // "proxy": "http://192.168.100.2:5002/",
-    container: {
-      flex: 1,
-      backgroundColor: '#f9f8fc',
-      justifyContent: 'center',
-      
-    },
-  });
+  // "proxy": "http://192.168.100.2:5002/",
+  container: {
+    flex: 1,
+    backgroundColor: "#f9f8fc",
+    justifyContent: "center",
+  },
+});

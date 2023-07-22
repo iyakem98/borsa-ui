@@ -1,112 +1,123 @@
-import {View, Text, SafeAreaView, Pressable, ScrollView} from 'react-native'
-import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigation  } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Header from '../../components/Shared/Header';
-import { TextInput } from 'react-native-paper';
+import { View, Text, SafeAreaView, Pressable, ScrollView } from "react-native";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Header from "../../components/Shared/Header";
+import { TextInput } from "react-native-paper";
 import { showMessage } from "react-native-flash-message";
 
-
-const ResetPassword = ({route}) => {
-    const params = route.params
+const ResetPassword = ({ route }) => {
+  const params = route.params;
   const dispatch = useDispatch();
 
- const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const [isLoading, setIsLoading] = useState(false);
   const [userOtp, setUserOtp] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
 
-  useEffect(()=>{
-    console.log("--", params)
-  } ,[])
+  useEffect(() => {
+    console.log("--", params);
+  }, []);
 
- 
-  const handleReset = async() => {
-    if(!password || password.length<6 || password!=confirm){
-        showMessage({
-            message: "Password Error",
-            description: `Password must be atleast 6 characters and confirmed.`,
-            type: "warning",
-        });  
+  const handleReset = async () => {
+    if (!password || password.length < 6 || password != confirm) {
+      showMessage({
+        message: "Password Error",
+        description: `Password must be atleast 6 characters and confirmed.`,
+        type: "warning",
+      });
     }
-    if(!userOtp || userOtp.length<4){
-        showMessage({
-            message: "OTP Error",
-            description: `OTP can't be empty or less than 4 digits.`,
-            type: "warning",
-        });   
+    if (!userOtp || userOtp.length < 4) {
+      showMessage({
+        message: "OTP Error",
+        description: `OTP can't be empty or less than 4 digits.`,
+        type: "warning",
+      });
     }
 
-    if(password && password.length>5 && password==confirm && userOtp && userOtp.length==4)
-    {
-        setIsLoading(true)
-        
-        await axios.post('http://143.198.168.244/api/users/reset-password', {
+    if (
+      password &&
+      password.length > 5 &&
+      password == confirm &&
+      userOtp &&
+      userOtp.length == 4
+    ) {
+      setIsLoading(true);
+
+      await axios
+        .post("http://143.198.168.244/api/users/reset-password", {
           userId: params?._id,
           otp: userOtp,
-          password: password
+          password: password,
         })
-          // await AsyncStorage.removeItem("user")
-         .then((res) => {
+        // await AsyncStorage.removeItem("user")
+        .then((res) => {
           showMessage({
             message: "Change Succeeded",
             description: `Please login with your new password.`,
             type: "success",
-        });
+          });
 
-        setTimeout(() => {
-          navigation.navigate("Login")
-        }, 3000);
-      })
-          .catch(e => {
-            let errResponse = (e && e.response && e.response.data) 
-            || (e && e.message); 
-            
-            console.log("------------", errResponse)
-              showMessage({
-                  message: "Error",
-                  description: `Something went wrong. Try again.`,
-                  type: "warning",
-              });
+          setTimeout(() => {
+            navigation.navigate("Login");
+          }, 3000);
+        })
+        .catch((e) => {
+          let errResponse =
+            (e && e.response && e.response.data) || (e && e.message);
+
+          console.log("------------", errResponse);
+          showMessage({
+            message: "Error",
+            description: `Something went wrong. Try again.`,
+            type: "warning",
+          });
         });
-      setIsLoading(false)
+      setIsLoading(false);
     }
-   
-  }
+  };
 
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: "#fff"
-    }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: "#fff",
+      }}
+    >
       <Header backBtn />
-      <ScrollView contentContainerStyle={{
-        paddingHorizontal: 15,
-        flexGrow: 1
-      }}>
-        <Text style={{
-          fontFamily: "Poppins_600SemiBold",
-          fontSize: 30,
-          marginTop: 10,
-        }}>
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 15,
+          flexGrow: 1,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "Poppins_600SemiBold",
+            fontSize: 30,
+            marginTop: 10,
+          }}
+        >
           Reset your password
         </Text>
-        <Text style={{
-          fontFamily: "Poppins_400Regular",
-          fontSize: 14,
-        }}>
-         Please check your email for OTP.
+        <Text
+          style={{
+            fontFamily: "Poppins_400Regular",
+            fontSize: 14,
+          }}
+        >
+          Please check your email for OTP.
         </Text>
         <TextInput
           label="OTP"
           value={userOtp}
-          onChangeText={text => setUserOtp(text)}
+          onChangeText={(text) => setUserOtp(text)}
           mode="outlined"
-          keyboardType='numeric'
+          keyboardType="numeric"
           maxLength={4}
           style={{
             marginTop: 15,
@@ -117,12 +128,12 @@ const ResetPassword = ({route}) => {
             backgroundColor: "#fff",
             borderColor: "#ccc",
           }}
-          placeholderTextColor= "#eee"
+          placeholderTextColor="#eee"
         />
         <TextInput
           label="New Password"
           value={password}
-          onChangeText={text => setPassword(text)}
+          onChangeText={(text) => setPassword(text)}
           mode="outlined"
           secureTextEntry
           style={{
@@ -134,13 +145,13 @@ const ResetPassword = ({route}) => {
             backgroundColor: "#fff",
             borderColor: "#ccc",
           }}
-          placeholderTextColor= "#eee"
+          placeholderTextColor="#eee"
         />
-         <TextInput
+        <TextInput
           label="Confirm New Password"
           value={confirm}
           secureTextEntry
-          onChangeText={text => setConfirm(text)}
+          onChangeText={(text) => setConfirm(text)}
           mode="outlined"
           style={{
             marginTop: 15,
@@ -151,29 +162,35 @@ const ResetPassword = ({route}) => {
             backgroundColor: "#fff",
             borderColor: "#ccc",
           }}
-          placeholderTextColor= "#eee"
+          placeholderTextColor="#eee"
         />
-        <Pressable style={{
-          backgroundColor: "#514590",
-          // bottom: 10,
-          // left: 15,
-          // position: "absolute",
-          paddingVertical: 15,
-          borderRadius: 5,
-          marginTop: 15,
-          width: "100%"
-        }} onPress={handleReset}>
-          <Text style={{
+        <Pressable
+          style={{
+            backgroundColor: "#514590",
+            // bottom: 10,
+            // left: 15,
+            // position: "absolute",
+            paddingVertical: 15,
+            borderRadius: 5,
+            marginTop: 15,
+            width: "100%",
+          }}
+          onPress={handleReset}
+        >
+          <Text
+            style={{
               color: "#fff",
               fontFamily: "Poppins_400Regular",
               fontSize: 14,
-              textAlign: "center"
-          }}>{isLoading ? "Resetting ..." : "Reset"}</Text>
+              textAlign: "center",
+            }}
+          >
+            {isLoading ? "Resetting ..." : "Reset"}
+          </Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default ResetPassword
-
+export default ResetPassword;

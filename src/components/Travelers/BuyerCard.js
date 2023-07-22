@@ -1,169 +1,176 @@
-import {View, Text, StyleSheet, Image, ImageBackground, Pressable} from 'react-native'
-import { Entypo, Octicons } from '@expo/vector-icons';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  Pressable,
+} from "react-native";
+import { Entypo, Octicons } from "@expo/vector-icons";
 
-const BuyerCard = ({buyer}) => {
+const BuyerCard = ({ buyer }) => {
   return (
-    <View style = {styles.container}>
-    <View>
-    <ImageBackground  source={{uri: buyer.profilePic}}  
-       style = {styles.image} resizeMode= 'cover'>
-        <View style = {styles.overlay}>
-        <Text style = {styles.name}>
-            {buyer.name}
+    <View style={styles.container}>
+      <View>
+        <ImageBackground
+          source={{ uri: buyer.profilePic }}
+          style={styles.image}
+          resizeMode="cover"
+        >
+          <View style={styles.overlay}>
+            <Text style={styles.name}>{buyer.name}</Text>
+
+            <View style={styles.location_container}>
+              <Entypo name="location-pin" size={20} color="red" />
+              <View style={styles.location}>
+                <Text style={styles.text_loc}>{buyer.city},</Text>
+
+                <Text style={styles.text_loc2}>{buyer.country}</Text>
+              </View>
+            </View>
+          </View>
+        </ImageBackground>
+      </View>
+
+      <View style={styles.destination}>
+        <Octicons
+          name="list-unordered"
+          size={24}
+          color="#593196"
+          style={{
+            marginRight: 7,
+          }}
+        />
+
+        <Text
+          style={{
+            fontSize: 20,
+            marginRight: 2,
+          }}
+        >
+          {buyer.orders}
         </Text>
+      </View>
 
-        <View style = {styles.location_container}>
-       <Entypo name="location-pin" size={20} color="red" />
-       <View style = {styles.location}>
-        <Text style = {styles.text_loc}>
-            {buyer.city},
-        </Text>
-
-        <Text style = {styles.text_loc2}>
-            {buyer.country}
-        </Text>
-
-       </View>
-       </View>
-        </View>
-    </ImageBackground>
-    </View>
-
-       <View style = {styles.destination}>
-       <Octicons name="list-unordered" size={24} color="#593196" style = {{
-             marginRight: 7,
-       }} />
-        
-        
-            <Text style = {{     
-                fontSize: 20,
-                marginRight: 2
-            }}>
-                {buyer.orders} 
-            </Text>
-       </View>
-
-       <View style = {styles.date}>
-        <Text>
-            Ordered since:
-        </Text>
-        <Text style = {{
+      <View style={styles.date}>
+        <Text>Ordered since:</Text>
+        <Text
+          style={{
             fontWeight: "bold",
-            color: '#343a40'
-        }}>
-            {buyer.orderDate}
+            color: "#343a40",
+          }}
+        >
+          {buyer.orderDate}
         </Text>
-       </View>
-       
-       <Pressable style = {{
-            alignSelf: 'center',
-            borderWidth: 1,
-            padding: 12,
-            borderColor: "#593196",
-            borderRadius: 30,
-            width: "70%",
-            alignItems: 'center',
-            marginTop: 15,
+      </View>
 
-       }}>
-        <Text style = {{
-            color: '#593196',
-            fontSize: 16
-        }}>
-            Start chatting!
+      <Pressable
+        style={{
+          alignSelf: "center",
+          borderWidth: 1,
+          padding: 12,
+          borderColor: "#593196",
+          borderRadius: 30,
+          width: "70%",
+          alignItems: "center",
+          marginTop: 15,
+        }}
+      >
+        <Text
+          style={{
+            color: "#593196",
+            fontSize: 16,
+          }}
+        >
+          Start chatting!
         </Text>
-       </Pressable>
-</View>
-  )
-}
+      </Pressable>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "white",
-        width: "90%",
-        height: 450,
-        marginTop: 30,
-        alignSelf: 'center',
+  container: {
+    backgroundColor: "white",
+    width: "90%",
+    height: 450,
+    marginTop: 30,
+    alignSelf: "center",
 
-        borderRadius: 30,
-        overflow: 'hidden',
+    borderRadius: 30,
+    overflow: "hidden",
 
-        shadowColor: '#fff',
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        
-        shadowOpacity: 0.10,
-        shadowRadius: 1.0,
-
-        elevation: 1,
-        
+    shadowColor: "#fff",
+    shadowOffset: {
+      width: 0,
+      height: 1,
     },
 
-    image: {
-        width: "100%",
-        height: 300,
-        justifyContent: 'flex-end',
-        
-    },
+    shadowOpacity: 0.1,
+    shadowRadius: 1.0,
 
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        justifyContent: 'flex-end',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-    },
+    elevation: 1,
+  },
 
-    name: {
-        //backgroundColor: 'black',
-        color: 'white',
-        fontSize: 30,
+  image: {
+    width: "100%",
+    height: 300,
+    justifyContent: "flex-end",
+  },
 
-        marginLeft: 5
-    },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    justifyContent: "flex-end",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+  },
 
-    location_container: {
-        flexDirection: "row",
-        paddingTop: 5,
-    },
+  name: {
+    //backgroundColor: 'black',
+    color: "white",
+    fontSize: 30,
 
-    location: {
-        flexDirection: 'row',
-    },
+    marginLeft: 5,
+  },
 
-    text_loc: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 15,
-        marginBottom: 5,
-        marginRight: 3
-    },
+  location_container: {
+    flexDirection: "row",
+    paddingTop: 5,
+  },
 
-    text_loc2: {
+  location: {
+    flexDirection: "row",
+  },
 
-        color: 'white',
-        marginTop: 1,
+  text_loc: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 15,
+    marginBottom: 5,
+    marginRight: 3,
+  },
 
-    },
-    destination: {
-        flexDirection: 'row',
-        paddingTop: 10,
-        paddingLeft: 5
-    },
+  text_loc2: {
+    color: "white",
+    marginTop: 1,
+  },
+  destination: {
+    flexDirection: "row",
+    paddingTop: 10,
+    paddingLeft: 5,
+  },
 
-    date: {
-        flexDirection: 'row',
-        paddingTop: 5,
-        paddingLeft: 5
-    },
-    space: {
-        flexDirection: 'row',
-        paddingTop : 10,
-        paddingLeft: 5
-    }
+  date: {
+    flexDirection: "row",
+    paddingTop: 5,
+    paddingLeft: 5,
+  },
+  space: {
+    flexDirection: "row",
+    paddingTop: 10,
+    paddingLeft: 5,
+  },
+});
 
-})
-
-export default BuyerCard
+export default BuyerCard;

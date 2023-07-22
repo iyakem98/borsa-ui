@@ -1,7 +1,7 @@
 import React from "react";
 import { SvgXml } from "react-native-svg";
 
-export default function EmptyUnDraw(){  
+export default function EmptyUnDraw() {
   const svgMarkup = `
     <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="247.63626" height="162.17383" viewBox="0 0 647.63626 632.17383" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path d="M687.3279,276.08691H512.81813a15.01828,15.01828,0,0,0-15,15v387.85l-2,.61005-42.81006,13.11a8.00676,8.00676,0,0,1-9.98974-5.31L315.678,271.39691a8.00313,8.00313,0,0,1,5.31006-9.99l65.97022-20.2,191.25-58.54,65.96972-20.2a7.98927,7.98927,0,0,1,9.99024,5.3l32.5498,106.32Z" transform="translate(-276.18187 -133.91309)" fill="#f2f2f2"/>
@@ -16,7 +16,7 @@ export default function EmptyUnDraw(){
         <circle cx="433.63626" cy="105.17383" r="12.18187" fill="#fff"/>
     </svg>
 `;
-  const SvgImage = () => <SvgXml xml={svgMarkup} width="301px" />;  
+  const SvgImage = () => <SvgXml xml={svgMarkup} width="301px" />;
 
   return <SvgImage />;
 }
