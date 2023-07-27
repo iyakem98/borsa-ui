@@ -18,6 +18,7 @@ import moment from "moment/moment";
 import { API_BASE_URL, API_BASE_URL_Socket } from "../utils/config";
 import ChatItem from "../components/Chats/ChatItem";
 import * as Notifications from "expo-notifications";
+import axios from "axios";
 
 const ChatScreen = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,23 @@ const ChatScreen = () => {
       settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
     );
   };
+
+  // const fetchAllChats = async() => {
+  //   try {
+  //     const res = await axios.get('http://143.198.168.244/api/chat/v2?page=1&size=30', {
+  //       headers: {
+  //         Authorization: `Bearer ${user?.token}`
+  //       }
+  //     })
+  //     console.log("object", res.data?.chat?.length)
+  //   } catch(e) {
+  //     console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data)
+  //   }
+  // }
+
+  // useEffect(()=>{
+  //   fetchAllChats();
+  // }, [])
 
   const sendPush = async (newMessage) => {
     const hasPushNotificationPermissionGranted =
@@ -216,7 +234,7 @@ const ChatScreen = () => {
                     height: 200,
                     resizeMode: "cover",
                     marginBottom: 20,
-                    background: "white",
+                    backgroundColor: "white",
                   }}
                 />
                 <Text
@@ -257,7 +275,7 @@ const ChatScreen = () => {
                     height: 200,
                     resizeMode: "cover",
                     marginBottom: 20,
-                    background: "white",
+                    backgroundColor: "white",
                   }}
                 />
                 <Text
