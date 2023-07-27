@@ -43,6 +43,8 @@ const ChatScreen = () => {
   const [socketConnected, setsocketConnected] = useState(false);
   // var storedNotifications = []
   const [storedNotifications, setstoredNotifications] = useState([]);
+
+  let pageNo = 1
   const allowsNotificationsAsync = async () => {
     const settings = await Notifications.getPermissionsAsync();
     return (
@@ -53,7 +55,7 @@ const ChatScreen = () => {
 
   const fetchAllChats = async() => {
     try {
-      const res = await axios.get('http://143.198.168.244/api/chat/v2?page=1&limit=2', {
+      const res = await axios.get(`http://143.198.168.244/api/chat/v2?page=${pageNo}&limit=20`, {
         headers: {
           Authorization: `Bearer ${user?.token}`
         }
@@ -161,7 +163,7 @@ const ChatScreen = () => {
           }
           return (
             <ChatItem
-              key={index}
+              key={item._id}
               storedNotifications={storedNotifications}
               setchattId={setchattId}
               setloading={setloading}
@@ -175,7 +177,7 @@ const ChatScreen = () => {
         } else if (d == 1) {
           return (
             <ChatItem
-              key={index}
+              key={item._id}
               storedNotifications={storedNotifications}
               setchattId={setchattId}
               setloading={setloading}
@@ -198,7 +200,7 @@ const ChatScreen = () => {
           }
           return (
             <ChatItem
-              key={index}
+              key={item._id}
               storedNotifications={storedNotifications}
               setchattId={setchattId}
               setloading={setloading}
@@ -222,7 +224,22 @@ const ChatScreen = () => {
           data={chatsData}
           renderItem={renderItem}
           keyExtractor={item => item._id}
-          // extraData={selectedId}
+          onEndReached={async() => {
+            try {
+              const res = await axios.get(`http://143.198.168.244/api/chat/v2?page=${pageNo + 1}&limit=20`, {
+                headers: {
+                  Authorization: `Bearer ${user?.token}`
+                }
+              })
+              if(res.data?.chat && res.data?.chat?.length >= 0) {
+                setChatsData((prev)=>[...prev, ...res.data?.chat])
+                pageNo = pageNo + 1
+              }
+              console.log("chat data", res.data?.chat)
+            } catch(e) {
+              console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data)
+            }
+          }}
           initialNumToRender={10}
         />
       ) : (
