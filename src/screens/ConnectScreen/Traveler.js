@@ -374,7 +374,7 @@ const TravelerChat = async(travData) => {
                     </View> */}
                 </View>
                 <View style={styles.horizontal}>
-                <MaterialIcons name="luggage" size={24} color="#13b955" />
+                <MaterialIcons name="luggage" size={24} color="" />
                 {user?.isImperial? (
                          <Text style={{
                             fontSize: 18,
@@ -498,11 +498,15 @@ const TravelerChat = async(travData) => {
 
                
                 <Pressable style={{
-                  backgroundColor: "#13b955",
+                  //backgroundColor: "#13b955",
                   //backgroundColor: 'navy',
                   //backgroundColor: '#009cdc',
+                  backgroundColor: 'white',
                   paddingHorizontal: 20,
-                  paddingVertical: 8,
+                  paddingVertical: 6,
+                  borderRadius: 8,
+                  borderStyle: 'solid',
+                  borderWidth: 1.5,
                   borderRadius: 8
                 }} onPress={()=>{
                     store1 = true
@@ -512,7 +516,7 @@ const TravelerChat = async(travData) => {
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
-                    color: "#fff"
+                    //color: "#fff"
                   }}>Message</Text>
                 </Pressable>
               </View>
