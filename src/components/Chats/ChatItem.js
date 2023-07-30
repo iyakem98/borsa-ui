@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     color: "gray",
     marginTop: 2,
     marginLeft: 2,
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: "Poppins_400Regular",
   },
 });
