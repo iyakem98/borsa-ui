@@ -242,6 +242,9 @@ const ChatScreen = () => {
     <>
       {chatsData && chatsData.length ? (
         <FlatList
+        contentContainerStyle={{
+          paddingTop: 10
+        }}
           data={chatsData}
           renderItem={renderItem}
           keyExtractor={item => item._id}
