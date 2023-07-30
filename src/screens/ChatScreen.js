@@ -39,6 +39,7 @@ const ChatScreen = () => {
   const ENDPOINT = "http://192.168.100.2:5000";
   var socket = useRef(null);
   const API_URL = `${API_BASE_URL}chat/`;
+  let hasMoreToLoad = false
 
   const [socketConnected, setsocketConnected] = useState(false);
   // var storedNotifications = []
@@ -63,14 +64,34 @@ const ChatScreen = () => {
       if(res.data?.chat && res.data?.chat?.length) {
         setChatsData(res.data?.chat)
       }
-      console.log("chat data", res.data?.chat)
     } catch(e) {
       console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data)
     }
   }
 
+  const handleOnEndReached = async() => {
+    try {
+      if(!hasMoreToLoad) {
+        hasMoreToLoad = true;
+        const res = await axios.get(`http://143.198.168.244/api/chat/v2?page=${pageNo + 1}&limit=20`, {
+          headers: {
+            Authorization: `Bearer ${user?.token}`
+          }
+        })
+        if(res.data?.chat && res.data?.chat?.length >= 0) {
+          setChatsData((prev)=>[...prev, ...res.data?.chat])
+          pageNo = pageNo + 1
+        }
+        }
+    } catch(e) {
+      console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data)
+      hasMoreToLoad = false;
+    }
+  }
+
   useEffect(()=>{
     fetchAllChats();
+    console.log("token", user.token)
   }, [])
 
   const sendPush = async (newMessage) => {
@@ -163,7 +184,7 @@ const ChatScreen = () => {
           }
           return (
             <ChatItem
-              key={item._id}
+              key={index}
               storedNotifications={storedNotifications}
               setchattId={setchattId}
               setloading={setloading}
@@ -177,7 +198,7 @@ const ChatScreen = () => {
         } else if (d == 1) {
           return (
             <ChatItem
-              key={item._id}
+              key={index}
               storedNotifications={storedNotifications}
               setchattId={setchattId}
               setloading={setloading}
@@ -200,7 +221,7 @@ const ChatScreen = () => {
           }
           return (
             <ChatItem
-              key={item._id}
+              key={index}
               storedNotifications={storedNotifications}
               setchattId={setchattId}
               setloading={setloading}
@@ -224,22 +245,7 @@ const ChatScreen = () => {
           data={chatsData}
           renderItem={renderItem}
           keyExtractor={item => item._id}
-          onEndReached={async() => {
-            try {
-              const res = await axios.get(`http://143.198.168.244/api/chat/v2?page=${pageNo + 1}&limit=20`, {
-                headers: {
-                  Authorization: `Bearer ${user?.token}`
-                }
-              })
-              if(res.data?.chat && res.data?.chat?.length >= 0) {
-                setChatsData((prev)=>[...prev, ...res.data?.chat])
-                pageNo = pageNo + 1
-              }
-              console.log("chat data", res.data?.chat)
-            } catch(e) {
-              console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data)
-            }
-          }}
+          onEndReached={handleOnEndReached}
           initialNumToRender={10}
         />
       ) : (
