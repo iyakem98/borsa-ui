@@ -28,7 +28,7 @@ const ChatInput = ({
   const onContentSizeChange = (event) => {
     const { height } = event.nativeEvent.contentSize;
     // Set a maximum height for the TextInput to limit expansion
-    const newHeight = Math.min(height, 100); // Adjust the maximum height as needed
+    const newHeight = Math.min(height, 300); // Adjust the maximum height as needed
     setInputHeight(newHeight);
   };
   return (
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: "100%",
     width: width - 75,
-    maxHeight: 100, // Set a maximum height for the TextInput
+    maxHeight: 300, // Set a maximum height for the TextInput
     textAlignVertical: "center",
   },
 });
