@@ -264,10 +264,13 @@ export default ChatItem;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    marginHorizontal: 10,
-    marginVertical: 5,
-    height: 70,
+    marginHorizontal: 7,
+    marginVertical: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 7,
+    height: 77,
     backgroundColor: "#fff",
+    borderRadius: 4
   },
   image: {
     width: 60,
@@ -277,8 +280,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#ccc",
+    // borderBottomWidth: StyleSheet.hairlineWidth,
+    // borderBottomColor: "#ccc",
   },
   notif: {
     alignItems: "center",
@@ -321,6 +324,7 @@ const styles = StyleSheet.create({
     color: "gray",
     marginTop: 2,
     marginLeft: 2,
-    fontSize: 15,
+    fontSize: 12,
+    fontFamily: "Poppins_400Regular",
   },
 });

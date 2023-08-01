@@ -7,10 +7,12 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React from "react";
+import {React, useState} from "react";
 import { AntDesign } from "@expo/vector-icons";
 
 const width = Dimensions.get("screen").width;
+const paddingVertical = 8;
+const marginVertical = 4;
 
 const ChatInput = ({
   sendMessage,
@@ -19,13 +21,24 @@ const ChatInput = ({
   typingHandler,
   activeHandler,
 }) => {
+  const [inputHeight, setInputHeight] = useState(45); // Initial height of the TextInput
+  const containerHeight = Math.max(inputHeight + 20, 2); // Minimum container height is 65
+
+  // Function to update the height of the TextInput based on its content
+  const onContentSizeChange = (event) => {
+    const { height } = event.nativeEvent.contentSize;
+    // Set a maximum height for the TextInput to limit expansion
+    const newHeight = Math.min(height, 300); // Adjust the maximum height as needed
+    setInputHeight(newHeight);
+  };
   return (
-    <>
+    <View style={{ paddingBottom: marginVertical, paddingTop: 4, }}>
       <View
         style={{
           paddingTop: 5,
           width: "100%",
           overflow: "hidden",
+         // marginVertical: marginVertical,
         }}
       >
         <View
@@ -44,8 +57,10 @@ const ChatInput = ({
 
             elevation: 3,
             height: 45,
-            paddingVertical: 5,
+            //paddingVertical: 5,
             paddingHorizontal: 15,
+            height: containerHeight,
+            paddingTop: 0,
           }}
         >
           <TextInput
@@ -53,13 +68,14 @@ const ChatInput = ({
             onChangeText={(text) => {
               setNewMessage(text);
             }}
-            style={styles.input}
+            style={[styles.input, { height: inputHeight + 2 * paddingVertical }]} 
             multiline
             placeholder="Type your message..."
             onChange={() => {
               activeHandler();
               typingHandler();
             }}
+            onContentSizeChange={onContentSizeChange}
             onFocus={() => {
               if (newmessage.length > 0) {
                 // socket.current.emit('typing', chattId);
@@ -97,7 +113,7 @@ const ChatInput = ({
           </Pressable>
         </View>
       </View>
-    </>
+    </View>
   );
 };
 
@@ -109,8 +125,11 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "ios" ? 8 : 0,
     fontSize: 16,
     paddingHorizontal: 10,
+    paddingVertical: 2 + paddingVertical,
     borderRadius: 8,
     height: "100%",
     width: width - 75,
+    maxHeight: 300, // Set a maximum height for the TextInput
+    textAlignVertical: "center",
   },
 });

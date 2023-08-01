@@ -7,7 +7,7 @@ import { getConsumers, getTravelers } from '../../features/auth/authSlice'
 import { useNavigation } from '@react-navigation/native'
 import { fetchChat } from '../../features/chat/chatSlice'
 import { ChatState } from '../../context/ChatProvider'
-import { AntDesign, Feather, FontAwesome5, Foundation, Ionicons, MaterialIcons, Entypo } from '@expo/vector-icons'
+import { AntDesign, Feather, FontAwesome5, Foundation, Ionicons, MaterialIcons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
 import EmptyUnDraw from '../../assets/svg/emptyUnDraw'
 import ErrorUnDraw from '../../assets/svg/errorUnDraw'
 import {registerSheet} from 'react-native-actions-sheet';
@@ -43,6 +43,41 @@ const MyCards = () => {
 
   function tweakBuyer2() {
     setIsBuyer(true)
+  }
+
+  const changeIsFull = async (id, currentStatus) => {
+    console.log("card to be deleted is:", id)
+    let config = {
+      headers: {
+        Authorization: `Bearer ${await AsyncStorage.getItem('myToken')}`
+      }
+    }
+
+    let newData = {
+      travelRequestId: id,
+      isLuggageSpaceFull: !currentStatus
+    }
+    Alert.alert('Changing your luggage status', `Are you sure you want to mark your luggage as ${currentStatus ? 'empty' : 'full'}?`, [
+      {text: 'OK', onPress: async () => {
+        setSpinner(true)
+        await axios.put(`http://143.198.168.244/api/travels/update-is-luggage-space-full`, newData, config)
+        .then((res) => {
+          getCards()
+          setSelectedTab(1)
+        }).catch((err) => {
+          let errResponse =
+            (err && err.response && err.response.data) ||
+            (err && err.message);
+          console.log("error:", errResponse)
+        });
+        setSpinner(false)
+      }},
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+    ]);
   }
 
   const deleteTraveler = async (id) => {
@@ -409,7 +444,7 @@ const MyCards = () => {
               //marginLeft:20,
               backgroundColor:"#593196",
               backgroundColor: 'white',
-              paddingTop: 10,
+              paddingVertical: 20,
               //height:300,
               //padding:5,
               marginVertical: 17,
@@ -479,22 +514,7 @@ const MyCards = () => {
 
                  
                    
-              {user.isImperial? (
-                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
-                {"  "}
-                <MaterialIcons name="luggage" size={26} color="black" />
-                {" " + (travel?.luggageSpace*2.20462).toFixed(1)} lb 
-                
-                </Text> 
-              ) : (
-                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
-                  {"  "}
-                  <MaterialIcons name="luggage" size={26} color="black" />
-                  {"  "+ (travel?.luggageSpace*1.0).toFixed(1)} kg 
-                  
-                  
-                  </Text> 
-              )}
+              
 
               
                 
@@ -514,6 +534,40 @@ const MyCards = () => {
                   
                   </Text> 
                   </View>
+
+                  {user.isImperial? (
+                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
+                {"  "}
+                {
+                  travel?.isLuggageSpaceFull ? 
+                  <MaterialCommunityIcons name="bag-personal" size={28} color="black" />
+                  :
+                  <MaterialCommunityIcons name="bag-personal-outline" size={28} color="black" />
+                }
+                {" " + (travel?.luggageSpace*2.20462).toFixed(1)} lb 
+                
+                </Text> 
+              ) : (
+                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
+                  {"  "}
+                  {
+                  travel?.isLuggageSpaceFull ? 
+                  <View style={{flexDirection:"row"}}>
+                    <MaterialCommunityIcons name="bag-personal" size={28} color="black" />
+                  </View>
+                  
+                  :
+                  <MaterialCommunityIcons name="bag-personal-outline" size={28} color="black" />
+                }
+                  {"  "+ (travel?.luggageSpace*1.0).toFixed(1)} kg 
+                  
+                  
+                  </Text> 
+              )}
+
+<MaterialCommunityIcons name={travel?.isLuggageSpaceFull ? 'toggle-switch' : 'toggle-switch-off-outline'} size={28} color="black" 
+style={{alignSelf:"flex-end", marginRight:7, marginTop:-28}}
+onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
 
                   
 

@@ -559,10 +559,13 @@ const Buyer = ({ item, onPress }) => {
                 </View> */}
           <Pressable
             style={{
-              backgroundColor: "#593196",
+              backgroundColor: 'white',
               paddingHorizontal: 20,
-              paddingVertical: 8,
+              paddingVertical: 6,
               borderRadius: 8,
+              borderStyle: 'solid',
+              borderWidth: 1.5,
+              borderRadius: 8
             }}
             onPress={() => {
               BuyerChat(buyer.user);
@@ -572,7 +575,7 @@ const Buyer = ({ item, onPress }) => {
               style={{
                 fontSize: 16,
                 fontFamily: "Poppins_500Medium",
-                color: "#fff",
+                //color: "#fff",
               }}
             >
               Message

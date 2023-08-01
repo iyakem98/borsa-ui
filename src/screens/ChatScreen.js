@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   Platform,
+  FlatList,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { ChatState } from "../context/ChatProvider";
@@ -18,6 +19,7 @@ import moment from "moment/moment";
 import { API_BASE_URL, API_BASE_URL_Socket } from "../utils/config";
 import ChatItem from "../components/Chats/ChatItem";
 import * as Notifications from "expo-notifications";
+import axios from "axios";
 
 const ChatScreen = () => {
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ const ChatScreen = () => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [Today, setToday] = useState(false);
+  const [chatsData, setChatsData] = useState([]);
   const [Yesterday, setYesterday] = useState(false);
   const [otherDs, setotherDs] = useState(false);
   var yesterdaytest = null;
@@ -36,10 +39,13 @@ const ChatScreen = () => {
   const ENDPOINT = "http://192.168.100.2:5000";
   var socket = useRef(null);
   const API_URL = `${API_BASE_URL}chat/`;
+  let hasMoreToLoad = false
 
   const [socketConnected, setsocketConnected] = useState(false);
   // var storedNotifications = []
   const [storedNotifications, setstoredNotifications] = useState([]);
+
+  let pageNo = 1
   const allowsNotificationsAsync = async () => {
     const settings = await Notifications.getPermissionsAsync();
     return (
@@ -47,6 +53,46 @@ const ChatScreen = () => {
       settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
     );
   };
+
+  const fetchAllChats = async() => {
+    try {
+      const res = await axios.get(`http://143.198.168.244/api/chat/v2?page=${pageNo}&limit=20`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`
+        }
+      })
+      if(res.data?.chat && res.data?.chat?.length) {
+        setChatsData(res.data?.chat)
+      }
+    } catch(e) {
+      console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data)
+    }
+  }
+
+  const handleOnEndReached = async() => {
+    try {
+      if(!hasMoreToLoad) {
+        hasMoreToLoad = true;
+        const res = await axios.get(`http://143.198.168.244/api/chat/v2?page=${pageNo + 1}&limit=20`, {
+          headers: {
+            Authorization: `Bearer ${user?.token}`
+          }
+        })
+        if(res.data?.chat && res.data?.chat?.length >= 0) {
+          setChatsData((prev)=>[...prev, ...res.data?.chat])
+          pageNo = pageNo + 1
+        }
+        }
+    } catch(e) {
+      console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data)
+      hasMoreToLoad = false;
+    }
+  }
+
+  useEffect(()=>{
+    fetchAllChats();
+    console.log("token", user.token)
+  }, [])
 
   const sendPush = async (newMessage) => {
     const hasPushNotificationPermissionGranted =
@@ -111,168 +157,132 @@ const ChatScreen = () => {
     setstoredNotifications((current) => [...current, newMessageReceived]);
   };
 
+  const renderItem = ({item, index}) => {
+    const chat = item
+    if (chat !== null || chat !== undefined) {
+      if (
+        chat.lastestMessage == undefined ||
+        chat.lastestMessage == null
+      ) {
+        // console.log('undefined chat(s)')
+        // null;
+      }
+      if (chat.latestMessage) {
+        let msgdate = null;
+        msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD");
+        let today = moment();
+        let d = today.diff(msgdate, "days");
+        if (d == 0) {
+          var formatted_date = null;
+          if (
+            chat.lastestMessage !== undefined ||
+            chat.lastestMessage !== null
+          ) {
+            formatted_date = moment(
+              chat.latestMessage.createdAt
+            ).format("LT");
+          }
+          return (
+            <ChatItem
+              key={index}
+              storedNotifications={storedNotifications}
+              setchattId={setchattId}
+              setloading={setloading}
+              chat={chat}
+              user={user}
+              getSenderFull={getSenderFull}
+              formatted_date={formatted_date}
+              setSelectedChat={setSelectedChat}
+            />
+          );
+        } else if (d == 1) {
+          return (
+            <ChatItem
+              key={index}
+              storedNotifications={storedNotifications}
+              setchattId={setchattId}
+              setloading={setloading}
+              chat={chat}
+              user={user}
+              getSenderFull={getSenderFull}
+              formatted_date={formatted_date}
+              setSelectedChat={setSelectedChat}
+            />
+          );
+        } else {
+          var formatted_date = null;
+          if (
+            chat.lastestMessage !== undefined ||
+            chat.lastestMessage !== null
+          ) {
+            formatted_date = user?.isImperial
+              ? moment(chat.latestMessage.createdAt).format("MM/DD/YY")
+              : moment(chat.latestMessage.createdAt).format("DD/MM/YY");
+          }
+          return (
+            <ChatItem
+              key={index}
+              storedNotifications={storedNotifications}
+              setchattId={setchattId}
+              setloading={setloading}
+              chat={chat}
+              user={user}
+              getSenderFull={getSenderFull}
+              formatted_date={formatted_date}
+              setSelectedChat={setSelectedChat}
+            />
+          );
+        }
+      }
+    }
+  };
+
+
   return (
     <>
-      <ScrollView
-        style={{
-          backgroundColor: "#fff",
-          paddingTop: 10,
+      {chatsData && chatsData.length ? (
+        <FlatList
+        contentContainerStyle={{
+          paddingTop: 10
         }}
-      >
-        {chattts && chattts.length > 0 ? (
-          chattts.map((chat, index) => {
-            if (chat !== null || chat !== undefined) {
-              if (
-                chat.lastestMessage == undefined ||
-                chat.lastestMessage == null
-              ) {
-                // console.log('undefined chat(s)')
-                // null;
-              }
-              if (chat.latestMessage) {
-                let msgdate = null;
-                msgdate = moment(chat.latestMessage.createdAt, "YYYY-MM-DD");
-                let today = moment();
-                let d = today.diff(msgdate, "days");
-                if (d == 0) {
-                  var formatted_date = null;
-                  if (
-                    chat.lastestMessage !== undefined ||
-                    chat.lastestMessage !== null
-                  ) {
-                    formatted_date = moment(
-                      chat.latestMessage.createdAt
-                    ).format("LT");
-                  }
-                  return (
-                    <ChatItem
-                      key={index}
-                      storedNotifications={storedNotifications}
-                      setchattId={setchattId}
-                      setloading={setloading}
-                      chat={chat}
-                      user={user}
-                      getSenderFull={getSenderFull}
-                      formatted_date={formatted_date}
-                      setSelectedChat={setSelectedChat}
-                    />
-                  );
-                } else if (d == 1) {
-                  return (
-                    <ChatItem
-                      key={index}
-                      storedNotifications={storedNotifications}
-                      setchattId={setchattId}
-                      setloading={setloading}
-                      chat={chat}
-                      user={user}
-                      getSenderFull={getSenderFull}
-                      formatted_date={formatted_date}
-                      setSelectedChat={setSelectedChat}
-                    />
-                  );
-                } else {
-                  var formatted_date = null;
-                  if (
-                    chat.lastestMessage !== undefined ||
-                    chat.lastestMessage !== null
-                  ) {
-                    formatted_date = user?.isImperial
-                      ? moment(chat.latestMessage.createdAt).format("MM/DD/YY")
-                      : moment(chat.latestMessage.createdAt).format("DD/MM/YY");
-                  }
-                  return (
-                    <ChatItem
-                      key={index}
-                      storedNotifications={storedNotifications}
-                      setchattId={setchattId}
-                      setloading={setloading}
-                      chat={chat}
-                      user={user}
-                      getSenderFull={getSenderFull}
-                      formatted_date={formatted_date}
-                      setSelectedChat={setSelectedChat}
-                    />
-                  );
-                }
-              }
-            }
-          })
-        ) : (
-          <>
-            {Platform.OS == "android" ? (
-              <View
+          data={chatsData}
+          renderItem={renderItem}
+          keyExtractor={item => item._id}
+          onEndReached={handleOnEndReached}
+          initialNumToRender={10}
+        />
+      ) : (
+        <>
+          {Platform.OS == "android" ? (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                // height: '100%',
+                paddingTop: 30,
+              }}
+            >
+              <Image
+                source={require("../../assets/images/pug_glasses.jpeg")}
                 style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  // height: '100%',
-                  paddingTop: 30,
+                  width: 260,
+                  height: 200,
+                  resizeMode: "cover",
+                  marginBottom: 20,
+                  backgroundColor: "white",
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginBottom: 20,
+                  marginHorizontal: 10,
                 }}
               >
-                <Image
-                  source={require("../../assets/images/pug_glasses.jpeg")}
-                  style={{
-                    width: 260,
-                    height: 200,
-                    resizeMode: "cover",
-                    marginBottom: 20,
-                    background: "white",
-                  }}
-                />
-                <Text
-                  style={{
-                    fontSize: 18,
-                    marginBottom: 20,
-                    marginHorizontal: 10,
-                  }}
-                >
-                  Security Doggo wants you to start a new chat
-                </Text>
-                <View style={styles.connectBtn}>
-                  <Pressable onPress={() => navigation.navigate("Connect")}>
-                    <Text
-                      style={{
-                        fontSize: 18,
-                        color: "white",
-                      }}
-                    >
-                      Click here to start chatting{" "}
-                    </Text>
-                  </Pressable>
-                </View>
-              </View>
-            ) : (
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  height: "100%",
-                  paddingTop: 30,
-                }}
-              >
-                <Image
-                  source={require("../../assets/images/pug_glasses.jpeg")}
-                  style={{
-                    width: 260,
-                    height: 200,
-                    resizeMode: "cover",
-                    marginBottom: 20,
-                    background: "white",
-                  }}
-                />
-                <Text
-                  style={{
-                    fontSize: 18,
-                    marginBottom: 20,
-                    marginHorizontal: 10,
-                  }}
-                >
-                  Security Doggo wants you to start a new chat
-                </Text>
-                <Pressable
-                  style={styles.connectBtn}
-                  onPress={() => navigation.navigate("Connect")}
-                >
+                Security Doggo wants you to start a new chat
+              </Text>
+              <View style={styles.connectBtn}>
+                <Pressable onPress={() => navigation.navigate("Connect")}>
                   <Text
                     style={{
                       fontSize: 18,
@@ -283,10 +293,52 @@ const ChatScreen = () => {
                   </Text>
                 </Pressable>
               </View>
-            )}
-          </>
-        )}
-      </ScrollView>
+            </View>
+          ) : (
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+                paddingTop: 30,
+              }}
+            >
+              <Image
+                source={require("../../assets/images/pug_glasses.jpeg")}
+                style={{
+                  width: 260,
+                  height: 200,
+                  resizeMode: "cover",
+                  marginBottom: 20,
+                  backgroundColor: "white",
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginBottom: 20,
+                  marginHorizontal: 10,
+                }}
+              >
+                Security Doggo wants you to start a new chat
+              </Text>
+              <Pressable
+                style={styles.connectBtn}
+                onPress={() => navigation.navigate("Connect")}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: "white",
+                  }}
+                >
+                  Click here to start chatting{" "}
+                </Text>
+              </Pressable>
+            </View>
+          )}
+        </>
+      )}
     </>
   );
 };
