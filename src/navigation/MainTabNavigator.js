@@ -259,10 +259,10 @@ const MainTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        // name="Saved"
-        name="anime"
-        // component={Saved}
-        component={Testanime}
+        name="Saved"
+        // name="anime"
+        component={Saved}
+        // component={Testanime}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="heart-outline" size={size} color={color} />
