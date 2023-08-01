@@ -61,6 +61,7 @@ import WelcomeImperial from "../screens/ProfileScreens/WelcomeImperial";
 import AddPost from "../screens/AddPost/index";
 import Saved from "../screens/Saved";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Testanime from "../screens/ConnectScreen/testanime";
 
 const Stack = createStackNavigator();
 const Navigator = ({ showOnBoarding }) => {
@@ -167,6 +168,10 @@ const Navigator = ({ showOnBoarding }) => {
 
               headerShown: false,
             })}
+          />
+          <Stack.Screen
+            name="Anime"
+            component={Testanime}
           />
           {/* <Stack.Screen name="Welcome Pic" component={WelcomeProPic} options={{headerShown: false}} /> */}
           <Stack.Screen

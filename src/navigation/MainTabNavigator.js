@@ -41,6 +41,7 @@ import WelcomeProPic from "../screens/ProfileScreens/WelcomeProPic";
 import ProfilePicker from "../screens/ProfilePicker";
 import axios from "axios";
 import WelcomeImperial from "../screens/ProfileScreens/WelcomeImperial";
+import Testanime from "../screens/ConnectScreen/testanime";
 const Tab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
@@ -258,8 +259,10 @@ const MainTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Saved"
-        component={Saved}
+        // name="Saved"
+        name="anime"
+        // component={Saved}
+        component={Testanime}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="heart-outline" size={size} color={color} />

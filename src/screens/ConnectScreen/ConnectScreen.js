@@ -20,14 +20,14 @@ import TravelerHeader from '../../components/Connect/TravelerHeader'
 import BuyerHeader from '../../components/Connect/BuyerHeader'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Lottie from 'lottie-react-native';
+import LottieView  from 'lottie-react-native';
 import CountryPicker from 'react-native-country-picker-modal'
-import CountryFlag from "react-native-country-flag"
+// import CountryFlag from "react-native-country-flag"
 
 const width = Dimensions.get("screen").width
 
 const ConnectScreen = () => {
-  registerSheet('example-two', <BottomSheet />);
+  // registerSheet('example-two', <BottomSheet />);
 
   const [bottomSheetData, setBottomSheetData] = useState(null)
   const [selectedTab, setSelectedTab] = useState(1)
@@ -472,18 +472,49 @@ const [bdelivery, setBdelivery] = useState(false)
           }}
           size="large"
           />
+          
           :
           <View>
           
           
           {loading ? (
             <View style={{
-                paddingTop: "130%"
+                paddingTop: "100%"
             }}>
               {/* <ActivityIndicator size="large" color="#777" /> */}
-              <Lottie
+              {/* <Lottie
       source={require('../../assets/Animation - 1689355162679.json')}
-    />
+    /> */}
+      {/* <LottieView
+       
+        source={require('../../assets/animation_lkjgfh27.json')}
+      /> */}
+      {/* <Lottie source={require('../../assets/loading.json')} autoPlay loop /> */}
+    
+              {/* <LottieView
+      source={require('../../assets/qdZM0DGhfn.json')}
+    /> */}
+    <View style={styles.animationContainer}>
+      <LottieView
+        style={{
+         
+          height: 250,
+        }}
+        source={require('../../assets/Animation - 1689355162679.json')}
+        autoPlay
+        loop
+      />
+      <LottieView
+        style={{
+          width: 500,
+          height: 200,
+        
+        }}
+        source={require('../../assets/animation_lks476w7.json')}
+        autoPlay
+        loop
+      />
+    </View>
             </View>
           ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
             <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
@@ -1282,5 +1313,14 @@ pressDisabledT : {
     padding: 10,
     width: 100,
     
-}
+},
+animationContainer: {
+  backgroundColor: '#fff',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flex: 1,
+},
+buttonContainer: {
+  paddingTop: 20,
+},
 })
