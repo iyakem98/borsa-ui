@@ -68,7 +68,7 @@ const MyCards = () => {
           let errResponse =
             (err && err.response && err.response.data) ||
             (err && err.message);
-          console.log("error:", errResponse)
+          console.log("error:", errResponse, newData)
         });
         setSpinner(false)
       }},
