@@ -442,7 +442,7 @@ const Buyer = ({ item, onPress }) => {
               onPress={addToWislistTraveler}
             >
               {ids.includes(item._id) ? (
-                <AntDesign name="heart" size={24} color="#593196" />
+                <AntDesign name="heart" size={24} color="#5f43b2" />
               ) : (
                 <AntDesign name="hearto" size={24} color="black" />
               )}
