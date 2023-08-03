@@ -131,6 +131,7 @@ const AddPost = ({ navigation }) => {
                     ? {
                         borderColor: "#514590",
                         borderColor: "#13b955",
+                        //borderColor: '#bd2e95',
                         borderWidth: 2,
                       }
                     : {
@@ -174,6 +175,7 @@ const AddPost = ({ navigation }) => {
                   selected === 2
                     ? {
                         borderColor: "#514590",
+                        borderColor: '#5f43b2',
                         //borderColor: '#13b955',
                         borderWidth: 2,
                       }
@@ -215,7 +217,7 @@ const AddPost = ({ navigation }) => {
             </View>
             <Pressable
               style={{
-                backgroundColor: `${selected == 1 ? "#514590" : "#514590"}`,
+                backgroundColor: `${selected == 1 ? "#5f43b2" : "#5f43b2"}`,
                 paddingVertical: 15,
                 borderRadius: 5,
                 marginBottom: 25,

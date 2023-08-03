@@ -303,7 +303,7 @@ const TravelerChat = async(travData) => {
                 <View style={styles.horizontal}>
                     <View style={styles.dot} />
                     <View style={styles.dottedLine} />
-                    <MaterialCommunityIcons name="airplane-takeoff" size={24} color="black" />
+                    <MaterialCommunityIcons name="airplane-takeoff" size={24} color="#7267e7" />
                     <View style={styles.dottedLine} />
                     <View style={styles.dot} />
                 </View>
@@ -374,11 +374,13 @@ const TravelerChat = async(travData) => {
                     </View> */}
                 </View>
                 <View style={styles.horizontal}>
-                <MaterialIcons name="luggage" size={24} color="" />
+                {/*<MaterialIcons name="luggage" size={24} color="" />*/}
+                <MaterialCommunityIcons name="bag-personal-outline" size={24} color="black" />
                 {user?.isImperial? (
                          <Text style={{
                             fontSize: 18,
                             fontFamily: "Poppins_600SemiBold",
+                            color: 'gray',
                         }}>
                             {(item?.luggageSpace*2.20462).toFixed(1)}
                             <Text style={{
@@ -390,6 +392,7 @@ const TravelerChat = async(travData) => {
                          <Text style={{
                             fontSize: 18,
                             fontFamily: "Poppins_600SemiBold",
+                            color: 'gray'
                         }}>
                             {(item?.luggageSpace*1.0).toFixed(1)}
                             <Text style={{
@@ -412,7 +415,7 @@ const TravelerChat = async(travData) => {
                     }} onPress={addToWislistTraveler}>
                        {
                         ids.includes(item._id) ? 
-                        <AntDesign name="heart" size={24} color="#13b955" />  
+                        <AntDesign name="heart" size={24} color="#7267e7" />  
                         :
                         <AntDesign name="hearto" size={24} color="black" />
                        }
@@ -508,7 +511,7 @@ const TravelerChat = async(travData) => {
                   borderStyle: 'solid',
                   borderWidth: 1.5,
                   borderRadius: 8
-                }} onPress={()=>{
+                }} onPress={()=>{ 
                     store1 = true
                     setchattId(null)
                     TravelerChat(traveler.user)
@@ -608,15 +611,26 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
         // height: 150,
-        width: '100%',
+        width: '98%',
+        alignSelf: 'center',
         marginBottom: 15,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "#eee",
+        //borderWidth: 0.2,
+        //borderStyle: "solid",
+        borderColor: "#000",
         borderRadius: 5,
         paddingTop: 20,
         justifyContent: "space-between",
-        overflow: "hidden"
+        //overflow: "hidden",
+        shadowColor: "#593196",
+        shadowColor: '#737373',
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.28,
+        shadowRadius: 3.00,
+        
+        elevation: 24,
     },
     image: {
         height: 50,
