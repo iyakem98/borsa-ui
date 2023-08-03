@@ -73,12 +73,21 @@ import {
     }
     return (
         <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : ""}
-        style={{
-          position: "relative",
-          flex: 1,
-          height: height - 100,
-        }}>
+        // behavior={Platform.OS === "ios" ? "padding" : ""}
+        // style={{
+        //   position: "relative",
+        //   flex: 1,
+        //   height: height - 100,
+        // }}
+        behavior='padding'
+     keyboardVerticalOffset={
+      Platform.select({
+        ios: () => -300,
+        android: () => -300
+      })()
+      
+    }
+        >
         {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inner}>
             <Text style={styles.header}>Header</Text>
