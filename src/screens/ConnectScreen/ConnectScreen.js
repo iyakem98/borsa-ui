@@ -1180,7 +1180,8 @@ const [bdelivery, setBdelivery] = useState(false)
                     // ListHeaderComponent={TravelerHeader}
                     data={travelerTotal}
                     contentContainerStyle={{
-                      paddingBottom: 270
+                      paddingBottom: 270,
+                      paddingTop: 6
                     }}
                     renderItem={({item}) => {
                       // console.log(item)

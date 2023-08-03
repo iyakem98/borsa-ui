@@ -470,7 +470,7 @@ const Buyer = ({ item, onPress }) => {
             <MaterialCommunityIcons
               name="airplane-takeoff"
               size={24}
-              color="black"
+              color="#593196"
             />
             <View style={styles.dottedLine} />
             <View style={styles.dot} />
