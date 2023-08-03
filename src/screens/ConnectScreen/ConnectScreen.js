@@ -415,6 +415,7 @@ const [bdelivery, setBdelivery] = useState(false)
     <SafeAreaView style={styles.container}>
       <View style={{
         backgroundColor: "#fff",
+        backgroundColor: "#fcfbff",
         justifyContent: "center",
         alignItems: "center",
         paddingBottom: 15,
@@ -869,7 +870,8 @@ const [bdelivery, setBdelivery] = useState(false)
               ) : (
                 <View style = {{
                   paddingHorizontal: 10,
-                  backgroundColor: 'white'
+                  backgroundColor: 'white',
+                  backgroundColor: "#fcfbff",
                 }}>
                   
                   {
@@ -1181,7 +1183,8 @@ const [bdelivery, setBdelivery] = useState(false)
                     data={travelerTotal}
                     contentContainerStyle={{
                       paddingBottom: 270,
-                      paddingTop: 6
+                      paddingTop: 6,
+                      backgroundColor: "#fcfbff"
                     }}
                     renderItem={({item}) => {
                       // console.log(item)
@@ -1270,7 +1273,8 @@ export default ConnectScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    backgroundColor: "#fcfbff"
   },
   contentContainer: {
     flex: 1,
