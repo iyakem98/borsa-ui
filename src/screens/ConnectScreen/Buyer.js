@@ -393,7 +393,7 @@ const Buyer = ({ item, onPress }) => {
             {user?.isImperial ? (
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 16,
                   fontFamily: "Poppins_600SemiBold",
                 }}
               >
@@ -401,7 +401,7 @@ const Buyer = ({ item, onPress }) => {
                 <Text
                   style={{
                     fontFamily: "Poppins_400Regular",
-                    fontSize: 13,
+                    fontSize: 16,
                   }}
                 >
                   lb
@@ -410,7 +410,7 @@ const Buyer = ({ item, onPress }) => {
             ) : (
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 17,
                   fontFamily: "Poppins_600SemiBold",
                 }}
               >
@@ -418,7 +418,7 @@ const Buyer = ({ item, onPress }) => {
                 <Text
                   style={{
                     fontFamily: "Poppins_400Regular",
-                    fontSize: 13,
+                    fontSize: 16,
                   }}
                 >
                   kg
@@ -456,7 +456,7 @@ const Buyer = ({ item, onPress }) => {
                 ? locationDeparture[2]
                 : locationDeparture[1]}
             </Text>
-            <Text style={styles.txtCity}>
+            <Text style={styles.txtCity1}>
               {locationDepartureLength === 3 ? (
                 <>{`${locationDeparture[0]}, ${locationDeparture[1]}`}</>
               ) : (
@@ -503,7 +503,7 @@ const Buyer = ({ item, onPress }) => {
             backgroundColor: "#f5f5f5",
             paddingHorizontal: 10,
             paddingVertical: 8,
-            marginTop: 15,
+            //marginTop: 15,
           }}
         >
           <View
@@ -701,15 +701,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     //height: 250,
     width: "98%",
+    alignSelf: 'center',
     marginBottom: 15,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#eee",
+    //borderWidth: 1,
+    //borderStyle: "solid",
+    //borderColor: "#eee",
     borderRadius: 5,
-    paddingTop: 20,
+    paddingTop: 6,
     //justifyContent: "space-between",
-    overflow: "hidden",
-  },
+    //overflow: "hidden",
+    shadowColor: '#737373',
+    shadowOffset: {
+        width: 0,
+        height: 0,
+    },
+    shadowOpacity: 0.28,
+    shadowRadius: 3.00,
+    
+    elevation: 24,
+},
   image: {
     height: 50,
     width: 50,
@@ -722,7 +732,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingLeft: 5,
+    paddingRight: 10,
     marginBottom: 10,
     // paddingRight: 20
   },
@@ -735,6 +746,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#777",
     maxWidth: 110,
+  },
+  txtCity1: {
+    fontFamily: "Poppins_500Medium",
+    fontSize: 12,
+    color: "#777",
+    maxWidth: 110,
+    marginBottom: 15,
   },
   bottomWrapper: {
     flexDirection: "row",

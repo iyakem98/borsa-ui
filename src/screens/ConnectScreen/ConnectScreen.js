@@ -428,7 +428,7 @@ const [bdelivery, setBdelivery] = useState(false)
           justifyContent: "space-between",
           width: width - 30,
           backgroundColor: "#eee",
-          padding: 10,
+          padding: 8,
           borderRadius: 10
         }}>
           <Pressable style={{
@@ -451,7 +451,16 @@ const [bdelivery, setBdelivery] = useState(false)
             borderRadius: 5,
             width: "49%",
             paddingVertical: 13,
-            alignItems: "center"
+            alignItems: "center",
+            /*
+            shadowColor: '#737373',
+            shadowOffset: {
+                width: 0,
+                height: 0,
+            },
+            shadowOpacity: selectedTab == 2? 0.28 : 0,
+            shadowRadius: selectedTab == 2? 3.00 : 0,
+          */
           }} onPress={()=>{
             !isBuyer ? setIsBuyer(true) : null
             setSelectedTab(2)
@@ -522,7 +531,7 @@ const [bdelivery, setBdelivery] = useState(false)
               {isBuyer ? (
                 <View style={{
                   paddingHorizontal: 10,
-                  backgroundColor: 'white'
+                  backgroundColor: '#fcfbff',
                 }}>
       
                         {
@@ -827,7 +836,9 @@ const [bdelivery, setBdelivery] = useState(false)
                     // ListHeaderComponent={BuyerHeader}
                     data={buyerTotal}
                     contentContainerStyle={{
-                      paddingBottom: 270
+                      paddingBottom: 270,
+                      paddingTop: 10,
+                      backgroundColor: '#fcfbff',
                     }}
                     maxToRenderPerBatch={2}
                     renderItem={({item}) => {
