@@ -17,6 +17,7 @@ import moment from 'moment'
 import { useRoute } from '@react-navigation/native'
 import Header from '../../components/Shared/Header'
 import { LinearGradient } from 'expo-linear-gradient'
+import { Snackbar, Button } from 'react-native-paper'
 
 const width = Dimensions.get("screen").width
 
@@ -45,6 +46,10 @@ const MyCards = () => {
     setIsBuyer(true)
   }
 
+  const showSuccess = () => {
+   
+  }
+
   const changeIsFull = async (id, currentStatus) => {
     console.log("card to be deleted is:", id)
     let config = {
@@ -64,6 +69,7 @@ const MyCards = () => {
         .then((res) => {
           getCards()
           setSelectedTab(1)
+         setSnack(true)
         }).catch((err) => {
           let errResponse =
             (err && err.response && err.response.data) ||
@@ -134,6 +140,8 @@ const MyCards = () => {
       },
     ]);
   }
+  const [snack, setSnack] = useState(false)
+
   useEffect(() => {
     navigation.addListener('focus', getCards)
     // UpdateUserRoute()
@@ -624,6 +632,23 @@ const MyCards = () => {
             </View> */}
 
 </ScrollView>
+
+ <View style={{
+
+       }}>
+     
+        <Snackbar
+        wrapperStyle={{ top: 0 }}
+        style={{
+          borderRadius:20
+        }}
+          visible={snack}
+          onDismiss={() => setSnack(false)}
+          duration={3000}
+        >
+          Update succeeded.
+        </Snackbar>
+      </View>
     </View>
   }
 
