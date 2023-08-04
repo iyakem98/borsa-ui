@@ -519,23 +519,7 @@ const MyCards = () => {
               
                 
                   
-
-                  
-                  <View style = {{
-                    backgroundColor: '#13b955',
-                    backgroundColor: '#f0f0f0',
-                    marginTop: 8,
-                    paddingBottom: 10,
-                  }}>
-                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
-                  {"  "}
-                  <AntDesign name="infocirlce" size={22} color="#13b955" />
-                  {"  "+travel.status} 
-                  
-                  </Text> 
-                  </View>
-
-                  {user.isImperial? (
+{user.isImperial? (
                 <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
                 {"  "}
                 {
@@ -565,11 +549,27 @@ const MyCards = () => {
                   </Text> 
               )}
 
-<MaterialCommunityIcons name={travel?.isLuggageSpaceFull ? 'toggle-switch' : 'toggle-switch-off-outline'} size={28} color="black" 
-style={{alignSelf:"flex-end", marginRight:7, marginTop:-28}}
-onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
+              <MaterialCommunityIcons name={travel?.isLuggageSpaceFull ? 'toggle-switch' : 'toggle-switch-off-outline'} size={28} color="black" 
+              style={{alignSelf:"flex-end", marginRight:7, marginTop:-28}}
+              onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
 
                   
+
+
+                  
+                  <View style = {{
+                    backgroundColor: '#13b955',
+                    backgroundColor: '#f0f0f0',
+                    marginTop: 8,
+                    paddingBottom: 10,
+                  }}>
+                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
+                  {"  "}
+                  <AntDesign name="infocirlce" size={22} color="#13b955" />
+                  {"  "+travel.status} 
+                  
+                  </Text> 
+                  </View>
 
                  
 

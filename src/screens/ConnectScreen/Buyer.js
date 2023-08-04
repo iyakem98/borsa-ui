@@ -470,7 +470,7 @@ const Buyer = ({ item, onPress }) => {
             <MaterialCommunityIcons
               name="airplane-takeoff"
               size={24}
-              color="#593196"
+              //color="#593196"
             />
             <View style={styles.dottedLine} />
             <View style={styles.dot} />
@@ -564,8 +564,10 @@ const Buyer = ({ item, onPress }) => {
               paddingVertical: 6,
               borderRadius: 8,
               borderStyle: 'solid',
-              borderWidth: 1.5,
-              borderRadius: 8
+              borderWidth: 0,
+              borderRadius: 8,
+              borderColor: '#5f43b2',
+              backgroundColor: '#5f43b2',
             }}
             onPress={() => {
               BuyerChat(buyer.user);
@@ -575,7 +577,8 @@ const Buyer = ({ item, onPress }) => {
               style={{
                 fontSize: 16,
                 fontFamily: "Poppins_500Medium",
-                //color: "#fff",
+                color: "#fff",
+                //color: '#5f43b2',
               }}
             >
               Message

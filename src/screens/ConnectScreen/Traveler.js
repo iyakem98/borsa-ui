@@ -303,7 +303,7 @@ const TravelerChat = async(travData) => {
                 <View style={styles.horizontal}>
                     <View style={styles.dot} />
                     <View style={styles.dottedLine} />
-                    <MaterialCommunityIcons name="airplane-takeoff" size={24} color="#7267e7" />
+                    <MaterialCommunityIcons name="airplane-takeoff" size={24} color="black" />
                     <View style={styles.dottedLine} />
                     <View style={styles.dot} />
                 </View>
@@ -375,6 +375,7 @@ const TravelerChat = async(travData) => {
                 </View>
                 <View style={styles.horizontal}>
                 {/*<MaterialIcons name="luggage" size={24} color="" />*/}
+               
                 <MaterialCommunityIcons name="bag-personal-outline" size={24} color="black" />
                 {user?.isImperial? (
                          <Text style={{
@@ -401,6 +402,47 @@ const TravelerChat = async(travData) => {
                             }}>Kg</Text>
                         </Text>
                     )}
+                    {item?.isLuggageSpaceFull ? (
+                         <View style = {{
+                            backgroundColor: '#13b955', 
+                            backgroundColor:'#fc3939',
+                            padding: 2,
+                            paddingHorizontal: 8,
+                            borderRadius: 10,
+                            marginLeft: 2,
+                            alignSelf: 'flex-start',
+                            marginTop: 4
+                        }}>
+                        <Text style = {{
+                            color: 'white',
+                            fontFamily: "Poppins_400Regular",
+                            fontSize: 11
+                        }}>
+                            Full
+                        </Text>
+                    </View>
+                    ):(
+                        <View style = {{
+                            backgroundColor: '#13b955',
+                            //backgroundColor:'#fc3939',
+                            //backgroundColor: '#009cdc',
+                            padding: 2,
+                            paddingHorizontal: 8,
+                            borderRadius: 10,
+                            marginLeft: 2,
+                            alignSelf: 'flex-start',
+                            marginTop: 4
+                        }}>
+                        <Text style = {{
+                            color: 'white',
+                            fontFamily: "Poppins_400Regular",
+                            fontSize: 11
+                        }}>
+                            space
+                        </Text>
+                    </View>
+                    )}
+                    
                     {/* <Pressable style={styles.dottedButton} onPress={()=>{
                         setModalOpen(true)
                     }}>
@@ -415,7 +457,7 @@ const TravelerChat = async(travData) => {
                     }} onPress={addToWislistTraveler}>
                        {
                         ids.includes(item._id) ? 
-                        <AntDesign name="heart" size={24} color="#7267e7" />  
+                        <AntDesign name="heart" size={24} color= '#5f43b2' />  
                         :
                         <AntDesign name="hearto" size={24} color="black" />
                        }
@@ -504,12 +546,14 @@ const TravelerChat = async(travData) => {
                   //backgroundColor: "#13b955",
                   //backgroundColor: 'navy',
                   //backgroundColor: '#009cdc',
-                  backgroundColor: 'white',
+                  //backgroundColor: 'white',
+                  backgroundColor: '#7267e7',
+                  backgroundColor: '#5f43b2',
                   paddingHorizontal: 20,
                   paddingVertical: 6,
                   borderRadius: 8,
                   borderStyle: 'solid',
-                  borderWidth: 1.5,
+                  borderWidth: 0,
                   borderRadius: 8
                 }} onPress={()=>{ 
                     store1 = true
@@ -519,7 +563,7 @@ const TravelerChat = async(travData) => {
                   <Text style={{
                     fontSize: 16,
                     fontFamily: "Poppins_500Medium",
-                    //color: "#fff"
+                    color: "#fff"
                   }}>Message</Text>
                 </Pressable>
               </View>
@@ -621,7 +665,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         justifyContent: "space-between",
         //overflow: "hidden",
-        shadowColor: "#593196",
+        //shadowColor: "#593196",
         shadowColor: '#737373',
         shadowOffset: {
             width: 0,
@@ -654,7 +698,7 @@ const styles = StyleSheet.create({
     txtCity: {
         fontFamily: "Poppins_500Medium",
         fontSize: 12,
-        color: "#777",
+        color: "     777",
         maxWidth: 110,
     },
     bottomWrapper: {
