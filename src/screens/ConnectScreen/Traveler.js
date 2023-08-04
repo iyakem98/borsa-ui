@@ -276,7 +276,7 @@ const TravelerChat = async(travData) => {
             showMessage({
                 message: "Item Removed",
                 description: `Item removed from wishlist!`,
-                type: "success",
+                type: "warning",
             });
           }
         } catch (e) {
@@ -381,25 +381,25 @@ const TravelerChat = async(travData) => {
                          <Text style={{
                             fontSize: 18,
                             fontFamily: "Poppins_600SemiBold",
-                            color: 'gray',
+                            //color: 'gray',
                         }}>
                             {(item?.luggageSpace*2.20462).toFixed(1)}
                             <Text style={{
                                 fontFamily: "Poppins_400Regular",
-                                fontSize: 16
+                                fontSize: 14
                             }}>lb</Text>
                         </Text>
                     ):(
                          <Text style={{
                             fontSize: 18,
                             fontFamily: "Poppins_600SemiBold",
-                            color: 'gray'
+                            //color: 'gray'
                         }}>
                             {(item?.luggageSpace*1.0).toFixed(1)}
                             <Text style={{
                                 fontFamily: "Poppins_400Regular",
-                                fontSize: 16
-                            }}>Kg</Text>
+                                fontSize: 14
+                            }}>kg</Text>
                         </Text>
                     )}
                     {item?.isLuggageSpaceFull ? (
@@ -457,7 +457,7 @@ const TravelerChat = async(travData) => {
                     }} onPress={addToWislistTraveler}>
                        {
                         ids.includes(item._id) ? 
-                        <AntDesign name="heart" size={24} color= '#5f43b2' />  
+                        <AntDesign name="heart" size={24} color= '#a991d4' />  
                         :
                         <AntDesign name="hearto" size={24} color="black" />
                        }
@@ -534,7 +534,8 @@ const TravelerChat = async(travData) => {
                      <View>
                         <Text style={{
                             fontSize: 16,
-                            fontFamily: "Poppins_500Medium"
+                            fontFamily: "Poppins_500Medium",
+                            marginTop: 2,
                         }}>{item?.user?.firstName} {item?.user?.lastName}</Text>
                     </View>
 
@@ -546,14 +547,15 @@ const TravelerChat = async(travData) => {
                   //backgroundColor: "#13b955",
                   //backgroundColor: 'navy',
                   //backgroundColor: '#009cdc',
-                  //backgroundColor: 'white',
                   backgroundColor: '#7267e7',
                   backgroundColor: '#5f43b2',
+                  //backgroundColor: 'white',
                   paddingHorizontal: 20,
                   paddingVertical: 6,
                   borderRadius: 8,
                   borderStyle: 'solid',
-                  borderWidth: 0,
+                  //borderWidth: 2,
+                  borderWidt: 0,
                   borderRadius: 8
                 }} onPress={()=>{ 
                     store1 = true

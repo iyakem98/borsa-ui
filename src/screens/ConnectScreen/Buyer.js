@@ -340,7 +340,7 @@ const Buyer = ({ item, onPress }) => {
         showMessage({
           message: "Item Removed",
           description: `Item removed from wishlist!`,
-          type: "success",
+          type: "warning",
         });
       }
     } catch (e) {
@@ -372,8 +372,9 @@ const Buyer = ({ item, onPress }) => {
             <View>
               <Text
                 style={{
-                  fontSize: 17,
+                  fontSize: 18,
                   fontFamily: "Poppins_500Medium",
+                  marginTop: 3
                 }}
               >
                 {item.item[0]}
@@ -393,7 +394,7 @@ const Buyer = ({ item, onPress }) => {
             {user?.isImperial ? (
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: 18,
                   fontFamily: "Poppins_600SemiBold",
                 }}
               >
@@ -401,7 +402,7 @@ const Buyer = ({ item, onPress }) => {
                 <Text
                   style={{
                     fontFamily: "Poppins_400Regular",
-                    fontSize: 16,
+                    fontSize: 14,
                   }}
                 >
                   lb
@@ -410,7 +411,7 @@ const Buyer = ({ item, onPress }) => {
             ) : (
               <Text
                 style={{
-                  fontSize: 17,
+                  fontSize: 18,
                   fontFamily: "Poppins_600SemiBold",
                 }}
               >
@@ -418,7 +419,7 @@ const Buyer = ({ item, onPress }) => {
                 <Text
                   style={{
                     fontFamily: "Poppins_400Regular",
-                    fontSize: 16,
+                    fontSize: 14,
                   }}
                 >
                   kg
@@ -442,7 +443,7 @@ const Buyer = ({ item, onPress }) => {
               onPress={addToWislistTraveler}
             >
               {ids.includes(item._id) ? (
-                <AntDesign name="heart" size={24} color="#5f43b2" />
+                <AntDesign name="heart" size={24} color="#a991d4" />
               ) : (
                 <AntDesign name="hearto" size={24} color="black" />
               )}
@@ -529,6 +530,7 @@ const Buyer = ({ item, onPress }) => {
                 style={{
                   fontSize: 16,
                   fontFamily: "Poppins_500Medium",
+                  marginTop: 2,
                 }}
               >
                 {item?.user?.firstName} {item?.user?.lastName}
@@ -724,10 +726,10 @@ const styles = StyleSheet.create({
     elevation: 24,
 },
   image: {
-    height: 50,
-    width: 50,
+    //height: 50,
+    //width: 50,
     borderRadius: 5,
-    //marginRight: 10,
+    marginHorizontal: 6,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -737,7 +739,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 5,
     paddingRight: 10,
-    marginBottom: 10,
+    marginBottom: 10 ,
     // paddingRight: 20
   },
   txtCountry: {
