@@ -177,15 +177,16 @@ const ProfileScreen = ({ navigation }) => {
     <View
       style={{
         //paddingVertical: 30,
-        backgroundColor: "white",
+        backgroundColor: "#fcfbff",
+        height: "100%",
       }}
     >
       <LinearGradient 
-         colors={["#5f43b2", "#fff"]}
+         colors={["#5f43b2", "#fcfbff"]}
          style={{
            //height: "100%",
            //alignItems: 'center',
-           paddingTop: 30,
+           paddingTop: 40,
            paddingHorizontal: 20,
           // paddingBottom: 50,
            //justifyContent: 'center'
@@ -296,7 +297,7 @@ const ProfileScreen = ({ navigation }) => {
         >
           <Pressable
             style={{
-              backgroundColor: selectedTab === 1 ? "#5f43b2" : "#fff",
+              backgroundColor: selectedTab === 1 ? "#5f43b2" : "#fcfbff",
               borderRadius: 5,
               width: "33%",
               paddingVertical: 13,
@@ -318,7 +319,7 @@ const ProfileScreen = ({ navigation }) => {
           </Pressable>
           <Pressable
             style={{
-              backgroundColor: selectedTab === 2 ? "#5f43b2" : "#fff",
+              backgroundColor: selectedTab === 2 ? "#5f43b2" : "#fcfbff",
               borderRadius: 5,
               width: "33%",
               paddingVertical: 13,
@@ -341,7 +342,7 @@ const ProfileScreen = ({ navigation }) => {
 
           <Pressable
             style={{
-              backgroundColor: selectedTab === 3 ? "#5f43b2" : "#fff",
+              backgroundColor: selectedTab === 3 ? "#5f43b2" : "#fcfbff",
               borderRadius: 5,
               width: "33%",
               paddingVertical: 13,
@@ -517,10 +518,22 @@ const ProfileScreen = ({ navigation }) => {
         )}
 
         {selectedTab == 2 && (
-          <SafeAreaView style={{ marginTop: 20, backgroundColor: "#E8E8E8" }}>
+          <SafeAreaView style={{ marginTop: 20, backgroundColor: "#fcfbff" }}>
             {t &&
               t.map((travel, index) => (
-                <View key={index} style={{ marginLeft: "2.5%", width: "95%" }}>
+                <View key={index} style={{
+                   width: "98%",
+                    alignSelf: 'center',
+                    shadowColor: '#e8e8e8',
+                    shadowOffset: {
+                        width: 0,
+                        height: 0,
+                    },
+                    shadowOpacity: 0.28,
+                    shadowRadius: 3.00,
+                    
+                    elevation: 24,
+                     }}>
                   <TravelerCard item={travel} />
                 </View>
               ))}
@@ -550,14 +563,32 @@ const ProfileScreen = ({ navigation }) => {
         )}
 
         {selectedTab == 3 && (
-          <View>
+          <View style = {{
+            paddingTop: 20, 
+          }}>
             <ScrollView
               contentContainerStyle={{
                 minHeight: buyerHeight,
               }}
-              style={{ backgroundColor: "#E8E8E8" }}
+              style={{ backgroundColor: "#fcfbff", paddingTop: 5, }}
             >
-              {b && b.map((buyer, index) => <Buyer key={index} item={buyer} />)}
+              {b && b.map((buyer, index) => (
+              <View style = {{
+                width: "98%",
+                alignSelf: 'center',
+                shadowColor: '#e8e8e8',
+                shadowOffset: {
+                    width: 0,
+                    height: 0,
+                },
+                shadowOpacity: 0.28,
+                shadowRadius: 3.00,
+                elevation: 24,
+                zIndex: 100,
+              }}>
+                <Buyer key={index} item={buyer} />
+              </View>  ))}
+              
             </ScrollView>
 
             {b.length < 1 && (
@@ -566,6 +597,7 @@ const ProfileScreen = ({ navigation }) => {
                   alignItems: "center",
                   minHeight: "100%",
                   paddingTop: 40,
+                  
                 }}
               >
                 <EmptyUnDraw />
