@@ -260,7 +260,7 @@ const MyCards = () => {
     </Pressable>
 
     <View style = {{
-      marginLeft: "15%"
+      marginLeft: "13%"
     }}>
       <Text style = {{
          fontSize: 18,
