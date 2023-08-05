@@ -180,8 +180,89 @@ const ProfileScreen = ({ navigation }) => {
         backgroundColor: "white",
       }}
     >
-      <View>
-        <LinearGradient
+      <LinearGradient 
+         colors={["#5f43b2", "#fff"]}
+         style={{
+           //height: "100%",
+           //alignItems: 'center',
+           paddingTop: 30,
+           paddingHorizontal: 20,
+          // paddingBottom: 50,
+           //justifyContent: 'center'
+         }}
+      >
+        <View style = {{
+          flexDirection: 'row',
+          width: "100%",
+          //height: 30,
+          alignItems: 'center',
+          paddingTop: 30,
+          //justifyContent: 'center',
+        }}>
+          <Pressable onPress={()=>navigation.pop()}>
+                <AntDesign name="left" size={28} color="black" />
+          </Pressable>
+        </View>
+        <View
+              style={{
+                //flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={getImageSourceById(route.params.theUser?.profilePic)}
+                style={{
+                  width: 120,
+                  height: 120,
+                  marginTop: 0,
+                  // borderRadius: "100%",
+                  borderRadius: 100,
+                  alignItems: "flex-end",
+                  justifyContent: "flex-end",
+                }}
+              />
+              <View
+                style={{
+                  marginLeft: 20,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 25,
+                    marginTop: 20,
+                    // marginBottom: 2,
+                    fontFamily: "Poppins_400Regular",
+                    //color: "white",
+                  }}
+                >
+                  {route.params.theUser?.firstName +
+                    " " +
+                    route.params.theUser?.lastName}
+                </Text>
+                <View
+                  style={{
+                    //backgroundColor: '#593196',
+                    paddingHorizontal: 5,
+                    paddingVertical: 2,
+                    borderRadius: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      //
+                      //color: "#fff",
+                      fontFamily: "Poppins_400Regular",
+                    }}
+                  >
+                    {route.params.theUser?.email}
+                  </Text>
+                </View>
+              </View>
+            </View>
+      </LinearGradient>
+     
+      <View style>
+       {/* <LinearGradient
           colors={["#705c9d", "#593196"]}
           style={{
             //height: "100%",
@@ -191,63 +272,16 @@ const ProfileScreen = ({ navigation }) => {
             paddingBottom: 50,
             //justifyContent: 'center'
           }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Image
-              source={getImageSourceById(route.params.theUser?.profilePic)}
-              style={{
-                width: 120,
-                height: 120,
-                marginTop: 0,
-                // borderRadius: "100%",
-                borderRadius: 100,
-                alignItems: "flex-end",
-                justifyContent: "flex-end",
-              }}
-            />
-            <View
-              style={{
-                marginLeft: 20,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 25,
-                  marginTop: 20,
-                  // marginBottom: 2,
-                  fontFamily: "Poppins_400Regular",
-                  color: "white",
-                }}
-              >
-                {route.params.theUser?.firstName +
-                  " " +
-                  route.params.theUser?.lastName}
-              </Text>
-              <View
-                style={{
-                  //backgroundColor: '#593196',
-                  paddingHorizontal: 5,
-                  paddingVertical: 2,
-                  borderRadius: 20,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "#fff",
-                    fontFamily: "Poppins_400Regular",
-                  }}
-                >
-                  {route.params.theUser?.email}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </LinearGradient>
+        > */}
+        <View style = {{
+           paddingTop: 10,
+           paddingHorizontal: 20,
+           paddingBottom: 20,
+        }}>  
+          
+        </View>
+         
+       {/* </LinearGradient> */}
         <View></View>
         <View
           style={{
@@ -255,14 +289,14 @@ const ProfileScreen = ({ navigation }) => {
             alignItems: "center",
             justifyContent: "space-between",
             //   width: width - 30,
-            backgroundColor: "#eee",
+            //backgroundColor: "#eee",
             padding: 10,
             borderRadius: 10,
           }}
         >
           <Pressable
             style={{
-              backgroundColor: selectedTab === 1 ? "#fff" : "#eee",
+              backgroundColor: selectedTab === 1 ? "#5f43b2" : "#fff",
               borderRadius: 5,
               width: "33%",
               paddingVertical: 13,
@@ -276,6 +310,7 @@ const ProfileScreen = ({ navigation }) => {
               style={{
                 fontFamily: "Poppins_500Medium",
                 fontSize: 14,
+                color: selectedTab === 1 ? "#fff" : "#000",
               }}
             >
               Profile
@@ -283,7 +318,7 @@ const ProfileScreen = ({ navigation }) => {
           </Pressable>
           <Pressable
             style={{
-              backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
+              backgroundColor: selectedTab === 2 ? "#5f43b2" : "#fff",
               borderRadius: 5,
               width: "33%",
               paddingVertical: 13,
@@ -297,6 +332,7 @@ const ProfileScreen = ({ navigation }) => {
               style={{
                 fontFamily: "Poppins_500Medium",
                 fontSize: 14,
+                color: selectedTab === 2 ? "#fff" : "#000",
               }}
             >
               Travels
@@ -305,7 +341,7 @@ const ProfileScreen = ({ navigation }) => {
 
           <Pressable
             style={{
-              backgroundColor: selectedTab === 3 ? "#fff" : "#eee",
+              backgroundColor: selectedTab === 3 ? "#5f43b2" : "#fff",
               borderRadius: 5,
               width: "33%",
               paddingVertical: 13,
@@ -319,6 +355,7 @@ const ProfileScreen = ({ navigation }) => {
               style={{
                 fontFamily: "Poppins_500Medium",
                 fontSize: 14,
+                color: selectedTab === 3 ? "#fff" : "#000",
               }}
             >
               Shippings
