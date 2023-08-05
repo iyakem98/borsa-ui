@@ -82,7 +82,7 @@ import {
         behavior='padding'
      keyboardVerticalOffset={
       Platform.select({
-        ios: () => -300,
+        ios: () => 100,
         android: () => -300
       })()
       
@@ -315,7 +315,7 @@ import {
               </TouchableWithoutFeedback>
                 <Pressable
                   style={{
-                    backgroundColor: "#13b955",
+                    //backgroundColor: "#13b955",
                     width: "50%",
                     height: 40,
                     alignItems: "center",
@@ -323,6 +323,9 @@ import {
                     borderRadius: 30,
                     marginLeft: "auto",
                     marginRight: "auto",
+                    borderWidth: 2,
+                    borderColor: '#5f43b2',
+                    borderStyle: 'solid',
                   }}
                   onPress={() => {
                     setLoading(true);
@@ -332,7 +335,9 @@ import {
                   <Text
                     style={{
                       color: "white",
+                      color: '#5f43b2',
                       fontSize: 17,
+                      fontFamily: "Poppins_500Medium",
                     }}
                   >
                     Submit
