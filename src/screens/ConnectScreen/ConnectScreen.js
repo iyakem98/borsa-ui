@@ -504,8 +504,20 @@ const [bdelivery, setBdelivery] = useState(false)
               {/* <LottieView
       source={require('../../assets/qdZM0DGhfn.json')}
     /> */}
-    <View style={styles.animationContainer}>
-      <LottieView
+   {/* <View style={styles.animationContainer}> */}
+    <LottieView
+        style={{
+         
+          height: 86,
+          position: 'absolute',
+          top: "120%",
+          left: '1%', 
+        }}
+        source={require('../../assets/animation_planeLoading.json')}
+        autoPlay
+        loop
+      />
+     {/* <LottieView
         style={{
          
           height: 250,
@@ -523,8 +535,8 @@ const [bdelivery, setBdelivery] = useState(false)
         source={require('../../assets/animation_lks476w7.json')}
         autoPlay
         loop
-      />
-    </View>
+      /> */}
+   {/* </View> */}
             </View>
           ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
             <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
