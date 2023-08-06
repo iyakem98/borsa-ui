@@ -74,7 +74,7 @@ import {
     }
     return (
         <KeyboardAvoidingView
-        // behavior={Platform.OS === "ios" ? "padding" : ""}
+        // behavior={Platform.OS === "ios" ? "padding" : "height"}
         // style={{
         //   position: "relative",
         //   flex: 1,
@@ -84,7 +84,7 @@ import {
      keyboardVerticalOffset={
       Platform.select({
         ios: () => 280,
-        android: () => -300
+        android: () =>-20
       })()
       
     }
