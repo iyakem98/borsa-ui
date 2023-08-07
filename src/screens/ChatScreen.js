@@ -39,13 +39,13 @@ const ChatScreen = () => {
   const ENDPOINT = "http://192.168.100.2:5000";
   var socket = useRef(null);
   const API_URL = `${API_BASE_URL}chat/`;
-  let hasMoreToLoad = false
+  let hasMoreToLoad = false;
 
   const [socketConnected, setsocketConnected] = useState(false);
   // var storedNotifications = []
   const [storedNotifications, setstoredNotifications] = useState([]);
 
-  let pageNo = 1
+  let pageNo = 1;
   const allowsNotificationsAsync = async () => {
     const settings = await Notifications.getPermissionsAsync();
     return (
@@ -54,45 +54,50 @@ const ChatScreen = () => {
     );
   };
 
-  const fetchAllChats = async() => {
+  const fetchAllChats = async () => {
     try {
-      const res = await axios.get(`http://143.198.168.244/api/chat/v2?page=${pageNo}&limit=20`, {
-        headers: {
-          Authorization: `Bearer ${user?.token}`
-        }
-      })
-      if(res.data?.chat && res.data?.chat?.length) {
-        setChatsData(res.data?.chat)
-      }
-    } catch(e) {
-      console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data)
-    }
-  }
-
-  const handleOnEndReached = async() => {
-    try {
-      if(!hasMoreToLoad) {
-        hasMoreToLoad = true;
-        const res = await axios.get(`http://143.198.168.244/api/chat/v2?page=${pageNo + 1}&limit=20`, {
+      const res = await axios.get(
+        `http://143.198.168.244/api/chat/v2?page=${pageNo}&limit=20`,
+        {
           headers: {
-            Authorization: `Bearer ${user?.token}`
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
+      if (res.data?.chat && res.data?.chat?.length) {
+        setChatsData(res.data?.chat);
+      }
+    } catch (e) {
+      console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data);
+    }
+  };
+
+  const handleOnEndReached = async () => {
+    try {
+      if (!hasMoreToLoad) {
+        hasMoreToLoad = true;
+        const res = await axios.get(
+          `http://143.198.168.244/api/chat/v2?page=${pageNo + 1}&limit=20`,
+          {
+            headers: {
+              Authorization: `Bearer ${user?.token}`,
+            },
           }
-        })
-        if(res.data?.chat && res.data?.chat?.length >= 0) {
-          setChatsData((prev)=>[...prev, ...res.data?.chat])
-          pageNo = pageNo + 1
+        );
+        if (res.data?.chat && res.data?.chat?.length >= 0) {
+          setChatsData((prev) => [...prev, ...res.data?.chat]);
+          pageNo = pageNo + 1;
         }
-        }
-    } catch(e) {
-      console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data)
+      }
+    } catch (e) {
+      console.log("ERROR WHILE FETCHING CHATS : ", e?.response?.data);
       hasMoreToLoad = false;
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchAllChats();
-    console.log("token", user.token)
-  }, [])
+  }, []);
 
   const sendPush = async (newMessage) => {
     const hasPushNotificationPermissionGranted =
@@ -157,13 +162,10 @@ const ChatScreen = () => {
     setstoredNotifications((current) => [...current, newMessageReceived]);
   };
 
-  const renderItem = ({item, index}) => {
-    const chat = item
+  const renderItem = ({ item, index }) => {
+    const chat = item;
     if (chat !== null || chat !== undefined) {
-      if (
-        chat.lastestMessage == undefined ||
-        chat.lastestMessage == null
-      ) {
+      if (chat.lastestMessage == undefined || chat.lastestMessage == null) {
         // console.log('undefined chat(s)')
         // null;
       }
@@ -178,9 +180,7 @@ const ChatScreen = () => {
             chat.lastestMessage !== undefined ||
             chat.lastestMessage !== null
           ) {
-            formatted_date = moment(
-              chat.latestMessage.createdAt
-            ).format("LT");
+            formatted_date = moment(chat.latestMessage.createdAt).format("LT");
           }
           return (
             <ChatItem
@@ -237,17 +237,17 @@ const ChatScreen = () => {
     }
   };
 
-
   return (
     <>
+      {console.log("RERENDER")}
       {chatsData && chatsData.length ? (
         <FlatList
-        contentContainerStyle={{
-          paddingTop: 10
-        }}
+          contentContainerStyle={{
+            paddingTop: 10,
+          }}
           data={chatsData}
           renderItem={renderItem}
-          keyExtractor={item => item._id}
+          keyExtractor={(item) => item._id}
           onEndReached={handleOnEndReached}
           initialNumToRender={10}
         />
