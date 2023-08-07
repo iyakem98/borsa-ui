@@ -1,4 +1,4 @@
-import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView , Dimensions} from "react-native"
+import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView , Dimensions, Modal} from "react-native"
 import profile from '../../../assets/data/profile.json'
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
@@ -65,6 +65,7 @@ const AccountScreen = () => {
   const [isTraveler, setIsTraveler] = useState(user.isTraveler)
   const [isBuyer, setIsBuyer] = useState(user.isBuyer)
 
+  const [showDelModal, setShowDelModal] = useState(false)
 
   {/*const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -224,7 +225,7 @@ const AccountScreen = () => {
 
       {/* <KeyboardAwareScrollView> */}
 
-      <LinearGradient  colors={['#593196', "#fff"]} style = {{
+      <LinearGradient  colors={['#5f43b2', "#fff"]} style = {{
                         width: '100%',
                         paddingTop: 80,
             }}>
@@ -624,10 +625,161 @@ const AccountScreen = () => {
               </Pressable>
             </View>
           </View>
+          <Pressable style = {{
+            width: "80%",
+            marginTop: 6,
+            borderRadius: 5,
+            borderStyle: 'solid',
+            borderWidth: 1,
+            borderColor: "#fc3939",
+            backgroundColor:'#fff',
+            padding: 8,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+            <View style = {{
+              marginRight: 6,
+            }}>
+            <AntDesign name="deleteuser" size={24} color="#fc3939" />
+            </View>
+            <Text style = {{
+              fontFamily: 'Poppins_500Medium',
+              color: '#fc3939',
+            }}>
+              Delete Account?
+            </Text>
+          </Pressable>
 
     
 {/* </KeyboardAwareScrollView>     */}
     </View>
+    <View style={styles.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      marginBottom: 10,
+                      fontSize: 22,
+                    }}
+                  >
+                    Are you sure you want to delete your account?
+                  </Text>
+                  <Text
+                    style={{
+                      //fontWeight: 'bold',
+                      marginBottom: 4,
+                      fontSize: 15,
+                    }}
+                  >
+                    This action cannot be reversed
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginLeft: "40%",
+                  }}
+                >
+                  <Pressable
+                    style={[styles.button, styles.buttonCloseNo]}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text
+                      style={{
+                        // fontWeight: 'bold',
+                        textAlign: "center",
+                      }}
+                    >
+                      No
+                    </Text>
+                  </Pressable>
+
+                  <Pressable
+                    style={[styles.button, styles.buttonCloseYes]}
+                    onPress={() => deleteAcc()}
+                  >
+                    <Text style={styles.textStyle}>Yes</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View> <View style={styles.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      marginBottom: 10,
+                      fontSize: 22,
+                    }}
+                  >
+                    Are you sure you want to delete your account?
+                  </Text>
+                  <Text
+                    style={{
+                      //fontWeight: 'bold',
+                      marginBottom: 4,
+                      fontSize: 15,
+                    }}
+                  >
+                    This action cannot be reversed
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginLeft: "40%",
+                  }}
+                >
+                  <Pressable
+                    style={[styles.button, styles.buttonCloseNo]}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text
+                      style={{
+                        // fontWeight: 'bold',
+                        textAlign: "center",
+                      }}
+                    >
+                      No
+                    </Text>
+                  </Pressable>
+
+                  <Pressable
+                    style={[styles.button, styles.buttonCloseYes]}
+                    onPress={() => deleteAcc()}
+                  >
+                    <Text style={styles.textStyle}>Yes</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
     </KeyboardAwareScrollView>
     </View>
   )

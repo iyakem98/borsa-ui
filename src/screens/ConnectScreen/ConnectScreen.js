@@ -687,13 +687,17 @@ const [bdelivery, setBdelivery] = useState(false)
 {!buyerS && (
       <View style={{
         width:"100%", 
-        backgroundColor:"#f6f6fb",
+        backgroundColor:"#eee",
+        paddingTop: 10,
+        //backgroundColor: "#fff",  
         height:40,
         padding:5,
         display:"flex",
         alignContent:"center",
-        alignItems:"center",
+        //alignItems:"center",
+        borderRadius: 6,
         fontSize:20,
+        marginTop: 4,
       }}>
       <CountryPicker
           withFlag
@@ -757,13 +761,16 @@ const [bdelivery, setBdelivery] = useState(false)
 {!buyerD && (
       <View style={{
         width:"100%", 
-        backgroundColor:"#f6f6fb",
+        //backgroundColor:"#f6f6fb",
+        backgroundColor: '#e8e8e8',
         height:40,
         padding:5,
+        paddingTop: 10,
         display:"flex",
         alignContent:"center",
-        alignItems:"center",
+        //alignItems:"center",
         fontSize:20,
+        marginTop: 4,
       }}>
       <CountryPicker
           withFlag
@@ -814,13 +821,18 @@ const [bdelivery, setBdelivery] = useState(false)
                                         clearFilterBuyer()
                                       }}
                                         style = {{
-                                            backgroundColor: '#E8E8E8',
+                                            //backgroundColor: '#E8E8E8',
                                             paddingHorizontal: 10,
                                             paddingVertical: 7,
                                             marginHorizontal: 30,
                                             borderRadius: 5,
+                                            borderStyle: 'solid',
+                                            borderWidth: 1,
+                                            borderColor: '#5f43b2',
                                         }}>
-                                        <Text>
+                                        <Text style = {{
+                                          color: '#5f43b2',
+                                        }}>
                                             Discard
                                         </Text>
                                     </Pressable>
@@ -829,6 +841,7 @@ const [bdelivery, setBdelivery] = useState(false)
                                     onPress={filterBuyers} 
                                         style = {{
                                             backgroundColor: '#593196',
+                                            backgroundColor: '#5f43b2',
                                             paddingHorizontal: 30,
                                             paddingVertical: 7,
                                             marginHorizontal: 2,
@@ -1044,13 +1057,17 @@ const [bdelivery, setBdelivery] = useState(false)
        {!travelerS && (
       <View style={{
         width:"100%", 
-        backgroundColor:"#f6f6fb",
+        backgroundColor:"#eee",
+        paddingTop: 10,
+        //backgroundColor: "#fff",  
         height:40,
         padding:5,
         display:"flex",
         alignContent:"center",
-        alignItems:"center",
+        //alignItems:"center",
+        borderRadius: 6,
         fontSize:20,
+        marginTop: 4,
       }}>
       <CountryPicker
           withFlag
@@ -1114,13 +1131,17 @@ const [bdelivery, setBdelivery] = useState(false)
        {!travelerD && (
       <View style={{
         width:"100%", 
-        backgroundColor:"#f6f6fb",
+        backgroundColor:"#eee",
+        paddingTop: 10,
+        //backgroundColor: "#fff",  
         height:40,
         padding:5,
         display:"flex",
         alignContent:"center",
-        alignItems:"center",
+        //alignItems:"center",
+        borderRadius: 6,
         fontSize:20,
+        marginTop: 4,
       }}>
       <CountryPicker
           withFlag
@@ -1171,13 +1192,17 @@ const [bdelivery, setBdelivery] = useState(false)
                                        clearFilterTraveler()
                                       }}
                                         style = {{
-                                            backgroundColor: '#E8E8E8',
-                                            paddingHorizontal: 10,
-                                            paddingVertical: 7,
-                                            marginHorizontal: 30,
-                                            borderRadius: 5,
+                                          paddingHorizontal: 10,
+                                          paddingVertical: 7,
+                                          marginHorizontal: 30,
+                                          borderRadius: 5,
+                                          borderStyle: 'solid',
+                                          borderWidth: 1,
+                                          borderColor: '#5f43b2',
                                         }}>
-                                        <Text>
+                                        <Text style = {{
+                                           color: '#5f43b2',
+                                        }}>
                                             Discard
                                         </Text>
                                     </Pressable>
@@ -1186,6 +1211,7 @@ const [bdelivery, setBdelivery] = useState(false)
                                     onPress={filterTravelers} 
                                         style = {{
                                             backgroundColor: '#593196',
+                                            //backgroundColor: '#5f43b2',
                                             paddingHorizontal: 30,
                                             paddingVertical: 7,
                                             marginHorizontal: 2,
