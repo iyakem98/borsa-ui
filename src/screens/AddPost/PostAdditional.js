@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import Header from "../../components/Shared/Header";
-import { TextInput } from "react-native-paper";
+import { Snackbar, TextInput } from "react-native-paper";
 import { MultipleSelectPicker } from "react-native-multi-select-picker";
 import { EvilIcons, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
@@ -44,9 +44,11 @@ const Description = ({ navigation }) => {
 
   const { user } = useSelector((state) => state.auth);
 
+  const [snack, setSnack] = useState(false)
+
   const postBuyer = async () => {
     if (!itmName || !kilo) {
-      alert("Please fill the required fields.");
+      setSnack(true)
     } else {
       //console.log("param", user.token)
 
@@ -76,7 +78,7 @@ const Description = ({ navigation }) => {
           },
         })
         .then((res) => {
-          alert("Traveler Card Posted.");
+          alert("Buyer card posted.");
           navigation.navigate("My Cards", {
             selectedTab: 2,
           });
@@ -90,7 +92,7 @@ const Description = ({ navigation }) => {
 
   const postTraveler = async () => {
     if (!luggageSpace) {
-      alert("Please fill the required fields.");
+     setSnack(true)
     } else {
       console.log("param", route.params);
 
@@ -126,7 +128,7 @@ const Description = ({ navigation }) => {
           }
         )
         .then((res) => {
-          alert("Traveling Card successfully posted.");
+          alert("Traveller card posted.");
           navigation.navigate("My Cards");
         })
         .catch((err) => {
@@ -292,9 +294,26 @@ const Description = ({ navigation }) => {
               />
             </View>
 
+            <View style={{
+
+}}>
+
+ <Snackbar
+ wrapperStyle={{ top: 0 }}
+ style={{
+   borderRadius:20
+ }}
+   visible={snack}
+   onDismiss={() => setSnack(false)}
+   duration={3000}
+ >
+   Please fill all fields.
+ </Snackbar>
+</View>
+
             <Pressable
               style={{
-                backgroundColor: "#514590",
+                backgroundColor: "#5f43b2",
                 paddingVertical: 15,
                 borderRadius: 5,
                 marginBottom: 25,
@@ -441,11 +460,25 @@ const Description = ({ navigation }) => {
                 />
               </View>
             )}
+ <View>
+ <Snackbar
+ wrapperStyle={{ top: 0 }}
+ style={{
+   borderRadius:20
+ }}
+   visible={snack}
+   onDismiss={() => setSnack(false)}
+   duration={3000}
+ >
+   Please fill all fields.
+ </Snackbar>
+</View>
 
             <Pressable
               style={{
-                backgroundColor: "#13b955",
-                backgroundColor: "#514590",
+                //backgroundColor: "#13b955",
+                //backgroundColor: "#514590",
+                backgroundColor: '#5f43b2',
                 paddingVertical: 15,
                 borderRadius: 5,
                 marginBottom: 25,

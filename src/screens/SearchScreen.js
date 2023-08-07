@@ -70,11 +70,15 @@ function SearchScreen() {
     }
   });
   const filtered2 = chattts.filter((chat) => {
+    // console.log('chats id', chat.users[0].firstName)
     if ((chat != null || undefined) && chat.latestMessage != null) {
+    
       if (
         searchFirstName === "" ||
         (chat?.users[1]?.firstName.toLowerCase().includes(searchFirstName) &&
-          chat?.latestMessage != null)
+          chat?.latestMessage != null || 
+          chat?.users[0]?.firstName.toLowerCase().includes(searchFirstName) &&
+          chat?.users[0]?.firstName.toLowerCase().includes(searchFirstName) !== user.firstName && chat?.latestMessage != null)
       ) {
         return chat;
       }

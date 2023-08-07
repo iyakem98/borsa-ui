@@ -340,7 +340,7 @@ const Buyer = ({ item, onPress }) => {
         showMessage({
           message: "Item Removed",
           description: `Item removed from wishlist!`,
-          type: "success",
+          type: "warning",
         });
       }
     } catch (e) {
@@ -372,8 +372,9 @@ const Buyer = ({ item, onPress }) => {
             <View>
               <Text
                 style={{
-                  fontSize: 17,
+                  fontSize: 18,
                   fontFamily: "Poppins_500Medium",
+                  marginTop: 3
                 }}
               >
                 {item.item[0]}
@@ -393,7 +394,7 @@ const Buyer = ({ item, onPress }) => {
             {user?.isImperial ? (
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 18,
                   fontFamily: "Poppins_600SemiBold",
                 }}
               >
@@ -401,7 +402,7 @@ const Buyer = ({ item, onPress }) => {
                 <Text
                   style={{
                     fontFamily: "Poppins_400Regular",
-                    fontSize: 13,
+                    fontSize: 14,
                   }}
                 >
                   lb
@@ -410,7 +411,7 @@ const Buyer = ({ item, onPress }) => {
             ) : (
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 18,
                   fontFamily: "Poppins_600SemiBold",
                 }}
               >
@@ -418,7 +419,7 @@ const Buyer = ({ item, onPress }) => {
                 <Text
                   style={{
                     fontFamily: "Poppins_400Regular",
-                    fontSize: 13,
+                    fontSize: 14,
                   }}
                 >
                   kg
@@ -442,7 +443,7 @@ const Buyer = ({ item, onPress }) => {
               onPress={addToWislistTraveler}
             >
               {ids.includes(item._id) ? (
-                <AntDesign name="heart" size={24} color="#593196" />
+                <AntDesign name="heart" size={24} color="#a991d4" />
               ) : (
                 <AntDesign name="hearto" size={24} color="black" />
               )}
@@ -456,7 +457,7 @@ const Buyer = ({ item, onPress }) => {
                 ? locationDeparture[2]
                 : locationDeparture[1]}
             </Text>
-            <Text style={styles.txtCity}>
+            <Text style={styles.txtCity1}>
               {locationDepartureLength === 3 ? (
                 <>{`${locationDeparture[0]}, ${locationDeparture[1]}`}</>
               ) : (
@@ -470,7 +471,7 @@ const Buyer = ({ item, onPress }) => {
             <MaterialCommunityIcons
               name="airplane-takeoff"
               size={24}
-              color="black"
+              //color="#593196"
             />
             <View style={styles.dottedLine} />
             <View style={styles.dot} />
@@ -503,7 +504,7 @@ const Buyer = ({ item, onPress }) => {
             backgroundColor: "#f5f5f5",
             paddingHorizontal: 10,
             paddingVertical: 8,
-            marginTop: 15,
+            //marginTop: 15,
           }}
         >
           <View
@@ -529,6 +530,7 @@ const Buyer = ({ item, onPress }) => {
                 style={{
                   fontSize: 16,
                   fontFamily: "Poppins_500Medium",
+                  marginTop: 2,
                 }}
               >
                 {item?.user?.firstName} {item?.user?.lastName}
@@ -564,8 +566,10 @@ const Buyer = ({ item, onPress }) => {
               paddingVertical: 6,
               borderRadius: 8,
               borderStyle: 'solid',
-              borderWidth: 1.5,
-              borderRadius: 8
+              borderWidth: 0,
+              borderRadius: 8,
+              borderColor: '#5f43b2',
+              backgroundColor: '#5f43b2',
             }}
             onPress={() => {
               BuyerChat(buyer.user);
@@ -575,7 +579,8 @@ const Buyer = ({ item, onPress }) => {
               style={{
                 fontSize: 16,
                 fontFamily: "Poppins_500Medium",
-                //color: "#fff",
+                color: "#fff",
+                //color: '#5f43b2',
               }}
             >
               Message
@@ -701,20 +706,30 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     //height: 250,
     width: "98%",
+    alignSelf: 'center',
     marginBottom: 15,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#eee",
+    //borderWidth: 1,
+    //borderStyle: "solid",
+    //borderColor: "#eee",
     borderRadius: 5,
-    paddingTop: 20,
+    paddingTop: 6,
     //justifyContent: "space-between",
-    overflow: "hidden",
-  },
+    //overflow: "hidden",
+    shadowColor: '#737373',
+    shadowOffset: {
+        width: 0,
+        height: 0,
+    },
+    shadowOpacity: 0.28,
+    shadowRadius: 3.00,
+    
+    elevation: 24,
+},
   image: {
-    height: 50,
-    width: 50,
+    //height: 50,
+    //width: 50,
     borderRadius: 5,
-    //marginRight: 10,
+    marginHorizontal: 6,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -722,8 +737,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 10,
-    marginBottom: 10,
+    paddingLeft: 5,
+    paddingRight: 10,
+    marginBottom: 10 ,
     // paddingRight: 20
   },
   txtCountry: {
@@ -735,6 +751,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#777",
     maxWidth: 110,
+  },
+  txtCity1: {
+    fontFamily: "Poppins_500Medium",
+    fontSize: 12,
+    color: "#777",
+    maxWidth: 110,
+    marginBottom: 15,
   },
   bottomWrapper: {
     flexDirection: "row",

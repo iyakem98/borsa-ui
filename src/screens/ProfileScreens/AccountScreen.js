@@ -1,4 +1,4 @@
-import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView , Dimensions} from "react-native"
+import { View, Button, Pressable, Text, ScrollView, Image, ImageBackground, StyleSheet, TouchableOpacity, TextInput, Platform, SafeAreaView , Dimensions, Modal} from "react-native"
 import profile from '../../../assets/data/profile.json'
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
@@ -65,6 +65,10 @@ const AccountScreen = () => {
   const [isTraveler, setIsTraveler] = useState(user.isTraveler)
   const [isBuyer, setIsBuyer] = useState(user.isBuyer)
 
+  const [showDelModal, setShowDelModal] = useState(false)
+  const [showConfirmDelModal, setShowConfirmDelModal] = useState(false)
+  const [password, setPassword] = useState("")
+  const [passwordError, setPasswordError] = useState("");
 
   {/*const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -106,6 +110,10 @@ const AccountScreen = () => {
 
   }
 
+  const delModalChanger = () => {
+    setShowDelModal(true)
+  }
+
   const handleUpdate = async () => {
     setIsEditing(!isEditing)
 
@@ -141,6 +149,32 @@ const AccountScreen = () => {
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+
+  const confirmToggler = () => {
+    setShowDelModal(!showDelModal)
+    setShowConfirmDelModal(!showConfirmDelModal)
+  }
+
+  const deleteAcc = async () => {
+    console.log('deleter in')
+    if (password !== user.password) {
+      setPasswordError('Incorrect Password')
+    }
+    else{
+      alert("I will delete stuff now bro")
+      {/*axios.delete(`${API_BASE_URL}users/${user._id}`);
+      await AsyncStorage.removeItem("user")
+        .then((data) => {
+          alert("Deleted.");
+          handleLogout();
+        })
+        .catch((err) => {
+          console.log("error is", err);
+          alert("No");
+        }); */}
+    } 
+   
+  };
 
   const findPlaces = (newText) => {
     axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${newText}&apiKey=8cb194b9c3384d909b48ba0c3adf1ab0`)
@@ -224,7 +258,7 @@ const AccountScreen = () => {
 
       {/* <KeyboardAwareScrollView> */}
 
-      <LinearGradient  colors={['#593196', "#fff"]} style = {{
+      <LinearGradient  colors={['#5f43b2', "#fff"]} style = {{
                         width: '100%',
                         paddingTop: 80,
             }}>
@@ -624,10 +658,230 @@ const AccountScreen = () => {
               </Pressable>
             </View>
           </View>
+          <Pressable onPress={delModalChanger} 
+            style = {{
+              width: "80%",
+              marginTop: 6,
+              borderRadius: 5,
+              borderStyle: 'solid',
+              borderWidth: 1,
+              borderColor: "#fc3939",
+              backgroundColor:'#fff',
+              padding: 8,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <View style = {{
+              marginRight: 6,
+            }}>
+            <AntDesign name="deleteuser" size={24} color="#fc3939" />
+            </View>
+            <Text style = {{
+              fontFamily: 'Poppins_500Medium',
+              color: '#fc3939',
+            }}>
+              Delete Account?
+            </Text>
+          </Pressable>
 
     
 {/* </KeyboardAwareScrollView>     */}
     </View>
+    <View style={styles.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={showDelModal}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setShowDelModal(!showDelModal);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <View style = {{
+                  alignItems: 'center'
+                }}>
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      marginBottom: 6,
+                      fontSize: 22,
+                      color: '#404040',
+                    }}
+                  >
+                    Delete Account?
+                  </Text>
+                  <Text
+                    style={{
+                      //fontWeight: 'bold',
+                      marginBottom: 4,
+                      fontSize: 15,
+                      color: 'gray',
+                      textAlign: 'center'
+                    }}
+                  >
+                    This action will remove your account permanently.
+                  </Text>
+                </View>
+
+                <View style = {{
+                  alignItems: "center",
+                  backgroundColor:"#f6f6fb",
+                  paddingHorizontal: 50,
+                  paddingVertical: 25,
+                  marginVertical: 10,
+
+                  shadowColor: '#737373',
+                  shadowOffset: {
+                      width: 2,
+                      height: 2,
+                  },
+                  shadowOpacity: 0.28,
+                  shadowRadius: 3.00,
+                  
+                  elevation: 24,
+                }}>
+                <Image source={getImageSourceById(user.profilePic)} style={{ 
+                  width: 100,
+                  height: 100,
+                  marginTop:0,
+                  // borderRadius: "100%",
+                  borderRadius: 100,
+                  alignItems: 'flex-end',
+                  justifyContent: 'flex-end',
+              }} />
+              <Text style = {{
+                fontSize: 20,
+              }}>
+                {user.firstName} {user.lastName}
+              </Text>
+              </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    //marginLeft: "40%",
+                  }}
+                >
+                  <Pressable
+                    style={[styles.button, styles.buttonCloseNo]}
+                    onPress={() => setShowDelModal(!showDelModal)}
+                  >
+                    <Text
+                      style={{
+                        // fontWeight: 'bold',
+                        textAlign: "center",
+                      }}
+                    >
+                      No
+                    </Text>
+                  </Pressable>
+
+                  <Pressable
+                    style={[styles.button, styles.buttonCloseYes]}
+                    onPress={() => confirmToggler()}
+                  >
+                    <Text style={styles.textStyle}>Yes</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </Modal>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={showConfirmDelModal}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setShowConfirmDelModal(!showConfirmDelModal);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <View style = {{
+                  alignItems: 'center'
+                }}>
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      marginBottom: 20,
+                      fontSize: 22,
+                      color: '#404040',
+                    }}
+                  >
+                    Enter your password to confirm your account deletion.
+                  </Text>
+                </View>
+
+               
+                <TextInput
+                  error={passwordError}
+                  style={{
+                    color: "gray",
+                    marginVertical: 0,
+                    marginBottom: 10,
+                    fontSize: 20,
+                    fontFamily: "Poppins_400Regular",
+                    //height: 50,
+                    borderRadius: 0,
+                    minWidth: "100%",
+                    //  marginLeft:"10vw",
+                    //  marginRight:"10vw",
+                    paddingHorizontal: 5,
+                    paddingVertical: 5,
+                    borderColor: "gray",
+                    //borderWidth: isEditing? StyleSheet.hairlineWidth : 0,
+                    borderWidth: 0.6,
+                    borderRadius: 5,
+                    //  opacity:`${isEditing? 1 : 0.5}`
+                    opacity: 1,
+                  }}
+                  underlineColorAndroid="transparent"
+                  //placeholder = "Password"
+                  //placeholderTextColor = "black"
+                  autoCapitalize="none"
+                  secureTextEntry={true}
+                  value={password}
+                  onChangeText={(newText) => {
+                    setPassword(newText);
+          }}
+          //onChangeText = {this.handlePassword}
+        />
+               
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    //marginLeft: "40%",
+                  }}
+                >
+                  <Pressable
+                    style={[styles.button, styles.buttonCloseNo]}
+                    onPress={() => setShowConfirmDelModal(!showConfirmDelModal)}
+                  >
+                    <Text
+                      style={{
+                        // fontWeight: 'bold',
+                        textAlign: "center",
+                      }}
+                    >
+                      Back
+                    </Text>
+                  </Pressable>
+
+                  <Pressable
+                    style={[styles.button, styles.buttonCloseYes]}
+                    onPress={() => deleteAcc()}
+                  >
+                    <Text style={styles.textStyle}>Delete Account!</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
     </KeyboardAwareScrollView>
     </View>
   )
@@ -684,7 +938,61 @@ const styles = StyleSheet.create({
     fontSize: 15,
     opacity: 0.8,
     textAlign:"left"
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 0,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    marginHorizontal: 4,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonCloseYes: {
+    backgroundColor: "#fc3939",
+    marginTop: 10,
+    //width:200
+  },
+  buttonCloseNo: {
+    backgroundColor: "green",
+    backgroundColor: "#13b955",
+    backgroundColor: "#e8e8e8",
+    marginTop: 10,
+    //width:200,
+    color: "black",
+  },
+  textStyle: {
+    color: "white",
+    //fontWeight: 'bold',
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 9,
+    textAlign: "center",
+    fontSize: 16,
+  },
 
 })
 

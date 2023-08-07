@@ -108,9 +108,9 @@ const ChatScreen = () => {
           content: {
             title: "New message! 📬",
             body: newMessage?.content,
-            data: { data: "goes here" },
+            data: { data: newMessage },
           },
-          trigger: { seconds: 2 },
+          trigger: { seconds: 0 },
         });
       } else {
         const { status } = await Notifications.requestPermissionsAsync();
@@ -196,6 +196,7 @@ const ChatScreen = () => {
             />
           );
         } else if (d == 1) {
+          var formatted_date = "yesterday";
           return (
             <ChatItem
               key={index}
@@ -238,8 +239,7 @@ const ChatScreen = () => {
   };
 
   return (
-    <>
-      {console.log("RERENDER")}
+    <View style={styles.con}>
       {chatsData && chatsData.length ? (
         <FlatList
           contentContainerStyle={{
@@ -339,7 +339,7 @@ const ChatScreen = () => {
           )}
         </>
       )}
-    </>
+    </View>
   );
 };
 
@@ -347,8 +347,10 @@ export default ChatScreen;
 
 const styles = StyleSheet.create({
   con: {
-    marginTop: 200,
-    borderRadius: 15,
+    //marginTop: 200,
+    //borderRadius: 15,
+    backgroundColor: "#fff",
+    height: "100%",
   },
   connectBtn: {
     backgroundColor: "#593196",

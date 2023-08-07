@@ -401,7 +401,7 @@ const FromToEdit = ({ navigation }) => {
 
             <Pressable
               style={{
-                backgroundColor: "#514590",
+                backgroundColor: "#5f43b2",
                 paddingVertical: 15,
                 borderRadius: 5,
                 marginTop: showExpiryDate ? "60%" : "68%",

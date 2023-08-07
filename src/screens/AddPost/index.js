@@ -131,6 +131,8 @@ const AddPost = ({ navigation }) => {
                     ? {
                         borderColor: "#514590",
                         borderColor: "#13b955",
+                        borderColor: '#5f43b2',
+                        //borderColor: '#bd2e95',
                         borderWidth: 2,
                       }
                     : {
@@ -174,6 +176,7 @@ const AddPost = ({ navigation }) => {
                   selected === 2
                     ? {
                         borderColor: "#514590",
+                        borderColor: '#5f43b2',
                         //borderColor: '#13b955',
                         borderWidth: 2,
                       }
@@ -215,7 +218,7 @@ const AddPost = ({ navigation }) => {
             </View>
             <Pressable
               style={{
-                backgroundColor: `${selected == 1 ? "#514590" : "#514590"}`,
+                backgroundColor: `${selected == 1 ? "#5f43b2" : "#5f43b2"}`,
                 paddingVertical: 15,
                 borderRadius: 5,
                 marginBottom: 25,
@@ -307,6 +310,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderStyle: "solid",
     borderColor: "#514590",
+    borderColor: '#5f43b2',
     position: "absolute",
     top: 15,
     right: 15,
@@ -321,19 +325,20 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderStyle: "solid",
     borderColor: "#13b955",
+    borderColor: '#5f43b2',
     position: "absolute",
     top: 15,
     right: 15,
   },
   radio: {
-    backgroundColor: "#514590",
+    backgroundColor: "#5f43b2",
     height: 14,
     width: 14,
     borderRadius: 10,
   },
 
   radioTr: {
-    backgroundColor: "#13b955",
+    backgroundColor: "#5f43b2",
     height: 14,
     width: 14,
     borderRadius: 10,

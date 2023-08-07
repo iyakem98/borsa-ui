@@ -415,6 +415,7 @@ const [bdelivery, setBdelivery] = useState(false)
     <SafeAreaView style={styles.container}>
       <View style={{
         backgroundColor: "#fff",
+        backgroundColor: "#fcfbff",
         justifyContent: "center",
         alignItems: "center",
         paddingBottom: 15,
@@ -427,7 +428,7 @@ const [bdelivery, setBdelivery] = useState(false)
           justifyContent: "space-between",
           width: width - 30,
           backgroundColor: "#eee",
-          padding: 10,
+          padding: 8,
           borderRadius: 10
         }}>
           <Pressable style={{
@@ -450,7 +451,16 @@ const [bdelivery, setBdelivery] = useState(false)
             borderRadius: 5,
             width: "49%",
             paddingVertical: 13,
-            alignItems: "center"
+            alignItems: "center",
+            /*
+            shadowColor: '#737373',
+            shadowOffset: {
+                width: 0,
+                height: 0,
+            },
+            shadowOpacity: selectedTab == 2? 0.28 : 0,
+            shadowRadius: selectedTab == 2? 3.00 : 0,
+          */
           }} onPress={()=>{
             !isBuyer ? setIsBuyer(true) : null
             setSelectedTab(2)
@@ -494,8 +504,20 @@ const [bdelivery, setBdelivery] = useState(false)
               {/* <LottieView
       source={require('../../assets/qdZM0DGhfn.json')}
     /> */}
-    <View style={styles.animationContainer}>
-      <LottieView
+   {/* <View style={styles.animationContainer}> */}
+    <LottieView
+        style={{
+         
+          height: 86,
+          position: 'absolute',
+          top: "120%",
+          left: '1%', 
+        }}
+        source={require('../../assets/animation_planeLoading.json')}
+        autoPlay
+        loop
+      />
+     {/* <LottieView
         style={{
          
           height: 250,
@@ -513,15 +535,15 @@ const [bdelivery, setBdelivery] = useState(false)
         source={require('../../assets/animation_lks476w7.json')}
         autoPlay
         loop
-      />
-    </View>
+      /> */}
+   {/* </View> */}
             </View>
           ) : (selectedTab === 2 && b && b.length > 0) || (selectedTab === 1 && t && t.length > 0) ? (
             <View style = {{backgroundColor: "white", paddingVertical: 0}}>         
               {isBuyer ? (
                 <View style={{
                   paddingHorizontal: 10,
-                  backgroundColor: 'white'
+                  backgroundColor: '#fcfbff',
                 }}>
       
                         {
@@ -665,13 +687,17 @@ const [bdelivery, setBdelivery] = useState(false)
 {!buyerS && (
       <View style={{
         width:"100%", 
-        backgroundColor:"#f6f6fb",
+        backgroundColor:"#eee",
+        paddingTop: 10,
+        //backgroundColor: "#fff",  
         height:40,
         padding:5,
         display:"flex",
         alignContent:"center",
-        alignItems:"center",
+        //alignItems:"center",
+        borderRadius: 6,
         fontSize:20,
+        marginTop: 4,
       }}>
       <CountryPicker
           withFlag
@@ -735,13 +761,16 @@ const [bdelivery, setBdelivery] = useState(false)
 {!buyerD && (
       <View style={{
         width:"100%", 
-        backgroundColor:"#f6f6fb",
+        //backgroundColor:"#f6f6fb",
+        backgroundColor: '#e8e8e8',
         height:40,
         padding:5,
+        paddingTop: 10,
         display:"flex",
         alignContent:"center",
-        alignItems:"center",
+        //alignItems:"center",
         fontSize:20,
+        marginTop: 4,
       }}>
       <CountryPicker
           withFlag
@@ -792,13 +821,18 @@ const [bdelivery, setBdelivery] = useState(false)
                                         clearFilterBuyer()
                                       }}
                                         style = {{
-                                            backgroundColor: '#E8E8E8',
+                                            //backgroundColor: '#E8E8E8',
                                             paddingHorizontal: 10,
                                             paddingVertical: 7,
                                             marginHorizontal: 30,
                                             borderRadius: 5,
+                                            borderStyle: 'solid',
+                                            borderWidth: 1,
+                                            borderColor: '#5f43b2',
                                         }}>
-                                        <Text>
+                                        <Text style = {{
+                                          color: '#5f43b2',
+                                        }}>
                                             Discard
                                         </Text>
                                     </Pressable>
@@ -807,6 +841,7 @@ const [bdelivery, setBdelivery] = useState(false)
                                     onPress={filterBuyers} 
                                         style = {{
                                             backgroundColor: '#593196',
+                                            backgroundColor: '#5f43b2',
                                             paddingHorizontal: 30,
                                             paddingVertical: 7,
                                             marginHorizontal: 2,
@@ -826,7 +861,9 @@ const [bdelivery, setBdelivery] = useState(false)
                     // ListHeaderComponent={BuyerHeader}
                     data={buyerTotal}
                     contentContainerStyle={{
-                      paddingBottom: 270
+                      paddingBottom: 270,
+                      paddingTop: 10,
+                      backgroundColor: '#fcfbff',
                     }}
                     maxToRenderPerBatch={2}
                     renderItem={({item}) => {
@@ -869,7 +906,8 @@ const [bdelivery, setBdelivery] = useState(false)
               ) : (
                 <View style = {{
                   paddingHorizontal: 10,
-                  backgroundColor: 'white'
+                  backgroundColor: 'white',
+                  backgroundColor: "#fcfbff",
                 }}>
                   
                   {
@@ -1019,13 +1057,17 @@ const [bdelivery, setBdelivery] = useState(false)
        {!travelerS && (
       <View style={{
         width:"100%", 
-        backgroundColor:"#f6f6fb",
+        backgroundColor:"#eee",
+        paddingTop: 10,
+        //backgroundColor: "#fff",  
         height:40,
         padding:5,
         display:"flex",
         alignContent:"center",
-        alignItems:"center",
+        //alignItems:"center",
+        borderRadius: 6,
         fontSize:20,
+        marginTop: 4,
       }}>
       <CountryPicker
           withFlag
@@ -1089,13 +1131,17 @@ const [bdelivery, setBdelivery] = useState(false)
        {!travelerD && (
       <View style={{
         width:"100%", 
-        backgroundColor:"#f6f6fb",
+        backgroundColor:"#eee",
+        paddingTop: 10,
+        //backgroundColor: "#fff",  
         height:40,
         padding:5,
         display:"flex",
         alignContent:"center",
-        alignItems:"center",
+        //alignItems:"center",
+        borderRadius: 6,
         fontSize:20,
+        marginTop: 4,
       }}>
       <CountryPicker
           withFlag
@@ -1146,13 +1192,17 @@ const [bdelivery, setBdelivery] = useState(false)
                                        clearFilterTraveler()
                                       }}
                                         style = {{
-                                            backgroundColor: '#E8E8E8',
-                                            paddingHorizontal: 10,
-                                            paddingVertical: 7,
-                                            marginHorizontal: 30,
-                                            borderRadius: 5,
+                                          paddingHorizontal: 10,
+                                          paddingVertical: 7,
+                                          marginHorizontal: 30,
+                                          borderRadius: 5,
+                                          borderStyle: 'solid',
+                                          borderWidth: 1,
+                                          borderColor: '#5f43b2',
                                         }}>
-                                        <Text>
+                                        <Text style = {{
+                                           color: '#5f43b2',
+                                        }}>
                                             Discard
                                         </Text>
                                     </Pressable>
@@ -1161,6 +1211,7 @@ const [bdelivery, setBdelivery] = useState(false)
                                     onPress={filterTravelers} 
                                         style = {{
                                             backgroundColor: '#593196',
+                                            //backgroundColor: '#5f43b2',
                                             paddingHorizontal: 30,
                                             paddingVertical: 7,
                                             marginHorizontal: 2,
@@ -1180,7 +1231,9 @@ const [bdelivery, setBdelivery] = useState(false)
                     // ListHeaderComponent={TravelerHeader}
                     data={travelerTotal}
                     contentContainerStyle={{
-                      paddingBottom: 270
+                      paddingBottom: 270,
+                      paddingTop: 6,
+                      backgroundColor: "#fcfbff"
                     }}
                     renderItem={({item}) => {
                       // console.log(item)
@@ -1269,7 +1322,8 @@ export default ConnectScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    backgroundColor: "#fcfbff"
   },
   contentContainer: {
     flex: 1,

@@ -298,10 +298,6 @@ const MessagingScreen = ({ navigation }) => {
     }, timerLength);
   };
 
-  useEffect(() => {
-    console.log("RERENDER::");
-  });
-
   return (
     <SafeAreaView
       style={{

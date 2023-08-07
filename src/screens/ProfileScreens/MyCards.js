@@ -17,6 +17,7 @@ import moment from 'moment'
 import { useRoute } from '@react-navigation/native'
 import Header from '../../components/Shared/Header'
 import { LinearGradient } from 'expo-linear-gradient'
+import { Snackbar, Button } from 'react-native-paper'
 
 const width = Dimensions.get("screen").width
 
@@ -45,6 +46,10 @@ const MyCards = () => {
     setIsBuyer(true)
   }
 
+  const showSuccess = () => {
+   
+  }
+
   const changeIsFull = async (id, currentStatus) => {
     console.log("card to be deleted is:", id)
     let config = {
@@ -64,11 +69,12 @@ const MyCards = () => {
         .then((res) => {
           getCards()
           setSelectedTab(1)
+         setSnack(true)
         }).catch((err) => {
           let errResponse =
             (err && err.response && err.response.data) ||
             (err && err.message);
-          console.log("error:", errResponse)
+          console.log("error:", errResponse, newData)
         });
         setSpinner(false)
       }},
@@ -134,6 +140,8 @@ const MyCards = () => {
       },
     ]);
   }
+  const [snack, setSnack] = useState(false)
+
   useEffect(() => {
     navigation.addListener('focus', getCards)
     // UpdateUserRoute()
@@ -252,7 +260,7 @@ const MyCards = () => {
     </Pressable>
 
     <View style = {{
-      marginLeft: "15%"
+      marginLeft: "13%"
     }}>
       <Text style = {{
          fontSize: 18,
@@ -339,7 +347,7 @@ const MyCards = () => {
     }}>
       <ScrollView
         //horizontal
-        style={{marginTop:"3%"}} 
+        style={{marginTop:"3%", height: '100%'}} 
         >
 
           <View style = {{
@@ -388,7 +396,7 @@ const MyCards = () => {
                     //marginTop: 4,
                     //marginLeft: 7,
                 }}>
-                    <Entypo name="plus" size={26} color="#13b955" />
+                    <Entypo name="plus" size={26} color="#5f43b2" />
                  
                 </Text>
             </Pressable>
@@ -407,11 +415,11 @@ const MyCards = () => {
               }}>
                No card found. Cards you post will appear here.
               </Text>
-              <LinearGradient  colors={['#13b955', "#0a863b"]} style = {{
+             {/* <LinearGradient  colors={['#13b955', "#0a863b"]} style = {{
                         width: '100%',
                         borderRadius: 5,
                         //paddingTop: 100,
-            }}>
+            }}> */}
               <Pressable 
                 onPress={()=>{
                   navigation.navigate("New Post", {
@@ -422,7 +430,9 @@ const MyCards = () => {
                   //backgroundColor: '#eee',
                   padding: 8,
                   paddingHorizontal: 22,
-                  borderRadius: 10
+                  borderRadius: 6,
+                  backgroundColor: '#5f43b2',
+                  flexDirection: 'row',
                 }}>
                 <Text style = {{
                   fontSize: 18,
@@ -432,7 +442,7 @@ const MyCards = () => {
                   Add a card
                 </Text>
               </Pressable>
-              </LinearGradient>
+             {/* </LinearGradient> */}
             </View>
             }
 
@@ -519,23 +529,7 @@ const MyCards = () => {
               
                 
                   
-
-                  
-                  <View style = {{
-                    backgroundColor: '#13b955',
-                    backgroundColor: '#f0f0f0',
-                    marginTop: 8,
-                    paddingBottom: 10,
-                  }}>
-                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
-                  {"  "}
-                  <AntDesign name="infocirlce" size={22} color="#13b955" />
-                  {"  "+travel.status} 
-                  
-                  </Text> 
-                  </View>
-
-                  {user.isImperial? (
+{user.isImperial? (
                 <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
                 {"  "}
                 {
@@ -565,11 +559,27 @@ const MyCards = () => {
                   </Text> 
               )}
 
-<MaterialCommunityIcons name={travel?.isLuggageSpaceFull ? 'toggle-switch' : 'toggle-switch-off-outline'} size={28} color="black" 
-style={{alignSelf:"flex-end", marginRight:7, marginTop:-28}}
-onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
+              <MaterialCommunityIcons name={travel?.isLuggageSpaceFull ? 'toggle-switch' : 'toggle-switch-off-outline'} size={28} color="black" 
+              style={{alignSelf:"flex-end", marginRight:7, marginTop:-28}}
+              onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
 
                   
+
+
+                  
+                  <View style = {{
+                    backgroundColor: '#13b955',
+                    backgroundColor: '#f0f0f0',
+                    marginTop: 8,
+                    paddingBottom: 10,
+                  }}>
+                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
+                  {"  "}
+                  <AntDesign name="infocirlce" size={22} color="#13b955" />
+                  {"  "+travel.status} 
+                  
+                  </Text> 
+                  </View>
 
                  
 
@@ -624,6 +634,23 @@ onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
             </View> */}
 
 </ScrollView>
+
+ <View style={{
+
+       }}>
+     
+        <Snackbar
+        wrapperStyle={{ top: 0 }}
+        style={{
+          borderRadius:20
+        }}
+          visible={snack}
+          onDismiss={() => setSnack(false)}
+          duration={3000}
+        >
+          Update succeeded.
+        </Snackbar>
+      </View>
     </View>
   }
 
@@ -689,7 +716,7 @@ onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
                     //marginTop: 4,
                     //marginLeft: 7,
                 }}>
-                    <Entypo name="plus" size={26} color="#593196" />
+                    <Entypo name="plus" size={26} color="#5f43b2" />
                  
                 </Text>
             </Pressable>
@@ -709,11 +736,6 @@ onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
                 }}>
                  No card found. Cards you post will appear here.
                 </Text>
-                <LinearGradient  colors={['#593196', "#3f216c"]} style = {{
-                        width: '100%',
-                        borderRadius: 5
-                        //paddingTop: 30,
-            }}>
                 <Pressable 
                   onPress={()=>{
                     navigation.navigate("New Post", {
@@ -723,8 +745,9 @@ onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
                   style = {{
                     //backgroundColor: '#13b955',
                     //backgroundColor: '#593196',
+                    backgroundColor: '#5f43b2',
                     padding: 8,
-                    borderRadius: 10
+                    borderRadius: 6
                   }}>
                   <Text style = {{
                     fontSize: 18,
@@ -734,7 +757,6 @@ onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
                     Add a new card
                   </Text>
                 </Pressable>
-                </LinearGradient>
               </View>
               }
 

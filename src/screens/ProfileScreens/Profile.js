@@ -177,11 +177,93 @@ const ProfileScreen = ({ navigation }) => {
     <View
       style={{
         //paddingVertical: 30,
-        backgroundColor: "white",
+        backgroundColor: "#fcfbff",
+        height: "100%",
       }}
     >
-      <View>
-        <LinearGradient
+      <LinearGradient 
+         colors={["#5f43b2", "#fcfbff"]}
+         style={{
+           //height: "100%",
+           //alignItems: 'center',
+           paddingTop: 40,
+           paddingHorizontal: 20,
+          // paddingBottom: 50,
+           //justifyContent: 'center'
+         }}
+      >
+        <View style = {{
+          flexDirection: 'row',
+          width: "100%",
+          //height: 30,
+          alignItems: 'center',
+          paddingTop: 30,
+          //justifyContent: 'center',
+        }}>
+          <Pressable onPress={()=>navigation.pop()}>
+                <AntDesign name="left" size={28} color="black" />
+          </Pressable>
+        </View>
+        <View
+              style={{
+                //flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={getImageSourceById(route.params.theUser?.profilePic)}
+                style={{
+                  width: 120,
+                  height: 120,
+                  marginTop: 0,
+                  // borderRadius: "100%",
+                  borderRadius: 100,
+                  alignItems: "flex-end",
+                  justifyContent: "flex-end",
+                }}
+              />
+              <View
+                style={{
+                  marginLeft: 20,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 25,
+                    marginTop: 20,
+                    // marginBottom: 2,
+                    fontFamily: "Poppins_400Regular",
+                    //color: "white",
+                  }}
+                >
+                  {route.params.theUser?.firstName +
+                    " " +
+                    route.params.theUser?.lastName}
+                </Text>
+                <View
+                  style={{
+                    //backgroundColor: '#593196',
+                    paddingHorizontal: 5,
+                    paddingVertical: 2,
+                    borderRadius: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      //
+                      //color: "#fff",
+                      fontFamily: "Poppins_400Regular",
+                    }}
+                  >
+                    {route.params.theUser?.email}
+                  </Text>
+                </View>
+              </View>
+            </View>
+      </LinearGradient>
+     
+      <View style>
+       {/* <LinearGradient
           colors={["#705c9d", "#593196"]}
           style={{
             //height: "100%",
@@ -191,63 +273,16 @@ const ProfileScreen = ({ navigation }) => {
             paddingBottom: 50,
             //justifyContent: 'center'
           }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Image
-              source={getImageSourceById(route.params.theUser?.profilePic)}
-              style={{
-                width: 120,
-                height: 120,
-                marginTop: 0,
-                // borderRadius: "100%",
-                borderRadius: 100,
-                alignItems: "flex-end",
-                justifyContent: "flex-end",
-              }}
-            />
-            <View
-              style={{
-                marginLeft: 20,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 25,
-                  marginTop: 20,
-                  // marginBottom: 2,
-                  fontFamily: "Poppins_400Regular",
-                  color: "white",
-                }}
-              >
-                {route.params.theUser?.firstName +
-                  " " +
-                  route.params.theUser?.lastName}
-              </Text>
-              <View
-                style={{
-                  //backgroundColor: '#593196',
-                  paddingHorizontal: 5,
-                  paddingVertical: 2,
-                  borderRadius: 20,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "#fff",
-                    fontFamily: "Poppins_400Regular",
-                  }}
-                >
-                  {route.params.theUser?.email}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </LinearGradient>
+        > */}
+        <View style = {{
+           paddingTop: 10,
+           paddingHorizontal: 20,
+           paddingBottom: 20,
+        }}>  
+          
+        </View>
+         
+       {/* </LinearGradient> */}
         <View></View>
         <View
           style={{
@@ -255,14 +290,14 @@ const ProfileScreen = ({ navigation }) => {
             alignItems: "center",
             justifyContent: "space-between",
             //   width: width - 30,
-            backgroundColor: "#eee",
+            //backgroundColor: "#eee",
             padding: 10,
             borderRadius: 10,
           }}
         >
           <Pressable
             style={{
-              backgroundColor: selectedTab === 1 ? "#fff" : "#eee",
+              backgroundColor: selectedTab === 1 ? "#5f43b2" : "#fcfbff",
               borderRadius: 5,
               width: "33%",
               paddingVertical: 13,
@@ -276,6 +311,7 @@ const ProfileScreen = ({ navigation }) => {
               style={{
                 fontFamily: "Poppins_500Medium",
                 fontSize: 14,
+                color: selectedTab === 1 ? "#fff" : "#000",
               }}
             >
               Profile
@@ -283,7 +319,7 @@ const ProfileScreen = ({ navigation }) => {
           </Pressable>
           <Pressable
             style={{
-              backgroundColor: selectedTab === 2 ? "#fff" : "#eee",
+              backgroundColor: selectedTab === 2 ? "#5f43b2" : "#fcfbff",
               borderRadius: 5,
               width: "33%",
               paddingVertical: 13,
@@ -297,6 +333,7 @@ const ProfileScreen = ({ navigation }) => {
               style={{
                 fontFamily: "Poppins_500Medium",
                 fontSize: 14,
+                color: selectedTab === 2 ? "#fff" : "#000",
               }}
             >
               Travels
@@ -305,7 +342,7 @@ const ProfileScreen = ({ navigation }) => {
 
           <Pressable
             style={{
-              backgroundColor: selectedTab === 3 ? "#fff" : "#eee",
+              backgroundColor: selectedTab === 3 ? "#5f43b2" : "#fcfbff",
               borderRadius: 5,
               width: "33%",
               paddingVertical: 13,
@@ -319,6 +356,7 @@ const ProfileScreen = ({ navigation }) => {
               style={{
                 fontFamily: "Poppins_500Medium",
                 fontSize: 14,
+                color: selectedTab === 3 ? "#fff" : "#000",
               }}
             >
               Shippings
@@ -480,10 +518,22 @@ const ProfileScreen = ({ navigation }) => {
         )}
 
         {selectedTab == 2 && (
-          <SafeAreaView style={{ marginTop: 20, backgroundColor: "#E8E8E8" }}>
+          <SafeAreaView style={{ marginTop: 20, backgroundColor: "#fcfbff" }}>
             {t &&
               t.map((travel, index) => (
-                <View key={index} style={{ marginLeft: "2.5%", width: "95%" }}>
+                <View key={index} style={{
+                   width: "98%",
+                    alignSelf: 'center',
+                    shadowColor: '#e8e8e8',
+                    shadowOffset: {
+                        width: 0,
+                        height: 0,
+                    },
+                    shadowOpacity: 0.28,
+                    shadowRadius: 3.00,
+                    
+                    elevation: 24,
+                     }}>
                   <TravelerCard item={travel} />
                 </View>
               ))}
@@ -513,14 +563,32 @@ const ProfileScreen = ({ navigation }) => {
         )}
 
         {selectedTab == 3 && (
-          <View>
+          <View style = {{
+            paddingTop: 20, 
+          }}>
             <ScrollView
               contentContainerStyle={{
                 minHeight: buyerHeight,
               }}
-              style={{ backgroundColor: "#E8E8E8" }}
+              style={{ backgroundColor: "#fcfbff", paddingTop: 5, }}
             >
-              {b && b.map((buyer, index) => <Buyer key={index} item={buyer} />)}
+              {b && b.map((buyer, index) => (
+              <View style = {{
+                width: "98%",
+                alignSelf: 'center',
+                shadowColor: '#e8e8e8',
+                shadowOffset: {
+                    width: 0,
+                    height: 0,
+                },
+                shadowOpacity: 0.28,
+                shadowRadius: 3.00,
+                elevation: 24,
+                zIndex: 100,
+              }}>
+                <Buyer key={index} item={buyer} />
+              </View>  ))}
+              
             </ScrollView>
 
             {b.length < 1 && (
@@ -529,6 +597,7 @@ const ProfileScreen = ({ navigation }) => {
                   alignItems: "center",
                   minHeight: "100%",
                   paddingTop: 40,
+                  
                 }}
               >
                 <EmptyUnDraw />

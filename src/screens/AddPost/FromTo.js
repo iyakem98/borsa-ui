@@ -1,7 +1,7 @@
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View, FlatList, SectionList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Shared/Header'
-import { TextInput } from 'react-native-paper'
+import { Snackbar, TextInput } from 'react-native-paper'
 import CountryPicker from 'react-native-country-picker-modal'
 import { AntDesign } from '@expo/vector-icons'
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -92,6 +92,8 @@ const FromTo = ({navigation}) => {
 
         setShowExpiryDate(false)
     }
+
+    const [snack, setSnack] = useState(false)
 
     useEffect(()=>{
         console.log(moment(from).format('L'))
@@ -347,10 +349,28 @@ const FromTo = ({navigation}) => {
                     </View>
                 </View>
                 )}
+
+
+<View style={{
+
+}}>
+
+ <Snackbar
+ wrapperStyle={{ top: 0 }}
+ style={{
+   borderRadius:20
+ }}
+   visible={snack}
+   onDismiss={() => setSnack(false)}
+   duration={3000}
+ >
+   Please fill all fields.
+ </Snackbar>
+</View>
                 
                 
                 <Pressable style={{
-                    backgroundColor: "#514590",
+                    backgroundColor: "#5f43b2",
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginTop: showExpiryDate? "60%" : "68%",
@@ -364,7 +384,7 @@ const FromTo = ({navigation}) => {
                 onPress={()=>
                     {
                         if(!countryFrom || !countryTo){
-                            alert("Please fill all the fields.")
+                            setSnack(true)
                         }
                         else
                         {
@@ -416,6 +436,7 @@ const FromTo = ({navigation}) => {
                     }}
                 />
             )}
+
             
             </>
             }
@@ -562,10 +583,27 @@ const FromTo = ({navigation}) => {
                     }}>{travelerDate.toLocaleString()}</Text>
                     <AntDesign name="calendar" size={24} color="#777" />
                 </Pressable>
+
+                <View style={{
+
+}}>
+
+ <Snackbar
+ wrapperStyle={{ top: 0 }}
+ style={{
+   borderRadius:20
+ }}
+   visible={snack}
+   onDismiss={() => setSnack(false)}
+   duration={3000}
+ >
+   Please fill all fields.
+ </Snackbar>
+</View>
                 
                 <Pressable style={{
-                    backgroundColor: "#13b955",
-                    backgroundColor: "#514590",
+                    //backgroundColor: "#13b955",
+                    backgroundColor: "#5f43b2",
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,
@@ -578,7 +616,7 @@ const FromTo = ({navigation}) => {
                 onPress={()=>
                     {
                         if(!travelerFrom || !travelerTo || !travelerDate){
-                            alert("Please fill all the fields.")
+                           setSnack(true)
                         }
                         else
                         {
@@ -618,9 +656,12 @@ const FromTo = ({navigation}) => {
                 />
             ) : null}
           
+
             
             </>
             }
+
+
             
         </SafeAreaView>
     )
