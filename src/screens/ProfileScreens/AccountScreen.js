@@ -107,6 +107,10 @@ const AccountScreen = () => {
 
   }
 
+  const delModalChanger = () => {
+    setShowDelModal(true)
+  }
+
   const handleUpdate = async () => {
     setIsEditing(!isEditing)
 
@@ -625,18 +629,19 @@ const AccountScreen = () => {
               </Pressable>
             </View>
           </View>
-          <Pressable style = {{
-            width: "80%",
-            marginTop: 6,
-            borderRadius: 5,
-            borderStyle: 'solid',
-            borderWidth: 1,
-            borderColor: "#fc3939",
-            backgroundColor:'#fff',
-            padding: 8,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+          <Pressable onPress={delModalChanger} 
+            style = {{
+              width: "80%",
+              marginTop: 6,
+              borderRadius: 5,
+              borderStyle: 'solid',
+              borderWidth: 1,
+              borderColor: "#fc3939",
+              backgroundColor:'#fff',
+              padding: 8,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
             <View style = {{
               marginRight: 6,
             }}>
@@ -657,10 +662,10 @@ const AccountScreen = () => {
           <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible}
+            visible={showDelModal}
             onRequestClose={() => {
               Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
+              setShowDelModal(!showDelModal);
             }}
           >
             <View style={styles.centeredView}>
@@ -694,70 +699,7 @@ const AccountScreen = () => {
                 >
                   <Pressable
                     style={[styles.button, styles.buttonCloseNo]}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text
-                      style={{
-                        // fontWeight: 'bold',
-                        textAlign: "center",
-                      }}
-                    >
-                      No
-                    </Text>
-                  </Pressable>
-
-                  <Pressable
-                    style={[styles.button, styles.buttonCloseYes]}
-                    onPress={() => deleteAcc()}
-                  >
-                    <Text style={styles.textStyle}>Yes</Text>
-                  </Pressable>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        </View> <View style={styles.centeredView}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <View>
-                  <Text
-                    style={{
-                      fontWeight: "bold",
-                      marginBottom: 10,
-                      fontSize: 22,
-                    }}
-                  >
-                    Are you sure you want to delete your account?
-                  </Text>
-                  <Text
-                    style={{
-                      //fontWeight: 'bold',
-                      marginBottom: 4,
-                      fontSize: 15,
-                    }}
-                  >
-                    This action cannot be reversed
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginLeft: "40%",
-                  }}
-                >
-                  <Pressable
-                    style={[styles.button, styles.buttonCloseNo]}
-                    onPress={() => setModalVisible(!modalVisible)}
+                    onPress={() => setShowDelModal(!showDelModal)}
                   >
                     <Text
                       style={{
@@ -836,7 +778,61 @@ const styles = StyleSheet.create({
     fontSize: 15,
     opacity: 0.8,
     textAlign:"left"
-  }
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    marginHorizontal: 4,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonCloseYes: {
+    backgroundColor: "red",
+    marginTop: 10,
+    //width:200
+  },
+  buttonCloseNo: {
+    backgroundColor: "green",
+    backgroundColor: "#13b955",
+    backgroundColor: "#e8e8e8",
+    marginTop: 10,
+    //width:200,
+    color: "black",
+  },
+  textStyle: {
+    color: "white",
+    //fontWeight: 'bold',
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 9,
+    textAlign: "center",
+    fontSize: 16,
+  },
 
 })
 
