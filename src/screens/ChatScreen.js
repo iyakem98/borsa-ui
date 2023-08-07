@@ -239,7 +239,7 @@ const ChatScreen = () => {
 
 
   return (
-    <>
+    <View style = {styles.con}>
       {chatsData && chatsData.length ? (
         <FlatList
         contentContainerStyle={{
@@ -339,7 +339,7 @@ const ChatScreen = () => {
           )}
         </>
       )}
-    </>
+    </View>
   );
 };
 
@@ -347,8 +347,10 @@ export default ChatScreen;
 
 const styles = StyleSheet.create({
   con: {
-    marginTop: 200,
-    borderRadius: 15,
+    //marginTop: 200,
+    //borderRadius: 15,
+    backgroundColor: '#fff',
+    height: '100%',
   },
   connectBtn: {
     backgroundColor: "#593196",
