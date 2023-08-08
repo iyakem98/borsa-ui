@@ -22,6 +22,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider as PaperProvider } from "react-native-paper";
 import FlashMessage from "react-native-flash-message";
 import { SheetProvider } from "react-native-actions-sheet";
+import NavigationListener from "./NavigationListener";
 import {
   useFonts,
   Poppins_300Light,
@@ -224,6 +225,7 @@ export default function App() {
             {/* <TouchableOpacity onPress={()=>sendPushNotification(expoPushToken)}>
               <Text>Submit</Text>
             </TouchableOpacity> */}
+            <NavigationListener/>
             <ChatProvider>
               <PersistGate loading={null} persistor={persistor}>
                 <SheetProvider>
@@ -240,6 +242,7 @@ export default function App() {
       </Provider>
     );
   } else {
+    return 
     <Text>{error}</Text>;
   }
 }
