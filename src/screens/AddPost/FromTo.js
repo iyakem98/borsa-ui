@@ -370,7 +370,7 @@ const FromTo = ({navigation}) => {
                 
                 
                 <Pressable style={{
-                    backgroundColor: "#514590",
+                    backgroundColor: "#5f43b2",
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginTop: showExpiryDate? "60%" : "68%",
@@ -602,8 +602,8 @@ const FromTo = ({navigation}) => {
 </View>
                 
                 <Pressable style={{
-                    backgroundColor: "#13b955",
-                    backgroundColor: "#514590",
+                    //backgroundColor: "#13b955",
+                    backgroundColor: "#5f43b2",
                     paddingVertical: 15,
                     borderRadius: 5,
                     marginBottom: 25,

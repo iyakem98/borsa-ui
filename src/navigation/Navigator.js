@@ -240,7 +240,7 @@ const Navigator = ({ showOnBoarding }) => {
           <Stack.Screen
             name="Profile"
             component={ProfileScreen}
-            options={{ headerTintColor: "#000" }}
+            options={{ headerTintColor: "#000", headerShown: false }}
           />
           <Stack.Screen name="Settings" component={SettingsScreen} />
           <Stack.Screen name="Security" component={SecurityScreen} />

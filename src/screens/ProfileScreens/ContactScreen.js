@@ -3,7 +3,7 @@ import {
     Text,
     Pressable,
     Stylesheet,
-    TextInput,
+    //TextInput,
     Image,
     StyleSheet,
     KeyboardAvoidingView,
@@ -20,6 +20,7 @@ import {
   import { API_BASE_URL } from "../../utils/config";
   import AsyncStorage from "@react-native-async-storage/async-storage";
   import { ActivityIndicator } from "react-native";
+  import { Checkbox, TextInput } from 'react-native-paper';
   const ContactScreen = () => {
     const height = Dimensions.get("window").height;
     const width = Dimensions.get("window").width;
@@ -73,7 +74,7 @@ import {
     }
     return (
         <KeyboardAvoidingView
-        // behavior={Platform.OS === "ios" ? "padding" : ""}
+        // behavior={Platform.OS === "ios" ? "padding" : "height"}
         // style={{
         //   position: "relative",
         //   flex: 1,
@@ -82,8 +83,8 @@ import {
         behavior='padding'
      keyboardVerticalOffset={
       Platform.select({
-        ios: () => -300,
-        android: () => -300
+        ios: () => 280,
+        android: () =>-20
       })()
       
     }
@@ -111,6 +112,7 @@ import {
                 height: "50%",
                 width: "100%",
                 backgroundColor: "#593196",
+                //backgroundColor: '#5f43b2',
                 //backgroundColor: '#a991d4',
                 alignItems: "center",
                 paddingTop: 40,
@@ -258,64 +260,65 @@ import {
                 {/* </View> */}
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <TextInput
-                autoFocus={true}
-                  placeholder="Name"
-                  value={fullName}
-                  onChangeText={(text) => setFullName(text)}
-                  style={{
-                    width: "100%",
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: "solid",
-                    borderBottomWidth: 0.5,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 16,
-                  }}
-                />
+                    label="Name"
+                    value={fullName}
+                    onChangeText={text => setFullName(text)}
+                    mode="outlined"
+                    style={{
+                      marginBottom: 13,
+                      borderRadius: 5,
+                      // paddingVertical: 5
+                    }}
+                    //error={userPasswordError}
+                    outlineStyle={{
+                      backgroundColor: "#fff",
+                      borderWidth: 0.4,
+                    }}
+                    placeholderTextColor= "#eee"
+                  />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <TextInput
-                 autoFocus={true}
-                  placeholder="Email"
+                  label="Email"
                   value={email}
-                  onChangeText={(text) => setEmail(text)}
+                  onChangeText={text => setEmail(text)}
+                  mode="outlined"
                   style={{
-                    width: "100%",
-                    paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: "solid",
-                    borderBottomWidth: 0.5,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    marginBottom: 16,
+                    marginBottom: 13,
+                    // paddingVertical: 5
                   }}
+                  //error={userPasswordError}
+                  outlineStyle={{
+                    backgroundColor: "#fff",
+                    borderWidth: 0.4,
+                  }}
+                  placeholderTextColor= "#eee"
                 />
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <TextInput
-                 autoFocus={true}
-                  placeholder="feedback"
-                  value={message}
-                  onChangeText={(text) => setMessage(text)}
-                  style={{
-                    width: "100%",
-                    // paddingHorizontal: 8,
-                    paddingVertical: 8,
-                    borderStyle: "solid",
-                    borderWidth: 0.5,
-                    height: 100,
-                    borderColor: "lightgray",
-                    fontSize: 18,
-                    textAlignVertical: "top",
-                    marginBottom: 16,
-                  }}
-                  multiline={true}
-                />
+                  <TextInput
+                    label="Feedback"
+                    value={message}
+                    onChangeText={text => setMessage(text)}
+                    mode="outlined"
+                    style={{
+                      marginBottom: 13,
+                      height: 160,
+                      // paddingVertical: 5
+                    }}
+                    //error={userPasswordError}
+                    outlineStyle={{
+                      backgroundColor: "#fff",
+                      borderWidth: 0.4,
+                    }}
+                    placeholderTextColor= "#eee"
+                    multiline={true}
+                  />
+                
               </TouchableWithoutFeedback>
                 <Pressable
                   style={{
-                    backgroundColor: "#13b955",
+                    //backgroundColor: "#13b955",
                     width: "50%",
                     height: 40,
                     alignItems: "center",
@@ -323,6 +326,9 @@ import {
                     borderRadius: 30,
                     marginLeft: "auto",
                     marginRight: "auto",
+                    borderWidth: 2,
+                    borderColor: '#5f43b2',
+                    borderStyle: 'solid',
                   }}
                   onPress={() => {
                     setLoading(true);
@@ -332,7 +338,9 @@ import {
                   <Text
                     style={{
                       color: "white",
+                      color: '#5f43b2',
                       fontSize: 17,
+                      fontFamily: "Poppins_500Medium",
                     }}
                   >
                     Submit

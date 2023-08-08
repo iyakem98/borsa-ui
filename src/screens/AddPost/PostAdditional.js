@@ -313,7 +313,7 @@ const Description = ({ navigation }) => {
 
             <Pressable
               style={{
-                backgroundColor: "#514590",
+                backgroundColor: "#5f43b2",
                 paddingVertical: 15,
                 borderRadius: 5,
                 marginBottom: 25,
@@ -476,8 +476,9 @@ const Description = ({ navigation }) => {
 
             <Pressable
               style={{
-                backgroundColor: "#13b955",
-                backgroundColor: "#514590",
+                //backgroundColor: "#13b955",
+                //backgroundColor: "#514590",
+                backgroundColor: '#5f43b2',
                 paddingVertical: 15,
                 borderRadius: 5,
                 marginBottom: 25,

@@ -265,12 +265,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     marginHorizontal: 7,
-    marginVertical: 4,
+    marginVertical: 0,
     paddingHorizontal: 6,
     paddingVertical: 7,
     height: 77,
     backgroundColor: "#fff",
-    borderRadius: 4
+    borderRadius: 4,
   },
   image: {
     width: 60,
@@ -280,8 +280,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    // borderBottomWidth: StyleSheet.hairlineWidth,
-    // borderBottomColor: "#ccc",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#ccc",
   },
   notif: {
     alignItems: "center",

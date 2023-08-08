@@ -146,7 +146,8 @@ const MainTabNavigator = () => {
     <Tab.Navigator
       initialRouteName={"Chats"}
       screenOptions={{
-        tabBarActiveTintColor: "#514590",
+        //tabBarActiveTintColor: "#514590",
+        tabBarActiveTintColor: '#5f43b2',
         tabBarStyle: {
           backgroundColor: "#fff",
         },

@@ -700,7 +700,7 @@ const styles = StyleSheet.create({
     txtCity: {
         fontFamily: "Poppins_500Medium",
         fontSize: 12,
-        color: "     777",
+        color: "gray",
         maxWidth: 110,
     },
     bottomWrapper: {
