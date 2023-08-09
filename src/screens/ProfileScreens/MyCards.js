@@ -454,7 +454,7 @@ const MyCards = () => {
               //marginLeft:20,
               backgroundColor:"#593196",
               backgroundColor: 'white',
-              paddingVertical: 20,
+              paddingTop: 20,
               //height:300,
               //padding:5,
               marginVertical: 17,
@@ -480,11 +480,11 @@ const MyCards = () => {
                   }}>
 
                     <View>
-                    <Text style={{fontSize:20}}>
+                    <Text style={{fontSize:20, color: travel.isLuggageSpaceFull? "gray" : "#000"}}>
               {"  "}
 
                   {" "+travel.departure.split(",")[0]+"   "} 
-                  <MaterialIcons name="flight-takeoff" size={26} color="#593196" />
+                  <MaterialIcons name="flight-takeoff" size={26} color= {travel.isLuggageSpaceFull? "gray" : "#5f43b2"} />
                    {"   "+travel.destination.split(",")[0]}
                   </Text> 
                     </View>
@@ -507,14 +507,14 @@ const MyCards = () => {
           </Text>
               
                 {user.isImperial? (
-                   <Text style={{textAlign:"left", marginTop:2, fontSize:17, color:"black"}}>
+                   <Text style={{textAlign:"left", marginTop:2, fontSize:17, color: travel.isLuggageSpaceFull? "gray" : "#000"}}>
                    {"  "}
                    <AntDesign name="calendar" size={22} color="#696969" />
                    {"  "+moment(travel.departureDate).format("MM-DD-YY")} 
                    
                    </Text> 
                 ) : (
-                  <Text style={{textAlign:"left", marginTop:2, fontSize:17, color:"black"}}>
+                  <Text style={{textAlign:"left", marginTop:2, fontSize:17,color: travel.isLuggageSpaceFull? "gray" : "#000"}}>
                   {"  "}
                   <AntDesign name="calendar" size={22} color="#696969" />
                   {"  "+moment(travel.departureDate).format("DD-MM-YY")} 
@@ -530,11 +530,11 @@ const MyCards = () => {
                 
                   
 {user.isImperial? (
-                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
+                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color: travel.isLuggageSpaceFull? "gray" : "#000"}}>
                 {"  "}
                 {
                   travel?.isLuggageSpaceFull ? 
-                  <MaterialCommunityIcons name="bag-personal" size={28} color="black" />
+                  <MaterialCommunityIcons name="bag-personal" size={28} color="gray" />
                   :
                   <MaterialCommunityIcons name="bag-personal-outline" size={28} color="black" />
                 }
@@ -542,12 +542,12 @@ const MyCards = () => {
                 
                 </Text> 
               ) : (
-                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color:"black"}}>
+                <Text style={{textAlign:"left", marginTop:5, fontSize:18, color: travel.isLuggageSpaceFull? "gray" : "#000"}}>
                   {"  "}
                   {
                   travel?.isLuggageSpaceFull ? 
                   <View style={{flexDirection:"row"}}>
-                    <MaterialCommunityIcons name="bag-personal" size={28} color="black" />
+                    <MaterialCommunityIcons name="bag-personal" size={28} color="gray" />
                   </View>
                   
                   :
@@ -558,10 +558,67 @@ const MyCards = () => {
                   
                   </Text> 
               )}
+              
+              <View style = {{
+                alignSelf:"flex-end", 
+                marginRight:7, 
+                marginTop:-28, 
+                flexDirection: 'row', 
+                justifyContent: 'space-between' , 
+                width: '40%',
+                borderStyle: 'solid', 
+                //borderWidth: 0.4, 
+                borderRadius: 10, 
+                paddingVertical: 2,
+                backgroundColor: "#fff",
+                paddingHorizontal: 2,
+                borderRadius: 10,
+            
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 1,
+                },
+                shadowOpacity: 0.22,
+                shadowRadius: 2.22,
 
-              <MaterialCommunityIcons name={travel?.isLuggageSpaceFull ? 'toggle-switch' : 'toggle-switch-off-outline'} size={28} color="black" 
+                elevation: 3,
+              }}>
+                <Pressable onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)}
+                  style = {{
+                    backgroundColor: travel?.isLuggageSpaceFull? "#fff" : "#009cdc",
+                    width: '49%',
+                    paddingVertical: 4,
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    
+                  }}>
+                  <Text style = {{
+                    color: travel.isLuggageSpaceFull? "#000" : "#fff"
+                  }}>
+                    Space
+                  </Text>
+                </Pressable>
+                <Pressable onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)}
+                  style = {{
+                  backgroundColor: travel?.isLuggageSpaceFull? '#fc3939' : '#fff',
+                    width: '49%',
+                    paddingVertical: 4,
+                    borderRadius: 10,
+                    alignItems: 'center',
+                  }}>
+                  <Text style = {{
+                    color: travel.isLuggageSpaceFull? "#fff" : "#000"
+                  }}>
+                    Full
+                  </Text>
+                </Pressable>
+              </View>
+                
+
+             {/* <MaterialCommunityIcons name={travel?.isLuggageSpaceFull ? 'toggle-switch' : 'toggle-switch-off-outline'} size={38} color="black" 
               style={{alignSelf:"flex-end", marginRight:7, marginTop:-28}}
-              onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} />
+            onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)} /> */}
 
                   
 
@@ -570,12 +627,12 @@ const MyCards = () => {
                   <View style = {{
                     backgroundColor: '#13b955',
                     backgroundColor: '#f0f0f0',
-                    marginTop: 8,
+                    marginTop: 12,
                     paddingBottom: 10,
                   }}>
-                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color:"black"}}>
+                      <Text style={{textAlign:"left", marginTop:10, fontSize:18, color: travel.isLuggageSpaceFull? "gray" : "#000"}}>
                   {"  "}
-                  <AntDesign name="infocirlce" size={22} color="#13b955" />
+                  <AntDesign name="infocirlce" size={22} color={travel.isLuggageSpaceFull? "gray" : '#5f43b2'} />
                   {"  "+travel.status} 
                   
                   </Text> 

@@ -17,6 +17,7 @@ import { UpdateLastSeenAndStatus } from "./src/features/auth/authSlice";
 import { fetchChat } from "./src/features/chat/chatSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API_BASE_URL } from "./src/utils/config";
+import { NavigationContainer, useRoute } from "@react-navigation/native";
 
 function AppContainer({ showOnBoarding, expoPushToken }) {
   const { user } = useSelector((state) => state.auth);
@@ -172,7 +173,9 @@ function AppContainer({ showOnBoarding, expoPushToken }) {
   return (
     //  <PersistGate loading={null} persistor={persistor}>
     <View style={styles.container}>
-      <Navigator showOnBoarding={showOnBoarding} />
+      <NavigationContainer>
+        <Navigator showOnBoarding={showOnBoarding} />
+      </NavigationContainer>
       {/* <StatusBar style="auto" /> */}
     </View>
     // </PersistGate>

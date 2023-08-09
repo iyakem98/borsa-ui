@@ -1,5 +1,9 @@
 import { View, Text, StyleSheet, AppState, Button } from "react-native";
-import { NavigationContainer, useRoute } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import {
   createStackNavigator,
   HeaderBackButton,
@@ -62,10 +66,15 @@ import AddPost from "../screens/AddPost/index";
 import Saved from "../screens/Saved";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Testanime from "../screens/ConnectScreen/testanime";
+import * as Notifications from "expo-notifications";
+import { getSenderFull } from "../ChatConfig/ChatLogics";
 
 const Stack = createStackNavigator();
 const Navigator = ({ showOnBoarding }) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const notificationListener = useRef();
+  const responseListener = useRef();
   // const appState = useRef(AppState.currentState);
   const { user } = useSelector((state) => state.auth);
   const { messageHeader, setmessageHeader } = ChatState();
@@ -108,6 +117,36 @@ const Navigator = ({ showOnBoarding }) => {
   //   };
 
   // }, [])
+
+  useEffect(() => {
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        // setNotification(notification);
+        console.log("=====", notification);
+        navigation.navigate("Messaging", {
+          userSelected:
+            user != null
+              ? getSenderFull(
+                  user,
+                  notification.request.content.data?.data?.chat?.users
+                )
+              : null,
+        });
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log("----=-", response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
   useEffect(() => {
     dispatch(fetchChat());
     // console.log(chattts[1])
@@ -131,7 +170,7 @@ const Navigator = ({ showOnBoarding }) => {
   }, []);
 
   return (
-    <NavigationContainer>
+    <>
       {user !== null || user != undefined ? (
         // <Stack.Navigator screenOptions={{headerStyle: {backgroundColor: '#f9f8fc'}}}>
 
@@ -169,10 +208,7 @@ const Navigator = ({ showOnBoarding }) => {
               headerShown: false,
             })}
           />
-          <Stack.Screen
-            name="Anime"
-            component={Testanime}
-          />
+          <Stack.Screen name="Anime" component={Testanime} />
           {/* <Stack.Screen name="Welcome Pic" component={WelcomeProPic} options={{headerShown: false}} /> */}
           <Stack.Screen
             name="WelcomeImperial"
@@ -335,7 +371,7 @@ const Navigator = ({ showOnBoarding }) => {
           />
         </Stack.Navigator>
       )}
-    </NavigationContainer>
+    </>
   );
 };
 {

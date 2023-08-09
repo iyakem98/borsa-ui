@@ -293,7 +293,7 @@ const TravelerChat = async(travData) => {
   
             <View style={styles.bottomWrapper}>
                 <View>
-                    <Text style={styles.txtCountry}>
+                    <Text style={[styles.txtCountry, item?.isLuggageSpaceFull? styles.txtFull : null]}>
                         {locationDepartureLength === 3 ? locationDeparture[2] : locationDeparture[1]}
                     </Text>
                     <Text style={styles.txtCity}>
@@ -303,12 +303,12 @@ const TravelerChat = async(travData) => {
                 <View style={styles.horizontal}>
                     <View style={styles.dot} />
                     <View style={styles.dottedLine} />
-                    <MaterialCommunityIcons name="airplane-takeoff" size={24} color="black" />
+                    <MaterialCommunityIcons name="airplane-takeoff" size={24} color={item?.isLuggageSpaceFull? "gray" : "black"} />
                     <View style={styles.dottedLine} />
                     <View style={styles.dot} />
                 </View>
                 <View style={{alignItems: "flex-end"}}>
-                    <Text style={styles.txtCountry}>
+                    <Text style={[styles.txtCountry, item?.isLuggageSpaceFull? styles.txtFull : null]}>
                         {locationPickUp[locationPickUpLength - 1]}
                     </Text>
                     <Text style={styles.txtCity}>
@@ -340,7 +340,7 @@ const TravelerChat = async(travData) => {
                     fontFamily: "Poppins_500Medium",
                     marginRight: 5,
                   }}>Departing on:</Text> */}
-                  <AntDesign name="calendar" size={24} color="black" />
+                  <AntDesign name="calendar" size={24} color={item?.isLuggageSpaceFull? "gray" : "black"} />
                   <View style={{
                     flexDirection: "row",
                     alignItems: "center",
@@ -349,7 +349,8 @@ const TravelerChat = async(travData) => {
                   }}>
                    <Text style = {{
                     fontSize: 14,
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
+                    ...(item?.isLuggageSpaceFull ? styles.txtFull : null),
                    }}>
                    {item?.departureDate ? item?.departureDate.slice(0, 10) : ""}
                    </Text>
@@ -376,12 +377,12 @@ const TravelerChat = async(travData) => {
                 <View style={styles.horizontal}>
                 {/*<MaterialIcons name="luggage" size={24} color="" />*/}
                
-                <MaterialCommunityIcons name="bag-personal-outline" size={24} color="black" />
+                <MaterialCommunityIcons name="bag-personal-outline" size={24} color={item?.isLuggageSpaceFull? "gray" : "black"} />
                 {user?.isImperial? (
                          <Text style={{
                             fontSize: 18,
                             fontFamily: "Poppins_600SemiBold",
-                            //color: 'gray',
+                            ...(item?.isLuggageSpaceFull ? styles.txtFull : null),
                         }}>
                             {(item?.luggageSpace*2.20462).toFixed(1)}
                             <Text style={{
@@ -393,12 +394,13 @@ const TravelerChat = async(travData) => {
                          <Text style={{
                             fontSize: 18,
                             fontFamily: "Poppins_600SemiBold",
-                            //color: 'gray'
+                            ...(item?.isLuggageSpaceFull ? styles.txtFull : null),
                         }}>
                             {(item?.luggageSpace*1.0).toFixed(1)}
                             <Text style={{
                                 fontFamily: "Poppins_400Regular",
-                                fontSize: 14
+                                fontSize: 14,
+                                ...(item?.isLuggageSpaceFull ? styles.txtFull : null),
                             }}>kg</Text>
                         </Text>
                     )}
@@ -423,9 +425,9 @@ const TravelerChat = async(travData) => {
                     </View>
                     ):(
                         <View style = {{
-                            backgroundColor: '#13b955',
+                            //backgroundColor: '#13b955',
                             //backgroundColor:'#fc3939',
-                            //backgroundColor: '#009cdc',
+                            backgroundColor: '#009cdc',
                             padding: 2,
                             paddingHorizontal: 8,
                             borderRadius: 10,
@@ -695,7 +697,10 @@ const styles = StyleSheet.create({
     },
     txtCountry: {
         fontFamily: "Poppins_500Medium",
-        fontSize: 15
+        fontSize: 15,
+    },
+    txtFull: {
+        color: 'gray'
     },
     txtCity: {
         fontFamily: "Poppins_500Medium",

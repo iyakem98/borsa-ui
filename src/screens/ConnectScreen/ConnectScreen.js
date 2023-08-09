@@ -22,7 +22,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { SafeAreaView } from 'react-native-safe-area-context'
 import LottieView  from 'lottie-react-native';
 import CountryPicker from 'react-native-country-picker-modal'
-// import CountryFlag from "react-native-country-flag"
+import CountryFlag from "react-native-country-flag"
 
 const width = Dimensions.get("screen").width
 
@@ -440,6 +440,9 @@ const [bdelivery, setBdelivery] = useState(false)
           }} onPress={()=>{
             isBuyer ? setIsBuyer(false) : null
             setSelectedTab(1)
+            handleClear()
+            setFilterBuyer(0)
+            setFilterTraveler(0)
           }}>
             <Text style={{
               fontFamily: "Poppins_500Medium",
@@ -464,6 +467,9 @@ const [bdelivery, setBdelivery] = useState(false)
           }} onPress={()=>{
             !isBuyer ? setIsBuyer(true) : null
             setSelectedTab(2)
+            handleClear()
+            setFilterBuyer(0)
+            setFilterTraveler(0)
           }}>
             <Text style={{
               fontFamily: "Poppins_500Medium",
@@ -732,8 +738,7 @@ const [bdelivery, setBdelivery] = useState(false)
               </Text>
               </View>
       
-     
-      </Pressable>
+     </Pressable>
       )}
                 
                                 </View>
