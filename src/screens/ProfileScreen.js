@@ -494,6 +494,7 @@ const ProfileScreen = ({ navigation }) => {
                     </View>
                   </TouchableOpacity>
 
+                 {/*
                   <TouchableOpacity
                     onPress={() => {
                       setModalVisible(true);
@@ -528,7 +529,8 @@ const ProfileScreen = ({ navigation }) => {
                         Delete Account
                       </Text>
                     </View>
-                  </TouchableOpacity>
+                  </TouchableOpacity> 
+                      */}
                 </View>
 
                 {/*    <View style = {{
