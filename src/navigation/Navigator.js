@@ -123,6 +123,11 @@ const Navigator = ({ showOnBoarding }) => {
       Notifications.addNotificationReceivedListener((notification) => {
         // setNotification(notification);
         console.log("=====", notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log("----=-", response);
         navigation.navigate("Messaging", {
           userSelected:
             user != null
@@ -132,11 +137,6 @@ const Navigator = ({ showOnBoarding }) => {
                 )
               : null,
         });
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log("----=-", response);
       });
 
     return () => {
