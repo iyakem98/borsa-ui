@@ -423,9 +423,9 @@ const TravelerChat = async(travData) => {
                     </View>
                     ):(
                         <View style = {{
-                            backgroundColor: '#13b955',
+                            //backgroundColor: '#13b955',
                             //backgroundColor:'#fc3939',
-                            //backgroundColor: '#009cdc',
+                            backgroundColor: '#009cdc',
                             padding: 2,
                             paddingHorizontal: 8,
                             borderRadius: 10,
