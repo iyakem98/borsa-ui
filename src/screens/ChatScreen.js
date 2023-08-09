@@ -95,10 +95,6 @@ const ChatScreen = () => {
     }
   };
 
-  useEffect(() => {
-    fetchAllChats();
-  }, []);
-
   const sendPush = async (newMessage) => {
     const hasPushNotificationPermissionGranted =
       await allowsNotificationsAsync();
@@ -136,7 +132,8 @@ const ChatScreen = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchChat());
+    // dispatch(fetchChat());
+    fetchAllChats();
   }, [fetchAgain, storedNotifications]);
 
   useEffect(() => {
