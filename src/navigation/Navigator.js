@@ -133,7 +133,7 @@ const Navigator = ({ showOnBoarding }) => {
             user != null
               ? getSenderFull(
                   user,
-                  notification.request.content.data?.data?.chat?.users
+                  response.request.content.data?.data?.chat?.users
                 )
               : null,
         });
