@@ -196,7 +196,7 @@ const ChatScreen = () => {
             />
           );
         } else if (d == 1) {
-          var formatted_date = "yesterday";
+          var formatted_date = "Yesterday";
           return (
             <ChatItem
               key={index}

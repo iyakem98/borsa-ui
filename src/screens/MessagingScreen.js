@@ -77,7 +77,7 @@ const MessagingScreen = ({ navigation }) => {
           content: {
             title: "New message! 📬",
             body: newMessage?.content,
-            data: { data: "goes here" },
+            data: { data: newMessage },
           },
           trigger: { seconds: 2 },
         });
