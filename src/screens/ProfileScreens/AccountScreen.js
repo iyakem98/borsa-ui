@@ -48,22 +48,22 @@ const AccountScreen = () => {
   const dispatch = useDispatch()
   const [def, setDef] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211")
   const [image, setImage] = useState(def);
-  const [userName, setUserName] = useState(user.userName)
-  const [firstName, setFirstName] = useState(user.firstName)
-  const [lastName, setLastName] = useState(user.lastName)
-  const [email, setEmail] = useState(user.email)
-  const [city, setCity] = useState(user.city)
-  const [address, setAddress] = useState(user.address)
+  const [userName, setUserName] = useState(user?.userName)
+  const [firstName, setFirstName] = useState(user?.firstName)
+  const [lastName, setLastName] = useState(user?.lastName)
+  const [email, setEmail] = useState(user?.email)
+  const [city, setCity] = useState(user?.city)
+  const [address, setAddress] = useState(user?.address)
   const [suggestions, setSuggestions] = useState(false)
   const [myUser, setMyUser] = useState(user)
   const [isEditing, setIsEditing] = useState(false)
   const [placeResult, setPlaceResult] = useState([])
   const [userPreview, setUserPriview] = useState("")
   const [selectedTab, setSelectedTab] = useState(0)
-  const [isImperial, setIsImperial] = useState(user.isImperial)
+  const [isImperial, setIsImperial] = useState(user?.isImperial)
 
-  const [isTraveler, setIsTraveler] = useState(user.isTraveler)
-  const [isBuyer, setIsBuyer] = useState(user.isBuyer)
+  const [isTraveler, setIsTraveler] = useState(user?.isTraveler)
+  const [isBuyer, setIsBuyer] = useState(user?.isBuyer)
 
   const [showDelModal, setShowDelModal] = useState(false)
   const [showConfirmDelModal, setShowConfirmDelModal] = useState(false)
@@ -98,7 +98,7 @@ const AccountScreen = () => {
   var socket = io(API_BASE_URL)
 
 
-  const handleLogout = () => {
+  //const handleLogout = () => {
     // {user && socket.emit("userLogout", {userID: user._id}) }
     // dispatch(logout())
     // navigate.navigate("Home")
@@ -108,7 +108,8 @@ const AccountScreen = () => {
     
     // alert(" Logout  Successful");
 
-  }
+  //}
+  
 
   const delModalChanger = () => {
     setShowDelModal(true)
@@ -156,25 +157,18 @@ const AccountScreen = () => {
   }
 
   const deleteAcc = async () => {
-    console.log('deleter in')
-    if (password !== user.password) {
-      setPasswordError('Incorrect Password')
-    }
-    else{
-      alert("I will delete stuff now bro")
-      {/*axios.delete(`${API_BASE_URL}users/${user._id}`);
-      await AsyncStorage.removeItem("user")
-        .then((data) => {
-          alert("Deleted.");
-          handleLogout();
-        })
-        .catch((err) => {
-          console.log("error is", err);
-          alert("No");
-        }); */}
-    } 
-   
+    axios.delete(`${API_BASE_URL}users/${user._id}`);
+    await AsyncStorage.removeItem("user")
+      .then((data) => {
+        alert("Deleted.");
+        handleLogout();
+      })
+      .catch((err) => {
+        console.log("error is", err);
+        alert("No");
+      });
   };
+
 
   const findPlaces = (newText) => {
     axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${newText}&apiKey=8cb194b9c3384d909b48ba0c3adf1ab0`)
@@ -208,6 +202,7 @@ const AccountScreen = () => {
          
         });
   }
+  
 
   const handleUserAddress = (data) => {  
     let Country = ""
@@ -238,6 +233,16 @@ const AccountScreen = () => {
   const getImageSourceById = (id) => {
     const item = data.find((item) => item.id === id);
     return item ? item.imageSource : null;
+  };
+
+  
+  const handleLogout = async () => {
+    {
+      user ? socket.emit("userLogout", { userID: user._id }) : null;
+    }
+    dispatch(logout());
+    dispatch(offLoadChat());
+    // navigate.navigate("Login")
   };
 
 
@@ -658,7 +663,10 @@ const AccountScreen = () => {
               </Pressable>
             </View>
           </View>
-          <Pressable onPress={delModalChanger} 
+
+          {isEditing && 
+
+            <Pressable onPress={delModalChanger} 
             style = {{
               width: "80%",
               marginTop: 6,
@@ -682,7 +690,10 @@ const AccountScreen = () => {
             }}>
               Delete Account?
             </Text>
-          </Pressable>
+            </Pressable>
+
+          }
+         
 
     
 {/* </KeyboardAwareScrollView>     */}
