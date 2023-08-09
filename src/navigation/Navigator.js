@@ -127,16 +127,22 @@ const Navigator = ({ showOnBoarding }) => {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log("----=-", response);
-        navigation.navigate("Messaging", {
-          userSelected:
-            user != null
-              ? getSenderFull(
-                  user,
-                  response.request.content.data?.data?.chat?.users
-                )
-              : null,
-        });
+        console.log(
+          "----=-",
+          response?.notification?.request?.content?.data?.data?.chat?.users
+        );
+        if (response?.notification?.request?.content?.data?.data?.chat?.users) {
+          navigation.navigate("Messaging", {
+            userSelected:
+              user != null
+                ? getSenderFull(
+                    user,
+                    response?.notification?.request?.content?.data?.data?.chat
+                      ?.users
+                  )
+                : null,
+          });
+        }
       });
 
     return () => {
