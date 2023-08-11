@@ -11,6 +11,9 @@ import {
     Dimensions,
     TouchableWithoutFeedback,
     Keyboard,
+    Alert,
+     Modal,
+
   } from "react-native";
   import { MaterialIcons, Entypo } from "@expo/vector-icons";
   import emailjs from "@emailjs/browser";
@@ -21,6 +24,9 @@ import {
   import AsyncStorage from "@react-native-async-storage/async-storage";
   import { ActivityIndicator } from "react-native";
   import { Checkbox, TextInput } from 'react-native-paper';
+  import LottieView  from 'lottie-react-native';
+import { useNavigation } from "@react-navigation/native";
+
   const ContactScreen = () => {
     const height = Dimensions.get("window").height;
     const width = Dimensions.get("window").width;
@@ -28,8 +34,10 @@ import {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
-  
+    const [modalVisible, setModalVisible] = useState(false);
+    // const transparent = "rgba(0,0,0,0.5)"
     const { user } = useSelector((state) => state.auth);
+    const navigation = useNavigation();
     const HandleSubmit = async () => {
       try {
         const config = {
@@ -50,36 +58,66 @@ import {
             },
           }
         );
-        setLoading(false);
+        // setLoading(false);
+        setModalVisible(false)
         //  console.log('message sent sucessfully')
         setFullName('')
         setEmail('')
         setMessage('')
         alert("feedback sent sucessfully");
+        navigation.navigate("More")
+
       } catch (err) {
         console.log(err);
       }
     };
-    if (loading) {
-      return (
-        <>
-          <ActivityIndicator
-            size="large"
-            color="#777"
-            style={{ paddingTop: 300 }}
-          />
-          {/* <Text>sending message</Text> */}
-        </>
-      );
-    }
+    // if (loading) {
+    //   return (
+    //     <>
+    //       <ActivityIndicator
+    //         size="large"
+    //         color="#777"
+    //         style={{ paddingTop: 300 }}
+    //       />
+         
+    //     </>
+    //   );
+    // }
     return (
+      <>
+         <View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        
+        >
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: "rgba(0,0,0,0.75)"
+        }}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Hello World!</Text>
+            
+    <LottieView
+          style={{
+         
+            height: 250,
+           
+          }}
+        source={require('../../assets/loader.json')}
+
+        autoPlay
+        loop
+      />
+          </View>
+        </View>
+      </Modal>
+    </View>
         <KeyboardAvoidingView
-        // behavior={Platform.OS === "ios" ? "padding" : "height"}
-        // style={{
-        //   position: "relative",
-        //   flex: 1,
-        //   height: height - 100,
-        // }}
+       
         behavior='padding'
      keyboardVerticalOffset={
       Platform.select({
@@ -89,15 +127,7 @@ import {
       
     }
         >
-        {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.inner}>
-            <Text style={styles.header}>Header</Text>
-            <TextInput placeholder="Username" style={styles.textInput} />
-            <View style={styles.btnContainer}>
-              <Button title="Submit" onPress={() => null} />
-            </View>
-          </View>
-        </TouchableWithoutFeedback> */}
+        
         <View
             style={{
               //paddingTop: 20,
@@ -222,42 +252,7 @@ import {
                   elevation: 1,
                 }}
               >
-                {/* <View style = {{
-                      width: 500,
-                      // justifyContent: 'space-around',
-                      // flexDirection: 'row',
-                  }}> */}
-                {/* <TextInput placeholder='Name'
-                   value={fullName}
-                   onChangeText={text => setFullName(text)}
-                    style = {{
-                      width: '43%',
-                      //paddingHorizontal: 8,
-                      paddingVertical: 8,
-                      borderStyle: 'solid',
-                      borderBottomWidth: 0.5,
-                      borderColor: "lightgray",
-                      fontSize: 18,
-                      marginBottom: 16,
-    
-                    }}
-                    /> */}
-  
-                {/* <TextInput placeholder='Last Name'
-                    style = {{
-                      width: '43%',
-                      //paddingHorizontal: 8,
-                      paddingVertical: 8,
-                      borderStyle: 'solid',
-                      borderBottomWidth: 0.5,
-                      borderColor: "lightgray",
-                      fontSize: 18,
-                      marginBottom: 16,
-    
-                    }}
-                    /> */}
-  
-                {/* </View> */}
+                
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <TextInput
                     label="Name"
@@ -331,7 +326,8 @@ import {
                     borderStyle: 'solid',
                   }}
                   onPress={() => {
-                    setLoading(true);
+                    setModalVisible(true)
+                    // setLoading(true);
                     HandleSubmit();
                   }}
                 >
@@ -350,8 +346,54 @@ import {
             </View>
           </View>
       </KeyboardAvoidingView>
+   
+      </>
     );
   };
   
   export default ContactScreen;
-  
+  const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 22,
+      // backgroundColor: transparent
+    },
+    modalView: {
+      margin: 20,
+      // backgroundColor: 'white',
+      // borderRadius: 20,
+      padding: 35,
+      alignItems: 'center',
+      // shadowColor: '#000',
+      // shadowOffset: {
+      //   width: 0,
+      //   height: 2,
+      // },
+      
+      // shadowOpacity: 0.25,
+      // shadowRadius: 4,
+      // elevation: 5,
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2,
+    },
+    buttonOpen: {
+      backgroundColor: '#F194FF',
+    },
+    buttonClose: {
+      backgroundColor: '#2196F3',
+    },
+    textStyle: {
+      color: 'white',
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: 'center',
+    },
+  });
