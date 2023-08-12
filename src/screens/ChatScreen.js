@@ -25,10 +25,12 @@ const ChatScreen = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { chattts } = useSelector((state) => state.chat);
+  const navigation = useNavigation();
+  const notificationListener = useRef();
+  const responseListener = useRef();
   const { setloading, isLoading } = ChatState();
   const { messages } = useSelector((state) => state.mess);
   const { setSelectedChat, fetchAgain, setchattId } = ChatState();
-  const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [Today, setToday] = useState(false);
   const [chatsData, setChatsData] = useState([]);
@@ -234,6 +236,26 @@ const ChatScreen = () => {
       }
     }
   };
+
+  useEffect(() => {
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        // setNotification(notification);
+        console.log("=====", notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        fetchAllChats();
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   return (
     <View style={styles.con}>

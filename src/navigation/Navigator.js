@@ -118,46 +118,11 @@ const Navigator = ({ showOnBoarding }) => {
 
   // }, [])
 
-  useEffect(() => {
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        // setNotification(notification);
-        console.log("=====", notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(
-          "----=-",
-          response?.notification?.request?.content?.data?.data?.chat?.users
-        );
-        if (response?.notification?.request?.content?.data?.data?.chat?.users) {
-          navigation.navigate("Messaging", {
-            userSelected:
-              user != null
-                ? getSenderFull(
-                    user,
-                    response?.notification?.request?.content?.data?.data?.chat
-                      ?.users
-                  )
-                : null,
-          });
-        }
-      });
-
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    dispatch(fetchChat());
-    // console.log(chattts[1])
-    // console.log("===", user)
-  }, [user]);
+  // useEffect(() => {
+  // dispatch(fetchChat());
+  // console.log(chattts[1])
+  // console.log("===", user)
+  // }, [user]);
 
   const handleWelcomeStack = async () => {
     try {
