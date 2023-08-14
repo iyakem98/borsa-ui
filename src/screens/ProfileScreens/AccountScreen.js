@@ -167,7 +167,6 @@ const AccountScreen = () => {
       password: password,
     };
     await axios.post(`${API_BASE_URL}users/delete-account`, data, config)
-    await AsyncStorage.removeItem("user")
       .then((data) => {
         alert("Deleted.");
         handleLogout();
@@ -177,8 +176,15 @@ const AccountScreen = () => {
           (error && error.response && error.response.data) ||
           (error && error.message);
 
-        alert(errResponse.message);
+        if (errResponse.message == "invalid_password") {
+          alert('Wrong Password')
+        }
+        
+        else {
+          alert(errResponse.message);
+        }
       });
+      await AsyncStorage.removeItem("user")
   }
 
   const deleteeAcc = async () => {

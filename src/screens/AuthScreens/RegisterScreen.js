@@ -461,7 +461,8 @@ const handleVerify = async () => {
                 />
           ) : (
             <Pressable style={{
-              backgroundColor: "#514590",
+              //backgroundColor: "#514590",
+              backgroundColor: '#5f43b2',
               paddingVertical: 15,
               borderRadius: 5,
               marginBottom: 25, 

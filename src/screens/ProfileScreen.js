@@ -192,7 +192,7 @@ const ProfileScreen = ({ navigation }) => {
 
               <View
                 style={{
-                  marginLeft: 20,
+                  marginLeft: 10,
                 }}
               >
                 <Text

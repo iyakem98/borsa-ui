@@ -108,7 +108,8 @@ const LoginScreen = ({ navigation }) => {
         />
         <Pressable
           style={{
-            backgroundColor: "#514590",
+            //backgroundColor: "#514590",
+            backgroundColor: '#5f43b2',
             // bottom: 10,
             // left: 15,
             // position: "absolute",

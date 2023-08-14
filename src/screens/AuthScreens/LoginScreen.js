@@ -22,6 +22,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../components/Shared/Header";
 import { TextInput } from "react-native-paper";
+import LottieView  from 'lottie-react-native';
 
 // import * as AppAuth from 'expo-google-sign-in'
 
@@ -257,7 +258,7 @@ const LoginScreen = ({ navigation }) => {
         </Text>
         <TextInput
           label="Email"
-          value={userEmail}
+          value={userEmail.toLowerCase()}
           onChangeText={(text) => setUserEmail(text)}
           mode="outlined"
           style={{
@@ -332,9 +333,38 @@ const LoginScreen = ({ navigation }) => {
             left: 15,
           }}
         >
-          <Pressable
+          {isLoading? (
+
+         <View style = {{
+              alignItems: 'center',
+            }}>
+              <Text style = {{
+                fontSize: 20,
+                fontFamily: "Poppins_400Regular",
+              }}>
+                Logging you in!
+              </Text>
+              <LottieView
             style={{
-              backgroundColor: "#514590",
+
+              height: 250,
+              //left: "5%",
+              //right: '20%',
+              bottom: '5%',
+            
+            }}
+            source={require('../../assets/loader.json')}
+
+            autoPlay
+            loop
+            />
+            </View>
+
+          ) : (
+            
+            <Pressable
+            style={{
+              //backgroundColor: "#514590",
               backgroundColor: '#5f43b2',
               //backgroundColor: '#593196',
               paddingVertical: 15,
@@ -343,18 +373,21 @@ const LoginScreen = ({ navigation }) => {
               width: "100%",
             }}
             onPress={handleLogin}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                fontFamily: "Poppins_400Regular",
-                fontSize: 14,
-                textAlign: "center",
-              }}
             >
-              {isLoading ? "Loading ..." : "Login"}
-            </Text>
+              <Text
+                style={{
+                  color: "#fff",
+                  fontFamily: "Poppins_400Regular",
+                  fontSize: 14,
+                  textAlign: "center",
+                }}
+              >
+                {isLoading ? "Loading ..." : "Login"}
+              </Text>
           </Pressable>
+
+
+          )}
           <View
             style={{
               flexDirection: "row",
