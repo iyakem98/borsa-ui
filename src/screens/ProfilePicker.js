@@ -112,7 +112,7 @@ const ProfilePicker = () => {
         dispatch(getUserDetails(user._id));
         // handleLogout()
         setLoading(false);
-        navigation.popToTop();
+        navigation.pop();
       })
       .catch((err) => {
         setLoading(false);

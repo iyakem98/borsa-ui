@@ -115,7 +115,7 @@ const WelcomeAddPost = () => {
             fontFamily: "Poppins_400Regular",
           }}
         >
-          This is the phase 1, messaging version of the Borsa App. 
+          This is the Phase 1, messaging version of the Borsa App. 
         </Text>
       </View>
 

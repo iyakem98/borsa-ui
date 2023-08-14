@@ -251,14 +251,14 @@ const WelcomeProPic = () => {
             style={{
               width: "100%",
               alignItems: "center",
-              marginBottom: 20,
+              marginBottom: 10,
             }}
           >
             <Image
               source={getImageSourceById(user?.profilePic)}
               style={{
-                width: 120,
-                height: 120,
+                width: 150,
+                height: 150,
               }}
             />
           </View>
@@ -266,7 +266,7 @@ const WelcomeProPic = () => {
           <View
             style={{
               //paddingRight: "35%",
-              marginBottom: 20,
+              marginBottom: 40,
             }}
           >
             <Text
@@ -274,12 +274,14 @@ const WelcomeProPic = () => {
                 fontSize: 30,
                 color: "white",
                 fontFamily: "Poppins_400Regular",
+                textAlign: 'center',
               }}
             >
-              Great!
+              Avatar Chosen
             </Text>
           </View>
 
+        {/*
           <View
             style={{
               marginBottom: 10,
@@ -295,15 +297,17 @@ const WelcomeProPic = () => {
               You have just chosen your avatar!
             </Text>
           </View>
+            */}
           <View
             style={{
               //paddingHorizontal: 20,
-              marginBottom: 40,
+              marginBottom: 20,
+              paddingHorizontal: 10,
             }}
           >
             <Text
               style={{
-                fontSize: 18,
+                fontSize: 16,
                 color: "white",
                 fontFamily: "Poppins_400Regular",
               }}
