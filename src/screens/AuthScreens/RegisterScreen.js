@@ -11,6 +11,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../../utils/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../components/Shared/Header';
+import LottieView  from 'lottie-react-native';
 import { Checkbox, TextInput } from 'react-native-paper';
 
 const windowHeight = Dimensions.get("window").height
@@ -325,7 +326,7 @@ const handleVerify = async () => {
         <TextInput
           label="Email"
           value={userEmail}
-          onChangeText={text => setUserEmail(text)}
+          onChangeText={text => setUserEmail(text.toLowerCase())}
           mode="outlined"
           style={{
             marginBottom: 13,
@@ -442,20 +443,39 @@ const handleVerify = async () => {
             bottom: 20,
             left: 15,
         }}>
-          <Pressable style={{
-            backgroundColor: "#514590",
-            paddingVertical: 15,
-            borderRadius: 5,
-            marginBottom: 25,
-            width: "100%"
-          }} onPress={handleLogin}>
-            <Text style={{
-                color: "#fff",
-                fontFamily: "Poppins_400Regular",
-                fontSize: 14,
-                textAlign: "center"
-            }}>{isLoading ? "Loading ..." : "Continue"}</Text>
-          </Pressable>
+          {isLoading? (
+
+                <LottieView
+                style={{
+
+                  height: 150,
+                  left: "15%",
+                  right: '20%',
+                  bottom: '10%',
+                
+                }}
+                source={require('../../assets/loader.json')}
+
+                autoPlay
+                loop
+                />
+          ) : (
+            <Pressable style={{
+              backgroundColor: "#514590",
+              paddingVertical: 15,
+              borderRadius: 5,
+              marginBottom: 25, 
+              width: "100%"
+            }} onPress={handleLogin}>
+              <Text style={{
+                  color: "#fff",
+                  fontFamily: "Poppins_400Regular",
+                  fontSize: 14,
+                  textAlign: "center"
+              }}>{isLoading ? "Loading ..." : "Continue"}</Text>
+            </Pressable>
+            
+          )}
           <View style={{
             flexDirection: "row",
             alignItems: "center",
