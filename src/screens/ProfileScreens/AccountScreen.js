@@ -156,7 +156,32 @@ const AccountScreen = () => {
     setShowConfirmDelModal(!showConfirmDelModal)
   }
 
-  const deleteAcc = async () => {
+  const deleteAcc = async() => {
+    let config = {
+      headers: {
+        Authorization: `Bearer ${await AsyncStorage.getItem("myToken")}`,
+      },
+    };
+    let data = {
+      //userId: user._id, 
+      password: password,
+    };
+    await axios.post(`${API_BASE_URL}users/delete-account`, data, config)
+    await AsyncStorage.removeItem("user")
+      .then((data) => {
+        alert("Deleted.");
+        handleLogout();
+      })
+      .catch((error) => {
+        let errResponse =
+          (error && error.response && error.response.data) ||
+          (error && error.message);
+
+        alert(errResponse.message);
+      });
+  }
+
+  const deleteeAcc = async () => {
     axios.delete(`${API_BASE_URL}users/${user._id}`);
     await AsyncStorage.removeItem("user")
       .then((data) => {
@@ -227,7 +252,7 @@ const AccountScreen = () => {
     if(user==null){
       navigation.navigate("Home")
     } 
-    console.log("user id issssssss:", user._id)
+    console.log("user id issssssss:", user?._id)
   }, [user])
 
   const getImageSourceById = (id) => {
@@ -238,7 +263,7 @@ const AccountScreen = () => {
   
   const handleLogout = async () => {
     {
-      user ? socket.emit("userLogout", { userID: user._id }) : null;
+      user ? socket.emit("userLogout", { userID: user?._id }) : null;
     }
     dispatch(logout());
     dispatch(offLoadChat());
@@ -315,7 +340,7 @@ const AccountScreen = () => {
         }}>
           
 
-          <Image source={getImageSourceById(user.profilePic)} style={{ 
+          <Image source={getImageSourceById(user?.profilePic)} style={{ 
             width: 150,
             height: 150,
             marginTop:0,
@@ -627,7 +652,7 @@ const AccountScreen = () => {
             }}>
               <Pressable disabled = {isEditing? false : true}
                 style={{
-                    backgroundColor: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#593196" : "#fff",
+                    backgroundColor: selectedTab === 1 || (!user?.isImperial && selectedTab == 0) ? "#593196" : "#fff",
                     borderRadius: 5,
                     width: "49%",
                     paddingVertical: 7,
@@ -640,12 +665,12 @@ const AccountScreen = () => {
                   <Text style={{
                       fontFamily: "Poppins_500Medium",
                       fontSize: 14,
-                      color: selectedTab === 1 || (!user.isImperial && selectedTab == 0) ? "#fff" : "#000",
+                      color: selectedTab === 1 || (!user?.isImperial && selectedTab == 0) ? "#fff" : "#000",
                   }}>Metric</Text>
               </Pressable>
               <Pressable disabled = {isEditing? false : true}
                 style={{
-                    backgroundColor: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#593196" : "#fff",
+                    backgroundColor: selectedTab === 2 || (user?.isImperial && selectedTab == 0) ? "#593196" : "#fff",
                     borderRadius: 5,
                     width: "49%",
                     paddingVertical: 5,
@@ -658,7 +683,7 @@ const AccountScreen = () => {
                   <Text style={{
                       fontFamily: "Poppins_500Medium",
                       fontSize: 14,
-                      color: selectedTab === 2 || (user.isImperial && selectedTab == 0) ? "#fff" : "#000",
+                      color: selectedTab === 2 || (user?.isImperial && selectedTab == 0) ? "#fff" : "#000",
                   }}>Imperial</Text>
               </Pressable>
             </View>
@@ -753,7 +778,7 @@ const AccountScreen = () => {
                   
                   elevation: 24,
                 }}>
-                <Image source={getImageSourceById(user.profilePic)} style={{ 
+                <Image source={getImageSourceById(user?.profilePic)} style={{ 
                   width: 100,
                   height: 100,
                   marginTop:0,
@@ -765,7 +790,7 @@ const AccountScreen = () => {
               <Text style = {{
                 fontSize: 20,
               }}>
-                {user.firstName} {user.lastName}
+                {user?.firstName} {user?.lastName}
               </Text>
               </View>
 

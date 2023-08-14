@@ -82,7 +82,7 @@ const WelcomeImperial = () => {
               marginBottom: 30,
             }}
           >
-            Please choose your preferred measurement system:
+            Please choose your preferred system of measurement:
           </Text>
           <Text style={styles.optionText}>Metric System (SI)</Text>
           <Text style={styles.exampleText}>Weight: kg</Text>

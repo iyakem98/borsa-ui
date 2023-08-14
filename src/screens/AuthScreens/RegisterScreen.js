@@ -451,7 +451,7 @@ const handleVerify = async () => {
                   height: 150,
                   left: "15%",
                   right: '20%',
-                  bottom: '10%',
+                  bottom: '5%',
                 
                 }}
                 source={require('../../assets/loader.json')}

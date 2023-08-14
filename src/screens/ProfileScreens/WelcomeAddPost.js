@@ -111,11 +111,11 @@ const WelcomeAddPost = () => {
             fontSize: 16,
             color: "white",
             //marginTop: 20,
-            fontFamily: "Poppins_600SemiBold",
+            //fontFamily: "Poppins_600SemiBold",
+            fontFamily: "Poppins_400Regular",
           }}
         >
-          This is a beta testing version so some features are not fully
-          functional.
+          This is the phase 1, messaging version of the Borsa App. 
         </Text>
       </View>
 

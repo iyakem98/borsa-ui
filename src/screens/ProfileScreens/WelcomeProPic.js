@@ -168,8 +168,7 @@ const WelcomeProPic = () => {
                 marginTop: 16,
               }}
             >
-              Thank you for becoming a member of our Pilot Team! We value your
-              feedback.
+              Let's get you started with your journey!
             </Text>
           </View>
           <View
