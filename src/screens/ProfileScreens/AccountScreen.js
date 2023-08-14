@@ -665,7 +665,7 @@ const AccountScreen = () => {
                   <Text style={{
                       fontFamily: "Poppins_500Medium",
                       fontSize: 14,
-                      color: selectedTab === 1 || (!user?.isImperial && selectedTab == 0) ? "#fff" : "#000",
+                      color: selectedTab === 1 || (!user?.isImperial && selectedTab == 0) ? "#fff" : (selectedTab == 0 && user?.isImperial && !isEditing)? "gray" : "#000",
                   }}>Metric</Text>
               </Pressable>
               <Pressable disabled = {isEditing? false : true}
@@ -683,7 +683,7 @@ const AccountScreen = () => {
                   <Text style={{
                       fontFamily: "Poppins_500Medium",
                       fontSize: 14,
-                      color: selectedTab === 2 || (user?.isImperial && selectedTab == 0) ? "#fff" : "#000",
+                      color: selectedTab === 2 || (user?.isImperial && selectedTab == 0) ? "#fff" : (selectedTab == 0 && !user?.isImperial && !isEditing)? "gray" : "#000",
                   }}>Imperial</Text>
               </Pressable>
             </View>
