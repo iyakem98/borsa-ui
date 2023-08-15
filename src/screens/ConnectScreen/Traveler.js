@@ -420,7 +420,7 @@ const TravelerChat = async(travData) => {
                             fontFamily: "Poppins_400Regular",
                             fontSize: 11
                         }}>
-                            Full
+                            full
                         </Text>
                     </View>
                     ):(
@@ -459,7 +459,7 @@ const TravelerChat = async(travData) => {
                     }} onPress={addToWislistTraveler}>
                        {
                         ids.includes(item._id) ? 
-                        <AntDesign name="heart" size={24} color= '#a991d4' />  
+                        <AntDesign name="heart" size={24} color= '#fc3939' />  
                         :
                         <AntDesign name="hearto" size={24} color="black" />
                        }
