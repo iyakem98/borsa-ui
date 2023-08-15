@@ -99,7 +99,6 @@ import { useNavigation } from "@react-navigation/native";
           backgroundColor: "rgba(0,0,0,0.75)"
         }}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
             
     <LottieView
           style={{

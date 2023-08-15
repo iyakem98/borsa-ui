@@ -298,9 +298,9 @@ const ChatScreen = () => {
                   marginHorizontal: 10,
                 }}
               >
-                Security Doggo wants you to start a new chat
+                Security Doggo says hi
               </Text>
-              <View style={styles.connectBtn}>
+              {/*<View style={styles.connectBtn}>
                 <Pressable onPress={() => navigation.navigate("Connect")}>
                   <Text
                     style={{
@@ -311,7 +311,7 @@ const ChatScreen = () => {
                     Click here to start chatting{" "}
                   </Text>
                 </Pressable>
-              </View>
+                  </View> */}
             </View>
           ) : (
             <View
@@ -339,9 +339,9 @@ const ChatScreen = () => {
                   marginHorizontal: 10,
                 }}
               >
-                Security Doggo wants you to start a new chat
+                Security Doggo says hi
               </Text>
-              <Pressable
+             {/* <Pressable
                 style={styles.connectBtn}
                 onPress={() => navigation.navigate("Connect")}
               >
@@ -353,7 +353,7 @@ const ChatScreen = () => {
                 >
                   Click here to start chatting{" "}
                 </Text>
-              </Pressable>
+                </Pressable> */}
             </View>
           )}
         </>
