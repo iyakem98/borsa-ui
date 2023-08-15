@@ -42,7 +42,6 @@ import {
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import * as Updates from "expo-updates";
-import axios from "axios";
 import { API_BASE_URL } from "./src/utils/config";
 
 Notifications.setNotificationHandler({
