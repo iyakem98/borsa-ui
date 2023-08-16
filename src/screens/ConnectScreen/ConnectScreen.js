@@ -480,14 +480,20 @@ const [bdelivery, setBdelivery] = useState(false)
       </View>
         {
           load ? 
-          <ActivityIndicator style={{
-            justifyContent:"center",
-            marginTop:"48%",
-            // color: 'blue'
-            color: 'black'
-          }}
-          size="large"
-          />
+          <LottieView
+            style={{
+
+              height: 250,
+              left: "10%",
+              //right: '20%',
+              top: '5%',
+            
+            }}
+            source={require('../../assets/loader.json')}
+
+            autoPlay
+            loop
+            />
           
           :
           <View>
@@ -725,16 +731,16 @@ const [bdelivery, setBdelivery] = useState(false)
               padding:5,
               display:"flex",
               alignContent:"center",
-              alignItems:"center"
+              //alignItems:"center"
             }}>
 
         
-                <View style={{flexDirection:"row"}}>
+                <View style={{flexDirection:"row", paddingTop: 4}}>
               <Text style={{fontSize:17, fontFamily: "Poppins_400Regular",}}>
                 {buyerS} 
               </Text>
               <Text style={{marginLeft:20, marginTop:5}}>
-                <CountryFlag isoCode={buyerSF} size={10} />
+                <CountryFlag isoCode={buyerSF} size={17} />
               </Text>
               </View>
       
@@ -797,16 +803,16 @@ const [bdelivery, setBdelivery] = useState(false)
               padding:5,
               display:"flex",
               alignContent:"center",
-              alignItems:"center"
+              //alignItems:"center"
             }}>
 
         
-                <View style={{flexDirection:"row"}}>
+                <View style={{flexDirection:"row", paddingTop: 4}}>
               <Text style={{fontSize:17, fontFamily: "Poppins_400Regular",}}>
                 {buyerD} 
               </Text>
               <Text style={{marginLeft:20, marginTop:5}}>
-                <CountryFlag isoCode={buyerDF} size={10} />
+                <CountryFlag isoCode={buyerDF} size={17} />
               </Text>
               </View>
       
@@ -904,7 +910,20 @@ const [bdelivery, setBdelivery] = useState(false)
                     zIndex: 100000,
                     position: "absolute",
                   }}> 
-                   <ActivityIndicator size="large" color="#777" />
+                   <LottieView
+            style={{
+
+              height: 250,
+              //left: "5%",
+              //right: '20%',
+              bottom: '5%',
+            
+            }}
+            source={require('../../assets/loader.json')}
+
+            autoPlay
+            loop
+            />
                   </View>}
                   
                 </View> 
@@ -1094,16 +1113,16 @@ const [bdelivery, setBdelivery] = useState(false)
               padding:5,
               display:"flex",
               alignContent:"center",
-              alignItems:"center"
+              //alignItems:"center"
             }}>
 
         
-                <View style={{flexDirection:"row"}}>
+                <View style={{flexDirection:"row", paddingTop: 4}}>
               <Text style={{fontSize:17, fontFamily: "Poppins_400Regular",}}>
                 {travelerS} 
               </Text>
               <Text style={{marginLeft:20, marginTop:5}}>
-                <CountryFlag isoCode={travelerSF} size={10} />
+                <CountryFlag isoCode={travelerSF} size={17} />
               </Text>
               </View>
       
@@ -1168,16 +1187,16 @@ const [bdelivery, setBdelivery] = useState(false)
               padding:5,
               display:"flex",
               alignContent:"center",
-              alignItems:"center"
+              //alignItems:"center"
             }}>
 
         
-                <View style={{flexDirection:"row"}}>
+                <View style={{flexDirection:"row", paddingTop: 4}}>
               <Text style={{fontSize:17, fontFamily: "Poppins_400Regular",}}>
                 {travelerD} 
               </Text>
               <Text style={{marginLeft:20, marginTop:5}}>
-                <CountryFlag isoCode={travelerDF} size={10} />
+                <CountryFlag isoCode={travelerDF} size={17} />
               </Text>
               </View>
       
@@ -1268,7 +1287,20 @@ const [bdelivery, setBdelivery] = useState(false)
                     zIndex: 100000,
                     position: "absolute",
                   }}> 
-                   <ActivityIndicator size="large" color="#777" />
+                   <LottieView
+            style={{
+
+              height: 250,
+              //left: "5%",
+              //right: '20%',
+              bottom: '5%',
+            
+            }}
+            source={require('../../assets/loader.json')}
+
+            autoPlay
+            loop
+            />
                   </View>}
                   
                 </View>
