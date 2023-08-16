@@ -18,6 +18,7 @@ import { useRoute } from '@react-navigation/native'
 import Header from '../../components/Shared/Header'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Snackbar, Button } from 'react-native-paper'
+import LottieView  from 'lottie-react-native';
 
 const width = Dimensions.get("screen").width
 
@@ -334,7 +335,21 @@ const MyCards = () => {
       paddingTop: 35,
       width: "100%"
   }}>
-    <ActivityIndicator size="large" color="black" />
+     <LottieView
+                style={{
+
+                  height: 150,
+                  //left: "15%",
+                  //right: '20%',
+                  //bottom: '5%',
+                
+                }}
+                source={require('../../assets/loader.json')}
+
+                autoPlay
+                loop
+                />
+   {/* <ActivityIndicator size="large" color="black" /> */}
   </View>
   }
  
@@ -586,7 +601,7 @@ const MyCards = () => {
               }}>
                 <Pressable onPress={()=>changeIsFull(travel._id, travel.isLuggageSpaceFull)}
                   style = {{
-                    backgroundColor: travel?.isLuggageSpaceFull? "#fff" : "#009cdc",
+                    backgroundColor: travel?.isLuggageSpaceFull? "#fff" : "#13b955",
                     width: '49%',
                     paddingVertical: 4,
                     borderRadius: 10,
