@@ -910,20 +910,7 @@ const [bdelivery, setBdelivery] = useState(false)
                     zIndex: 100000,
                     position: "absolute",
                   }}> 
-                   <LottieView
-            style={{
-
-              height: 250,
-              //left: "5%",
-              //right: '20%',
-              bottom: '5%',
-            
-            }}
-            source={require('../../assets/loader.json')}
-
-            autoPlay
-            loop
-            />
+                   <ActivityIndicator size="large" color="#777" />
                   </View>}
                   
                 </View> 
@@ -1287,20 +1274,7 @@ const [bdelivery, setBdelivery] = useState(false)
                     zIndex: 100000,
                     position: "absolute",
                   }}> 
-                   <LottieView
-            style={{
-
-              height: 250,
-              //left: "5%",
-              //right: '20%',
-              bottom: '5%',
-            
-            }}
-            source={require('../../assets/loader.json')}
-
-            autoPlay
-            loop
-            />
+                    <ActivityIndicator size="large" color="#777" />
                   </View>}
                   
                 </View>
