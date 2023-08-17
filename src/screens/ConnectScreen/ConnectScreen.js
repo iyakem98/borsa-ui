@@ -375,13 +375,15 @@ const [bdelivery, setBdelivery] = useState(false)
           Authorization: `Bearer ${user.token}`
         }}
 
-    await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=${limit}`, config)
+    await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=10`, config)
         .then((data, total) => {
           
           console.log("tttttttttttttttt:", data.data.data)
          setT(data.data.data)
          //setPageTraveler(pageTraveler + 1)
-         setTravelerTotal([...travelerTotal, ...data.data.data])
+         if(travelerTotal.length < data.data.total){
+          setTravelerTotal([...travelerTotal, ...data.data.data])
+         }
          setTotTraveler(data.data.total)
          setPageLimTraveler(Math.ceil(data.data.total/10))
          //setLoadingBuyer(true)
@@ -390,11 +392,13 @@ const [bdelivery, setBdelivery] = useState(false)
          setT(null)
         });
      
-        await axios.get(`http://143.198.168.244/api/buyers?page=${pageBuyer}&limit=${limit}`, config)
+        await axios.get(`http://143.198.168.244/api/buyers?page=${pageBuyer}&limit=10`, config)
         .then((data, total) => {
          setB(data.data.data)
          //setPageBuyer(pageBuyer + 1)
-         setBuyerTotal([...buyerTotal, ...data.data.data])
+         if(buyerTotal.length < data.data.total){
+          setBuyerTotal([...buyerTotal, ...data.data.data])
+         }
          setTotBuyer(data.data.total)
          setPageLimBuyer(Math.ceil(data.data.total/10))
          //alert(buyerTotal.length)
