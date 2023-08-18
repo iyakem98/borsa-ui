@@ -75,8 +75,8 @@ const ConnectScreen = () => {
     const [limit, setLimit] = useState(10);
     const [buyerTotal, setBuyerTotal] = useState([])
     const [travelerTotal, setTravelerTotal] = useState([])
-    const [totBuyer, setTotBuyer] = useState(0)
-    const [totTraveler, setTotTraveler] = useState(0)
+    const [totBuyer, setTotBuyer] = useState(10)
+    const [totTraveler, setTotTraveler] = useState(10)
     const [pageLimBuyer, setPageLimBuyer] = useState(0)
     const [pageLimTraveler, setPageLimTraveler] = useState(0)
 
@@ -375,7 +375,8 @@ const [bdelivery, setBdelivery] = useState(false)
           Authorization: `Bearer ${user.token}`
         }}
 
-    await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=10`, config)
+        if(Math.ceil(totTraveler/10) >= pageTraveler){
+        await axios.get(`http://143.198.168.244/api/travels?page=${pageTraveler}&limit=10`, config)
         .then((data, total) => {
           
           console.log("tttttttttttttttt:", data.data.data)
@@ -391,23 +392,25 @@ const [bdelivery, setBdelivery] = useState(false)
         .catch((err) => {
          setT(null)
         });
+      }
      
-        await axios.get(`http://143.198.168.244/api/buyers?page=${pageBuyer}&limit=10`, config)
-        .then((data, total) => {
-         setB(data.data.data)
-         //setPageBuyer(pageBuyer + 1)
-         if(buyerTotal.length < data.data.total){
-          setBuyerTotal([...buyerTotal, ...data.data.data])
-         }
-         setTotBuyer(data.data.total)
-         setPageLimBuyer(Math.ceil(data.data.total/10))
-         //alert(buyerTotal.length)
-         })
-        .catch((err) => {
-          setB(null)
-        });
-
-
+        if(Math.ceil(totBuyer/10) >= pageBuyer){
+          await axios.get(`http://143.198.168.244/api/buyers?page=${pageBuyer}&limit=10`, config)
+          .then((data, total) => {
+           setB(data.data.data)
+           //setPageBuyer(pageBuyer + 1)
+           if(buyerTotal.length < data.data.total){
+            setBuyerTotal([...buyerTotal, ...data.data.data])
+           }
+           setTotBuyer(data.data.total)
+           setPageLimBuyer(Math.ceil(data.data.total/10))
+           //alert(buyerTotal.length)
+           })
+          .catch((err) => {
+            setB(null)
+          });
+        }
+       
         setLoadingBuyer(false)
         setLoadingTraveler(false)
         setloading(false)
