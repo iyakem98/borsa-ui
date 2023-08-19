@@ -62,7 +62,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.Borsa",
+      "package": "com.borsa",
       "versionCode": 13
     },
     "web": {
