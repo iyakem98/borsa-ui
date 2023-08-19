@@ -47,7 +47,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.borsa",
@@ -62,7 +64,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.Borsa",
+      "package": "com.borsa",
       "versionCode": 12
     },
     "web": {
@@ -70,7 +72,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ffb19752-c430-4a49-9393-6bfc2721b436"
+        "projectId": "4a9ba445-a045-41d6-9466-945a8d373b0f"
       }
     }
   }
