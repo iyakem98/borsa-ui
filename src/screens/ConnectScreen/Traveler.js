@@ -711,7 +711,7 @@ const styles = StyleSheet.create({
     bottomWrapper: {
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center",
+        //alignItems: "center",
         marginBottom: 10,
         paddingHorizontal: 10,
     },

@@ -462,7 +462,7 @@ const Buyer = ({ item, onPress }) => {
                 <>{`${locationDeparture[0]}, ${locationDeparture[1]}`}</>
               ) : (
                 locationDeparture[0]
-              )}
+              )} 
             </Text>
           </View>
           <View style={styles.horizontal}>
