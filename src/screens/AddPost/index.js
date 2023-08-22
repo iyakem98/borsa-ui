@@ -62,8 +62,8 @@ const AddPost = ({ navigation }) => {
     // console.log("=======", data.data)
     if (data.data.length > 0) {
       Alert.alert(
-        "Already a Traveler",
-        "Do you want to delete your previous traveler card and add a new one?",
+        "You already have an active traveling card",
+        "Do you want to delete your current card and add a new one?",
         [
           {
             text: "OK",

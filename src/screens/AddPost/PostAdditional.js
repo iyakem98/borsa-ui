@@ -316,11 +316,12 @@ const Description = ({ navigation }) => {
                 backgroundColor: "#5f43b2",
                 paddingVertical: 15,
                 borderRadius: 5,
-                marginBottom: 25,
+                marginTop: '61%',
+                //marginBottom: "16%",
                 width: "100%",
-                position: "absolute",
-                bottom: 0,
-                left: 15,
+                //position: "absolute",
+                // /bottom: 0,
+                //left: 15,
               }}
               onPress={async () => {
                 setIsLoading(true);
@@ -478,14 +479,15 @@ const Description = ({ navigation }) => {
               style={{
                 //backgroundColor: "#13b955",
                 //backgroundColor: "#514590",
-                backgroundColor: '#5f43b2',
+                backgroundColor: "#5f43b2",
                 paddingVertical: 15,
                 borderRadius: 5,
-                marginBottom: 25,
+                //marginBottom: 25,
+                marginTop: "124%",
                 width: "100%",
-                position: "absolute",
-                bottom: 20,
-                left: 15,
+                //position: "absolute",
+                //bottom: 20,
+                //left: 15,
               }}
               onPress={() => postTraveler()}
             >

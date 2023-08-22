@@ -373,7 +373,8 @@ const FromTo = ({navigation}) => {
                     backgroundColor: "#5f43b2",
                     paddingVertical: 15,
                     borderRadius: 5,
-                    marginTop: showExpiryDate? "60%" : "68%",
+                    //marginTop: showExpiryDate? "60%" : "68%",
+                    marginTop: "79%",
                     //marginBottom: 25,
                     width: "100%",
                     //position: "absolute",
@@ -611,7 +612,7 @@ const FromTo = ({navigation}) => {
                     //position: "absolute",
                     bottom: 0,
                     //left: 15
-                    marginTop: "75%",
+                    marginTop: "83%",
                 }}
                 onPress={()=>
                     {
