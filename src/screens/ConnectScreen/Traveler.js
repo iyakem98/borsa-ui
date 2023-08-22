@@ -406,7 +406,7 @@ const TravelerChat = async(travData) => {
                     )}
                     {item?.isLuggageSpaceFull ? (
                          <View style = {{
-                            backgroundColor: '#13b955', 
+                            //backgroundColor: '#13b955', 
                             backgroundColor:'#fc3939',
                             padding: 2,
                             paddingHorizontal: 8,

@@ -136,6 +136,7 @@ const Buyer = ({ item, onPress }) => {
   const navigation = useNavigation();
   const [showModal, setshowModal] = useState(false);
   const [modal, setModal] = useState(false);
+  const [descriptionModal, setDescriptionModal] = useState(false)
 
   const getImageSourceById = (id) => {
     const item = data.find((item) => item.id === id);
@@ -348,6 +349,15 @@ const Buyer = ({ item, onPress }) => {
     }
   };
 
+  const descriptionPlus = () => {
+    setDescriptionModal(!descriptionModal)
+    setTimeout(() => {
+      setDescriptionModal(false);
+    }, 10000); // 10000 milliseconds (10 seconds)
+  }
+ 
+
+
   return (
     <>
       <Pressable
@@ -370,15 +380,39 @@ const Buyer = ({ item, onPress }) => {
               <AntDesign name="gift" size={30} color="#555" />
             </View>
             <View>
+              <View style = {{
+                flexDirection: 'row',
+                alignItems: 'center'
+              }}>
               <Text
                 style={{
                   fontSize: 18,
                   fontFamily: "Poppins_500Medium",
-                  marginTop: 3
+                  marginTop: 3,
                 }}
               >
                 {item.item[0]}
               </Text>
+              
+              {buyer.description && 
+                    <Pressable onPress={descriptionPlus}
+                      style = {{
+                        //paddingVertical: 5,
+                        //backgroundColor: '#f5f5f5',
+                      // marginTop: 10,
+                      marginLeft: 3,
+                      }}>
+                        {descriptionModal? (
+                          <MaterialCommunityIcons name="arrow-collapse" size={20} color="#5f43b2" />
+                        ): (
+                          <AntDesign name="infocirlceo" size={20} color="#5f43b2" />
+                        )}
+                      
+                    </Pressable>
+                  }
+
+              </View>
+             
               {/* <Pressable onPress={()=>navigation.navigate("Profile", {
                     theUser: item?.user
                 })}>
@@ -568,7 +602,7 @@ const Buyer = ({ item, onPress }) => {
               borderStyle: 'solid',
               borderWidth: 0,
               borderRadius: 8,
-              borderColor: '#5f43b2',
+              //borderColor: '#5f43b2',
               backgroundColor: '#5f43b2',
             }}
             onPress={() => {
@@ -587,112 +621,22 @@ const Buyer = ({ item, onPress }) => {
             </Text>
           </Pressable>
         </View>
-        {showModal && (
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modal}
-            onRequestClose={() => {
-              console.log("Modal has been closed.");
-              setModal(false);
-              setshowModal(false);
-            }}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <View
-                  style={{
-                    marginTop: 10,
-                    fontSize: 20,
-                    fontWeight: 700,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                    }}
-                  >
-                    {buyer.user.firstName + " " + buyer.user.lastName}
-                  </Text>
-                </View>
-
-                {/*  <View style={{
-                        marginTop:10,
-                        fontSize:18,
-                        // display:"flex",
-                        // flex: 1,
-                        flexDirection:"row"
-                    }}> */}
-                {/* <Ionicons name="location" size={20} color="black" /> */}
-                {/* <Text> &nbsp; &nbsp; {buyer.user.address}</Text> */}
-                {/*<Text>{buyer.user.address}</Text> 
-                    </View> */}
-
-                <View
-                  style={{
-                    marginTop: 10,
-                    fontSize: 18,
-                    // display:"flex",
-                    // flex: 1,
-                    flexDirection: "row",
-                  }}
-                >
-                  <Foundation name="shopping-bag" size={30} color="black" />
-                  {/* <Text> &nbsp; &nbsp; {buyer.item}</Text> */}
-                  <Text
-                    style={{
-                      fontSize: 22,
-                    }}
-                  >
-                    {buyer.item}
-                  </Text>
-                </View>
-
-                {/*  <View style={{
-                        marginTop:10,
-                        fontSize:18,
-                        // display:"flex",
-                        // flex: 1,
-                        flexDirection:"row"
-                    }}> */}
-                {/* <MaterialCommunityIcons name="weight-kilogram" size={20} color="black" />
-                         {/* <Text> &nbsp; &nbsp; {buyer.TotalWeight}</Text> */}
-                {/* <Text>{buyer.TotalWeight}</Text>
-                    </View> */}
-
-                <View
-                  style={{
-                    marginTop: 10,
-                    fontSize: 18,
-                    // display:"flex",
-                    // flex: 1,
-                    flexDirection: "row",
-                  }}
-                >
-                  <MaterialIcons
-                    name="pending-actions"
-                    size={30}
-                    color="black"
-                  />
-                  {/* <Text> &nbsp; &nbsp; {buyer.status}</Text> */}
-                  <Text
-                    style={{
-                      fontSize: 22,
-                    }}
-                  >
-                    {buyer.status}
-                  </Text>
-                </View>
-
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModal(false)}
-                >
-                  <Text style={styles.textStyle}>&times;</Text>
-                </Pressable>
-              </View>
-            </View>
-          </Modal>
+        {descriptionModal && (
+         <View style = {{
+          paddingVertical: 6,
+          paddingHorizontal: 3,
+         }}>
+          <Text style = {{
+            fontFamily: "Poppins_500Medium",
+          }}>
+            Extra Note:  
+            <Text style = {{
+              fontFamily: 'Poppins_400Regular'
+            }}>
+              {" "}{buyer.description}
+            </Text>
+          </Text>
+         </View>
         )}
       </Pressable>
     </>
