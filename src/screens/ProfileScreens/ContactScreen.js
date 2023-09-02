@@ -40,6 +40,7 @@ import { useNavigation } from "@react-navigation/native";
     const { user } = useSelector((state) => state.auth);
     const navigation = useNavigation();
     const HandleSubmit = async () => {
+      if(fullName && email && message){
       try {
         const config = {
           headers: {
@@ -71,6 +72,7 @@ import { useNavigation } from "@react-navigation/native";
       } catch (err) {
         console.log(err);
       }
+    }
     };
     // if (loading) {
     //   return (
@@ -264,6 +266,7 @@ import { useNavigation } from "@react-navigation/native";
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <TextInput
                     label="Name"
+                    error={!fullName && true}
                     value={fullName}
                     onChangeText={text => setFullName(text)}
                     mode="outlined"
@@ -284,6 +287,7 @@ import { useNavigation } from "@react-navigation/native";
                 <TextInput
                   label="Email"
                   value={email}
+                  error={!email && true}
                   onChangeText={text => setEmail(text)}
                   mode="outlined"
                   style={{
@@ -302,6 +306,7 @@ import { useNavigation } from "@react-navigation/native";
                   <TextInput
                     label="Feedback"
                     value={message}
+                    error={!message && true}
                     onChangeText={text => setMessage(text)}
                     mode="outlined"
                     style={{
