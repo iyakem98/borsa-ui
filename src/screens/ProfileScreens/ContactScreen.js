@@ -13,6 +13,7 @@ import {
     Keyboard,
     Alert,
      Modal,
+     Linking
 
   } from "react-native";
   import { MaterialIcons, Entypo } from "@expo/vector-icons";
@@ -171,6 +172,9 @@ import { useNavigation } from "@react-navigation/native";
                     }}
                   >
                     <MaterialIcons name="email" size={17} color="white" />
+                    <Pressable 
+                    onPress={()=>Linking.openURL('mailto:info@borsa.world')}
+                    >
                     <Text
                       style={{
                         color: "white",
@@ -180,6 +184,7 @@ import { useNavigation } from "@react-navigation/native";
                     >
                       info@borsa.world
                     </Text>
+                    </Pressable>
                   </View>
   
                   <View
@@ -188,6 +193,9 @@ import { useNavigation } from "@react-navigation/native";
                     }}
                   >
                     <Entypo name="phone" size={17} color="white" />
+                    <Pressable 
+                    onPress={()=>Linking.openURL('tel:+1(310) 351-5957')}
+                    >
                     <Text
                       style={{
                         color: "white",
@@ -196,6 +204,7 @@ import { useNavigation } from "@react-navigation/native";
                     >
                       +1(310) 351-5957
                     </Text>
+                    </Pressable>
                   </View>
                 </View>
   
