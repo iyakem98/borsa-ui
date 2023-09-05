@@ -359,7 +359,6 @@ const handleVerify = async () => {
           value={confirmUserPassword}
           onChangeText={text => setConfirmUserPassword(text)}
           mode="outlined"
-          secureTextEntry={true}
           style={{
             // paddingVertical: 5
           }}
