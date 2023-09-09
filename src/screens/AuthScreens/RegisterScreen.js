@@ -1,30 +1,40 @@
+import {
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Pressable,
+  TouchableHighlight,
+  ScrollView,
+  TouchableOpacity,
+  Modal,
+  Dimensions,
+} from "react-native";
+import { AntDesign, Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../features/auth/authSlice";
+import { login } from "../../features/auth/authSlice";
+import { reset } from "../../features/chat/chatSlice";
+import axios from "axios";
+import { API_BASE_URL } from "../../utils/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Header from "../../components/Shared/Header";
+import LottieView from "lottie-react-native";
+import { Checkbox, TextInput } from "react-native-paper";
 
-import {View, Text, ImageBackground, Image, SafeAreaView, StyleSheet, Pressable, TouchableHighlight, ScrollView, TouchableOpacity, Modal, Dimensions} from 'react-native'
-import { AntDesign, Entypo } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../../features/auth/authSlice';
-import { login } from '../../features/auth/authSlice';
-import { reset } from '../../features/chat/chatSlice';
-import axios from 'axios';
-import { API_BASE_URL } from '../../utils/config';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Header from '../../components/Shared/Header';
-import LottieView  from 'lottie-react-native';
-import { Checkbox, TextInput } from 'react-native-paper';
+const windowHeight = Dimensions.get("window").height;
 
-const windowHeight = Dimensions.get("window").height
-
-
-const RegisterScreen = ({navigation}) => {
-
-  const [signUp, setSignUp] = useState(true)
+const RegisterScreen = ({ navigation }) => {
+  const [signUp, setSignUp] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [userFullName, setUserFullName] = useState("")
+  const [userFullName, setUserFullName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(false);
   const [userEmailError, setUserEmailError] = useState("");
   const [userPasswordError, setUserPasswordError] = useState("");
 
@@ -33,266 +43,287 @@ const RegisterScreen = ({navigation}) => {
   const [userName, setuserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordAgain, setPasswordAgain] = useState("")
+  const [passwordAgain, setPasswordAgain] = useState("");
   const [isTraveler, setIsTraveler] = useState(false);
-  const [profilePic, setProfilePic] = useState("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211");
+  const [profilePic, setProfilePic] = useState(
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Male_Avatar.jpg/800px-Male_Avatar.jpg?20201202061211"
+  );
   const [city, setCity] = useState();
   const [country, setCountry] = useState();
   const dispatch = useDispatch();
-  const [visibility, setVisibility] = useState(true)
-  const [secureText, setSecureText] = useState(true)
-  const [passwordError, setPasswordError] = useState("")
-  const { user } = useSelector((state) => state.auth)
-  const [registerForm, setRegisterForm] = useState("")
-  const [verifyForm, setVerifyForm] = useState("none")
-  const [confirm, setConfirm] = useState("")
-  const [mailedTo, setMailedTo] = useState("")
-  const [confirmUserPassword, setConfirmUserPassword] = useState("")
-  let registerUserData = null
+  const [visibility, setVisibility] = useState(true);
+  const [secureText, setSecureText] = useState(true);
+  const [passwordError, setPasswordError] = useState("");
+  const { user } = useSelector((state) => state.auth);
+  const [registerForm, setRegisterForm] = useState("");
+  const [verifyForm, setVerifyForm] = useState("none");
+  const [confirm, setConfirm] = useState("");
+  const [mailedTo, setMailedTo] = useState("");
+  const [confirmUserPassword, setConfirmUserPassword] = useState("");
+  let registerUserData = null;
   const storeTokenOnLocal = async (t) => {
-    try{
-      let msgs =  await AsyncStorage.setItem(`myToken`, t)
-      
-      console.log("-=-=--=", t)
-     
-      console.log("gott", await AsyncStorage.getItem('myToken'))
+    try {
+      let msgs = await AsyncStorage.setItem(`myToken`, t);
 
-    } catch(error){
-      console.log("errorr", error)
+      console.log("-=-=--=", t);
+
+      console.log("gott", await AsyncStorage.getItem("myToken"));
+    } catch (error) {
+      console.log("errorr", error);
     }
-  }
+  };
   const handleUserData = async (value) => {
     try {
       dispatch(login(value));
-      const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem('@user_data', jsonValue)
-      storeTokenOnLocal(value.token)
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("@user_data", jsonValue);
+      storeTokenOnLocal(value.token);
     } catch (e) {
       // saving error
     }
-  }
+  };
 
   function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  const handleLogin = async() => {
-    setUserPasswordError("")
-    setIsLoading(true)
-    const userName = userFullName.split(" ")
-    console.log(userName)
-    if(firstName.length < 1) {
-      setUserPasswordError("You have to provide first name")
-    } 
-    else if(lastName.length < 1) {
-      setUserPasswordError("You have to provide last name")
-    } 
-    else if (userPassword !== confirmUserPassword) {
-      setUserPasswordError("Passwords do not match")
-    }
-    else if(checked && firstName.length > 0 && lastName.length > 0) {
+  const handleLogin = async () => {
+    setUserPasswordError("");
+    setIsLoading(true);
+    const userName = userFullName.split(" ");
+    console.log(userName);
+    if (firstName.length < 1) {
+      setUserPasswordError("You have to provide first name");
+    } else if (lastName.length < 1) {
+      setUserPasswordError("You have to provide last name");
+    } else if (userPassword !== confirmUserPassword) {
+      setUserPasswordError("Passwords do not match");
+    } else if (checked && firstName.length > 0 && lastName.length > 0) {
       try {
         //const capitalizedFirstName = capitalizeFirstLetter(userName[0]);
         //const capitalizedLastName = capitalizeFirstLetter(userName[1]);;
 
-        const capitalizedFirstName = capitalizeFirstLetter(firstName)
-        const capitalizedLastName = capitalizeFirstLetter(lastName);;
+        const capitalizedFirstName = capitalizeFirstLetter(firstName);
+        const capitalizedLastName = capitalizeFirstLetter(lastName);
 
-        const res = await axios.post('http://143.198.168.244/api/users', {
+        const res = await axios.post("http://143.198.168.244/api/users", {
           firstName: capitalizedFirstName,
           lastName: capitalizedLastName,
           email: userEmail.toLowerCase(),
-          password: userPassword
+          password: userPassword,
         });
         console.log(res.data);
         await handleUserData(res.data);
-      } catch(e) {
-        console.log("------------", e)
-        console.log("------------", e?.response?.data?.message)
-        if(e?.response?.data?.message === "Invalid email or password") {
-          setUserPasswordError("Invalid email or password")
-        } else if(e?.response?.data?.message === "User already exists") {
-          setUserPasswordError("Email already exists")
-        } else if(e?.response?.data?.message === "Username Taken! put in another one") {
-          setUserPasswordError("Username already taken")
+      } catch (e) {
+        console.log("------------", e);
+        console.log("------------", e?.response?.data?.message);
+        if (e?.response?.data?.message === "Invalid email or password") {
+          setUserPasswordError("Invalid email or password");
+        } else if (e?.response?.data?.message === "User already exists") {
+          setUserPasswordError("Email already exists");
+        } else if (
+          e?.response?.data?.message === "Username Taken! put in another one"
+        ) {
+          setUserPasswordError("Username already taken");
         } else {
-          setUserPasswordError("Something Went Wrong")
+          setUserPasswordError("Something Went Wrong");
         }
       }
     } else {
-      setUserPasswordError("You have to Check the Checkbox")
+      setUserPasswordError("You have to Check the Checkbox");
     }
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
-  const Icon = <Pressable onPress={() => {
-    setVisibility(!visibility)
-    setSecureText(!secureText)
-  }}>
-                <Entypo name={visibility ? "eye" : "eye-with-line"} size={24} color="black" style = {{
-                    marginTop: 7,
-                  }} />
-              </Pressable>
+  const Icon = (
+    <Pressable
+      onPress={() => {
+        setVisibility(!visibility);
+        setSecureText(!secureText);
+      }}
+    >
+      <Entypo
+        name={visibility ? "eye" : "eye-with-line"}
+        size={24}
+        color="black"
+        style={{
+          marginTop: 7,
+        }}
+      />
+    </Pressable>
+  );
   const checkValidation = (text) => {
-     setPasswordAgain(text)
-     if(password !== passwordAgain){
-      setPasswordError("passwords do not match ")
+    setPasswordAgain(text);
+    if (password !== passwordAgain) {
+      setPasswordError("passwords do not match ");
+    } else {
+      setPasswordError("");
+    }
+  };
 
-     }
-     else{
-      setPasswordError("")
-     }
-  }
-
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false);
   const handleSubmit = async () => {
-    if (  firstName === '' || lastName === '' || userName === ''  || email === '' || password === '' || country === '' ||  city === '') {
-        alert("All fields are required");
-        return;
-    }
-    if(password != passwordAgain){
-      // setPasswordError("error in matching passwords")
-      alert("passwords do not match")
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      userName === "" ||
+      email === "" ||
+      password === "" ||
+      country === "" ||
+      city === ""
+    ) {
+      alert("All fields are required");
       return;
     }
-    if(password.length < 8){
+    if (password != passwordAgain) {
       // setPasswordError("error in matching passwords")
-      alert("your password should be at least greater than eight characters")
+      alert("passwords do not match");
       return;
     }
-    
-   if(firstName && lastName && userName && email && password &&country && city && password==passwordAgain && password.length>7){
-    setSignUp(false)
-    let userData = {
-      firstName,
-      lastName,
-      email,
-      password,
-      userName,
-      isTraveler,
-      profilePic,
-      city,
-      country
+    if (password.length < 8) {
+      // setPasswordError("error in matching passwords")
+      alert("your password should be at least greater than eight characters");
+      return;
     }
-    console.log(userData)
-  try{
-    const {data} =   await axios.post(`${API_BASE_URL}users/`, userData)
-    await AsyncStorage.setItem('cre', JSON.stringify(data))
-    
-    
-    // console.log(registerUserData)
-    // alert('123')
-    // dispatch(register(data))
 
-  //   setTimeout(() => {
-  //     // Code to run after the pause
-      
-  // }, 5000);
-    // await AsyncStorage.setItem('user', JSON.stringify(data))
-    // console.log(user)
-    setMailedTo(data._id)
-    setModalVisible(true)
-    setSignUp(false)
-  }
-  catch(err){
-    console.log("error is", err)
-    alert("Something went wrong try again!")
-  }
-  // axios.post(`${API_BASE_URL}users/`, userData)
-  //     .then((data) => {
-  //     // await AsyncStorage.setItem('user', JSON.stringify(data.data))
-  //       // const user1 = await AsyncStorage.getItem('user')
-  //       dispatch(register(data.data))
-  //       console.log(user)
-  //     setMailedTo(data.data._id)
-  //      setModalVisible(true)
-  //      })
-  //     .catch((err) => {
-  //       console.log("error is", err)
-  //       alert("Something went wrong try again!")
-  //     });
+    if (
+      firstName &&
+      lastName &&
+      userName &&
+      email &&
+      password &&
+      country &&
+      city &&
+      password == passwordAgain &&
+      password.length > 7
+    ) {
+      setSignUp(false);
+      let userData = {
+        firstName,
+        lastName,
+        email,
+        password,
+        userName,
+        isTraveler,
+        profilePic,
+        city,
+        country,
+      };
+      console.log(userData);
+      try {
+        const { data } = await axios.post(`${API_BASE_URL}users/`, userData);
+        await AsyncStorage.setItem("cre", JSON.stringify(data));
 
-  //     setSignUp(false)
-   } 
-   
-   
+        // console.log(registerUserData)
+        // alert('123')
+        // dispatch(register(data))
 
+        //   setTimeout(() => {
+        //     // Code to run after the pause
+
+        // }, 5000);
+        // await AsyncStorage.setItem('user', JSON.stringify(data))
+        // console.log(user)
+        setMailedTo(data._id);
+        setModalVisible(true);
+        setSignUp(false);
+      } catch (err) {
+        console.log("error is", err);
+        alert("Something went wrong try again!");
+      }
+      // axios.post(`${API_BASE_URL}users/`, userData)
+      //     .then((data) => {
+      //     // await AsyncStorage.setItem('user', JSON.stringify(data.data))
+      //       // const user1 = await AsyncStorage.getItem('user')
+      //       dispatch(register(data.data))
+      //       console.log(user)
+      //     setMailedTo(data.data._id)
+      //      setModalVisible(true)
+      //      })
+      //     .catch((err) => {
+      //       console.log("error is", err)
+      //       alert("Something went wrong try again!")
+      //     });
+
+      //     setSignUp(false)
+    }
 
     // setRegisterForm("none")
     // setVerifyForm("")
     // alert("Sign In Successful");
     // navigate.navigate("Verifyyy")
+  };
 
-};
+  const handleVerify = async () => {
+    let data = {
+      userId: mailedTo,
+      otp: confirm,
+    };
 
-const handleVerify = async () => {
-  let data = {
-    userId: mailedTo,
-    otp: confirm
-  }
+    axios
+      .post(`${API_BASE_URL}users/verify-email`, data)
+      .then(async (data) => {
+        let userData = {
+          firstName,
+          lastName,
+          email,
+          password,
+          userName,
+          isTraveler,
+          profilePic,
+          city,
+          country,
+        };
 
-  axios.post(`${API_BASE_URL}users/verify-email`, data)
-        .then(async(data) => {
-          
-    let userData = {
-      firstName,
-      lastName,
-      email,
-      password,
-      userName,
-      isTraveler,
-      profilePic,
-      city,
-      country
-
-    }
-   
-   
-      alert("Verified. Press OK to continue!")
-      const registerUser1 = await AsyncStorage.getItem('cre')
-      const registerUser =  JSON.parse(registerUser1)
-      console.log(registerUser)
-      dispatch(register(registerUser)) 
-      // dispatch(login(userData))
-      navigate.navigate('Chats')
-   
-
-         })
-        .catch((err) => {
-          console.log("error is", err)
-          alert("Invalid otp!")
-        });
-
- 
-}
+        alert("Verified. Press OK to continue!");
+        const registerUser1 = await AsyncStorage.getItem("cre");
+        const registerUser = JSON.parse(registerUser1);
+        console.log(registerUser);
+        dispatch(register(registerUser));
+        // dispatch(login(userData))
+        navigate.navigate("Chats");
+      })
+      .catch((err) => {
+        console.log("error is", err);
+        alert("Invalid otp!");
+      });
+  };
 
   return (
-    <SafeAreaView style={{
-      flex: 1,
-      backgroundColor: "#fff"
-    }}>
-      <ScrollView contentContainerStyle={{
-        paddingHorizontal: 15,
-        paddingTop: 60,
-        flexGrow: 1,
-      }}>
-        <Text style={{
-          fontFamily: "Poppins_600SemiBold",
-          fontSize: 30
-        }}>
+    <View
+      style={{
+        height: windowHeight,
+        backgroundColor: "#fff",
+      }}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 15,
+          paddingTop: 60,
+          flexGrow: 1,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "Poppins_600SemiBold",
+            fontSize: 30,
+          }}
+        >
           Create an Account
         </Text>
-        <Text style={{
-          fontFamily: "Poppins_400Regular",
-          fontSize: 14,
-        }}>
+        <Text
+          style={{
+            fontFamily: "Poppins_400Regular",
+            fontSize: 14,
+          }}
+        >
           Create an account to start using Borsa
         </Text>
         <View>
           <TextInput
             label="First Name"
             value={firstName}
-            onChangeText={text => setFirstName(text.trim())}
+            onChangeText={(text) => setFirstName(text.trim())}
             mode="outlined"
             style={{
               marginTop: 15,
@@ -303,12 +334,12 @@ const handleVerify = async () => {
             outlineStyle={{
               backgroundColor: "#fff",
             }}
-            placeholderTextColor= "#eee"
+            placeholderTextColor="#eee"
           />
           <TextInput
             label="Last Name"
             value={lastName}
-            onChangeText={text => setLastName(text.trim())}
+            onChangeText={(text) => setLastName(text.trim())}
             mode="outlined"
             style={{
               //marginTop: 15,
@@ -319,14 +350,14 @@ const handleVerify = async () => {
             outlineStyle={{
               backgroundColor: "#fff",
             }}
-            placeholderTextColor= "#eee"
+            placeholderTextColor="#eee"
           />
         </View>
-       
+
         <TextInput
           label="Email"
           value={userEmail}
-          onChangeText={text => setUserEmail(text.toLowerCase())}
+          onChangeText={(text) => setUserEmail(text.toLowerCase())}
           mode="outlined"
           style={{
             marginBottom: 13,
@@ -336,13 +367,13 @@ const handleVerify = async () => {
           outlineStyle={{
             backgroundColor: "#fff",
           }}
-          placeholderTextColor= "#eee"
+          placeholderTextColor="#eee"
         />
         <TextInput
           label="Password"
           secureTextEntry={true}
           value={userPassword}
-          onChangeText={text => setUserPassword(text)}
+          onChangeText={(text) => setUserPassword(text)}
           mode="outlined"
           secureTextEntry={true}
           style={{
@@ -357,145 +388,175 @@ const handleVerify = async () => {
           label="Confirm Password"
           secureTextEntry={true}
           value={confirmUserPassword}
-          onChangeText={text => setConfirmUserPassword(text)}
+          onChangeText={(text) => setConfirmUserPassword(text)}
           mode="outlined"
           secureTextEntry={true}
-          style={{
-            // paddingVertical: 5
-          }}
+          style={
+            {
+              // paddingVertical: 5
+            }
+          }
           error={userPasswordError}
           outlineStyle={{
             backgroundColor: "#fff",
           }}
         />
         {userPasswordError ? (
-          <Text style={{
-            marginTop: 10,
-            textAlign: "center",
-            color: "red",
-            fontFamily: "Poppins_400Regular",
-            fontSize: 13
-          }}>
+          <Text
+            style={{
+              marginTop: 10,
+              textAlign: "center",
+              color: "red",
+              fontFamily: "Poppins_400Regular",
+              fontSize: 13,
+            }}
+          >
             {userPasswordError}
           </Text>
-        ) : (null)}
-        <View style={{
-          flexDirection: "row",
-          marginTop: 20,
-          width: "100%",
-          // backgroundColor: "#eee"
-        }}>
-
+        ) : null}
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 20,
+            width: "100%",
+            // backgroundColor: "#eee"
+          }}
+        >
           <View>
-            <View style = {{
-            marginRight: 8,
-            borderStyle:'solid',
-            borderWidth: 0.9,
-            borderRadius: 50,
-          }}>
-
-            <Checkbox
-            status={checked ? 'checked' : 'unchecked'}
-            onPress={() => {
-              setChecked(!checked);
-            }}
-
-            color="#514590"
-            style={{
-              width: 80,
-              backgroundColor: "#eee",
-            }}
-          />
-              
+            <View
+              style={{
+                marginRight: 8,
+                borderStyle: "solid",
+                borderWidth: 0.9,
+                borderRadius: 50,
+              }}
+            >
+              <Checkbox
+                status={checked ? "checked" : "unchecked"}
+                onPress={() => {
+                  setChecked(!checked);
+                }}
+                color="#514590"
+                style={{
+                  width: 80,
+                  backgroundColor: "#eee",
+                }}
+              />
             </View>
-          
-
           </View>
-        
-          <View style={{
-            flex: 1
-          }}>
-            <Text style={{
-              position: "relative",
-              fontFamily: "Poppins_400Regular",
-              fontSize: 13
-            }}>
-              I intend to become a registered user of {" "}
-              <Text style={{
-                color: "#514590",
-                fontFamily: "Poppins_500Medium",
-                //textDecorationLine: "underline"
-              }} onPress={()=>{
-                // console.log("========")
-              }}>Borsa,</Text>
-              {" "}and I have reviewed and agreed to the{" "}
-              <Text style={{
-                color: "#514590",
-                fontFamily: "Poppins_500Medium",
-                //textDecorationLine: "underline"
-              }} onPress={()=> navigation.navigate('Terms & Conditions')} >Terms and Conditions.</Text>
+
+          <View
+            style={{
+              flex: 1,
+            }}
+          >
+            <Text
+              style={{
+                position: "relative",
+                fontFamily: "Poppins_400Regular",
+                fontSize: 13,
+              }}
+            >
+              I intend to become a registered user of{" "}
+              <Text
+                style={{
+                  color: "#514590",
+                  fontFamily: "Poppins_500Medium",
+                  //textDecorationLine: "underline"
+                }}
+                onPress={() => {
+                  // console.log("========")
+                }}
+              >
+                Borsa,
+              </Text>{" "}
+              and I have reviewed and agreed to the{" "}
+              <Text
+                style={{
+                  color: "#514590",
+                  fontFamily: "Poppins_500Medium",
+                  //textDecorationLine: "underline"
+                }}
+                onPress={() => navigation.navigate("Terms & Conditions")}
+              >
+                Terms and Conditions.
+              </Text>
             </Text>
           </View>
         </View>
-        <View style={{
+        <View
+          style={{
             position: "absolute",
             width: "100%",
             bottom: 20,
             left: 15,
-        }}>
-          {isLoading? (
-
-                <LottieView
-                style={{
-
-                  height: 150,
-                  left: "15%",
-                  right: '20%',
-                  bottom: '5%',
-                
-                }}
-                source={require('../../assets/loader.json')}
-
-                autoPlay
-                loop
-                />
+          }}
+        >
+          {isLoading ? (
+            <LottieView
+              style={{
+                height: 150,
+                left: "15%",
+                right: "20%",
+                bottom: "5%",
+              }}
+              source={require("../../assets/loader.json")}
+              autoPlay
+              loop
+            />
           ) : (
-            <Pressable style={{
-              //backgroundColor: "#514590",
-              backgroundColor: '#5f43b2',
-              paddingVertical: 15,
-              borderRadius: 5,
-              marginBottom: 25, 
-              width: "100%"
-            }} onPress={handleLogin}>
-              <Text style={{
+            <Pressable
+              style={{
+                //backgroundColor: "#514590",
+                backgroundColor: "#5f43b2",
+                paddingVertical: 15,
+                borderRadius: 5,
+                marginBottom: 25,
+                width: "100%",
+              }}
+              onPress={handleLogin}
+            >
+              <Text
+                style={{
                   color: "#fff",
                   fontFamily: "Poppins_400Regular",
                   fontSize: 14,
-                  textAlign: "center"
-              }}>{isLoading ? "Loading ..." : "Continue"}</Text>
+                  textAlign: "center",
+                }}
+              >
+                {isLoading ? "Loading ..." : "Continue"}
+              </Text>
             </Pressable>
-            
           )}
-          <View style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center"
-          }}>
-            <Text style={{
-              fontFamily: "Poppins_400Regular"
-            }}>I already have an account. </Text>
-            <Pressable onPress={()=> navigation.navigate('Login')}>
-              <Text style={{
-                fontFamily: "Poppins_600SemiBold",
-                color: "#514590",
-                textDecorationLine: "underline"
-              }}>Login</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Poppins_400Regular",
+              }}
+            >
+              I already have an account.{" "}
+            </Text>
+            <Pressable onPress={() => navigation.navigate("Login")}>
+              <Text
+                style={{
+                  fontFamily: "Poppins_600SemiBold",
+                  color: "#514590",
+                  textDecorationLine: "underline",
+                }}
+              >
+                Login
+              </Text>
             </Pressable>
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
     // <View style = {{
     //     height: "100%",
     //   }}>
@@ -505,26 +566,26 @@ const handleVerify = async () => {
     //         alignItems: 'center',
     //         justifyContent: 'center'
     //       }}>
-  
-    //           <Image 
-    //               source = {require ('../../data/logos/lwhiteclearbg.png')} 
+
+    //           <Image
+    //               source = {require ('../../data/logos/lwhiteclearbg.png')}
     //               style = {{
     //                   width: 80,
     //                   height: 130,
     //                   resizeMode: 'cover',
     //                   marginBottom: 10
     //               }}
-    //               />  
+    //               />
     //             <Text style = {{
     //               color: 'white',
     //               fontSize: 17,
     //             }}>
     //               Borsa
     //             </Text>
-  
+
     //       </View>
 
-    //       {/* {registerForm ? <ScrollView style = {{backgroundColor: 'white', 
+    //       {/* {registerForm ? <ScrollView style = {{backgroundColor: 'white',
     //       // display:`${registerForm}`
     //       }}>
     //       <View style = {{
@@ -548,7 +609,7 @@ const handleVerify = async () => {
     //                 borderColor: "lightgray",
     //                 fontSize: 18,
     //                 marginBottom: 16,
-  
+
     //               }}
     //               value={firstName}
     //                onChangeText={text => setFirstName(text)}
@@ -565,12 +626,11 @@ const handleVerify = async () => {
     //                 fontSize: 18,
     //                 marginBottom: 16,
 
-  
     //               }}
     //               value={lastName}
     //                onChangeText={text => setLastName(text)}
     //               />
-  
+
     //             </View>
     //             <TextInput placeholder='Enter your username'
     //               style = {{
@@ -582,9 +642,9 @@ const handleVerify = async () => {
     //                 borderColor: "lightgray",
     //                 fontSize: 18,
     //                 marginBottom: 8,
-  
+
     //               }}
-    //               value={userName} 
+    //               value={userName}
     //               onChangeText={text => setuserName(text)}
     //               />
     //             <TextInput placeholder='Enter your email'
@@ -597,13 +657,13 @@ const handleVerify = async () => {
     //                 borderColor: "lightgray",
     //                 fontSize: 18,
     //                 marginBottom: 8,
-  
+
     //               }}
-    //               value={email} 
+    //               value={email}
     //               onChangeText={text => setEmail(text)}
     //                autoCompleteType="email" keyboardType="email-address"
     //               />
-  
+
     //             <View style = {{
     //               width: "85%",
     //               flexDirection: 'row',
@@ -612,24 +672,24 @@ const handleVerify = async () => {
     //               borderBottomWidth: StyleSheet.hairlineWidth,
     //               borderColor: "lightgray",
     //               marginVertical: 8,
-                  
+
     //             }}>
     //             <TextInput placeholder='Enter password'
     //               style = {{
     //                 width: '90%',
     //                 paddingHorizontal: 6,
     //                 paddingVertical: 8,
-                    
+
     //                 fontSize: 18
-  
+
     //               }}
-    //               value={password} 
-    //               onChangeText={text => setPassword(text)} 
-    //               secureTextEntry={secureText} 
+    //               value={password}
+    //               onChangeText={text => setPassword(text)}
+    //               secureTextEntry={secureText}
     //               />
     //               {Icon}
     //             </View>
-    //             <View 
+    //             <View
     //                 style = {{
     //                 width: "85%",
     //                 flexDirection: 'row',
@@ -638,28 +698,28 @@ const handleVerify = async () => {
     //                 borderBottomWidth: StyleSheet.hairlineWidth,
     //                 borderColor: "lightgray",
     //                 marginVertical: 8,
-                  
+
     //             }}>
     //             <TextInput placeholder='Confirm password'
     //               style = {{
     //                 width: '90%',
     //                 paddingHorizontal: 6,
     //                 paddingVertical: 8,
-                    
+
     //                 fontSize: 18
-  
+
     //               }}
-    //               value={passwordAgain} 
-                 
+    //               value={passwordAgain}
+
     //               onChangeText={(text) => {
-                   
+
     //                 setPasswordAgain(text)
-    //               }} 
+    //               }}
     //               secureTextEntry={secureText}
 
     //               />
     //                 {Icon}
-                
+
     //             </View>
     //             <TextInput placeholder='Enter your Country'
     //               style = {{
@@ -672,7 +732,7 @@ const handleVerify = async () => {
     //                 fontSize: 18,
     //                 marginVertical: 8,
     //               }}
-    //               value={country} 
+    //               value={country}
     //               onChangeText={text => setCountry(text)}
     //               />
     //             <TextInput placeholder='Enter your City'
@@ -686,7 +746,7 @@ const handleVerify = async () => {
     //                 fontSize: 18,
     //                 marginVertical: 8,
     //               }}
-    //               value={city} 
+    //               value={city}
     //               onChangeText={text => setCity(text)}
     //               />
 
@@ -695,7 +755,7 @@ const handleVerify = async () => {
     //                 width: "80%",
     //                 paddingHorizontal: 10,
     //                 paddingVertical: 10,
-                    
+
     //               }}>
     //                 <Text style = {{}}>
     //                     Upload profile pic
@@ -703,7 +763,7 @@ const handleVerify = async () => {
     //               </TouchableHighlight>
     //               <View>
     //               </View>
-                 
+
     //             <TouchableOpacity style = {{
     //               backgroundColor: '#13b955',
     //               width: "70%",
@@ -713,7 +773,7 @@ const handleVerify = async () => {
     //               alignItems: 'center',
     //               justifyContent: 'center',
     //               borderRadius: 5,
-  
+
     //               shadowColor: "000",
     //               shadowOffset: {
     //                   width: 0,
@@ -721,10 +781,10 @@ const handleVerify = async () => {
     //               },
     //               shadowOpacity: 0.28,
     //               shadowRadius: 3.00,
-  
+
     //               elevation: 1,
-  
-    //             }} 
+
+    //             }}
     //             onPress={() => handleSubmit()}>
     //               <Text style = {{
     //                 color: 'white',
@@ -738,8 +798,8 @@ const handleVerify = async () => {
     //             }}>
     //               Forgot password?
     //             </Text>
-  
-    //             <Pressable 
+
+    //             <Pressable
     //               onPress={() => navigate.navigate('Login')}
     //               style = {{
     //                 marginVertical: 30,
@@ -758,7 +818,7 @@ const handleVerify = async () => {
     //             </Pressable>
     //       </View>
     //       </ScrollView> : null} */}
-    //         <ScrollView style = {{backgroundColor: 'white', 
+    //         <ScrollView style = {{backgroundColor: 'white',
     //       // display:`${registerForm}`
     //       }}>
     //       <View style = {{
@@ -782,7 +842,7 @@ const handleVerify = async () => {
     //                 borderColor: "lightgray",
     //                 fontSize: 18,
     //                 marginBottom: 16,
-  
+
     //               }}
     //               value={firstName}
     //                onChangeText={text => setFirstName(text)}
@@ -799,12 +859,11 @@ const handleVerify = async () => {
     //                 fontSize: 18,
     //                 marginBottom: 16,
 
-  
     //               }}
     //               value={lastName}
     //                onChangeText={text => setLastName(text)}
     //               />
-  
+
     //             </View>
     //             <TextInput placeholder='Enter your username'
     //               style = {{
@@ -816,9 +875,9 @@ const handleVerify = async () => {
     //                 borderColor: "lightgray",
     //                 fontSize: 18,
     //                 marginBottom: 8,
-  
+
     //               }}
-    //               value={userName} 
+    //               value={userName}
     //               onChangeText={text => setuserName(text)}
     //               />
     //             <TextInput placeholder='Enter your email'
@@ -831,13 +890,13 @@ const handleVerify = async () => {
     //                 borderColor: "lightgray",
     //                 fontSize: 18,
     //                 marginBottom: 8,
-  
+
     //               }}
-    //               value={email} 
+    //               value={email}
     //               onChangeText={text => setEmail(text)}
     //                autoCompleteType="email" keyboardType="email-address"
     //               />
-  
+
     //             <View style = {{
     //               width: "85%",
     //               flexDirection: 'row',
@@ -846,24 +905,24 @@ const handleVerify = async () => {
     //               borderBottomWidth: StyleSheet.hairlineWidth,
     //               borderColor: "lightgray",
     //               marginVertical: 8,
-                  
+
     //             }}>
     //             <TextInput placeholder='Enter password'
     //               style = {{
     //                 width: '90%',
     //                 paddingHorizontal: 6,
     //                 paddingVertical: 8,
-                    
+
     //                 fontSize: 18
-  
+
     //               }}
-    //               value={password} 
-    //               onChangeText={text => setPassword(text)} 
-    //               secureTextEntry={secureText} 
+    //               value={password}
+    //               onChangeText={text => setPassword(text)}
+    //               secureTextEntry={secureText}
     //               />
     //               {Icon}
     //             </View>
-    //             <View 
+    //             <View
     //                 style = {{
     //                 width: "85%",
     //                 flexDirection: 'row',
@@ -872,28 +931,28 @@ const handleVerify = async () => {
     //                 borderBottomWidth: StyleSheet.hairlineWidth,
     //                 borderColor: "lightgray",
     //                 marginVertical: 8,
-                  
+
     //             }}>
     //             <TextInput placeholder='Confirm password'
     //               style = {{
     //                 width: '90%',
     //                 paddingHorizontal: 6,
     //                 paddingVertical: 8,
-                    
+
     //                 fontSize: 18
-  
+
     //               }}
-    //               value={passwordAgain} 
-                 
+    //               value={passwordAgain}
+
     //               onChangeText={(text) => {
-                   
+
     //                 setPasswordAgain(text)
-    //               }} 
+    //               }}
     //               secureTextEntry={secureText}
 
     //               />
     //                 {Icon}
-                
+
     //             </View>
     //             <TextInput placeholder='Enter your Country'
     //               style = {{
@@ -906,7 +965,7 @@ const handleVerify = async () => {
     //                 fontSize: 18,
     //                 marginVertical: 8,
     //               }}
-    //               value={country} 
+    //               value={country}
     //               onChangeText={text => setCountry(text)}
     //               />
     //             <TextInput placeholder='Enter your City'
@@ -920,7 +979,7 @@ const handleVerify = async () => {
     //                 fontSize: 18,
     //                 marginVertical: 8,
     //               }}
-    //               value={city} 
+    //               value={city}
     //               onChangeText={text => setCity(text)}
     //               />
 
@@ -929,7 +988,7 @@ const handleVerify = async () => {
     //                 width: "80%",
     //                 paddingHorizontal: 10,
     //                 paddingVertical: 10,
-                    
+
     //               }}>
     //                 <Text style = {{}}>
     //                     Upload profile pic
@@ -937,8 +996,7 @@ const handleVerify = async () => {
     //               </TouchableHighlight>
     //               <View>
     //               </View>
-               
-               
+
     //             <TouchableOpacity style = {{
     //               backgroundColor: '#13b955',
     //               width: "70%",
@@ -948,7 +1006,7 @@ const handleVerify = async () => {
     //               alignItems: 'center',
     //               justifyContent: 'center',
     //               borderRadius: 5,
-  
+
     //               shadowColor: "000",
     //               shadowOffset: {
     //                   width: 0,
@@ -956,10 +1014,10 @@ const handleVerify = async () => {
     //               },
     //               shadowOpacity: 0.28,
     //               shadowRadius: 3.00,
-  
+
     //               elevation: 1,
-  
-    //             }} 
+
+    //             }}
     //             onPress={() => handleSubmit()}>
     //               <Text style = {{
     //                 color: 'white',
@@ -969,14 +1027,13 @@ const handleVerify = async () => {
     //               </Text>
     //             </TouchableOpacity>
 
-
     //             <Text style = {{
     //               color: 'gray'
     //             }}>
     //               Forgot password?
     //             </Text>
-  
-    //             <Pressable 
+
+    //             <Pressable
     //               onPress={() => navigate.navigate('Login')}
     //               style = {{
     //                 marginVertical: 30,
@@ -994,7 +1051,7 @@ const handleVerify = async () => {
     //               </Text>
     //             </Pressable>
     //       </View>
-    //       </ScrollView> 
+    //       </ScrollView>
 
     //       <View style={styles.centeredView}>
     //   <Modal
@@ -1008,9 +1065,8 @@ const handleVerify = async () => {
     //     <View style={styles.centeredView}>
     //       <View style={styles.modalView}>
 
-
     //         <Text style={styles.modalText}>Enter the OTP sent to your email to verify..</Text>
-            
+
     //         <TextInput placeholder='OTP'
     //               style = {{
     //                 width: '76%',
@@ -1046,29 +1102,27 @@ const handleVerify = async () => {
     //       </View>
     //     </View>
     //   </Modal>
-     
+
     // </View>
 
-        
-          
     //   </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 22,
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -1083,40 +1137,40 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: "#F194FF",
   },
   buttonCloseYes: {
-    backgroundColor: 'red',
-    marginTop:10,
-    width:"50%"
+    backgroundColor: "red",
+    marginTop: 10,
+    width: "50%",
   },
   buttonCloseNo: {
-    backgroundColor: 'green',
-    marginTop:10,
-    width:200,
-    color:"black"
+    backgroundColor: "green",
+    marginTop: 10,
+    width: 200,
+    color: "black",
   },
 
   buttonCloseCancel: {
-    backgroundColor: '#f6f6fb',
-    marginTop:10,
-    width:200,
-    color:"black"
+    backgroundColor: "#f6f6fb",
+    marginTop: 10,
+    width: 200,
+    color: "black",
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   textStyleCancel: {
-    color: 'black',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "black",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
 
-export default RegisterScreen
+export default RegisterScreen;

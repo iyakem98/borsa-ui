@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
@@ -22,7 +23,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../../components/Shared/Header";
 import { TextInput } from "react-native-paper";
-import LottieView  from 'lottie-react-native';
+import LottieView from "lottie-react-native";
 
 // import * as AppAuth from 'expo-google-sign-in'
 
@@ -31,6 +32,8 @@ import { API_BASE_URL } from "../../utils/config";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import * as Notifications from "expo-notifications";
 import { fetchChat } from "../../features/chat/chatSlice";
+
+const height = Dimensions.get("screen").height;
 
 const LoginScreen = ({ navigation }) => {
   const { user } = useSelector((state) => state.auth);
@@ -235,19 +238,26 @@ const LoginScreen = ({ navigation }) => {
 
   // }
   return (
-    <SafeAreaView
+    <View
       style={{
-        flex: 1,
         backgroundColor: "#fff",
+        height: height,
       }}
     >
-      <Header />
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: 15,
+          paddingTop: 30,
           flexGrow: 1,
+          height: height,
         }}
+        style={
+          {
+            // height: height,
+          }
+        }
       >
+        <Header />
         <Text
           style={{
             fontFamily: "Poppins_600SemiBold",
@@ -329,50 +339,48 @@ const LoginScreen = ({ navigation }) => {
           style={{
             position: "absolute",
             width: "100%",
-            bottom: 20,
+            bottom: 80,
             left: 15,
           }}
         >
-          {isLoading? (
-
-         <View style = {{
-              alignItems: 'center',
-            }}>
-              <Text style = {{
-                fontSize: 20,
-                fontFamily: "Poppins_400Regular",
-              }}>
+          {isLoading ? (
+            <View
+              style={{
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Poppins_400Regular",
+                }}
+              >
                 Logging you in!
               </Text>
               <LottieView
-            style={{
-
-              height: 250,
-              //left: "5%",
-              //right: '20%',
-              bottom: '5%',
-            
-            }}
-            source={require('../../assets/loader.json')}
-
-            autoPlay
-            loop
-            />
+                style={{
+                  height: 250,
+                  //left: "5%",
+                  //right: '20%',
+                  bottom: "5%",
+                }}
+                source={require("../../assets/loader.json")}
+                autoPlay
+                loop
+              />
             </View>
-
           ) : (
-            
             <Pressable
-            style={{
-              //backgroundColor: "#514590",
-              backgroundColor: '#5f43b2',
-              //backgroundColor: '#593196',
-              paddingVertical: 15,
-              borderRadius: 5,
-              marginBottom: 25,
-              width: "100%",
-            }}
-            onPress={handleLogin}
+              style={{
+                //backgroundColor: "#514590",
+                backgroundColor: "#5f43b2",
+                //backgroundColor: '#593196',
+                paddingVertical: 15,
+                borderRadius: 5,
+                marginBottom: 25,
+                width: "100%",
+              }}
+              onPress={handleLogin}
             >
               <Text
                 style={{
@@ -384,9 +392,7 @@ const LoginScreen = ({ navigation }) => {
               >
                 {isLoading ? "Loading ..." : "Login"}
               </Text>
-          </Pressable>
-
-
+            </Pressable>
           )}
           <View
             style={{
@@ -416,7 +422,7 @@ const LoginScreen = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
     // <View style = {{
     //   height: "100%",
     //   backgroundColor: 'white'

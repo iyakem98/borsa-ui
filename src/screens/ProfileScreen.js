@@ -153,17 +153,26 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView
+      style={{
+        backgroundColor: "#900",
+      }}
+      contentContainerStyle={{
+        flexGrow: 1,
+      }}
+    >
       <View
         style={{
           //paddingVertical: 30,
           backgroundColor: "white",
+          flex: 1,
+          height: "100%",
         }}
       >
         <View>
           <LinearGradient
             //colors={['#593196', '#705c9d', "#fff"]}
-            c//olors={["#593196", "#fff"]}
+            //colors={["#593196", "#fff"]}
             colors={["#5f43b2", "#fff"]}
             style={{
               paddingTop: 120,
@@ -494,7 +503,7 @@ const ProfileScreen = ({ navigation }) => {
                     </View>
                   </TouchableOpacity>
 
-                 {/*
+                  {/*
                   <TouchableOpacity
                     onPress={() => {
                       setModalVisible(true);
@@ -815,12 +824,6 @@ const ProfileScreen = ({ navigation }) => {
           </Modal>
         </View>
       </View>
-      <View
-        style={{
-          height: "25%",
-          backgroundColor: "white",
-        }}
-      ></View>
     </ScrollView>
   );
 };
