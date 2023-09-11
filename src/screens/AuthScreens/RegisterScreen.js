@@ -375,7 +375,6 @@ const RegisterScreen = ({ navigation }) => {
           value={userPassword}
           onChangeText={(text) => setUserPassword(text)}
           mode="outlined"
-          secureTextEntry={true}
           style={{
             marginBottom: 13,
           }}
@@ -390,7 +389,6 @@ const RegisterScreen = ({ navigation }) => {
           value={confirmUserPassword}
           onChangeText={(text) => setConfirmUserPassword(text)}
           mode="outlined"
-          secureTextEntry={true}
           style={
             {
               // paddingVertical: 5
