@@ -31,17 +31,18 @@ import { useNavigation } from "@react-navigation/native";
   const ContactScreen = () => {
     const height = Dimensions.get("window").height;
     const width = Dimensions.get("window").width;
-    const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     // const transparent = "rgba(0,0,0,0.5)"
     const { user } = useSelector((state) => state.auth);
+    const [fullName, setFullName] = useState(user.firstName+' '+user.lastName);
+    const [email, setEmail] = useState(user.email);
     const navigation = useNavigation();
     const HandleSubmit = async () => {
       if(fullName && email && message){
       try {
+        setModalVisible(true)
         const config = {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -336,10 +337,10 @@ import { useNavigation } from "@react-navigation/native";
                     marginRight: "auto",
                     borderWidth: 2,
                     borderColor: '#5f43b2',
+                    backgroundColor:"#5f43b2",
                     borderStyle: 'solid',
                   }}
                   onPress={() => {
-                    setModalVisible(true)
                     // setLoading(true);
                     HandleSubmit();
                   }}
@@ -347,7 +348,7 @@ import { useNavigation } from "@react-navigation/native";
                   <Text
                     style={{
                       color: "white",
-                      color: '#5f43b2',
+                      color: '#fff',
                       fontSize: 17,
                       fontFamily: "Poppins_500Medium",
                     }}
