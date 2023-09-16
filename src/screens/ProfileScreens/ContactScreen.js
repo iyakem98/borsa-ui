@@ -18,7 +18,7 @@ import {
   } from "react-native";
   import { MaterialIcons, Entypo } from "@expo/vector-icons";
   import emailjs from "@emailjs/browser";
-  import { useState } from "react";
+  import { useRef, useState } from "react";
   import { useSelector } from "react-redux";
   import axios from "axios";
   import { API_BASE_URL } from "../../utils/config";
@@ -31,17 +31,35 @@ import { useNavigation } from "@react-navigation/native";
   const ContactScreen = () => {
     const height = Dimensions.get("window").height;
     const width = Dimensions.get("window").width;
-    const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     // const transparent = "rgba(0,0,0,0.5)"
     const { user } = useSelector((state) => state.auth);
+    const [fullName, setFullName] = useState(user.firstName+' '+user.lastName);
+    const [email, setEmail] = useState(user.email);
     const navigation = useNavigation();
-    const HandleSubmit = async () => {
-      if(fullName && email && message){
+
+    const msgRef = useRef(null);
+    const nameRef = useRef(null);
+    const emailRef = useRef(null);
+
+    const handleFocus = () => {
+
+      if(!fullName){
+        nameRef.current.focus(); 
+      }
+      if(!email){
+        emailRef.current.focus(); 
+      }
+      if(!message){
+        msgRef.current.focus(); 
+      }
+      };
+
+    const handleSubmit = async () => {
       try {
+        setModalVisible(true)
         const config = {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -72,7 +90,6 @@ import { useNavigation } from "@react-navigation/native";
       } catch (err) {
         console.log(err);
       }
-    }
     };
     // if (loading) {
     //   return (
@@ -266,6 +283,7 @@ import { useNavigation } from "@react-navigation/native";
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <TextInput
                     label="Name"
+                    ref={nameRef}
                     error={!fullName && true}
                     value={fullName}
                     onChangeText={text => setFullName(text)}
@@ -286,15 +304,14 @@ import { useNavigation } from "@react-navigation/native";
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <TextInput
                   label="Email"
+                  ref={emailRef}
                   value={email}
                   error={!email && true}
                   onChangeText={text => setEmail(text)}
                   mode="outlined"
                   style={{
                     marginBottom: 13,
-                    // paddingVertical: 5
                   }}
-                  //error={userPasswordError}
                   outlineStyle={{
                     backgroundColor: "#fff",
                     borderWidth: 0.4,
@@ -309,6 +326,7 @@ import { useNavigation } from "@react-navigation/native";
                     error={!message && true}
                     onChangeText={text => setMessage(text)}
                     mode="outlined"
+                    ref={msgRef}
                     style={{
                       marginBottom: 13,
                       height: 160,
@@ -326,7 +344,6 @@ import { useNavigation } from "@react-navigation/native";
               </TouchableWithoutFeedback>
                 <Pressable
                   style={{
-                    //backgroundColor: "#13b955",
                     width: "50%",
                     height: 40,
                     alignItems: "center",
@@ -336,18 +353,16 @@ import { useNavigation } from "@react-navigation/native";
                     marginRight: "auto",
                     borderWidth: 2,
                     borderColor: '#5f43b2',
+                    backgroundColor:`${fullName && email && message ? '#5f43b2' : '#f6f6fb'}`,
                     borderStyle: 'solid',
                   }}
                   onPress={() => {
-                    setModalVisible(true)
-                    // setLoading(true);
-                    HandleSubmit();
+                    fullName && email && message ?  handleSubmit() : handleFocus()
                   }}
                 >
                   <Text
                     style={{
-                      color: "white",
-                      color: '#5f43b2',
+                      color:`${fullName && email && message ? '#fff' : '#000'}`,
                       fontSize: 17,
                       fontFamily: "Poppins_500Medium",
                     }}
