@@ -170,6 +170,7 @@ export default function App() {
   useEffect(() => {
     checkOnBoardingData();
     checktracking();
+    registerForPushNotificationsAsync();
   }, []);
 
   if (fontsLoaded) {

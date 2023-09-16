@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Modal,
   Dimensions,
+  KeyboardAvoidingView,
 } from "react-native";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -290,11 +291,12 @@ const RegisterScreen = ({ navigation }) => {
   };
 
   return (
-    <View
+    <KeyboardAvoidingView
       style={{
         height: windowHeight,
         backgroundColor: "#fff",
       }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView
         contentContainerStyle={{
@@ -554,7 +556,7 @@ const RegisterScreen = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
     // <View style = {{
     //     height: "100%",
     //   }}>
