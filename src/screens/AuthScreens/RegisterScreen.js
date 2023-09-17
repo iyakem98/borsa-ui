@@ -39,6 +39,8 @@ const RegisterScreen = ({ navigation }) => {
   const [userEmailError, setUserEmailError] = useState("");
   const [userPasswordError, setUserPasswordError] = useState("");
 
+  const [fullNameErr, setFullNameErr] = useState("");
+  const [fullName, setFullName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setuserName] = useState("");
@@ -93,13 +95,23 @@ const RegisterScreen = ({ navigation }) => {
     setIsLoading(true);
     const userName = userFullName.split(" ");
     console.log(userName);
+    let regex = /^[A-Za-z]+ [A-Za-z]+$/;
+    if (!regex.test(fullName)){
+      setFullNameErr(true)
+      setUserPasswordError("Full name can only contain letters and a space. eg. Abebe Bikila");
+    }else{
+      setFullNameErr(false)
+      let name = fullName.split(" ")
+      setFirstName(name[0])
+      setLastName(name[1])
+    }
     if (firstName.length < 1) {
-      setUserPasswordError("You have to provide first name");
+      setUserPasswordError("Full name can only contain letters and a space. eg. Abebe Bikila");
     } else if (lastName.length < 1) {
-      setUserPasswordError("You have to provide last name");
+      setUserPasswordError("Full name can only contain letters and a space. eg. Abebe Bikila");
     } else if (userPassword !== confirmUserPassword) {
       setUserPasswordError("Passwords do not match");
-    } else if (checked && firstName.length > 0 && lastName.length > 0) {
+    } else if (checked && firstName.length > 0 && lastName.length > 0 && regex.test(fullName)) {
       try {
         //const capitalizedFirstName = capitalizeFirstLetter(userName[0]);
         //const capitalizedLastName = capitalizeFirstLetter(userName[1]);;
@@ -290,6 +302,19 @@ const RegisterScreen = ({ navigation }) => {
       });
   };
 
+  const validateName = (text) => {
+    let regex = /^[A-Za-z]+ [A-Za-z]+$/;
+    if (regex.test(text)) {
+    setFullNameErr(false); 
+    setFullName(text); 
+    } else {
+      setFullName(text); 
+      setFullNameErr(true); 
+    // setFullName("");
+    }
+    };
+    
+
   return (
     <KeyboardAvoidingView
       style={{
@@ -301,7 +326,7 @@ const RegisterScreen = ({ navigation }) => {
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: 15,
-          paddingTop: 60,
+          paddingTop: 50,
           flexGrow: 1,
         }}
       >
@@ -323,22 +348,26 @@ const RegisterScreen = ({ navigation }) => {
         </Text>
         <View>
           <TextInput
-            label="First Name"
-            value={firstName}
-            onChangeText={(text) => setFirstName(text.trim())}
+            label="Full Name"
+            value={fullName}
+            onChangeText={(text)=>{
+              setFullName(text)
+              setFullNameErr(false)
+            }}
             mode="outlined"
             style={{
               marginTop: 15,
               marginBottom: 13,
+              height: 40,
               // paddingVertical: 5
             }}
-            error={userPasswordError}
+            error={fullNameErr}
             outlineStyle={{
               backgroundColor: "#fff",
             }}
             placeholderTextColor="#eee"
           />
-          <TextInput
+          {/* <TextInput
             label="Last Name"
             value={lastName}
             onChangeText={(text) => setLastName(text.trim())}
@@ -353,7 +382,7 @@ const RegisterScreen = ({ navigation }) => {
               backgroundColor: "#fff",
             }}
             placeholderTextColor="#eee"
-          />
+          /> */}
         </View>
 
         <TextInput
@@ -363,6 +392,7 @@ const RegisterScreen = ({ navigation }) => {
           mode="outlined"
           style={{
             marginBottom: 13,
+            height: 40,
             // paddingVertical: 5
           }}
           error={userPasswordError}
@@ -379,6 +409,7 @@ const RegisterScreen = ({ navigation }) => {
           mode="outlined"
           style={{
             marginBottom: 13,
+            height: 40,
           }}
           error={userPasswordError}
           outlineStyle={{
@@ -393,6 +424,7 @@ const RegisterScreen = ({ navigation }) => {
           mode="outlined"
           style={
             {
+              height: 40,
               // paddingVertical: 5
             }
           }
@@ -509,7 +541,7 @@ const RegisterScreen = ({ navigation }) => {
               style={{
                 //backgroundColor: "#514590",
                 backgroundColor: "#5f43b2",
-                paddingVertical: 15,
+                paddingVertical: 12,
                 borderRadius: 5,
                 marginBottom: 25,
                 width: "100%",
