@@ -118,7 +118,7 @@ const RegisterScreen = ({ navigation }) => {
     if(!checked) {
       setUserPasswordError("You have to Check the Checkbox");
     }
-    if(!userPassword || !confirmUserPassword || userPassword !== confirmUserPassword){
+    if(!userPassword || !confirmUserPassword || userPassword !== confirmUserPassword || userPassword.length<6){
       setPasswordErr(true)
       setUserPasswordError("Password has to be atleast 6 digits and confirmed")
     }
@@ -129,7 +129,7 @@ const RegisterScreen = ({ navigation }) => {
     } else if (userPassword !== confirmUserPassword) {
       setUserPasswordError("Passwords do not match");
       setPasswordError(true)
-    } else if (checked && firstName.length > 0 && lastName.length > 0 && regex.test(fullName) && emailRegex.test(userEmail) && userPassword && userPassword===confirmUserPassword) {
+    } else if (checked && firstName.length > 0 && lastName.length > 0 && regex.test(fullName) && emailRegex.test(userEmail) && userPassword && userPassword===confirmUserPassword && userPassword.length>5) {
       try {
         //const capitalizedFirstName = capitalizeFirstLetter(userName[0]);
         //const capitalizedLastName = capitalizeFirstLetter(userName[1]);;
