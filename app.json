@@ -62,6 +62,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
+      "icon": "./assets/icon_android.png",
       "package": "com.borsa",
       "versionCode": 13
     },
