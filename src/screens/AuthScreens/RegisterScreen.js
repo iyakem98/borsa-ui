@@ -39,6 +39,8 @@ const RegisterScreen = ({ navigation }) => {
   const [userEmailError, setUserEmailError] = useState("");
   const [userPasswordError, setUserPasswordError] = useState("");
 
+  const [passwordErr, setPasswordErr] = useState(false);
+
   const [fullNameErr, setFullNameErr] = useState("");
   const [fullName, setFullName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -96,14 +98,29 @@ const RegisterScreen = ({ navigation }) => {
     const userName = userFullName.split(" ");
     console.log(userName);
     let regex = /^[A-Za-z]+ [A-Za-z]+$/;
+    let emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/
     if (!regex.test(fullName)){
       setFullNameErr(true)
       setUserPasswordError("Full name can only contain letters and a space. eg. Abebe Bikila");
+      setFirstName("")
+      setLastName("")
     }else{
       setFullNameErr(false)
       let name = fullName.split(" ")
       setFirstName(name[0])
       setLastName(name[1])
+    }
+    if (!emailRegex.test(userEmail)){
+      console.log("yryyr", emailRegex.test(userEmail))
+      setUserPasswordError("Please use a valid email");
+      setUserEmailError(true)
+    }
+    if(!checked) {
+      setUserPasswordError("You have to Check the Checkbox");
+    }
+    if(!userPassword || !confirmUserPassword || userPassword !== confirmUserPassword){
+      setPasswordErr(true)
+      setUserPasswordError("Password has to be atleast 6 digits and confirmed")
     }
     if (firstName.length < 1) {
       setUserPasswordError("Full name can only contain letters and a space. eg. Abebe Bikila");
@@ -111,7 +128,8 @@ const RegisterScreen = ({ navigation }) => {
       setUserPasswordError("Full name can only contain letters and a space. eg. Abebe Bikila");
     } else if (userPassword !== confirmUserPassword) {
       setUserPasswordError("Passwords do not match");
-    } else if (checked && firstName.length > 0 && lastName.length > 0 && regex.test(fullName)) {
+      setPasswordError(true)
+    } else if (checked && firstName.length > 0 && lastName.length > 0 && regex.test(fullName) && emailRegex.test(userEmail) && userPassword && userPassword===confirmUserPassword) {
       try {
         //const capitalizedFirstName = capitalizeFirstLetter(userName[0]);
         //const capitalizedLastName = capitalizeFirstLetter(userName[1]);;
@@ -142,8 +160,6 @@ const RegisterScreen = ({ navigation }) => {
           setUserPasswordError("Something Went Wrong");
         }
       }
-    } else {
-      setUserPasswordError("You have to Check the Checkbox");
     }
     setIsLoading(false);
   };
@@ -388,14 +404,17 @@ const RegisterScreen = ({ navigation }) => {
         <TextInput
           label="Email"
           value={userEmail}
-          onChangeText={(text) => setUserEmail(text.toLowerCase())}
+          onChangeText={(text) => {
+            setUserEmail(text.toLowerCase())
+            setUserEmailError(false)
+          }}
           mode="outlined"
           style={{
             marginBottom: 13,
             height: 40,
             // paddingVertical: 5
           }}
-          error={userPasswordError}
+          error={userEmailError}
           outlineStyle={{
             backgroundColor: "#fff",
           }}
@@ -405,13 +424,16 @@ const RegisterScreen = ({ navigation }) => {
           label="Password"
           secureTextEntry={true}
           value={userPassword}
-          onChangeText={(text) => setUserPassword(text)}
+          onChangeText={(text) => {
+            setUserPassword(text)
+            setPasswordErr(false)
+          }}
           mode="outlined"
           style={{
             marginBottom: 13,
             height: 40,
           }}
-          error={userPasswordError}
+          error={passwordErr}
           outlineStyle={{
             backgroundColor: "#fff",
           }}
@@ -420,7 +442,10 @@ const RegisterScreen = ({ navigation }) => {
           label="Confirm Password"
           secureTextEntry={true}
           value={confirmUserPassword}
-          onChangeText={(text) => setConfirmUserPassword(text)}
+          onChangeText={(text) => {
+            setConfirmUserPassword(text)
+            setPasswordErr(false)
+          }}
           mode="outlined"
           style={
             {
@@ -428,7 +453,7 @@ const RegisterScreen = ({ navigation }) => {
               // paddingVertical: 5
             }
           }
-          error={userPasswordError}
+          error={passwordErr}
           outlineStyle={{
             backgroundColor: "#fff",
           }}
