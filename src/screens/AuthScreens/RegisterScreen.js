@@ -42,6 +42,9 @@ const RegisterScreen = ({ navigation }) => {
   const [passwordErr, setPasswordErr] = useState(false);
 
   const [fullNameErr, setFullNameErr] = useState("");
+  const [firstNameErr, setFirstNameErr] = useState(false);
+  const [lastNameErr, setLastNameErr] = useState(false);
+
   const [fullName, setFullName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -99,12 +102,17 @@ const RegisterScreen = ({ navigation }) => {
     console.log(userName);
     let regex = /^[A-Za-z]+ [A-Za-z]+$/;
     let emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/
-    if (!regex.test(fullName)){
-      setFullNameErr(true)
-      setUserPasswordError("Full name can only contain letters and a space. eg. Abebe Bikila");
-      setFirstName("")
-      setLastName("")
-    }else{
+    if (!firstName){
+      setFirstNameErr(true)
+      setUserPasswordError("First name is required.");
+    }
+
+    if(!lastName){
+      setLastNameErr(true)
+      setUserPasswordError("Last name is required.");
+    }
+    
+    else{
       setFullNameErr(false)
       let name = fullName.split(" ")
       setFirstName(name[0])
@@ -123,9 +131,9 @@ const RegisterScreen = ({ navigation }) => {
       setUserPasswordError("Password has to be atleast 6 digits and confirmed")
     }
     if (firstName.length < 1) {
-      setUserPasswordError("Full name can only contain letters and a space. eg. Abebe Bikila");
+      setUserPasswordError("First name is required.");
     } else if (lastName.length < 1) {
-      setUserPasswordError("Full name can only contain letters and a space. eg. Abebe Bikila");
+      setUserPasswordError("Last name is required.");
     } else if (userPassword !== confirmUserPassword) {
       setUserPasswordError("Passwords do not match");
       setPasswordError(true)
@@ -364,11 +372,11 @@ const RegisterScreen = ({ navigation }) => {
         </Text>
         <View>
           <TextInput
-            label="Full Name"
-            value={fullName}
+            label="First Name"
+            value={firstName}
             onChangeText={(text)=>{
-              setFullName(text)
-              setFullNameErr(false)
+              setFirstName(text.trim())
+              setFirstNameErr(false)
             }}
             mode="outlined"
             style={{
@@ -377,7 +385,46 @@ const RegisterScreen = ({ navigation }) => {
               height: 40,
               // paddingVertical: 5
             }}
-            error={fullNameErr}
+            error={firstNameErr}
+            outlineStyle={{
+              backgroundColor: "#fff",
+            }}
+            placeholderTextColor="#eee"
+          />
+          {/* <TextInput
+            label="Last Name"
+            value={lastName}
+            onChangeText={(text) => setLastName(text.trim())}
+            mode="outlined"
+            style={{
+              //marginTop: 15,
+              marginBottom: 13,
+              // paddingVertical: 5
+            }}
+            error={userPasswordError}
+            outlineStyle={{
+              backgroundColor: "#fff",
+            }}
+            placeholderTextColor="#eee"
+          /> */}
+        </View>
+
+         <View>
+          <TextInput
+            label="Last Name"
+            value={lastName}
+            onChangeText={(text)=>{
+              setLastName(text.trim())
+              setLastNameErr(false)
+            }}
+            mode="outlined"
+            style={{
+              marginTop: 3,
+              marginBottom: 13,
+              height: 40,
+              // paddingVertical: 5
+            }}
+            error={lastNameErr}
             outlineStyle={{
               backgroundColor: "#fff",
             }}
