@@ -106,17 +106,9 @@ const RegisterScreen = ({ navigation }) => {
       setFirstNameErr(true)
       setUserPasswordError("First name is required.");
     }
-
     if(!lastName){
       setLastNameErr(true)
       setUserPasswordError("Last name is required.");
-    }
-    
-    else{
-      setFullNameErr(false)
-      let name = fullName.split(" ")
-      setFirstName(name[0])
-      setLastName(name[1])
     }
     if (!emailRegex.test(userEmail)){
       console.log("yryyr", emailRegex.test(userEmail))
@@ -137,11 +129,9 @@ const RegisterScreen = ({ navigation }) => {
     } else if (userPassword !== confirmUserPassword) {
       setUserPasswordError("Passwords do not match");
       setPasswordError(true)
-    } else if (checked && firstName.length > 0 && lastName.length > 0 && regex.test(fullName) && emailRegex.test(userEmail) && userPassword && userPassword===confirmUserPassword && userPassword.length>5) {
+    } else if (checked && firstName.length > 0 && lastName.length > 0 && emailRegex.test(userEmail) && userPassword && userPassword===confirmUserPassword && userPassword.length>5) {
       try {
-        //const capitalizedFirstName = capitalizeFirstLetter(userName[0]);
-        //const capitalizedLastName = capitalizeFirstLetter(userName[1]);;
-
+        
         const capitalizedFirstName = capitalizeFirstLetter(firstName);
         const capitalizedLastName = capitalizeFirstLetter(lastName);
 
@@ -600,9 +590,9 @@ const RegisterScreen = ({ navigation }) => {
             <LottieView
               style={{
                 height: 150,
-                left: "15%",
-                right: "20%",
-                bottom: "5%",
+                left: "20%",
+                // right: "25%",
+                bottom: "15%",
               }}
               source={require("../../assets/loader.json")}
               autoPlay
