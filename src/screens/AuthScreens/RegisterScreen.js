@@ -605,7 +605,7 @@ const RegisterScreen = ({ navigation }) => {
                 backgroundColor: "#5f43b2",
                 paddingVertical: 12,
                 borderRadius: 5,
-                marginBottom: 25,
+                marginBottom: -15,
                 width: "100%",
               }}
               onPress={handleLogin}
@@ -632,6 +632,7 @@ const RegisterScreen = ({ navigation }) => {
             <Text
               style={{
                 fontFamily: "Poppins_400Regular",
+                marginTop: 14
               }}
             >
               I already have an account.{" "}
@@ -642,6 +643,7 @@ const RegisterScreen = ({ navigation }) => {
                   fontFamily: "Poppins_600SemiBold",
                   color: "#514590",
                   textDecorationLine: "underline",
+                  marginTop: 14
                 }}
               >
                 Login
