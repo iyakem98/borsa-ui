@@ -93,7 +93,7 @@ const LoginScreen = ({ navigation }) => {
         <TextInput
           label="Email"
           value={userEmail}
-          onChangeText={(text) => setUserEmail(text)}
+          onChangeText={(text) => setUserEmail(text.toLowerCase())}
           mode="outlined"
           style={{
             marginTop: 15,
@@ -109,7 +109,7 @@ const LoginScreen = ({ navigation }) => {
         <Pressable
           style={{
             //backgroundColor: "#514590",
-            backgroundColor: '#5f43b2',
+            backgroundColor: "#5f43b2",
             // bottom: 10,
             // left: 15,
             // position: "absolute",

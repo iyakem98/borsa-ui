@@ -268,8 +268,8 @@ const LoginScreen = ({ navigation }) => {
         </Text>
         <TextInput
           label="Email"
-          value={userEmail.toLowerCase()}
-          onChangeText={(text) => setUserEmail(text)}
+          value={userEmail}
+          onChangeText={(text) => setUserEmail(text.toLowerCase())}
           mode="outlined"
           style={{
             marginTop: 15,

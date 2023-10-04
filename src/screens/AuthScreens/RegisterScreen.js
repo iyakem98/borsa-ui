@@ -101,26 +101,31 @@ const RegisterScreen = ({ navigation }) => {
     const userName = userFullName.split(" ");
     console.log(userName);
     let regex = /^[A-Za-z]+ [A-Za-z]+$/;
-    let emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/
-    if (!firstName){
-      setFirstNameErr(true)
+    let emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+    if (!firstName) {
+      setFirstNameErr(true);
       setUserPasswordError("First name is required.");
     }
-    if(!lastName){
-      setLastNameErr(true)
+    if (!lastName) {
+      setLastNameErr(true);
       setUserPasswordError("Last name is required.");
     }
-    if (!emailRegex.test(userEmail)){
-      console.log("yryyr", emailRegex.test(userEmail))
+    if (!emailRegex.test(userEmail)) {
+      console.log("yryyr", emailRegex.test(userEmail));
       setUserPasswordError("Please use a valid email");
-      setUserEmailError(true)
+      setUserEmailError(true);
     }
-    if(!checked) {
+    if (!checked) {
       setUserPasswordError("You have to Check the Checkbox");
     }
-    if(!userPassword || !confirmUserPassword || userPassword !== confirmUserPassword || userPassword.length<6){
-      setPasswordErr(true)
-      setUserPasswordError("Password has to be atleast 6 digits and confirmed")
+    if (
+      !userPassword ||
+      !confirmUserPassword ||
+      userPassword !== confirmUserPassword ||
+      userPassword.length < 6
+    ) {
+      setPasswordErr(true);
+      setUserPasswordError("Password has to be atleast 6 digits and confirmed");
     }
     if (firstName.length < 1) {
       setUserPasswordError("First name is required.");
@@ -128,10 +133,17 @@ const RegisterScreen = ({ navigation }) => {
       setUserPasswordError("Last name is required.");
     } else if (userPassword !== confirmUserPassword) {
       setUserPasswordError("Passwords do not match");
-      setPasswordError(true)
-    } else if (checked && firstName.length > 0 && lastName.length > 0 && emailRegex.test(userEmail) && userPassword && userPassword===confirmUserPassword && userPassword.length>5) {
+      setPasswordError(true);
+    } else if (
+      checked &&
+      firstName.length > 0 &&
+      lastName.length > 0 &&
+      emailRegex.test(userEmail) &&
+      userPassword &&
+      userPassword === confirmUserPassword &&
+      userPassword.length > 5
+    ) {
       try {
-        
         const capitalizedFirstName = capitalizeFirstLetter(firstName);
         const capitalizedLastName = capitalizeFirstLetter(lastName);
 
@@ -319,15 +331,14 @@ const RegisterScreen = ({ navigation }) => {
   const validateName = (text) => {
     let regex = /^[A-Za-z]+ [A-Za-z]+$/;
     if (regex.test(text)) {
-    setFullNameErr(false); 
-    setFullName(text); 
+      setFullNameErr(false);
+      setFullName(text);
     } else {
-      setFullName(text); 
-      setFullNameErr(true); 
-    // setFullName("");
+      setFullName(text);
+      setFullNameErr(true);
+      // setFullName("");
     }
-    };
-    
+  };
 
   return (
     <KeyboardAvoidingView
@@ -364,9 +375,9 @@ const RegisterScreen = ({ navigation }) => {
           <TextInput
             label="First Name"
             value={firstName}
-            onChangeText={(text)=>{
-              setFirstName(text.trim())
-              setFirstNameErr(false)
+            onChangeText={(text) => {
+              setFirstName(text.trim());
+              setFirstNameErr(false);
             }}
             mode="outlined"
             style={{
@@ -399,13 +410,13 @@ const RegisterScreen = ({ navigation }) => {
           /> */}
         </View>
 
-         <View>
+        <View>
           <TextInput
             label="Last Name"
             value={lastName}
-            onChangeText={(text)=>{
-              setLastName(text.trim())
-              setLastNameErr(false)
+            onChangeText={(text) => {
+              setLastName(text.trim());
+              setLastNameErr(false);
             }}
             mode="outlined"
             style={{
@@ -442,8 +453,8 @@ const RegisterScreen = ({ navigation }) => {
           label="Email"
           value={userEmail}
           onChangeText={(text) => {
-            setUserEmail(text.toLowerCase())
-            setUserEmailError(false)
+            setUserEmail(text.toLowerCase());
+            setUserEmailError(false);
           }}
           mode="outlined"
           style={{
@@ -462,8 +473,8 @@ const RegisterScreen = ({ navigation }) => {
           secureTextEntry={true}
           value={userPassword}
           onChangeText={(text) => {
-            setUserPassword(text)
-            setPasswordErr(false)
+            setUserPassword(text);
+            setPasswordErr(false);
           }}
           mode="outlined"
           style={{
@@ -480,16 +491,14 @@ const RegisterScreen = ({ navigation }) => {
           secureTextEntry={true}
           value={confirmUserPassword}
           onChangeText={(text) => {
-            setConfirmUserPassword(text)
-            setPasswordErr(false)
+            setConfirmUserPassword(text);
+            setPasswordErr(false);
           }}
           mode="outlined"
-          style={
-            {
-              height: 40,
-              // paddingVertical: 5
-            }
-          }
+          style={{
+            height: 40,
+            // paddingVertical: 5
+          }}
           error={passwordErr}
           outlineStyle={{
             backgroundColor: "#fff",
@@ -632,7 +641,7 @@ const RegisterScreen = ({ navigation }) => {
             <Text
               style={{
                 fontFamily: "Poppins_400Regular",
-                marginTop: 14
+                marginTop: 14,
               }}
             >
               I already have an account.{" "}
@@ -643,7 +652,7 @@ const RegisterScreen = ({ navigation }) => {
                   fontFamily: "Poppins_600SemiBold",
                   color: "#514590",
                   textDecorationLine: "underline",
-                  marginTop: 14
+                  marginTop: 14,
                 }}
               >
                 Login

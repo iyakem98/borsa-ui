@@ -48,6 +48,12 @@ const ResetPassword = ({ route }) => {
     ) {
       setIsLoading(true);
 
+      console.log("RESET PASSWORD: ", {
+        userId: params?._id,
+        otp: userOtp,
+        password: password,
+      });
+
       await axios
         .post("http://143.198.168.244/api/users/reset-password", {
           userId: params?._id,
@@ -68,14 +74,25 @@ const ResetPassword = ({ route }) => {
         })
         .catch((e) => {
           let errResponse =
-            (e && e.response && e.response.data) || (e && e.message);
+            (e && e.response && e?.response?.data) || (e && e?.message);
 
           console.log("------------", errResponse);
-          showMessage({
-            message: "Error",
-            description: `Something went wrong. Try again.`,
-            type: "warning",
-          });
+          if (
+            errResponse?.message ===
+            "New password cannot be the same as old password"
+          ) {
+            showMessage({
+              message: "Error",
+              description: `New password cannot be the same as old password.`,
+              type: "warning",
+            });
+          } else {
+            showMessage({
+              message: "Error",
+              description: `Something went wrong. Try again.`,
+              type: "warning",
+            });
+          }
         });
       setIsLoading(false);
     }
@@ -167,7 +184,7 @@ const ResetPassword = ({ route }) => {
         <Pressable
           style={{
             //backgroundColor: "#514590",
-            backgroundColor: '#5f43b2',
+            backgroundColor: "#5f43b2",
             // bottom: 10,
             // left: 15,
             // position: "absolute",
