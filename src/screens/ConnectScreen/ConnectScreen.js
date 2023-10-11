@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { ActivityIndicator, Dimensions, FlatList, Pressable, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, Dimensions, FlatList, Pressable, ScrollView, StyleSheet, Text, View, TouchableOpacity, RefreshControl } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import BuyerCard from '../../components/Connect/BuyerCard'
 import TravelerCard from './Traveler'
@@ -348,6 +348,24 @@ const [tdelivery, setTdelivery] = useState(false)
 const [bpickup, setBpickup] = useState(false)
 const [bdelivery, setBdelivery] = useState(false)
 
+const [buyerRefreshing, setBuyerRefreshing] = useState(false);
+const [travelerRefreshing, setTravelerRefreshing] = useState(false);
+
+const onBuyerRefresh = () => {
+  setBuyerRefreshing(true);
+  setTimeout(() => {
+  setPageBuyer(1)
+  setBuyerRefreshing(false);
+  }, 2000);
+  };
+
+  const onTravelerRefresh = () => {
+    setTravelerRefreshing(true);
+    setTimeout(() => {
+    setPageTraveler(1)
+    setTravelerRefreshing(false);
+    }, 2000);
+    };
 
     useEffect(() => {   
       getUsers()
@@ -622,9 +640,10 @@ const [bdelivery, setBdelivery] = useState(false)
                           backgroundColor: '#e8e8e8',
                           //backgroundColor: '#a991d4',
                           //backgroundColor: 'black',
-                          //backgroundColor: '#009cdc',
-                          //backgroundColor: "#593196",
-                          //backgroundColor: '#7267e7',
+                          //backgroundColor: '#244ac7',
+                          //backgroundColor: "#475991",
+                          //backgroundColor: '#595c54',
+                          //backgroundColor: '#9eeb34'
                           marginTop:10,
                           marginBottom:5,
                           marginLeft:"20%",
@@ -905,10 +924,10 @@ const [bdelivery, setBdelivery] = useState(false)
                         changeBuyerPage()
                       }
                     }
-                      
-                     
-                     
                     }}
+                    refreshControl={
+                      <RefreshControl refreshing={buyerRefreshing} onRefresh={onBuyerRefresh} />
+                      }
                   />
       
       {loadingBuyer && <View style = {{
@@ -1274,6 +1293,9 @@ const [bdelivery, setBdelivery] = useState(false)
                      
                      
                     }}
+                      refreshControl={
+                      <RefreshControl refreshing={travelerRefreshing} onRefresh={onTravelerRefresh} />
+                      }
                   />
                   {loadingTraveler && <View style = {{
                     top: "30%",
