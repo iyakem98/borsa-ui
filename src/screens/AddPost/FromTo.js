@@ -801,7 +801,12 @@ const FromTo = ({ navigation }) => {
                 marginTop: `${roundTrip ? "43%" : "60%"}`,
               }}
               onPress={() => {
-                if (!travelerFrom || !travelerTo || !travelerDate) {
+                if (
+                  !travelerFrom ||
+                  !travelerTo ||
+                  !travelerDate ||
+                  !returnDate
+                ) {
                   setSnack(true);
                 } else {
                   navigation.navigate("PostAdditional", {
@@ -809,6 +814,8 @@ const FromTo = ({ navigation }) => {
                     travelerCountryFrom: travelerFrom,
                     travelerCountryTo: travelerTo,
                     travelerDate: travelerDate,
+                    roundTrip: roundTrip,
+                    returnDate: returnDate,
                   });
                 }
               }}
@@ -836,6 +843,7 @@ const FromTo = ({ navigation }) => {
               onChange={(date, selectedDate) => {
                 setReturnDate(moment(selectedDate).format("YYYY-MM-DD"));
                 console.log("daaaaaaate is:", selectedDate);
+                console.log("to return on", returnDate);
                 setShowTravelerDatePickerReturn(false);
               }}
             />
