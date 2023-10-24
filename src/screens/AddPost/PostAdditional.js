@@ -49,6 +49,8 @@ const Description = ({ navigation }) => {
   const [postingBuyer, setPostingBuyer] = useState(false);
   const [postingTraveler, setPostingTraveler] = useState(false);
 
+  const [duplucateCard, setDuplicateCard] = useState(false);
+
   const postBuyer = async () => {
     if (!itmName || !kilo) {
       setSnack(true);
@@ -142,7 +144,7 @@ const Description = ({ navigation }) => {
         })
         .catch((err) => {
           console.log("error:", err);
-          alert("You already have a traveler card.");
+          setDuplicateCard(true);
         });
 
       setPostingTraveler(false);
@@ -316,6 +318,21 @@ const Description = ({ navigation }) => {
                 duration={3000}
               >
                 Please fill all fields.
+              </Snackbar>
+            </View>
+
+            <View style={{}}>
+              <Snackbar
+                wrapperStyle={{ top: 0 }}
+                style={{
+                  borderRadius: 20,
+                }}
+                visible={duplucateCard}
+                onDismiss={() => setDuplicateCard(false)}
+                duration={3000}
+              >
+                You can&apos;t post another while having an existing Traveler
+                Card.
               </Snackbar>
             </View>
 
