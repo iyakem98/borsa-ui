@@ -689,7 +689,7 @@ const FromTo = ({ navigation }) => {
                 fontSize: 18,
               }}
             >
-              Flight Date
+              Departure Date
             </Text>
             <Pressable
               style={{
@@ -805,7 +805,7 @@ const FromTo = ({ navigation }) => {
                   !travelerFrom ||
                   !travelerTo ||
                   !travelerDate ||
-                  !returnDate
+                  (roundTrip && !returnDate)
                 ) {
                   setSnack(true);
                 } else {

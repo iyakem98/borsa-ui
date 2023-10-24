@@ -44,11 +44,14 @@ const Description = ({ navigation }) => {
 
   const { user } = useSelector((state) => state.auth);
 
-  const [snack, setSnack] = useState(false)
+  const [snack, setSnack] = useState(false);
+
+  const [postingBuyer, setPostingBuyer] = useState(false);
+  const [postingTraveler, setPostingTraveler] = useState(false);
 
   const postBuyer = async () => {
     if (!itmName || !kilo) {
-      setSnack(true)
+      setSnack(true);
     } else {
       //console.log("param", user.token)
 
@@ -71,6 +74,8 @@ const Description = ({ navigation }) => {
       //     console.log("failed", e);
       //   }
 
+      setPostingBuyer(true);
+
       await axios
         .post("http://143.198.168.244/api/buyers/", buyerData, {
           headers: {
@@ -78,7 +83,6 @@ const Description = ({ navigation }) => {
           },
         })
         .then((res) => {
-          alert("Buyer card posted.");
           navigation.navigate("My Cards", {
             selectedTab: 2,
           });
@@ -87,12 +91,14 @@ const Description = ({ navigation }) => {
           console.log("error:", err);
           alert("Something went wrong.");
         });
+
+      setPostingBuyer(false);
     }
   };
 
   const postTraveler = async () => {
     if (!luggageSpace) {
-     setSnack(true)
+      setSnack(true);
     } else {
       console.log("param", route.params);
 
@@ -102,6 +108,8 @@ const Description = ({ navigation }) => {
         proofCode: proofCode,
         luggageSpace: luggageSpace,
         departureDate: route.params.travelerDate,
+        roundTrip: route.params.roundTrip,
+        returnDate: route.params.returnDate,
       };
 
       // try {
@@ -115,9 +123,11 @@ const Description = ({ navigation }) => {
       //     console.log("traveler data is:", travelerData)
       //   }
 
+      setPostingTraveler(true);
+
       await axios
         .post(
-          "http://143.198.168.244/api/travels/",
+          "http://143.198.168.244/api/travels/v2",
           travelerData,
 
           {
@@ -128,13 +138,14 @@ const Description = ({ navigation }) => {
           }
         )
         .then((res) => {
-          alert("Traveller card posted.");
           navigation.navigate("My Cards");
         })
         .catch((err) => {
           console.log("error:", err);
           alert("You already have a traveler card.");
         });
+
+      setPostingTraveler(false);
     }
   };
 
@@ -294,29 +305,26 @@ const Description = ({ navigation }) => {
               />
             </View>
 
-            <View style={{
-
-}}>
-
- <Snackbar
- wrapperStyle={{ top: 0 }}
- style={{
-   borderRadius:20
- }}
-   visible={snack}
-   onDismiss={() => setSnack(false)}
-   duration={3000}
- >
-   Please fill all fields.
- </Snackbar>
-</View>
+            <View style={{}}>
+              <Snackbar
+                wrapperStyle={{ top: 0 }}
+                style={{
+                  borderRadius: 20,
+                }}
+                visible={snack}
+                onDismiss={() => setSnack(false)}
+                duration={3000}
+              >
+                Please fill all fields.
+              </Snackbar>
+            </View>
 
             <Pressable
               style={{
                 backgroundColor: "#5f43b2",
                 paddingVertical: 15,
                 borderRadius: 5,
-                marginTop: '61%',
+                marginTop: "61%",
                 //marginBottom: "16%",
                 width: "100%",
                 //position: "absolute",
@@ -325,12 +333,14 @@ const Description = ({ navigation }) => {
               }}
               onPress={async () => {
                 setIsLoading(true);
-                try {
-                  await postBuyer();
-                } catch (e) {
-                  console.log("ADD POST ERROR: ", e);
+                if (!postingBuyer) {
+                  try {
+                    await postBuyer();
+                  } catch (e) {
+                    console.log("ADD POST ERROR: ", e);
+                  }
+                  setIsLoading(false);
                 }
-                setIsLoading(false);
               }}
             >
               <Text
@@ -461,19 +471,19 @@ const Description = ({ navigation }) => {
                 />
               </View>
             )}
- <View>
- <Snackbar
- wrapperStyle={{ top: 0 }}
- style={{
-   borderRadius:20
- }}
-   visible={snack}
-   onDismiss={() => setSnack(false)}
-   duration={3000}
- >
-   Please fill all fields.
- </Snackbar>
-</View>
+            <View>
+              <Snackbar
+                wrapperStyle={{ top: 0 }}
+                style={{
+                  borderRadius: 20,
+                }}
+                visible={snack}
+                onDismiss={() => setSnack(false)}
+                duration={3000}
+              >
+                Please fill all fields.
+              </Snackbar>
+            </View>
 
             <Pressable
               style={{
@@ -489,7 +499,11 @@ const Description = ({ navigation }) => {
                 //bottom: 20,
                 //left: 15,
               }}
-              onPress={() => postTraveler()}
+              onPress={() => {
+                if (!postingTraveler) {
+                  postTraveler();
+                }
+              }}
             >
               <Text
                 style={{
@@ -499,7 +513,7 @@ const Description = ({ navigation }) => {
                   textAlign: "center",
                 }}
               >
-                {"Finish"}
+                {postingTraveler ? "Loading..." : "Finish"}
               </Text>
             </Pressable>
           </ScrollView>
